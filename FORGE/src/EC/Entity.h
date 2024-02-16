@@ -1,102 +1,80 @@
 #pragma once
-#ifndef GAMEOBJECT_H_
-#define GAMEOBJECT_H_
+#ifndef ENTITY_H_
+#define ENTITY_H_
+#include <unordered_map>
+#include <string>
 
-#include <iostream>
-#include <array>
-#include <vector>
-#include "../components/Component.h"
-#include "../data/constants.h"
-
-using namespace std;
+class Scene;
+class Component;
+class Entity;
+struct Group {
+	std::string id;
+	std::vector<Entity> entities;
+};
 
 class Entity {
-protected:
+private:
+	Scene* scene;
+	std::unordered_map<std::string, Component*> components;
+	Group group;
 	bool alive;
-	Scene* gStt;
-	grpId group;
-	std::vector<Component*> currCmps;
-	std::array<Component*, maxComponentId> cmps;
 public:
-	// Constructor
-	Entity() : gStt(nullptr), cmps(), currCmps(), alive(true), group(grpId::_grp_GENERAL) {
-		currCmps.reserve(maxComponentId);
-	}
-	// Destructor
-	virtual ~Entity() { 
-		for (auto cmp = currCmps.rbegin(); cmp != currCmps.rend(); ++cmp) {
-			delete (*cmp);
-			*cmp = nullptr;
-		}
-
-		for (Component* cpm : cmps) {
-			cpm = nullptr;
-		}
-	}
-	// Asigna el Manager del GameObject
-	inline void setContext(Scene* _gStt, grpId _group) { gStt = _gStt; group = _group; }
-	// Inicializa el GameObject tras tener el contexto
-	virtual void initGameObject() {}
-	// Devuelve si el GameObject está vivo
-	inline bool isAlive() { return alive; }
-	// Asigna si el GameObject está vivo o no
-	inline void setAlive(bool _alive) { alive = _alive; }
-	// Añade el Component dicho al GameObject, devuelve un puntero a ese Component
-	template<typename T, typename ...Ts>
-	inline T* addComponent(Ts&& ...args) {
-		T* c = new T(std::forward<Ts>(args)...);
-		removeComponent<T>();
-		currCmps.push_back(c);
-		cmps[T::id] = c;
-		c->setContext(this, gStt);
-		c->initComponent();
-		return c;
-	}
-	// Elimina el Component dicho del GameObject
-	template<typename T>
-	inline void removeComponent() {
-		constexpr cmpId_type cId = T::id;
-
-		if (cmps[cId] != nullptr) {
-			auto iter = std::find(currCmps.begin(),
-				currCmps.end(),
-				cmps[cId]);
-			currCmps.erase(iter);
-			delete cmps[cId];
-			cmps[cId] = nullptr;
-		}
-	}
-	// Devuelve el Compoment pedido del GameObject
+	/// <summary>
+	/// Constructor por defecto de la clase Entity
+	/// </summary>
+	Entity();
+	/// <summary>
+	/// Destructor por defecto de la clase Entity
+	/// </summary>
+	virtual ~Entity();
+	/// <summary>
+	/// Asigna la Scene en la que esta el componente y el group al que pertenece
+	/// </summary>
+	/// <param name="_scene">Referencia a la escena de la Entity</param>
+	/// <param name="_group">Referencia al grupo de la Entity</param>
+	void setContext(Scene* _scene, Group _group);
+	/// <returns>
+	/// Si la Entity esta viva
+	/// </returns>
+	bool isAlive();
+	/// <summary>
+	/// Asigna si la Entity esta viva o no, de cara al recolector de basura
+	/// </summary>
+	/// <param name="_alive">Nuevo estado de vida de la entidad</param>
+	void setAlive(bool _alive);
+	/// <summary>
+	/// Agrega el Component dicho a la Entity, devuelve un puntero a ese Component
+	/// </summary>
+	/// <returns>El Component agregado</returns>
+	/// <param name="data">Informacion del componente en formato de object de Lua</param>
+	Component* addComponent(/*LuaObject data*/);
+	/// <summary>
+	/// Elimina el Component dicho de la Entity
+	/// </summary>
+	/// <param name="name">Nombre del Component a eliminar</param>
+	void removeComponent(std::string name);
+	/// <returns>
+	/// El Component pedido de esta Entity
+	/// </retuns>
 	template<typename T>
 	inline T* getComponent() {
-		return static_cast<T*>(cmps[T::id]);
+		return static_cast<T*>(components.at(T::id));
 	}
-	// Devuelve si el GameObject tiene el Component pedido
-	template<typename T>
-	inline bool hasComponent() {
-		return cmps[T::id] != nullptr;
-	}
-	// Devuelve el grupo al que pertenece el gameObject
-	inline grpId getGroup() {
-		return group;
-	}
-	// Actualiza el GameObject
-	virtual void update() {
-		for (Component* cmp : currCmps) {
-			cmp->update();
-		}
-	}
-	// Dibuja el GameObject en pantalla
-	virtual void render() const {
-		for (Component* cmp : currCmps) {
-			cmp->render();
-		}
-	}
-	// Maneja los eventos del GameObject
-	virtual void handleInput() {
-		for (Component* cmp : currCmps) {
-			cmp->handleInput();
-		}
-	}
+	/// <returns>
+	/// Si la Entity tiene el Component pedido
+	/// </returns>
+	bool hasComponent(std::string name);
+	/// <returns>
+	/// El grupo al que pertenece la Entity
+	/// </returns>
+	Group getGroup();
+	/// <summary>
+	/// Actualiza la logica de la Entity
+	/// </summary>
+	virtual void update();
+	/// <summary>
+	///	Actualiza la Entity en periodos de tiempo fijos
+	/// </summary>
+	virtual void fixedUpdate();
 };
 #endif
