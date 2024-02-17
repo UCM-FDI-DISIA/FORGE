@@ -5,7 +5,7 @@ Entity::Entity() :
     scene(nullptr),
     components(),
     alive(false),
-    group() {
+    groupId(0) {
 }
 
 Entity::~Entity() { 
@@ -14,9 +14,9 @@ Entity::~Entity() {
     }
 }
 
-void Entity::setContext(Scene* _scene, Group _group) { 
+void Entity::setContext(Scene* _scene, int _groupId) {
     scene = _scene;
-    group = _group; 
+    groupId = _groupId;
     alive = true;
 }
 
@@ -49,8 +49,8 @@ bool Entity::hasComponent(std::string name) {
     return components.count(name);
 }
 
-Group Entity::getGroup() {
-    return group;
+int Entity::getGroup() {
+    return groupId;
 }
 
 void Entity::update() {

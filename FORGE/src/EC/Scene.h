@@ -1,68 +1,61 @@
-// #pragma once
-// #include <vector>
-// #include "../gameObjects/GameObject.h"
-// #include "../gameObjects/General Objects/Camera.h"
-// #include "../gameObjects/General Objects/Pointer.h"
-// #include "../core/ButtonNavigator.h"
-// #include "../gameObjects/UI/Button.h"
+#pragma once
+#ifndef SCENE_H_
+#define SCENE_H_
+#include <vector>
+#include <unordered_map>
+#include <string>
 
-// class SDLApplication;
-// using namespace std;
+class Entity;
 
-// class Scene {
-// protected:
-//     Camera* camera;
-//     Pointer* pointer;
-//     ButtonNavigator* butNavigator;
-//     GameControl& gmCtrl_;
-
-//     array<std::vector<Entity*>, maxGroupId> entsByGroup_;
-//     int lastButtonIndex;
-// public:
-//     // Constructor
-//     Scene();
-//     // Destructor
-//     virtual ~Scene();
-//     // Actualiza los objetos de la escea
-//     virtual void update();
-//     // Dibuja la escena en pantalla
-//     virtual void render() const;
-//     // Maneja el evento actual
-//     virtual void handleInput();
-//     // Borra todos los GameObject no vivos
-//     void refresh();
-
-//     //Inserta un nuevo GameObject a la escena indicando su grupo
-//     template<typename T = Entity, typename ...Ts>
-//     T* addGameObject(grpId group, Ts&& ...args) {
-//         T* e = new T();
-//         e->setAlive(true);
-//         e->setContext(this, group);
-//         e->initGameObject(std::forward<Ts>(args)...);
-//         entsByGroup_[group].push_back(e);
-//         return e;
-//     }
-//     //Inserta un nuevo GameObject a la escena en el grupo General
-//     template<typename T = Entity, typename ...Ts>
-//     T* addGameObject(Ts&& ...args) {
-//         return addGameObject<T>(_grp_GENERAL, std::forward<Ts>(args)...);
-//     }
-//     // Devuelve una lista con el grupo seleccionado
-//     inline const vector<Entity*>& getEntitiesByGroup(grpId_type gId) {
-//         return entsByGroup_[gId];
-//     }
-
-//     // Devuelve la camara
-//     Camera* getCamera() const;
-
-//     // Devuelve el puntero
-//     inline Pointer* getPointer() const { return pointer; }
-
-//     // Devuelve el navegador entre botones
-//     ButtonNavigator* getButtonNavigator() const;
-
-//     // Crear un botón especificado en la escena
-//     Button* createButton(Vector2D _bPos, Vector2D _fPos, CallBack _cb, string key, float horizontalMult = 1.0f, float verticalMult = 1.0f);
-
-//     inline void setLastIndex(int index) { lastButtonIndex = index; }
-// };
+class Scene {
+protected:
+    
+    std::vector<std::vector<Entity*>> entitiesByGroup;
+    std::unordered_map<std::string, Entity*> handlers;
+public:
+    /// <summary> 
+    //// Constructor
+    /// </summary>
+    Scene();
+    /// <summary>
+    /// Destructor
+	/// </summary>
+    virtual ~Scene();
+    /// <summary>
+    /// Actualiza las Entity de la escena
+	/// </summary>
+    virtual void update();
+    /// <summary>
+	///	Actualiza la Entity en periodos de tiempo fijos
+	/// </summary>
+    virtual void fixedUpdate();
+    /// <summary>
+    /// Dibuja la Scene en pantalla
+    /// </summary>
+    virtual void render() const;
+    /// <summary>
+    /// Borra todas las Entity no vivas
+    /// </summary>
+    void refresh();
+    /// <summary>
+    /// Inserta una nueva Entity a la escena con el grupo indicado
+    /// </summary>
+    /// <param name="groupId">Id del grupo que se le da a la Entity</param>
+    /// <returns>La Entity creada</returns>
+    Entity* addEntity(int groupId);
+    /// <returns>
+    /// Una lista con todas las entidades en escena del grupo seleccionado
+    /// </returns>
+    const std::vector<Entity*>& getEntitiesByGroup(int groupId);
+    /// <returns>
+    /// Una entidad en escena a partir de su handler
+    /// </returns>
+    const Entity* getEntityByHandler(std::string handler);
+    /// <summary>
+    /// </summary>
+    /// <param name="handler">Nombre que se le va a dar al Handler</param>
+    /// <param name="ent">Entidad que se asocia al Handler</param>
+    /// <returns>Si se ha podido agregar el Handler</returns>
+    bool setHandler(std::string handler, Entity* ent);
+};
+#endif // !COMPONENT_H_

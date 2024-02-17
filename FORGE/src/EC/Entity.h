@@ -7,16 +7,12 @@
 class Scene;
 class Component;
 class Entity;
-struct Group {
-	std::string id;
-	std::vector<Entity> entities;
-};
 
 class Entity {
 private:
 	Scene* scene;
 	std::unordered_map<std::string, Component*> components;
-	Group group;
+	int groupId;
 	bool alive;
 public:
 	/// <summary>
@@ -32,7 +28,7 @@ public:
 	/// </summary>
 	/// <param name="_scene">Referencia a la escena de la Entity</param>
 	/// <param name="_group">Referencia al grupo de la Entity</param>
-	void setContext(Scene* _scene, Group _group);
+	void setContext(Scene* _scene, int _groupId);
 	/// <returns>
 	/// Si la Entity esta viva
 	/// </returns>
@@ -43,9 +39,9 @@ public:
 	/// <param name="_alive">Nuevo estado de vida de la entidad</param>
 	void setAlive(bool _alive);
 	/// <summary>
-	/// Agrega el Component dicho a la Entity, devuelve un puntero a ese Component
+	/// Agrega el Component dicho a la Entity
 	/// </summary>
-	/// <returns>El Component agregado</returns>
+	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Informacion del componente en formato de object de Lua</param>
 	Component* addComponent(/*LuaObject data*/);
 	/// <summary>
@@ -54,11 +50,15 @@ public:
 	/// <param name="name">Nombre del Component a eliminar</param>
 	void removeComponent(std::string name);
 	/// <returns>
-	/// El Component pedido de esta Entity
-	/// </retuns>
+	/// Un puntero al Component pedido de esta Entity
+	/// </returns>
 	template<typename T>
 	inline T* getComponent() {
-		return static_cast<T*>(components.at(T::id));
+		auto comp = components.find(T::id);
+		if (comp == components.end()) {
+			return nullptr;
+		}
+		return static_cast<T*>(comp->second);
 	}
 	/// <returns>
 	/// Si la Entity tiene el Component pedido
@@ -67,7 +67,7 @@ public:
 	/// <returns>
 	/// El grupo al que pertenece la Entity
 	/// </returns>
-	Group getGroup();
+	int getGroup();
 	/// <summary>
 	/// Actualiza la logica de la Entity
 	/// </summary>

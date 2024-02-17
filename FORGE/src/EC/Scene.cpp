@@ -1,90 +1,86 @@
-﻿// #include "GameState.h"
-// #include "../core/SDLApplication.h"
+﻿#include "Scene.h"
+#include "Entity.h"
+#include "SceneManager.h"
 
-// // Constructor
-// Scene::Scene() : entsByGroup_(), butNavigator(new ButtonNavigator()), gmCtrl_(gmCtrl()), lastButtonIndex(-1) {
-//     for (auto & grpEnts : entsByGroup_) {
-//         grpEnts.reserve(500); //Reserva espacio para cada lista
-//     }
-//     camera = addGameObject<Camera>();
-//     pointer = addGameObject<Pointer>(_grp_POINTER);
-// }
+Scene::Scene() :
+    entitiesByGroup(SceneManager::getInstance()->getMaxGroupId()),
+    handlers() {
+    for (auto & grpEnts : entitiesByGroup) {
+        grpEnts.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
+    }
+}
 
-// // Destructor
-// Scene::~Scene() {
-//     for (auto& group : entsByGroup_) {
-//         for (auto& e : group) {
-//             delete e;
-//             e = nullptr;
-//         }
-//     }
-//     delete butNavigator;
-// }
+Scene::~Scene() {
+    for (auto& group : entitiesByGroup) {
+        for (auto& e : group) {
+            delete e;
+            e = nullptr;
+        }
+    }
+}
 
-// // Actualiza los objetos de la escena
-// void Scene::update() {
-//     for (auto& group : entsByGroup_) {
-//         for (auto e : group) {
-//             e->update();
-//         }
-//     }
+void Scene::update() {
+    for (auto& group : entitiesByGroup) {
+        for (auto& e : group) {
+            e->update();
+        }
+    }
 
-//     refresh();
-// }
+    refresh();
+}
 
-// // Dibuja la escena en pantalla
-// void Scene::render() const {
-//     for (auto& group : entsByGroup_) {
-//         for (auto e : group) {
-//             e->render();
-//         }
-//     }
-// }
+void Scene::fixedUpdate() {
+    for (auto& group : entitiesByGroup) {
+        for (auto& e : group) {
+            e->fixedUpdate();
+        }
+    }
+}
 
-// // Maneja el evento actual
-// void Scene::handleInput() {
-//     for (auto& group : entsByGroup_) {
-//         for (auto e : group) {
-//             e->handleInput();
-//         }
-//     }
-// }
+void Scene::render() const {
 
-// // Borra todos los GameObject no vivos
-// void Scene::refresh() {
+}
 
-//     for (grpId_type gId = 0; gId < maxGroupId; gId++) {
-//         auto& grpEnts = entsByGroup_[gId];
-//         grpEnts.erase(
-//             std::remove_if(grpEnts.begin(), grpEnts.end(),
-//                 [](Entity* e) {
-//                     if (e->isAlive()) {
-//                         return false;
-//                     }
-//                     else {
-//                         delete e;
-//                         return true;
-//                     }
-//                 }),
-//             grpEnts.end());
-//     }
-// }
+void Scene::refresh() {
+    for (auto& grpEnts : entitiesByGroup) {
+        grpEnts.erase(
+            std::remove_if(grpEnts.begin(), grpEnts.end(),
+                [](Entity* e) {
+                    if (e->isAlive()) {
+                        return false;
+                    }
+                    else {
+                        delete e;
+                        return true;
+                    }
+                }),
+            grpEnts.end());
+    }
+}
 
+Entity* Scene::addEntity(int groupId) {
+    Entity* e = new Entity();
+    e->setAlive(true);
+    e->setContext(this, groupId);
+	entitiesByGroup[groupId].push_back(e);
+    return e;
+}
 
-// // Devuelve la camara de la escena
-// Camera* Scene::getCamera() const { return camera; }
+const std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
+    if(groupId < 0 || groupId > SceneManager::getInstance()->getMaxGroupId()){
+        return std::vector<Entity*>();
+    }
+    return entitiesByGroup[groupId];
+}
 
-// // Devuelve el navegador entre botones
-// ButtonNavigator* Scene::getButtonNavigator() const { return butNavigator; }
+const Entity* Scene::getEntityByHandler(std::string handler) {
+    auto handIt = handlers.find(handler);
+    if (handIt == handlers.end()) {
+        return nullptr;
+    }
+    return handIt->second;
+}
 
-// // Crear un botón especificado en la escena
-// Button* Scene::createButton(Vector2D _bPos, Vector2D _fPos, CallBack _cb, string key, float horizontalMult, float verticalMult) {
-//     AnimatorInfo aI = AnimatorInfo(key);
-//     // Crear marco
-//     Entity* frame = addGameObject();
-//     frame->addComponent<Transform>(_fPos, Vector2D(), MM_BUTTONFRAME_WIDTH, MM_BUTTONFRAME_HEIGHT);
-//     frame->addComponent<Animator>(SDLApplication::getTexture("ButtonFrame"), BUTTON_FRAME_SPRITE_WIDTH, BUTTON_FRAME_SPRITE_HEIGTH, aI.rows, aI.cols);
-
-//     // Crear bot�n
-//     return addGameObject<Button>(_cb, _bPos, aI, -1, frame, horizontalMult, verticalMult);
-// }
+bool Scene::setHandler(std::string handler, Entity* ent) {
+    return handlers.insert(std::pair<std::string, Entity*>(handler, ent)).second;
+}
