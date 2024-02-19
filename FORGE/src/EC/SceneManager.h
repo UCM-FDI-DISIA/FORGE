@@ -28,10 +28,8 @@ class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
 
-	std::list<Scene*> scenesToUpdate;
-	std::list<Scene*> scenesToRender;	
-
-	//-------------------------------------------------------------------------\\
+	Scene* activeScene;
+	std::unordered_map<std::string, Scene*> loadedScenes;
 
 	std::unordered_map<std::string, LuaData> entityBlueprints;
 	std::unordered_map<std::string, LuaData> sceneBlueprints;
@@ -44,8 +42,9 @@ private:
 public:
 	static SceneManager* getInstance();
 
-	void addScene();
+	void changeScene(std::string scene, bool renewScene = false);
 	void removeScene(std::string id);
+	Scene* createScene(std::string id);
 	Scene* getScene(std::string id);
 	/// <returns>
 	/// Cantidad total de grupos
