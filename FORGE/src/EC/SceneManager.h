@@ -26,11 +26,34 @@ private:
     SceneManager();
 
 public:
+	/// <summary>
+	/// Devuelve la instancia de SceneManager y si no existe la crea
+	/// </summary>
+	/// <returns>Instancia singleton a SceneManager</returns>
 	static SceneManager* getInstance();
-
+	/// <summary>
+	/// Cambia la escena activa a una con el identificador del parametro
+	/// Si no hay ninguna cargada en memoria la crea a traves de su blueprint
+	/// </summary>
+	/// <param name="scene">Identificador de la escena</param>
+	/// <param name="renewScene">
+	/// Elimina la escena cargada en memoria y la crea de nuevo desde el blueprint
+	/// </param>
 	void changeScene(std::string scene, bool renewScene = false);
+	/// <summary>
+	/// Elimina una escena cargada en memoria
+	/// </summary>
+	/// <param name="id">Identificador de la escena</param>
 	void removeScene(std::string id);
+	/// <summary>
+	/// Crea una escena a partir de un blueprint
+	/// </summary>
+	/// <param name="id">Identificador del blueprint</param>
+	/// <returns>La escena creada</returns>
 	Scene* createScene(std::string id);
+	/// <returns>
+	/// Una escena a partir de su Identificador
+	/// </returns>
 	Scene* getScene(std::string id);
 	/// <returns>
 	/// Cantidad total de grupos
@@ -42,7 +65,17 @@ public:
 	/// <param name="group">Nombre del grupo</param>
 	/// <returns>Id del grupo</returns>
 	int getGroupId(std::string group);
+	/// <summary>
+	/// Agrega un blueprint de escena y lo mapea con su id
+	/// </summary>
+	/// <param name="id">Identificador del blueprint</param>
+	/// <param name="scene">Blueprint de la escena</param>
 	void addSceneBlueprint(std::string id, std::vector<EntityStruct*> scene);
+	/// <summary>
+	/// Agrega un blueprint de entidad y lo mapea con su id
+	/// </summary>
+	/// <param name="id">Identificador del blueprint</param>
+	/// <param name="entity">Blueprint de la entidad</param>
 	void addEntityBlueprint(std::string id, EntityStruct* entity);
 
 	
