@@ -36,3 +36,13 @@ int SceneManager::getGroupId(std::string group)
 {
 	return groups[group];
 }
+
+void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityStruct*> scene)
+{
+	sceneBlueprints.insert({ id,scene });
+}
+
+void SceneManager::addEntityBlueprint(std::string id, EntityStruct* entity)
+{
+	entityBlueprints.insert({ id,entity });
+}

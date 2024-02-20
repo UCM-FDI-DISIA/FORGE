@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <string>
 
+struct EntityStruct;
 class Scene;
 class Entity;
 /*
@@ -22,8 +23,6 @@ class Entity;
  * 
  * sceneBlueprints (diccionario) [Lua]
 */
-
-class LuaData {};
 class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
@@ -31,8 +30,8 @@ private:
 	Scene* activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
 
-	std::unordered_map<std::string, LuaData> entityBlueprints;
-	std::unordered_map<std::string, LuaData> sceneBlueprints;
+	std::unordered_map<std::string, EntityStruct*> entityBlueprints;
+	std::unordered_map<std::string, std::vector<EntityStruct*>> sceneBlueprints;
 
 	std::unordered_map<std::string, int> groups;
 	int maxGroupId;
@@ -56,6 +55,8 @@ public:
 	/// <param name="group">Nombre del grupo</param>
 	/// <returns>Id del grupo</returns>
 	int getGroupId(std::string group);
+	void addSceneBlueprint(std::string id, std::vector<EntityStruct*> scene);
+	void addEntityBlueprint(std::string id, EntityStruct* entity);
 
 	
 
