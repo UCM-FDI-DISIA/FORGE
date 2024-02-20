@@ -83,12 +83,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\EC\Component.cpp" />
     <ClCompile Include="..\..\src\EC\Entity.cpp" />
+    <ClCompile Include="..\..\src\EC\Factory.cpp" />
     <ClCompile Include="..\..\src\EC\Scene.cpp" />
     <ClCompile Include="..\..\src\EC\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\EC\Component.h" />
     <ClInclude Include="..\..\src\EC\Entity.h" />
+    <ClInclude Include="..\..\src\EC\Factory.h" />
     <ClInclude Include="..\..\src\EC\Scene.h" />
     <ClInclude Include="..\..\src\EC\SceneManager.h" />
   </ItemGroup>
