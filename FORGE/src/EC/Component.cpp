@@ -1,4 +1,5 @@
 ﻿#include "Component.h"
+class Lua;
 
 Component::Component() : 
     entity(nullptr),
@@ -14,7 +15,7 @@ void Component::setContext(Entity* _entity, Scene* _scene) {
     enabled = true;
 }
 
-void Component::initComponent(/*LuaObject data*/) {}
+void Component::initComponent(Lua* data) {}
 
 
 void Component::update() {}

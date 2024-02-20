@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Factory.h"
 
+class Lua;
+
 Entity::Entity() : 
     scene(nullptr),
     components(),
@@ -30,20 +32,21 @@ void Entity::setAlive(bool _alive) {
     alive = _alive;
 }
 
-Component* Entity::addComponent(/*LuaObject data*/) {
-    //Component* c = fact.generateComponent(/*data.name*/);
-    //removeComponent(/*data.name*/);
-    //components.insert(std::pair<std::string, Component*>(/*data.name*/, c));
-    //c->setContext(this, scene);
-    //c->initComponent(/*data*/);
-    //return c;
+Component* Entity::addComponent(std::string id, Lua* data) {
+    Component* c = fact.generateComponent(id);
+    removeComponent(id);
+    components.insert(std::pair<std::string, Component*>(id, c));
+    c->setContext(this, scene);
+    c->initComponent(data);
+    return c;
     return nullptr;
 }
 
 void Entity::removeComponent(std::string name) {
-    if (components.count(name)) {
-        delete components[name];
-        components.erase(name);
+    auto iter = components.find(name);
+    if (iter != components.end()) {
+        delete iter->second;
+        components.erase(iter);
     }
 }
 

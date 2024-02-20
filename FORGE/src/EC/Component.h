@@ -4,6 +4,7 @@
 
 class Entity;
 class Scene;
+class Lua;
 
 class Component {
 protected:
@@ -27,10 +28,11 @@ public:
 	/// <param name="_entity">Entity a la que pertenece este Component</param>
 	/// <param name="_scene">Scene a la que pertenece la Entity</param>
 	void setContext(Entity* _entity, Scene* _scene);
-	/// <summary>
-	/// Inicializa el Componente si es necesario
+	/// // <summary>
+	/// Inicializa el Componente con los parametros adecuados
 	/// </summary>
-	virtual void initComponent(/*LuaObject data*/);
+	/// <param name="data"> Parametros neceasrios para la iniciacion del componente</param>
+	virtual void initComponent(Lua* data);
 	/// <summary>
 	/// Actualiza la logica del componente
 	/// </summary>

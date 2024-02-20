@@ -8,6 +8,7 @@ class Scene;
 class Component;
 class Entity;
 class Factory;
+class Lua;
 
 class Entity {
 private:
@@ -45,7 +46,7 @@ public:
 	/// </summary>
 	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Informacion del componente en formato de object de Lua</param>
-	Component* addComponent(/*LuaObject data*/);
+	Component* addComponent(std::string id, Lua* data);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>

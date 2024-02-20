@@ -9,20 +9,7 @@
 struct EntityStruct;
 class Scene;
 class Entity;
-/*
- *  estructura con una instancia de cada escena por defecto
- * 
- * 
- * 
- * 
- * 
- * awakeScenes (stack-like) [C++]
- * asleepScenes (stack-like(debajo del anterior)) [C++]
- * scenemanager.addScene(string blueprintName);
- * 
- * 
- * sceneBlueprints (diccionario) [Lua]
-*/
+
 class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;

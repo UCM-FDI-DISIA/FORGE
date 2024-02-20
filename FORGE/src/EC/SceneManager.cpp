@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Entity.h"
+#include "../Load/EcsLoad.h"
 
 SceneManager* SceneManager::getInstance() {
     if (instance.get() != nullptr) return instance.get();
@@ -24,19 +26,36 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 }
 
 void SceneManager::removeScene(std::string id) {
-	delete loadedScenes[id];
-	loadedScenes.erase(id);
+	auto iter = loadedScenes.find(id);
+	if (iter != loadedScenes.end()) {
+		delete iter->second;
+		loadedScenes.erase(iter);
+	}
 }
 
 Scene* SceneManager::createScene(std::string id)
 {
-	//createSceneFromLuaData(sceneBlueprints[id]);
-	return nullptr;
+	auto iter = sceneBlueprints.find(id);
+	if (iter == sceneBlueprints.end()) {
+		return nullptr;
+	}
+	Scene* newScene = new Scene();
+	for (EntityStruct* e : iter->second) {
+		Entity* ent = newScene->addEntity(getGroupId(e->group));
+		if (e->handler != "") {
+			newScene->setHandler(e->handler,ent);
+		}
+		for (ComponentStruct* c : e->components) {
+			ent->addComponent(c->id, c->data);
+		}
+	}
+	loadedScenes.insert({ id, newScene });
+	return newScene;
 }
 
 Scene* SceneManager::getScene(std::string id) {
-	auto scnIt = loadedScenes.find(id);
-	if (scnIt != loadedScenes.end()) {
+	auto iter = loadedScenes.find(id);
+	if (iter != loadedScenes.end()) {
 		return loadedScenes[id];
 	}
 	return nullptr;

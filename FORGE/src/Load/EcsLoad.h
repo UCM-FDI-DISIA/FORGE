@@ -4,17 +4,18 @@
 #include <string>
 #include <vector>
 
-struct ComponentStruct
-{
+class Lua;
 
+struct ComponentStruct {
+	std::string id;
+	Lua* data;
 };
-struct EntityStruct
-{
+
+struct EntityStruct {
 	std::string group;
 	std::string handler;
 	std::vector<ComponentStruct*> components;
 };
-
 
 class EcsLoad {
 
