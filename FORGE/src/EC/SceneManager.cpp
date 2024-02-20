@@ -6,17 +6,24 @@ SceneManager* SceneManager::getInstance() {
 	return (instance = std::unique_ptr<SceneManager>(new SceneManager())).get();
 }
 
-void SceneManager::changeScene(std::string scene, bool renewScene)
-{
-	Scene* targetScene = nullptr;
-	if (renewScene || !(targetScene = loadedScenes.find(scene)->second)) {
-		targetScene = createScene(scene);
+void SceneManager::changeScene(std::string scene, bool renewScene) {
+	auto iter = loadedScenes.find(scene);
+	if (iter == loadedScenes.end()) {
+		activeScene = createScene(scene);
 	}
-	activeScene = targetScene;
+	else {
+		if (renewScene) {
+			delete iter->second;
+			loadedScenes.erase(iter);
+			activeScene = createScene(scene);
+		}
+		else {
+			activeScene = iter->second;
+		}
+	}
 }
 
-void SceneManager::removeScene(std::string id)
-{
+void SceneManager::removeScene(std::string id) {
 	delete loadedScenes[id];
 	loadedScenes.erase(id);
 }
@@ -27,13 +34,19 @@ Scene* SceneManager::createScene(std::string id)
 	return nullptr;
 }
 
-int SceneManager::getMaxGroupId()
-{
+Scene* SceneManager::getScene(std::string id) {
+	auto scnIt = loadedScenes.find(id);
+	if (scnIt != loadedScenes.end()) {
+		return loadedScenes[id];
+	}
+	return nullptr;
+}
+
+int SceneManager::getMaxGroupId() {
 	return maxGroupId;
 }
 
-int SceneManager::getGroupId(std::string group)
-{
+int SceneManager::getGroupId(std::string group) {
 	return groups[group];
 }
 

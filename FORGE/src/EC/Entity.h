@@ -7,9 +7,11 @@
 class Scene;
 class Component;
 class Entity;
+class Factory;
 
 class Entity {
 private:
+	Factory& fact;
 	Scene* scene;
 	std::unordered_map<std::string, Component*> components;
 	int groupId;

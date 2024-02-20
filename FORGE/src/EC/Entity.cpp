@@ -1,11 +1,13 @@
 ﻿#include "Entity.h"
 #include "Component.h"
+#include "Factory.h"
 
 Entity::Entity() : 
     scene(nullptr),
     components(),
     alive(false),
-    groupId(0) {
+    groupId(0),
+    fact(*Factory::getInstance()){
 }
 
 Entity::~Entity() { 
@@ -29,7 +31,7 @@ void Entity::setAlive(bool _alive) {
 }
 
 Component* Entity::addComponent(/*LuaObject data*/) {
-    //Component* c = generateComponent(/*data.name*/);
+    //Component* c = fact.generateComponent(/*data.name*/);
     //removeComponent(/*data.name*/);
     //components.insert(std::pair<std::string, Component*>(/*data.name*/, c));
     //c->setContext(this, scene);
