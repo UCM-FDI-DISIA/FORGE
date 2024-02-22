@@ -4,11 +4,13 @@
 #include <string>
 #include <vector>
 
-class Lua;
+namespace luabridge {
+	class LuaRef;
+}
 
 struct ComponentStruct {
 	std::string id;
-	Lua* data;
+	luabridge::LuaRef* data;
 };
 
 struct EntityStruct {
@@ -18,7 +20,11 @@ struct EntityStruct {
 };
 
 class EcsLoad {
-
+private:
+	lua_State* lua;
+	std::string filePath;
+public:
+	EcsLoad(std::string path);
 };
 
-#endif // !COMPONENT_H_
+#endif // !ECS_LOAD_H_

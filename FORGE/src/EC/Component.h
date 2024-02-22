@@ -4,7 +4,9 @@
 
 class Entity;
 class Scene;
-class Lua;
+namespace luabridge {
+	class LuaRef;
+}
 
 class Component {
 protected:
@@ -32,7 +34,7 @@ public:
 	/// Inicializa el Componente con los parametros adecuados
 	/// </summary>
 	/// <param name="data"> Parametros neceasrios para la iniciacion del componente</param>
-	virtual void initComponent(Lua* data);
+	virtual void initComponent(luabridge::LuaRef* data);
 	/// <summary>
 	/// Actualiza la logica del componente
 	/// </summary>

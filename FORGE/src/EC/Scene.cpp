@@ -68,7 +68,8 @@ Entity* Scene::addEntity(int groupId) {
 
 const std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
     if(groupId < 0 || groupId > SceneManager::getInstance()->getMaxGroupId()){
-        return std::vector<Entity*>();
+        std::vector<Entity*> res = std::vector<Entity*>();
+        return res;
     }
     return entitiesByGroup[groupId];
 }

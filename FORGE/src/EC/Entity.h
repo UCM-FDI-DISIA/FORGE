@@ -8,7 +8,9 @@ class Scene;
 class Component;
 class Entity;
 class Factory;
-class Lua;
+namespace luabridge {
+	class LuaRef;
+}
 
 class Entity {
 private:
@@ -46,7 +48,7 @@ public:
 	/// </summary>
 	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Informacion del componente en formato de object de Lua</param>
-	Component* addComponent(std::string id, Lua* data);
+	Component* addComponent(std::string id, luabridge::LuaRef* data);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>

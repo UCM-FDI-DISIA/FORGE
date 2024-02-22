@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "Factory.h"
 
-class Lua;
+class luabridge::LuaRef;
 
 Entity::Entity() : 
     scene(nullptr),
@@ -32,7 +32,7 @@ void Entity::setAlive(bool _alive) {
     alive = _alive;
 }
 
-Component* Entity::addComponent(std::string id, Lua* data) {
+Component* Entity::addComponent(std::string id, luabridge::LuaRef* data) {
     Component* c = fact.generateComponent(id);
     removeComponent(id);
     components.insert(std::pair<std::string, Component*>(id, c));

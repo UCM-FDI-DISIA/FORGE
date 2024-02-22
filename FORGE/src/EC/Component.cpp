@@ -1,5 +1,5 @@
 ﻿#include "Component.h"
-class Lua;
+class luabridge::LuaRef;
 
 Component::Component() : 
     entity(nullptr),
@@ -15,7 +15,7 @@ void Component::setContext(Entity* _entity, Scene* _scene) {
     enabled = true;
 }
 
-void Component::initComponent(Lua* data) {}
+void Component::initComponent(luabridge::LuaRef* data) {}
 
 
 void Component::update() {}
