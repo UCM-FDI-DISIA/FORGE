@@ -45,8 +45,8 @@ Scene* SceneManager::createScene(std::string id)
 		if (e->handler != "") {
 			newScene->setHandler(e->handler,ent);
 		}
-		for (ComponentStruct* c : e->components) {
-			ent->addComponent(c->id, c->data);
+		for (auto& c : e->components) {
+			ent->addComponent(c.first, &(c.second));
 		}
 	}
 	loadedScenes.insert({ id, newScene });
@@ -79,7 +79,7 @@ void SceneManager::addEntityBlueprint(std::string id, EntityStruct entity)
 	entityBlueprints.insert({ id,entity });
 }
 
-EntityStruct& const SceneManager::getEntityBlueprint(std::string id)
+EntityStruct const SceneManager::getEntityBlueprint(std::string id)
 {
 	auto iter = entityBlueprints.find(id);
 	if (iter != entityBlueprints.end()) {

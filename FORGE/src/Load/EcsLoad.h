@@ -6,18 +6,10 @@
 #include <unordered_map>
 
 class lua_State;
+class SceneManager;
 namespace luabridge {
 	class LuaRef;
 }
-
-//struct ComponentStruct {
-//	std::string id;
-//	luabridge::LuaRef data;
-//	ComponentStruct(std::string _id, luabridge::LuaRef data_) :
-//		id(_id),
-//		data(data_) {
-//	}
-//};
 
 struct EntityStruct {
 	std::string group;
@@ -29,9 +21,10 @@ class EcsLoad {
 private:
 	lua_State* lua;
 	std::string filePath;
+	SceneManager* sceneManager;
 public:
 	EcsLoad(std::string path);
-	EntityStruct parseEntityStruct(luabridge::LuaRef data);
+	EntityStruct parseEntityStruct(luabridge::LuaRef data, EntityStruct bp = EntityStruct());
 	std::vector<EntityStruct*> parseScene(luabridge::LuaRef data);
 };
 
