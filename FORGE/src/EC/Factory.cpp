@@ -1,5 +1,7 @@
 #include "Factory.h"
 
+std::unique_ptr<Factory> Factory::instance = nullptr;
+
 Factory* Factory::getInstance() {
     if (instance.get() != nullptr) return instance.get();
     return (instance = std::unique_ptr<Factory>(new Factory())).get();

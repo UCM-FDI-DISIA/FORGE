@@ -1,8 +1,8 @@
 ﻿#include "Entity.h"
 #include "Component.h"
 #include "Factory.h"
-
-class luabridge::LuaRef;
+#include "lua.hpp"
+#include "LuaBridge/LuaBridge.h"
 
 Entity::Entity() : 
     scene(nullptr),

@@ -79,7 +79,7 @@ public:
 	void addEntityBlueprint(std::string id, EntityStruct entity);
 	/// <param name="id">Identificador del Blueprint de entidad </param>
 	/// <returns>Blueprint de la entidad</returns>
-	EntityStruct const getEntityBlueprint(std::string id);
+	EntityStruct getEntityBlueprint(std::string id);
 
 	
 

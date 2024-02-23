@@ -5,7 +5,7 @@
 #include <vector>
 #include <unordered_map>
 
-class lua_State;
+struct lua_State;
 class SceneManager;
 namespace luabridge {
 	class LuaRef;
@@ -14,14 +14,14 @@ namespace luabridge {
 struct EntityStruct {
 	std::string group;
 	std::string handler;
-	std::unordered_map<std::string, luabridge::LuaRef> components;
+	std::unordered_map<std::string, luabridge::LuaRef*> components;
 };
 
 class EcsLoad {
 private:
 	lua_State* lua;
 	std::string filePath;
-	SceneManager* sceneManager;
+	SceneManager& sceneManager;
 public:
 	EcsLoad(std::string path);
 	EntityStruct parseEntityStruct(luabridge::LuaRef data, EntityStruct bp = EntityStruct());

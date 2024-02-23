@@ -2,6 +2,16 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "../Load/EcsLoad.h"
+#include "lua.hpp"
+#include "LuaBridge/LuaBridge.h"
+
+std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
+
+SceneManager::SceneManager() : 
+	activeScene(nullptr),
+	maxGroupId(/*TODO: guardar el numero maximo de grupos*/) {
+
+}
 
 SceneManager* SceneManager::getInstance() {
     if (instance.get() != nullptr) return instance.get();
@@ -46,7 +56,7 @@ Scene* SceneManager::createScene(std::string id)
 			newScene->setHandler(e->handler,ent);
 		}
 		for (auto& c : e->components) {
-			ent->addComponent(c.first, &(c.second));
+			ent->addComponent(c.first, (c.second));
 		}
 	}
 	loadedScenes.insert({ id, newScene });
@@ -79,10 +89,11 @@ void SceneManager::addEntityBlueprint(std::string id, EntityStruct entity)
 	entityBlueprints.insert({ id,entity });
 }
 
-EntityStruct const SceneManager::getEntityBlueprint(std::string id)
+EntityStruct SceneManager::getEntityBlueprint(std::string id)
 {
 	auto iter = entityBlueprints.find(id);
 	if (iter != entityBlueprints.end()) {
 		return entityBlueprints[id];
 	}
+	return EntityStruct();
 }

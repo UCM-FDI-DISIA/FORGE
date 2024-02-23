@@ -5,17 +5,20 @@
 
 EcsLoad::EcsLoad(std::string path) : 
 	filePath(path),
-	sceneManager(SceneManager::getInstance()) {
-	lua = luaL_newstate();
+	sceneManager(*SceneManager::getInstance()) {
 	using namespace luabridge;
-	LuaRef lr = LuaRef::fromStack(lua, -1);
-	for (luabridge::Iterator it(lr); !it.isNil(); ++it) {
-		sceneManager->addEntityBlueprint(it.key().cast<std::string>(), parseEntityStruct(it.value()));
+
+	lua = luaL_newstate();
+	luaL_dofile(lua, path.c_str());
+
+	LuaRef lr = LuaRef::fromStack(lua, 1);
+	for (auto&& pair : pairs(lr)) {
+		sceneManager.addEntityBlueprint(pair.first.cast<std::string>(), parseEntityStruct(pair.second));
 	}
 
-	lr = LuaRef::fromStack(lua, -2);
-	for (luabridge::Iterator it(lr); !it.isNil(); ++it) {
-		sceneManager->addSceneBlueprint(it.key().cast<std::string>(), parseScene(it.value()));
+	lr = LuaRef::fromStack(lua, 1);
+	for (auto&& pair : pairs(lr)) {
+		sceneManager.addSceneBlueprint(pair.first.cast<std::string>(), parseScene(pair.second));
 	}
 }
 
@@ -24,28 +27,29 @@ EntityStruct EcsLoad::parseEntityStruct(luabridge::LuaRef data, EntityStruct bp)
 	es.handler = data["handler"].cast<std::string>();
 	es.group = data["group"].cast<std::string>();
 	luabridge::LuaRef comps = data["components"];
-
-	for (luabridge::Iterator it(comps); !it.isNil(); ++it) {
-		es.components[it.key().cast<std::string>()] = it.value();
+	for (auto&& pair : pairs(comps)) {
+		auto k = pair.first.cast<std::string>();
+		es.components[k] = &(pair.second);
 	}
 	
 	return es;
 }
 
 std::vector<EntityStruct*> EcsLoad::parseScene(luabridge::LuaRef data) {
-	std::vector<EntityStruct*> sc;
-	for (luabridge::Iterator it(data); !it.isNil(); ++it) {
-		if (it.value()["blueprint"].isNil()) {
-			sc.push_back(new EntityStruct(parseEntityStruct(it.value())));
+	std::vector<EntityStruct*> scene;
+	for (auto&& pair : pairs(data)) {
+		if (pair.second["blueprint"].isNil()) {
+			scene.push_back(new EntityStruct(parseEntityStruct(pair.second)));
 		}
 		else {
-			EntityStruct& bp = sceneManager->getEntityBlueprint(it.value()["blueprint"]);
-			if (it.value()["components"].isNil() && it.value()["handler"].isNil() && it.value()["group"].isNil()) {
-				sc.push_back(&bp);
+			EntityStruct bp = sceneManager.getEntityBlueprint(it.value()["blueprint"]);
+			if (pair.second["components"].isNil() && pair.second["handler"].isNil() && pair.second["group"].isNil()) {
+				scene.push_back(&bp);
 			}
 			else {
-				sc.push_back(new EntityStruct(parseEntityStruct(it.value(), bp)));
+				scene.push_back(new EntityStruct(parseEntityStruct(pair.second, bp)));
 			}
 		}
 	}
+	return scene;
 }
