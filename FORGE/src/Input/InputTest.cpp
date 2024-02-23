@@ -4,7 +4,7 @@
 int main() {
 	char c = ' ';     
 	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_CreateWindow("Prueba", 100, 100, 900, 600, SDL_WINDOW_SHOWN);
+	auto window = SDL_CreateWindow("Prueba", 100, 100, 900, 600, SDL_WINDOW_SHOWN);
 	while (c == ' ') {
 		SDL_Event SDLevent;         
 		while (SDL_PollEvent(&SDLevent)) {
@@ -12,5 +12,7 @@ int main() {
 				std::cout << "Hey :)\n";         
 		}        
 	}      
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 	return 0; 
 }
