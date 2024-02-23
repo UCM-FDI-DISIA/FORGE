@@ -74,7 +74,15 @@ void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityStruct*> 
 	sceneBlueprints.insert({ id,scene });
 }
 
-void SceneManager::addEntityBlueprint(std::string id, EntityStruct* entity)
+void SceneManager::addEntityBlueprint(std::string id, EntityStruct entity)
 {
 	entityBlueprints.insert({ id,entity });
+}
+
+EntityStruct& const SceneManager::getEntityBlueprint(std::string id)
+{
+	auto iter = entityBlueprints.find(id);
+	if (iter != entityBlueprints.end()) {
+		return entityBlueprints[id];
+	}
 }

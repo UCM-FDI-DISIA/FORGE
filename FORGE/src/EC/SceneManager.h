@@ -17,7 +17,7 @@ private:
 	Scene* activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
 
-	std::unordered_map<std::string, EntityStruct*> entityBlueprints;
+	std::unordered_map<std::string, EntityStruct> entityBlueprints;
 	std::unordered_map<std::string, std::vector<EntityStruct*>> sceneBlueprints;
 
 	std::unordered_map<std::string, int> groups;
@@ -76,7 +76,10 @@ public:
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="entity">Blueprint de la entidad</param>
-	void addEntityBlueprint(std::string id, EntityStruct* entity);
+	void addEntityBlueprint(std::string id, EntityStruct entity);
+	/// <param name="id">Identificador del Blueprint de entidad </param>
+	/// <returns>Blueprint de la entidad</returns>
+	EntityStruct& const getEntityBlueprint(std::string id);
 
 	
 
