@@ -41,6 +41,24 @@ public:
 		}
 		return ' ';
 	}
+	
+	char ControllerButtonDown(SDL_Event SDLevent) {
+		if (SDLevent.type == SDL_CONTROLLERBUTTONDOWN) {
+			std::cout << "mando boton\n";
+			SDLPreviousEvent.type = SDL_CONTROLLERBUTTONDOWN;
+			return SDLevent.key.keysym.sym;
+		}
+		return ' ';
+	}
+	
+	char ControllerAxisMotion(SDL_Event SDLevent) {
+		if (SDLevent.type == SDL_CONTROLLERAXISMOTION) {
+			std::cout << "mando movimiento joystick\n";
+			SDLPreviousEvent.type = SDL_CONTROLLERAXISMOTION;
+			return SDLevent.key.keysym.sym;
+		}
+		return ' ';
+	}
 
 	//std::string KeyPressedS(SDL_Event SDLevent) {
 	//	if (SDLPreviousEvent.type == SDL_KEYDOWN) {

@@ -9,6 +9,8 @@ int main() {
 	auto window = SDL_CreateWindow("Prueba", 100, 100, 900, 600, SDL_WINDOW_SHOWN);
 	Input* input = new Input();
 	SDL_Event SDLevent;
+	SDL_GameController* controller=nullptr;
+
 	while (c == ' ') {      
 		while (SDL_PollEvent(&SDLevent)) {
 			//if (SDLevent.type = SDL_CONTROLLERBUTTONDOWN) std::cout << "AAAAAAA\n";
@@ -16,7 +18,12 @@ int main() {
 			input->KeyPressed(SDLevent);
 			input->KeyUp(SDLevent);
 			input->KeyDown(SDLevent);
-		}        
+			input->ControllerAxisMotion(SDLevent);
+			input->ControllerButtonDown(SDLevent);
+			if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
+				controller = SDL_GameControllerOpen(0);
+			}
+		}
 	}      
 	SDL_DestroyWindow(window);
 	SDL_Quit();
