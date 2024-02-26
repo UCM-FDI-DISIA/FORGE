@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <string>
 
-struct EntityStruct;
+struct EntityData;
 class Scene;
 class Entity;
 
@@ -17,8 +17,8 @@ private:
 	Scene* activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
 
-	std::unordered_map<std::string, EntityStruct> entityBlueprints;
-	std::unordered_map<std::string, std::vector<EntityStruct*>> sceneBlueprints;
+	std::unordered_map<std::string, EntityData*> entityBlueprints;
+	std::unordered_map<std::string, std::vector<EntityData*>> sceneBlueprints;
 
 	std::unordered_map<std::string, int> groups;
 	int maxGroupId;
@@ -26,6 +26,7 @@ private:
     SceneManager();
 
 public:
+	~SceneManager();
 	/// <summary>
 	/// Devuelve la instancia de SceneManager y si no existe la crea
 	/// </summary>
@@ -70,16 +71,16 @@ public:
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="scene">Blueprint de la escena</param>
-	void addSceneBlueprint(std::string id, std::vector<EntityStruct*> scene);
+	void addSceneBlueprint(std::string id, std::vector<EntityData*> scene);
 	/// <summary>
 	/// Agrega un blueprint de entidad y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="entity">Blueprint de la entidad</param>
-	void addEntityBlueprint(std::string id, EntityStruct entity);
+	void addEntityBlueprint(std::string id, EntityData* entity);
 	/// <param name="id">Identificador del Blueprint de entidad </param>
-	/// <returns>Blueprint de la entidad</returns>
-	EntityStruct getEntityBlueprint(std::string id);
+	/// <returns>Puntero al Blueprint de la entidad</returns>
+	EntityData* getEntityBlueprint(std::string id);
 
 	
 

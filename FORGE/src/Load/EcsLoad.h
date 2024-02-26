@@ -10,12 +10,7 @@ class SceneManager;
 namespace luabridge {
 	class LuaRef;
 }
-
-struct EntityStruct {
-	std::string group;
-	std::string handler;
-	std::unordered_map<std::string, luabridge::LuaRef*> components;
-};
+struct EntityData;
 
 class EcsLoad {
 private:
@@ -24,8 +19,9 @@ private:
 	SceneManager& sceneManager;
 public:
 	EcsLoad(std::string path);
-	EntityStruct parseEntityStruct(luabridge::LuaRef data, EntityStruct bp = EntityStruct());
-	std::vector<EntityStruct*> parseScene(luabridge::LuaRef data);
+	void extractEntityValues(EntityData& es, luabridge::LuaRef& h, luabridge::LuaRef& g, luabridge::LuaRef& cmps);
+	EntityData* parseEntityStruct(luabridge::LuaRef& data);
+	std::vector<EntityData*> parseScene(luabridge::LuaRef& data);
 };
 
 #endif // !ECS_LOAD_H_

@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Entity.h"
-#include "../Load/EcsLoad.h"
+#include "EntityData.h"
 #include "lua.hpp"
 #include "LuaBridge/LuaBridge.h"
 
@@ -11,6 +11,23 @@ SceneManager::SceneManager() :
 	activeScene(nullptr),
 	maxGroupId(/*TODO: guardar el numero maximo de grupos*/) {
 
+}
+
+SceneManager::~SceneManager() {
+	delete activeScene;
+	for (auto& scene : loadedScenes) {
+		delete scene.second;
+	}
+	for (auto& scene : sceneBlueprints) {
+		for (auto& ent : scene.second) {
+			if (!ent->isBlueprint) {
+				delete ent;
+			}
+		}
+	}
+	for (auto& ent : entityBlueprints) {
+		delete ent.second;
+	}
 }
 
 SceneManager* SceneManager::getInstance() {
@@ -50,7 +67,7 @@ Scene* SceneManager::createScene(std::string id)
 		return nullptr;
 	}
 	Scene* newScene = new Scene();
-	for (EntityStruct* e : iter->second) {
+	for (EntityData* e : iter->second) {
 		Entity* ent = newScene->addEntity(getGroupId(e->group));
 		if (e->handler != "") {
 			newScene->setHandler(e->handler,ent);
@@ -79,21 +96,21 @@ int SceneManager::getGroupId(std::string group) {
 	return groups[group];
 }
 
-void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityStruct*> scene)
+void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityData*> scene)
 {
 	sceneBlueprints.insert({ id,scene });
 }
 
-void SceneManager::addEntityBlueprint(std::string id, EntityStruct entity)
+void SceneManager::addEntityBlueprint(std::string id, EntityData* entity)
 {
 	entityBlueprints.insert({ id,entity });
 }
 
-EntityStruct SceneManager::getEntityBlueprint(std::string id)
+EntityData* SceneManager::getEntityBlueprint(std::string id)
 {
 	auto iter = entityBlueprints.find(id);
 	if (iter != entityBlueprints.end()) {
 		return entityBlueprints[id];
 	}
-	return EntityStruct();
+	return nullptr;
 }
