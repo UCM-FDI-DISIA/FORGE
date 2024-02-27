@@ -14,14 +14,17 @@ int main() {
 	char c = ' ';
 	while (c == ' ') {      
 		while (SDL_PollEvent(&SDLevent)) {
-			input->KeyDown(SDLevent);
-			input->KeyUp(SDLevent);
-			input->KeyDown(SDLevent);
+			
+			//input->KeyDown(KeyNames::K_1);
+			//input->KeyUp(KeyNames::K_1);
+			input->KeyPressed(KeyNames::K_1);
+			input->KeyPressed(KeyNames::K_2);
 			input->ControllerAxisMotion(SDLevent);
 			input->ControllerButtonDown(SDLevent);
 			if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
 				controller = SDL_GameControllerOpen(0);
 			}
+			input->update();
 			if (c != ' ') std::cout << " '" << c << "'\n";
 		}
 	}      
