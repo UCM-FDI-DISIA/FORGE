@@ -1,14 +1,18 @@
 ﻿#include "Component.h"
 #include "lua.hpp"
 #include "LuaBridge/LuaBridge.h"
+#include "Serializer.h"
 
 Component::Component() : 
     entity(nullptr),
     scene(nullptr),
-    enabled(false) {
+    enabled(false),
+    serializer(new Serializer()) {
 }
 
-Component::~Component() {}
+Component::~Component() {
+    delete serializer;
+}
 
 void Component::setContext(Entity* _entity, Scene* _scene) {
     entity = _entity;
@@ -29,27 +33,4 @@ void Component::setEnabled(bool _enabled) {
 
 bool Component::isEnabled() {
     return enabled;
-}
-
-Component::BaseSerialized::BaseSerialized(std::string myName) :
-    name(myName) {
-}
-
-void Component::Serializer::initialize(luabridge::LuaRef& data) {
-    for (auto& e : *this) {
-        e->initialize(data);
-    }
-}
-
-Component::Serializer::~Serializer() {
-    for (auto& e : *this) {
-        delete e;
-    }
-}
-
-template<typename T>
-void Component::Serialized<T>::initialize(luabridge::LuaRef& data) {
-    if (!data[name].isNil()) {
-        var = data[name].cast<T>();
-    }
 }

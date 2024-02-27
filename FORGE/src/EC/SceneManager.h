@@ -21,7 +21,6 @@ private:
 	std::unordered_map<std::string, std::vector<EntityData*>> sceneBlueprints;
 
 	std::unordered_map<std::string, int> groups;
-	int maxGroupId;
 
     SceneManager();
 
@@ -82,7 +81,7 @@ public:
 	/// <returns>Puntero al Blueprint de la entidad</returns>
 	EntityData* getEntityBlueprint(std::string id);
 
-	
+	void addGroup(std::string group);
 
 };
 #endif // !SCENE_MANAGER_H_

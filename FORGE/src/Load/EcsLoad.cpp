@@ -32,6 +32,7 @@ void EcsLoad::extractEntityValues(EntityData& es, luabridge::LuaRef& h, luabridg
 	}
 	if (!g.isNil()) {
 		es.group = g.cast<std::string>();
+		sceneManager.addGroup(es.group);
 	}
 	if (!cmps.isNil()) {
 		for (auto&& cmp : pairs(cmps)) {

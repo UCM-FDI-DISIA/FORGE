@@ -101,6 +101,8 @@
     <ClCompile Include="..\..\src\EC\Factory.cpp" />
     <ClCompile Include="..\..\src\EC\Scene.cpp" />
     <ClCompile Include="..\..\src\EC\SceneManager.cpp" />
+    <ClCompile Include="..\..\src\EC\Serializer.cpp" />
+    <ClCompile Include="..\..\src\EC\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\EC\Component.h" />
@@ -109,6 +111,8 @@
     <ClInclude Include="..\..\src\EC\Factory.h" />
     <ClInclude Include="..\..\src\EC\Scene.h" />
     <ClInclude Include="..\..\src\EC\SceneManager.h" />
+    <ClInclude Include="..\..\src\EC\Serializer.h" />
+    <ClInclude Include="..\..\src\EC\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,6 @@ class Entity;
 
 class Scene {
 protected:
-    
     std::vector<std::vector<Entity*>> entitiesByGroup;
     std::unordered_map<std::string, Entity*> handlers;
 public:

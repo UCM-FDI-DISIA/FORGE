@@ -8,13 +8,10 @@
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() : 
-	activeScene(nullptr),
-	maxGroupId(/*TODO: guardar el numero maximo de grupos*/) {
-
+	activeScene(nullptr) {
 }
 
 SceneManager::~SceneManager() {
-	delete activeScene;
 	for (auto& scene : loadedScenes) {
 		delete scene.second;
 	}
@@ -89,7 +86,7 @@ Scene* SceneManager::getScene(std::string id) {
 }
 
 int SceneManager::getMaxGroupId() {
-	return maxGroupId;
+	return static_cast<int>(groups.size());
 }
 
 int SceneManager::getGroupId(std::string group) {
@@ -113,4 +110,9 @@ EntityData* SceneManager::getEntityBlueprint(std::string id)
 		return entityBlueprints[id];
 	}
 	return nullptr;
+}
+
+
+void SceneManager::addGroup(std::string group) {
+	groups.insert({ group, getMaxGroupId()});
 }
