@@ -11,10 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Input\Input.hpp" />
+    <ClCompile Include="..\..\src\Input\Input.cpp" />
+    <ClCompile Include="..\..\src\Input\InputTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Input\InputTest.cpp" />
+    <ClInclude Include="..\..\src\Input\Input.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

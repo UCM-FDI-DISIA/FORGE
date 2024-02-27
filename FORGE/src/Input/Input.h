@@ -1,5 +1,5 @@
 #include "SDL.h"
-#include <array>
+#include <iostream>
 #include <unordered_map>
 #include "KeyNames.h"
 
@@ -7,6 +7,8 @@ class Input {
 private:
 	SDL_Event SDLPreviousEvent;
 	const Uint8* keyboardState;
+	// true -> presionada/mantenida, false -> soltada
+	std::unordered_map<KeyNames, bool> keys;
 
 	/// <summary>
 	/// Traduccion de KeyNames a SDL_Scancodes, el numero es la cantidad de teclas mapeadas (constante de KeyNames.h).
@@ -29,119 +31,48 @@ private:
 		{SDL_SCANCODE_DOWN}, {SDL_SCANCODE_RIGHT}
 	};
 public:
-	
-
-	// true -> presionada/mantenida false -> soltada
-	std::unordered_map<KeyNames, bool> keys;
-
-//public:
-	/// <summary>
-	/// Nombres de las teclas desde fuera del motor.
-	/// Cada fila del teclado en una fila, si se quieren agregar teclas hacerlo por el final.
-	/// </summary>
-	
-
 	/// <summary>
 	/// Creates the input manager
 	/// </summary>
-	Input() {
-		SDLPreviousEvent.type = SDL_KEYDOWN;
-		keyboardState = SDL_GetKeyboardState(0);
-	}
+	Input();
 
 	/// <summary>
-/// Returns the character corresponding to the key that has been pressed
-/// </summary>
-/// <param name="SDLevent">- event received to react to</param>
-/// <returns>Key character</returns>
-	bool KeyDown(KeyNames k) {
-		if (keyboardState[SCANCODE[k]] && (!keys.count(k) || !keys[k])) {
-			std::cout << "pulsada\n";
-			keys[k] = true;
-			return true;
-		}
-		return false;
-	}
+	/// Returns the character corresponding to the key that has been pressed
+	/// </summary>
+	/// <param name="SDLevent">- event received to react to</param>
+	/// <returns>Key character</returns>
+	bool KeyDown(KeyNames k);
 
 	/// <summary>
 	/// Returns the character corresponding to the key that is being pressed
 	/// </summary>
 	/// <param name="SDLevent">- event received to react to</param>
 	/// <returns>Key character</returns>
-	bool KeyPressed(KeyNames k) {
-		if (keyboardState[SCANCODE[k]]) {
-			if (!keys.count(k)) {
-				keys[k] = true;
-				return false;
-			}
-			else if (keys[k]) {
-				std::cout << "mantenida: " << k << "\n";
-				return true;
-			}
-		}
-		return false;
-	}
+	bool KeyPressed(KeyNames k);
 
 	/// <summary>
 	/// Returns the character corresponding to the key that has been released
 	/// </summary>
 	/// <param name="SDLevent">- event received to react to</param>
 	/// <returns>Key character</returns>
-	bool KeyUp(KeyNames k) {
-		if (!keyboardState[SCANCODE[k]] && keys[k]) {
-			std::cout << "soltada\n";
-			keys[k] = false;
-			return true;
-		}
-		return false;
-	}
+	bool KeyUp(KeyNames k);
+
 	/// <summary>
 	/// Returns the character corresponding to the controller button that has been pressed
 	/// </summary>
 	/// <param name="SDLevent">- event received to react to</param>
 	/// <returns>Key character</returns>
-	char ControllerButtonDown(SDL_Event SDLevent) {
-		if (SDLevent.type == SDL_CONTROLLERBUTTONDOWN) {
-			std::cout << "mando boton\n";
-			SDLPreviousEvent.type = SDL_CONTROLLERBUTTONDOWN;
-			return SDLevent.key.keysym.sym;
-		}
-		return ' ';
-	}
-	
+	char ControllerButtonDown(SDL_Event SDLevent);
+
 	/// <summary>
 	/// Returns the character corresponding to moving the joystick of the controller along an axis
 	/// </summary>
 	/// <param name="SDLevent">- event received to react to</param>
 	/// <returns>Character of an axis movement</returns>
-	char ControllerAxisMotion(SDL_Event SDLevent) {
-		if (SDLevent.type == SDL_CONTROLLERAXISMOTION) {
-			std::cout << "mando movimiento joystick\n";
-			SDLPreviousEvent.type = SDL_CONTROLLERAXISMOTION;
-			return SDLevent.key.keysym.sym;
-		}
-		return ' ';
-	}
-
-	//std::string KeyPressedS(SDL_Event SDLevent) {
-	//	if (SDLPreviousEvent.type == SDL_KEYDOWN) {
-	//		if (SDLevent.type == SDL_KEYDOWN) {
-	//			std::cout << "mantenido\n";
-	//			SDLPreviousEvent.type = SDL_KEYDOWN;
-	//			//std::cout << "KeyDown_" << (char)SDLevent.key.keysym.sym << "\n";
-	//			char c = SDLevent.key.keysym.sym;
-	//			return ("KeyDown_" + c);
-	//		}
-	//	}
-	//	return "";
-	//}
+	char ControllerAxisMotion(SDL_Event SDLevent);
 
 	/// <summary>
 	/// Actualiza los eventos de tecla dentro del map
 	/// </summary>
-	void update() {
-		for (auto it = keys.begin(); it != keys.end(); ++it) {
-			it->second = keyboardState[SCANCODE[it->first]];
-		}
-	}
+	void update();
 };

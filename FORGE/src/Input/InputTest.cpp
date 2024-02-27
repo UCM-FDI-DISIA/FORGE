@@ -1,6 +1,4 @@
-#include <iostream>
-#include "SDL.h"
-#include "Input.hpp"
+#include "Input.h"
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -15,10 +13,10 @@ int main() {
 	while (c == ' ') {      
 		while (SDL_PollEvent(&SDLevent)) {
 			
-			//input->KeyDown(KeyNames::K_1);
+			input->KeyDown(KeyNames::K_1);
 			//input->KeyUp(KeyNames::K_1);
-			input->KeyPressed(KeyNames::K_1);
-			input->KeyPressed(KeyNames::K_2);
+			//input->KeyPressed(KeyNames::K_1);
+			//input->KeyPressed(KeyNames::K_2);
 			input->ControllerAxisMotion(SDLevent);
 			input->ControllerButtonDown(SDLevent);
 			if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
