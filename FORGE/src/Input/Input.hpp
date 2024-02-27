@@ -69,13 +69,15 @@ public:
 	/// <param name="SDLevent">- event received to react to</param>
 	/// <returns>Key character</returns>
 	bool KeyPressed(KeyNames k) {
-		if (!keys.count(k)) {
-			keys[k] = true;
-			return false;
-		}
-		else if (keyboardState[SCANCODE[k]] && keys[k]) {
-			std::cout << "mantenida: " << k <<"\n";
-			return true;
+		if (keyboardState[SCANCODE[k]]) {
+			if (!keys.count(k)) {
+				keys[k] = true;
+				return false;
+			}
+			else if (keys[k]) {
+				std::cout << "mantenida: " << k << "\n";
+				return true;
+			}
 		}
 		return false;
 	}
