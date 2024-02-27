@@ -4,18 +4,17 @@
 
 int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	char c = ' ';     
+
 	SDL_Init(SDL_INIT_EVERYTHING);
 	auto window = SDL_CreateWindow("Prueba", 100, 100, 900, 600, SDL_WINDOW_SHOWN);
 	Input* input = new Input();
 	SDL_Event SDLevent;
-	SDL_GameController* controller=nullptr;
+	SDL_GameController* controller = nullptr;
 
+	char c = ' ';
 	while (c == ' ') {      
 		while (SDL_PollEvent(&SDLevent)) {
-			//if (SDLevent.type = SDL_CONTROLLERBUTTONDOWN) std::cout << "AAAAAAA\n";
-			//std::string st = input->KeyPressedS(SDLevent);
-			input->KeyPressed(SDLevent);
+			input->KeyDown(SDLevent);
 			input->KeyUp(SDLevent);
 			input->KeyDown(SDLevent);
 			input->ControllerAxisMotion(SDLevent);
@@ -23,6 +22,7 @@ int main() {
 			if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
 				controller = SDL_GameControllerOpen(0);
 			}
+			if (c != ' ') std::cout << " '" << c << "'\n";
 		}
 	}      
 	SDL_DestroyWindow(window);
