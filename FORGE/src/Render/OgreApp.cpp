@@ -54,7 +54,7 @@ namespace Render {
 		createWindow(mAppName);
 		setWindowGrab(false);   // IG2: ratón libre
 
-		//locateResources();
+		locateResources();
 		//initialiseRTShaderSystem();
 
 		// adds context as listener to process context-level (above the sample level) events
@@ -132,7 +132,8 @@ namespace Render {
 		// go through all specified resource groups
 		Ogre::ConfigFile::SettingsBySection_::const_iterator seci;
 		for (seci = cf.getSettingsBySection().begin(); seci != cf.getSettingsBySection().end(); ++seci) {
-			sec = seci->first;
+			// Esto sirve para dividir los recursos en secciones. Al comentarlo se van todos a "General"
+			// sec = seci->first;
 			const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
 			Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
 
@@ -141,14 +142,15 @@ namespace Render {
 			{
 				type = i->first;
 				arch = Ogre::FileSystemLayer::resolveBundlePath(i->second);
-				Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type, sec);
+				Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parámetro sería "sec" si dividieramos en secciones
 			}
 		}
 
 		sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
 		const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);
 
-		//OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
+		// Aun no tenemos las excepciones de Ogre
+		// OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
 
 		arch = genLocs.front().archive->getName();
 		type = genLocs.front().archive->getType();
