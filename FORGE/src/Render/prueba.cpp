@@ -5,5 +5,6 @@
 int main(int argc, char* argv[]) {
     Render::OgreApp hola;
     hola.go();
+    while (true);
     return 0;
 }

@@ -13,7 +13,7 @@
 namespace Render {
 
 	OgreApp::OgreApp() {
-		mAppName = "App-Prueba";
+		mAppName = "FORGE";
 		mFSLayer = new Ogre::FileSystemLayer(mAppName);
 		mRoot = nullptr;
 		mOverlaySystem = nullptr;
@@ -54,12 +54,11 @@ namespace Render {
 		createWindow(mAppName);
 		setWindowGrab(false);   // IG2: ratón libre
 
-		locateResources();
+		//locateResources();
 		//initialiseRTShaderSystem();
 
 		// adds context as listener to process context-level (above the sample level) events
 		mRoot->addFrameListener(this);
-
 
 		mSM = mRoot->createSceneManager();
 
