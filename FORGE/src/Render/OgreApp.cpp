@@ -41,6 +41,15 @@ namespace Render {
 	}
 
 	void OgreApp::setup() {
+		//mRoot->restoreConfig();  // IG2: no queremos que recupere la configuración guardada
+		Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+		mRoot->setRenderSystem(rs);
+		//rs->setConfigOption("Full Screen", "No");
+		//rs->setConfigOption("Video Mode", "800 x 600");
+		//rs->setConfigOption("sRGB Gamma Conversion", "Yes");
+		//rs->setConfigOption("VSync", "No");
+		//rs->setConfigOption("FSAA", "0");
+		//rs->setConfigOption("RTT Preferred Mode", "FBO");
 		mRoot->initialise(false);
 		createWindow(mAppName);
 		setWindowGrab(false);   // IG2: ratón libre
@@ -214,6 +223,8 @@ namespace Render {
 
 
 	bool OgreApp::go() {
+		createRoot();
+		setup();
 		return true;
 	}
 }
