@@ -6,6 +6,7 @@
 #include <OgreRenderWindow.h>
 #include <OgreViewport.h>
 #include <OgreDataStream.h>
+#include <OgreEntity.h>
 
 #include <SDL_video.h>
 #include <SDL_syswm.h>
@@ -51,7 +52,10 @@ namespace Render {
 		//rs->setConfigOption("FSAA", "0");
 		//rs->setConfigOption("RTT Preferred Mode", "FBO");
 		mRoot->initialise(false);
-		createWindow(mAppName);
+		//Ogre::NameValuePairList misc;
+		//misc["externalWindowHandle"] = Ogre::StringConverter::toString((int)0);
+		//Ogre::RenderWindow* mWindow = mRoot->createRenderWindow("balls", 800, 600, false, &misc);
+		auto mWindow = createWindow(mAppName);
 		setWindowGrab(false);   // IG2: ratón libre
 
 		locateResources();
@@ -66,6 +70,30 @@ namespace Render {
 		//mShaderGenerator->addSceneManager(mSM);
 
 		mSM->addRenderQueueListener(mOverlaySystem);
+
+		mSM->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+
+		Ogre::Light* light = mSM->createLight("MainLight");
+		Ogre::SceneNode* lightNode = mSM->getRootSceneNode()->createChildSceneNode();
+		lightNode->attachObject(light);
+		lightNode->setPosition(20, 80, 50);
+
+		Ogre::SceneNode* camNode = mSM->getRootSceneNode()->createChildSceneNode();
+
+		// create the camera
+		Ogre::Camera* cam = mSM->createCamera("myCam");
+		cam->setNearClipDistance(5); // specific to this sample
+		cam->setAutoAspectRatio(true);
+		camNode->attachObject(cam);
+		camNode->setPosition(0, 0, 140);
+
+		// and tell it to render into the main window
+		Ogre::Viewport* vp = mWindow.render->addViewport(cam);
+		vp->setBackgroundColour(Ogre::ColourValue(1, 0, 0));
+
+		Ogre::Entity* ogreEntity = mSM->createEntity("ogrehead.mesh");
+		Ogre::SceneNode* ogreNode = mSM->getRootSceneNode()->createChildSceneNode();
+		ogreNode->attachObject(ogreEntity);
 	}
 
 	NativeWindowPair OgreApp::createWindow(Ogre::String name) {
@@ -221,11 +249,9 @@ namespace Render {
 		return true;
 	}*/
 
-
-
 	bool OgreApp::go() {
 		createRoot();
 		setup();
-		return true;
+		return mRoot->renderOneFrame();
 	}
 }

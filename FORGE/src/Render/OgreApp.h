@@ -53,6 +53,7 @@ namespace Render {
 		void setWindowGrab(bool active);   // IG2: ratón libre
 
 		void locateResources();
+		bool renderOneFrame();
 		//bool initialiseRTShaderSystem();
 	};
 }
