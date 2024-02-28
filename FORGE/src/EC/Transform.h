@@ -21,7 +21,7 @@ protected:
 public:
 	Transform();
 
-	void initComponent(luabridge::LuaRef* data) override;
+	void initComponent(ComponentData* data) override;
 
 	void setRotation(forge::Quaternion newRot);
 	void setRotation(forge::Vector3 newRot);

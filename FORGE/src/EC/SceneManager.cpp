@@ -8,7 +8,8 @@
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() : 
-	activeScene(nullptr) {
+	activeScene(nullptr),
+	lua(nullptr) {
 }
 
 SceneManager::~SceneManager() {
@@ -30,6 +31,14 @@ SceneManager::~SceneManager() {
 SceneManager* SceneManager::getInstance() {
     if (instance.get() != nullptr) return instance.get();
 	return (instance = std::unique_ptr<SceneManager>(new SceneManager())).get();
+}
+
+void SceneManager::setLuaState(lua_State* L) {
+	lua = L;
+}
+
+lua_State* SceneManager::getLuaState() {
+	return lua;
 }
 
 void SceneManager::changeScene(std::string scene, bool renewScene) {
@@ -70,7 +79,7 @@ Scene* SceneManager::createScene(std::string id)
 			newScene->setHandler(e->handler,ent);
 		}
 		for (auto& c : e->components) {
-			ent->addComponent(c.first, (c.second));
+			ent->addComponent(c.second);
 		}
 	}
 	loadedScenes.insert({ id, newScene });

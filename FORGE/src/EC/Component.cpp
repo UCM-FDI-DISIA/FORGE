@@ -1,6 +1,4 @@
 ﻿#include "Component.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
 #include "Serializer.h"
 
 Component::Component() : 
@@ -20,8 +18,11 @@ void Component::setContext(Entity* _entity, Scene* _scene) {
     enabled = true;
 }
 
-void Component::initComponent(luabridge::LuaRef* data) {}
+void Component::initSerialized(ComponentData* data) {
+    serializer->initialize(*data);
+}
 
+void Component::initComponent(ComponentData* data) {}
 
 void Component::update() {}
 
@@ -33,4 +34,8 @@ void Component::setEnabled(bool _enabled) {
 
 bool Component::isEnabled() {
     return enabled;
+}
+
+Serializer& Component::serialize() {
+    return *serializer;
 }

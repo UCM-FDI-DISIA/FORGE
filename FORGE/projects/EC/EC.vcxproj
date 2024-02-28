@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\EC\Component.cpp" />
+    <ClCompile Include="..\..\src\EC\ComponentData.cpp" />
     <ClCompile Include="..\..\src\EC\Entity.cpp" />
     <ClCompile Include="..\..\src\EC\EntityData.cpp" />
     <ClCompile Include="..\..\src\EC\Factory.cpp" />
@@ -106,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\EC\Component.h" />
+    <ClInclude Include="..\..\src\EC\ComponentData.h" />
     <ClInclude Include="..\..\src\EC\Entity.h" />
     <ClInclude Include="..\..\src\EC\EntityData.h" />
     <ClInclude Include="..\..\src\EC\Factory.h" />

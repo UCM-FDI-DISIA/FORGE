@@ -5,12 +5,12 @@ Transform::Transform() :
 	position(),
 	rotation(),
 	scale() {
-	serializer->addField(position, "position");
-	serializer->addField(rotation, "rotation");
-	serializer->addField(scale, "scale");
+	serialize()(position, "position");
+	serialize()(rotation, "rotation");
+	serialize()(scale, "scale");
 }
 
-void Transform::initComponent(luabridge::LuaRef* data) {
+void Transform::initComponent( ComponentData* data) {
 }
 
 void Transform::setRotation(forge::Quaternion newRot)

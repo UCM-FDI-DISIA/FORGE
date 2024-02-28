@@ -1,8 +1,7 @@
 ﻿#include "Entity.h"
 #include "Component.h"
 #include "Factory.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
+#include "ComponentData.h"
 
 Entity::Entity() : 
     scene(nullptr),
@@ -32,14 +31,14 @@ void Entity::setAlive(bool _alive) {
     alive = _alive;
 }
 
-Component* Entity::addComponent(std::string id, luabridge::LuaRef* data) {
-    Component* c = fact.generateComponent(id);
-    removeComponent(id);
-    components.insert(std::pair<std::string, Component*>(id, c));
+Component* Entity::addComponent(ComponentData* data) {
+    Component* c = fact.generateComponent(data->getId());
+    removeComponent(data->getId());
+    components.insert(std::pair<std::string, Component*>(data->getId(), c));
     c->setContext(this, scene);
+    c->initSerialized(data);
     c->initComponent(data);
     return c;
-    return nullptr;
 }
 
 void Entity::removeComponent(std::string name) {

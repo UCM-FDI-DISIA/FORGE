@@ -9,6 +9,7 @@
 struct EntityData;
 class Scene;
 class Entity;
+class lua_State;
 
 class SceneManager {
 private:
@@ -22,15 +23,30 @@ private:
 
 	std::unordered_map<std::string, int> groups;
 
+	lua_State* lua;
+
     SceneManager();
 
 public:
+	/// <summary>
+	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas
+	/// </summary>
 	~SceneManager();
 	/// <summary>
 	/// Devuelve la instancia de SceneManager y si no existe la crea
 	/// </summary>
 	/// <returns>Instancia singleton a SceneManager</returns>
 	static SceneManager* getInstance();
+	/// <summary>
+	/// Establece el lua_State usado para la carga de EC
+	/// </summary>
+	/// <param name="L">Puntero al lua_State usado para la carga de EC</param>
+	void setLuaState(lua_State* L);
+	/// <summary>
+	/// Devuelve un puntero al lua_State guardado
+	/// </summary>
+	/// <returns>Puntero al lua_State guardado o nullptr si no se a inicializado</returns>
+	lua_State* getLuaState();
 	/// <summary>
 	/// Cambia la escena activa a una con el identificador del parametro
 	/// Si no hay ninguna cargada en memoria la crea a traves de su blueprint
@@ -80,7 +96,10 @@ public:
 	/// <param name="id">Identificador del Blueprint de entidad </param>
 	/// <returns>Puntero al Blueprint de la entidad</returns>
 	EntityData* getEntityBlueprint(std::string id);
-
+	/// <summary>
+	/// Guarda un nuevo grupo de entidades que no se haya guardado
+	/// </summary>
+	/// <param name="group">Identificador del grupo nuevo</param>
 	void addGroup(std::string group);
 
 };

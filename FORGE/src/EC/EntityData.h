@@ -4,16 +4,14 @@
 #include <unordered_map>
 #include <string>
 
-namespace luabridge {
-	class LuaRef;
-}
+class ComponentData;
 
 struct EntityData {
 	bool isBlueprint = false;
 	std::string group = "";
 	std::string handler = "";
 	// Tiene que ser unordered map de punteros a LuaRef para funcionar el forwarding
-	std::unordered_map<std::string, luabridge::LuaRef*> components;
+	std::unordered_map<std::string, ComponentData*> components;
 	~EntityData();
 };
 #endif

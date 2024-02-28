@@ -2,21 +2,22 @@
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
 #include "EntityData.h"
+#include "ComponentData.h"
 #include "SceneManager.h"
 
 EcsLoad::EcsLoad(std::string path) : 
-	filePath(path),
 	sceneManager(*SceneManager::getInstance()) {
 	using namespace luabridge;
 
-	lua = luaL_newstate();
+	lua_State* lua = luaL_newstate();
 	luaL_dofile(lua, path.c_str());
+	sceneManager.setLuaState(lua);
 
 	LuaRef entityBlueprints = LuaRef::fromStack(lua, 1);
 	LuaRef sceneBlueprints = LuaRef::fromStack(lua, 2);
 
 	for (auto&& entity : pairs(entityBlueprints)) {
-		EntityData* blueprint = parseEntityStruct(entity.second);
+		EntityData* blueprint = parseEntityData(entity.second);
 		blueprint->isBlueprint = true;
 		sceneManager.addEntityBlueprint(entity.first.cast<std::string>(), blueprint);
 	}
@@ -24,25 +25,28 @@ EcsLoad::EcsLoad(std::string path) :
 	for (auto&& scene : pairs(sceneBlueprints)) {
 		sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
 	}
+
 }
 
-void EcsLoad::extractEntityValues(EntityData& es, luabridge::LuaRef& h, luabridge::LuaRef& g, luabridge::LuaRef& cmps) {
+void EcsLoad::extractEntityValues(EntityData& ed, luabridge::LuaRef& h, luabridge::LuaRef& g, luabridge::LuaRef& cmps) {
 	if (!h.isNil()) {
-		es.handler = h.cast<std::string>();
+		ed.handler = h.cast<std::string>();
 	}
 	if (!g.isNil()) {
-		es.group = g.cast<std::string>();
-		sceneManager.addGroup(es.group);
+		ed.group = g.cast<std::string>();
+		sceneManager.addGroup(ed.group);
 	}
 	if (!cmps.isNil()) {
 		for (auto&& cmp : pairs(cmps)) {
+			std::string cmpId = cmp.first.cast<std::string>();
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
-			es.components[cmp.first.cast<std::string>()] = new luabridge::LuaRef(cmp.second);
+			luabridge::LuaRef* ltData = new luabridge::LuaRef(cmp.second);
+			ed.components[cmpId] = new ComponentData(cmpId, ltData);
 		}
 	}
 }
 
-EntityData* EcsLoad::parseEntityStruct(luabridge::LuaRef& l_entity) {
+EntityData* EcsLoad::parseEntityData(luabridge::LuaRef& l_entity) {
 	luabridge::LuaRef
 		group = l_entity["group"],
 		handler = l_entity["handler"],
@@ -69,7 +73,7 @@ EntityData* EcsLoad::parseEntityStruct(luabridge::LuaRef& l_entity) {
 std::vector<EntityData*> EcsLoad::parseScene(luabridge::LuaRef& l_scene) {
 	std::vector<EntityData*> scene;
 	for (auto&& entity : pairs(l_scene)) {
-		scene.push_back(parseEntityStruct(entity.second));
+		scene.push_back( parseEntityData(entity.second));
 	}
 	return scene;
 }

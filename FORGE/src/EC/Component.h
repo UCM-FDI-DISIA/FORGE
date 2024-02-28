@@ -8,9 +8,7 @@
 class Entity;
 class Scene;
 class Serializer;
-namespace luabridge {
-	class LuaRef;
-}
+class ComponentData;
 
 class Component {
 protected:
@@ -35,10 +33,15 @@ public:
 	/// <param name="_scene">Scene a la que pertenece la Entity</param>
 	void setContext(Entity* _entity, Scene* _scene);
 	/// <summary>
+	/// Inicializa los parametros serializados del Component
+	/// </summary>
+	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	void initSerialized(ComponentData* data);
+	/// <summary>
 	/// Inicializa el Component con los parametros adecuados
 	/// </summary>
 	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-	virtual void initComponent(luabridge::LuaRef* data);
+	virtual void initComponent(ComponentData* data);
 	/// <summary>
 	/// Actualiza la logica del Component
 	/// </summary>
@@ -56,6 +59,28 @@ public:
 	///	Si el Component esta activado
 	/// </returns>
 	bool isEnabled();
+	/// <summary>
+	/// Accede al objeto del serializer en vez de al puntero y permite agregar variables a serializar de la siguiente manera:
+	/// <example>
+	/// Ejemplo de uso dentro de un Component (C++)
+	/// <code>
+	/// class MiComponente : public Component {
+	///		int cantidad;
+	///		MiComponente() {
+	///			serialize()(cantidad, "cantidad");
+	///		}
+	/// };
+	/// </code>
+	/// Ejemplo de la informacion guardada (Lua)
+	/// <code>
+	/// MiComponente = {
+	///		cantidad = 5
+	/// }
+	/// </code>
+	/// </example>
+	/// </summary>
+	/// <returns> referencia al serilizer </returns>
+	Serializer& serialize();
 
 };
 

@@ -6,7 +6,7 @@ BaseSerialized::BaseSerialized(std::string myName) :
     name(myName) {
 }
 
-void Serializer::initialize(luabridge::LuaRef& data) {
+void Serializer::initialize(ComponentData& data) {
     for (auto& e : *this) {
         e->initialize(data);
     }
