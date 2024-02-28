@@ -9,22 +9,36 @@ int main() {
 	SDL_Event SDLevent;
 	SDL_GameController* controller = nullptr;
 
-	char c = ' ';
-	while (c == ' ') {      
-		while (SDL_PollEvent(&SDLevent)) {
-			
-			input->KeyDown(KeyNames::K_1);
-			//input->KeyUp(KeyNames::K_1);
-			//input->KeyPressed(KeyNames::K_1);
-			//input->KeyPressed(KeyNames::K_2);
-			input->ControllerAxisMotion(SDLevent);
-			input->ControllerButtonDown(SDLevent);
-			if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
-				controller = SDL_GameControllerOpen(0);
-			}
-			input->update();
-			if (c != ' ') std::cout << " '" << c << "'\n";
-		}
+	bool end = false;
+	while (!end) {     
+		input->update();
+
+		// RATON
+		//std::pair<int, int> mPos = input->getMousePosition();
+		//std::cout << "(" << mPos.first << ", " << mPos.second << ")\n";
+		if (input->wheelUp()) std::cout << "rueda arriba" << "\n";
+		else if (input->wheelDown()) std::cout << "rueda abajo" << "\n";
+		if (input->isMouseButtonPressed(B_LEFT)) std::cout << "izquierdo" << "\n";
+		else if (input->isMouseButtonPressed(B_MIDDLE)) std::cout << "rueda" << "\n";
+		else if (input->isMouseButtonPressed(B_RIGHT)) std::cout << "derecho" << "\n";
+
+		// TECLAS
+		input->keyDown(K_1);
+		input->keyUp(K_1);
+		input->keyPressed(K_1);
+		input->keyPressed(K_2);
+		input->keyDown(K_3);
+		input->keyUp(K_4);
+		if (input->keyDown(K_ESC)) end = true;
+
+		// MANDO
+		//input->controllerAxisMotion(SDLevent);
+		//input->controllerButtonDown(SDLevent);
+		//if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
+		//	controller = SDL_GameControllerOpen(0);
+		//
+
+		input->refresh();
 	}      
 	SDL_DestroyWindow(window);
 	SDL_Quit();

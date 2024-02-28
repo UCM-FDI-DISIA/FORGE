@@ -1,6 +1,7 @@
 #pragma once
 
 const int KEYNAMES_SIZE = 62;
+const int BUTTONNAMES_SIZE = 3;
 
 /// <summary>
 /// Nombres de las teclas desde fuera del motor.
@@ -13,4 +14,11 @@ enum KeyNames {
 	K_CAPS, K_A, K_S, K_D, K_F, K_G, K_H, K_J, K_K, K_L, K_ENTER,
 	K_SHIFT, K_Z, K_X, K_C, K_V, K_B, K_N, K_M,
 	K_CTRL, K_CONTEXT, K_ALT, K_SPACE, K_LEFT, K_UP, K_DOWN, K_RIGHT
+};
+
+/// <summary>
+/// Nombres de los botones del raton desde fuera del motor
+/// </summary>
+enum ButtonNames {
+	B_LEFT, B_MIDDLE, B_RIGHT
 };

@@ -1,6 +1,9 @@
-#include "SDL.h"
+#pragma once
+
 #include <iostream>
 #include <unordered_map>
+#include <array>
+#include "SDL.h"
 #include "KeyNames.h"
 
 class Input {
@@ -9,6 +12,11 @@ private:
 	const Uint8* keyboardState;
 	// true -> presionada/mantenida, false -> soltada
 	std::unordered_map<KeyNames, bool> keys;
+
+	std::pair<int, int> mousePos;
+	bool mouseWheelUp;
+	bool mouseWheelDown;
+	std::array<bool, 3> mouseButtons;
 
 	/// <summary>
 	/// Traduccion de KeyNames a SDL_Scancodes, el numero es la cantidad de teclas mapeadas (constante de KeyNames.h).
@@ -30,49 +38,101 @@ private:
 		{SDL_SCANCODE_LGUI}, {SDL_SCANCODE_LALT},	{SDL_SCANCODE_SPACE},  {SDL_SCANCODE_LEFT}, {SDL_SCANCODE_UP},
 		{SDL_SCANCODE_DOWN}, {SDL_SCANCODE_RIGHT}
 	};
+
 public:
 	/// <summary>
-	/// Creates the input manager
+	/// Crea el gestor de entrada
 	/// </summary>
 	Input();
 
 	/// <summary>
-	/// Returns the character corresponding to the key that has been pressed
-	/// </summary>
-	/// <param name="SDLevent">- event received to react to</param>
-	/// <returns>Key character</returns>
-	bool KeyDown(KeyNames k);
-
-	/// <summary>
-	/// Returns the character corresponding to the key that is being pressed
-	/// </summary>
-	/// <param name="SDLevent">- event received to react to</param>
-	/// <returns>Key character</returns>
-	bool KeyPressed(KeyNames k);
-
-	/// <summary>
-	/// Returns the character corresponding to the key that has been released
-	/// </summary>
-	/// <param name="SDLevent">- event received to react to</param>
-	/// <returns>Key character</returns>
-	bool KeyUp(KeyNames k);
-
-	/// <summary>
-	/// Returns the character corresponding to the controller button that has been pressed
-	/// </summary>
-	/// <param name="SDLevent">- event received to react to</param>
-	/// <returns>Key character</returns>
-	char ControllerButtonDown(SDL_Event SDLevent);
-
-	/// <summary>
-	/// Returns the character corresponding to moving the joystick of the controller along an axis
-	/// </summary>
-	/// <param name="SDLevent">- event received to react to</param>
-	/// <returns>Character of an axis movement</returns>
-	char ControllerAxisMotion(SDL_Event SDLevent);
-
-	/// <summary>
-	/// Actualiza los eventos de tecla dentro del map
+	/// Lee los eventos y llama a los metodos correspondientes de cada uno de ellos
 	/// </summary>
 	void update();
+
+	/// <summary>
+	/// Hace las operaciones necesarias tras un update para estar preparado para el siguiente
+	/// </summary>
+	void refresh();
+
+	/// <summary>
+	/// Devuelve al estado inicial (el estado por defecto) la estructura del gestor de input
+	/// </summary>
+	void setDefaultState();
+
+	/// <summary>
+	/// Devolver el caracter correspondiente a la tecla que se ha pulsado
+	/// </summary>
+	/// <param name="KeyNames">- tecla</param>
+	/// <returns>Caracter de la tecla pulsada</returns>
+	bool keyDown(KeyNames k);
+
+	/// <summary>
+	/// Devuelve el caracter correspondiente a la tecla que se esta manteniendo pulsada
+	/// </summary>
+	/// <param name="KeyNames">- tecla</param>
+	/// <returns>Caracter de la tecla mantenida</returns>
+	bool keyPressed(KeyNames k);
+
+	/// <summary>
+	/// Devuelve el caracter correspondiente a la tecla que se ha soltado
+	/// </summary>
+	/// <param name="KeyNames">- tecla</param>
+	/// <returns>Carcater de la tecla</returns>
+	bool keyUp(KeyNames k);
+
+	/// <summary>
+	/// Devuelve el caracter correspondiente a la boton del mando que se ha presionado
+	/// </summary>
+	/// <param name="SDLevent">- evento al que reaccionar</param>
+	/// <returns>Carcater del boton</returns>
+	char controllerButtonDown(const SDL_Event& SDLevent);
+
+	/// <summary>
+	/// Devuelve el caracter correspondiente a 
+	/// </summary>
+	/// <param name="SDLevent">- evento al que reaccionar</param>
+	/// <returns>Caracter del movimiento</returns>
+	char controllerAxisMotion(const SDL_Event& SDLevent);
+
+	/// <summary>
+	/// Guarda la posicion actual del raton
+	/// </summary>
+	/// <param name="SDLevent">- evento al que reaccionar</param>
+	void onMouseMotion(const SDL_Event& event);
+
+	/// <summary>
+	/// Obtiene la posicion actual del raton
+	/// </summary>
+	/// <returns>first = x, second = y</returns>
+	std::pair<int, int> getMousePosition();
+
+	/// <summary>
+	/// Detecta si la rueda se ha movido hacia arriba o hacia abajo
+	/// </summary>
+	/// <param name="SDLevent">- evento al que reaccionar</param>
+	void onMouseWheelMotion(const SDL_Event& event);
+
+	/// <summary>
+	/// Devuelve si la rueda del raton se ha movido hacia arriba
+	/// </summary>
+	bool wheelUp();
+
+	/// <summary>
+	/// Devuelve si la rueda del raton se ha movido hacia abajo
+	/// </summary>
+	bool wheelDown();
+
+	/// <summary>
+	/// Marca en el array de los botones del raton si este se pulsa o se deja de pulsar
+	/// </summary>
+	/// <param name="SDLevent">- evento al que reaccionar</param>
+	/// <param name="down">- 'true' si esta siendo pulsado, 'false' si no</param>
+	void onMouseButton(const SDL_Event& event, bool down);
+
+	/// <summary>
+	/// Devuelve si el boton del raton indicado se esta pulsando
+	/// </summary>
+	/// <param name="button">- indice del boton del raton</param>
+	bool isMouseButtonPressed(int button);
 };
