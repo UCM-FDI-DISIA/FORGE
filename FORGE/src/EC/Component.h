@@ -12,7 +12,7 @@ class ComponentData;
 
 class Component {
 protected:
-	Serializer* serializer;
+	Serializer& serializer;
 	Entity* entity;
 	Scene* scene;
 
@@ -59,28 +59,6 @@ public:
 	///	Si el Component esta activado
 	/// </returns>
 	bool isEnabled();
-	/// <summary>
-	/// Accede al objeto del serializer en vez de al puntero y permite agregar variables a serializar de la siguiente manera:
-	/// <example>
-	/// Ejemplo de uso dentro de un Component (C++)
-	/// <code>
-	/// class MiComponente : public Component {
-	///		int cantidad;
-	///		MiComponente() {
-	///			serialize()(cantidad, "cantidad");
-	///		}
-	/// };
-	/// </code>
-	/// Ejemplo de la informacion guardada (Lua)
-	/// <code>
-	/// MiComponente = {
-	///		cantidad = 5
-	/// }
-	/// </code>
-	/// </example>
-	/// </summary>
-	/// <returns> referencia al serilizer </returns>
-	Serializer& serialize();
 
 };
 

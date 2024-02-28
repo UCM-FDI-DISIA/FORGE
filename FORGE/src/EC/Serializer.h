@@ -70,7 +70,7 @@ public:
 	/// class MiComponente : public Component {
 	///		int cantidad;
 	///		MiComponente() {
-	///			serializer->addField(cantidad, "cantidad");
+	///			serializer.addField(cantidad, "cantidad");
 	///		}
 	/// };
 	/// </code>
@@ -97,7 +97,7 @@ public:
 	/// class MiComponente : public Component {
 	///		int cantidad;
 	///		MiComponente() {
-	///			(*serializer)(cantidad, "cantidad");
+	///			serializer(cantidad, "cantidad");
 	///		}
 	/// };
 	/// </code>

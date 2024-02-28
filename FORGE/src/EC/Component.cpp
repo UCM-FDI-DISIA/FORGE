@@ -5,11 +5,11 @@ Component::Component() :
     entity(nullptr),
     scene(nullptr),
     enabled(false),
-    serializer(new Serializer()) {
+    serializer(*(new Serializer())) {
 }
 
 Component::~Component() {
-    delete serializer;
+    delete& serializer;
 }
 
 void Component::setContext(Entity* _entity, Scene* _scene) {
@@ -19,7 +19,7 @@ void Component::setContext(Entity* _entity, Scene* _scene) {
 }
 
 void Component::initSerialized(ComponentData* data) {
-    serializer->initialize(*data);
+    serializer.initialize(*data);
 }
 
 void Component::initComponent(ComponentData* data) {}
@@ -34,8 +34,4 @@ void Component::setEnabled(bool _enabled) {
 
 bool Component::isEnabled() {
     return enabled;
-}
-
-Serializer& Component::serialize() {
-    return *serializer;
 }

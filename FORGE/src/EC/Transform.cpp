@@ -5,9 +5,13 @@ Transform::Transform() :
 	position(),
 	rotation(),
 	scale() {
+	serializer( rotation,"");
 }
 
 void Transform::initComponent( ComponentData* data) {
+	std::vector<float> p = data->getVector<float>("position");
+	std::vector<float> r = data->getVector<float>("rotation");
+	std::vector<float> s = data->getVector<float>("scale");
 }
 
 void Transform::setRotation(forge::Quaternion newRot)

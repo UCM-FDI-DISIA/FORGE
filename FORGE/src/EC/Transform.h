@@ -7,8 +7,8 @@
 #include "Component.h"
 
 namespace forge {
-	class Vector3 { float x; float y; float z; };
-	class Quaternion { float x; float y; float z; float w;};
+	struct Vector3 { float x; float y; float z; };
+	struct Quaternion { float x; float y; float z; float w;};
 }
 
 class Transform : public Component {

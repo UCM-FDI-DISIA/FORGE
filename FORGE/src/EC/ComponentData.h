@@ -2,6 +2,7 @@
 #ifndef COMPONENT_DATA_H_
 #define COMPONENT_DATA_H_
 #include <string>
+#include <vector>
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
 
@@ -58,6 +59,18 @@ public:
             return p.cast<T>();
         }
         return T();
+    }
+
+    template <typename T>
+    std::vector<T> getVector( std::string param ) {
+        std::vector<T> vec;
+        auto t = (*data)[param];
+        if (t.isTable()) {
+            for (auto&& p : pairs(t)) {
+                vec.push_back( p.first.cast<T>() );
+            }
+        }
+        return vec;
     }
 
 };
