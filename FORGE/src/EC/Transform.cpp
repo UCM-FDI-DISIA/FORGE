@@ -5,9 +5,6 @@ Transform::Transform() :
 	position(),
 	rotation(),
 	scale() {
-	serialize()(position, "position");
-	serialize()(rotation, "rotation");
-	serialize()(scale, "scale");
 }
 
 void Transform::initComponent( ComponentData* data) {

@@ -2,6 +2,9 @@
 #ifndef ECS_LOAD_H_
 #define ECS_LOAD_H_
 
+#include <string>
+#include <vector>
+
 class SceneManager;
 struct EntityData;
 
