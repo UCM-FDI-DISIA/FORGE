@@ -7,10 +7,12 @@
 
 class Entity;
 class Scene;
-class Serializer;
 class ComponentData;
 
 class Component {
+private:
+	class Serializer;
+
 protected:
 	Serializer& serializer;
 	Entity* entity;

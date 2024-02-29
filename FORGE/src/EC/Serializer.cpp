@@ -2,18 +2,18 @@
 #include "lua.hpp"
 #include "LuaBridge/LuaBridge.h"
 
-BaseSerialized::BaseSerialized(std::string myName) :
+Component::Serializer::BaseSerialized::BaseSerialized(std::string myName) :
     name(myName) {
 }
 
-void Serializer::initialize(ComponentData& data) {
-    for (auto& e : *this) {
+void Component::Serializer::initialize(ComponentData& data) {
+    for (auto& e : serializations) {
         e->initialize(data);
     }
 }
 
-Serializer::~Serializer() {
-    for (auto& e : *this) {
+Component::Serializer::~Serializer() {
+    for (auto& e : serializations) {
         delete e;
     }
 }

@@ -2,8 +2,6 @@
 #ifndef TRANSFORM_H_
 #define TRANSFORM_H_
 
-#include <string>
-#include <vector>
 #include "Component.h"
 
 namespace forge {
@@ -16,12 +14,9 @@ private:
 	forge::Vector3 position;
 	forge::Quaternion rotation;
 	forge::Vector3 scale;
-protected:
 
 public:
 	Transform();
-
-	void initComponent(ComponentData* data) override;
 
 	void setRotation(forge::Quaternion newRot);
 	void setRotation(forge::Vector3 newRot);

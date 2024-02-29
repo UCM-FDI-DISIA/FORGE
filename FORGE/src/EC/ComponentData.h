@@ -50,12 +50,12 @@ public:
     /// <param name="param">Nombre del parametro al que se quiere acceder</param>
     /// <returns>
     /// El valor del parametro dentro del ComponentData. 
-    /// Si no existe devuelve el valor por defecto del tipo pedido.
+    /// Si no existe o no se puede castear devuelve el valor por defecto del tipo pedido.
     /// </returns>
     template <typename T>
     T get(std::string param) {
         auto p = (*data)[param];
-        if (!p.isNil()) {
+        if (!p.isNil() && p.isInstance<T>()) {
             return p.cast<T>();
         }
         return T();

@@ -5,88 +5,79 @@ Transform::Transform() :
 	position(),
 	rotation(),
 	scale() {
-	serializer( rotation,"");
+	serializer(position, "position");
+	serializer(rotation, "rotation");
+	serializer(scale, "scale");
 }
 
-void Transform::initComponent( ComponentData* data) {
-	std::vector<float> p = data->getVector<float>("position");
-	std::vector<float> r = data->getVector<float>("rotation");
-	std::vector<float> s = data->getVector<float>("scale");
-}
-
-void Transform::setRotation(forge::Quaternion newRot)
-{
+void Transform::setRotation(forge::Quaternion newRot) {
 
 }
 
-void Transform::setRotation(forge::Vector3 newRot)
-{
+void Transform::setRotation(forge::Vector3 newRot) {
+
 }
 
-void Transform::rotateX(float xRot)
-{
+void Transform::rotateX(float xRot) {
+
 }
 
-void Transform::rotateY(float yRot)
-{
+void Transform::rotateY(float yRot) {
+
 }
 
-void Transform::rotateZ(float zRot)
-{
+void Transform::rotateZ(float zRot) {
+
 }
 
-void Transform::setPosition(forge::Vector3 newPos)
-{
+void Transform::setPosition(forge::Vector3 newPos) {
+
 }
 
-void Transform::movePosition(forge::Vector3 offset)
-{
+void Transform::movePosition(forge::Vector3 offset) {
+
 }
 
-void Transform::setPositionX(float newX)
-{
+void Transform::setPositionX(float newX) {
+
 }
 
-void Transform::setPositionY(float newY)
-{
+void Transform::setPositionY(float newY) {
+
 }
 
-void Transform::setPositionZ(float newZ)
-{
+void Transform::setPositionZ(float newZ) {
+
 }
 
-void Transform::setScale(forge::Vector3 newScale)
-{
+void Transform::setScale(forge::Vector3 newScale) {
+
 }
 
-void Transform::setScale(float scale)
-{
+void Transform::setScale(float scale) {
+
 }
 
-void Transform::doScale(forge::Vector3 newScale)
-{
+void Transform::doScale(forge::Vector3 newScale) {
+
 }
 
-void Transform::doScale(float scale)
-{
+void Transform::doScale(float scale) {
+
 }
 
-forge::Quaternion Transform::getRotation()
-{
+forge::Quaternion Transform::getRotation() {
 	return rotation;
 }
 
-forge::Vector3 Transform::getRotationEuler()
-{
+forge::Vector3 Transform::getRotationEuler() {
 	return forge::Vector3();
 }
 
-forge::Vector3 Transform::getPosition()
-{
+forge::Vector3 Transform::getPosition() {
 	return position;
 }
 
-forge::Vector3 Transform::getScale()
-{
+forge::Vector3 Transform::getScale() {
 	return scale;
 }

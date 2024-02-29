@@ -26,6 +26,7 @@ SceneManager::~SceneManager() {
 	for (auto& ent : entityBlueprints) {
 		delete ent.second;
 	}
+	lua_close(lua);
 }
 
 SceneManager* SceneManager::getInstance() {

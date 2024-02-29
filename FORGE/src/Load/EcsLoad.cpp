@@ -10,11 +10,13 @@ EcsLoad::EcsLoad(std::string path) :
 	using namespace luabridge;
 
 	lua_State* lua = luaL_newstate();
+	luaL_openlibs(lua);
+	// TODO: funcion que agregue a Lua las clases que necesitemos de C++
 	luaL_dofile(lua, path.c_str());
 	sceneManager.setLuaState(lua);
 
-	LuaRef entityBlueprints = LuaRef::fromStack(lua, 1);
-	LuaRef sceneBlueprints = LuaRef::fromStack(lua, 2);
+	LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);
+	LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
 
 	for (auto&& entity : pairs(entityBlueprints)) {
 		EntityData* blueprint = parseEntityData(entity.second);
@@ -25,7 +27,6 @@ EcsLoad::EcsLoad(std::string path) :
 	for (auto&& scene : pairs(sceneBlueprints)) {
 		sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
 	}
-
 }
 
 void EcsLoad::extractEntityValues(EntityData& ed, luabridge::LuaRef& h, luabridge::LuaRef& g, luabridge::LuaRef& cmps) {
