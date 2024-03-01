@@ -24,12 +24,12 @@ private:
 		/// Constructor de BaseSerialized, almacena el nombre dentro de Lua o ComponentData de la variable que inicializara.
 		/// </summary>
 		/// <param name="myName">Nombre que se le dara a la variable dentro de Lua o ComponentData.</param>
-		BaseSerialized( std::string myName );
+		BaseSerialized(std::string myName);
 		/// <summary>
 		/// Asigna a la variable serializada el valor que tenga dentro del ComponentData.
 		/// </summary>
 		/// <param name="data">ComponentData dentro del que esta la informacion de la variable serializada.</param>
-		virtual void initialize( ComponentData& data ) = 0;
+		virtual void initialize(ComponentData& data) = 0;
 	};
 
 
@@ -46,15 +46,16 @@ private:
 		/// </summary>
 		/// <param name="myVar">Variable que se va a inicializar.</param>
 		/// <param name="myName">Nombre de la variable dentro del archivo Lua o del ComponentData.</param>
-		inline Serialized( T& myVar, std::string myName ) :
-			BaseSerialized( myName ),
-			var( myVar ) {}
+		inline Serialized(T& myVar, std::string myName) :
+			BaseSerialized(myName),
+			var(myVar) {
+		}
 		/// <summary>
 		/// Asigna a la variable serializada el valor que tenga dentro del LuaRef o ComponentData.
 		/// </summary>
 		/// <param name="data">ComponentData dentro del que esta la informacion de la variable serializada.</param>
-		void initialize( ComponentData& data ) override {
-			var = data.get<T>( name );
+		void initialize(ComponentData& data) override {
+			var = data.get<T>(name);
 		}
 	};
 

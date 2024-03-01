@@ -7,6 +7,30 @@
 #include <LuaBridge/LuaBridge.h>
 
 class ComponentData {
+private:
+    template <typename T>
+    struct getter {
+        T operator()(luabridge::LuaRef& data, std::string param) {
+            auto p = data[param];
+            if (!p.isNil() && p.isInstance<T>()) {
+                return p.cast<T>();
+            }
+            return T();
+        }
+    };
+    template <typename U>
+    struct getter<std::vector<U>> {
+        std::vector<U> operator()(luabridge::LuaRef& data, std::string param) {
+            auto t = data[param];
+            std::vector<U> vec;
+            if (t.isTable()) {
+                for (auto&& p : pairs(t)) {
+                    vec.push_back(p.first.cast<U>());
+                }
+            }
+            return vec;
+        }
+    };
 protected:
     std::string id;
 	luabridge::LuaRef* data;
@@ -54,29 +78,8 @@ public:
     /// </returns>
     template <typename T>
     T get(std::string param) {
-        //bool is_vec = std::conditional < std::is_same<T, std::vector<typename T::value_type>>::value
-        //if (is_vec) {
-        //    return getVector(param);
-        //}
-
-        auto p = (*data)[param];
-        if (!p.isNil() && p.isInstance<T>()) {
-            return p.cast<T>();
-        }
-        return T();
+        return getter<T>()(*data, param);
     }
-
-    //template <typename U>
-    //std::vector<U> get<std::vector<U>>(std::string param) {
-    //    std::vector<U> vec;
-    //    auto t = (*data)[param];
-    //    if (t.isTable()) {
-    //        for (auto&& p : pairs(t)) {
-    //            vec.push_back(p.first.cast<U>());
-    //        }
-    //    }
-    //    return vec;
-    //}
 
 };
 

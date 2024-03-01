@@ -1,9 +1,7 @@
 #pragma once
 #ifndef VECTOR2D_H_
 #define VECTOR2D_H_
-#include <cmath>
-class Vector2D
-{
+class Vector2D {
 private:
 	// Primera coordenada
 	float X;
@@ -17,7 +15,7 @@ public:
 	/// <summary>
 	/// Constructora a partir de parametros
 	/// </summary>	
-	Vector2D(float x = 0, float y = 0);
+	Vector2D(float x, float y);
 	/// <summary>
 	/// Constructora a partir de otro vector
 	/// </summary>	
@@ -30,31 +28,31 @@ public:
 	/// <summary>
 	/// Suma dos vectores
 	/// </summary>	
-	Vector2D operator+( const Vector2D& v ) const;
+	Vector2D operator+(const Vector2D& v) const;
 	/// <summary>
 	/// Resta dos vectores
 	/// </summary>	
-	Vector2D operator-( const Vector2D& v ) const;
+	Vector2D operator-(const Vector2D& v) const;
 	/// <summary>
 	/// Multiplica un vector por un escalar
 	/// </summary>	
-	Vector2D operator*( float e ) const;
+	Vector2D operator*(float e) const;
 	/// <summary>
 	/// Divide un vector por un escalar
 	/// </summary>
-	Vector2D operator/( float e ) const;
+	Vector2D operator/(float e) const;
 	/// <summary>
 	/// Producto escalar
 	/// </summary>
-	float operator *( const Vector2D& v ) const;
+	float operator*(const Vector2D& v) const;
 	/// <summary>
 	/// Igualdad de dos vectores
 	/// </summary>
-	bool operator ==( const Vector2D& v ) const;
+	bool operator==(const Vector2D& v) const;
 	/// <summary>
 	/// Desigualdad de dos vectores
 	/// </summary>
-	bool operator !=( const Vector2D& v ) const;
+	bool operator!=(const Vector2D& v) const;
 
 	/// <summary>
 	/// Calcula el modulo de un vector
