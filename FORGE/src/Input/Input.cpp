@@ -1,9 +1,16 @@
 #include "Input.h"
 
+std::unique_ptr<Input> Input::instance = nullptr;
+
 Input::Input() {
 	SDLPreviousEvent.type = SDL_KEYDOWN;
 	keyboardState = SDL_GetKeyboardState(0);
 	setDefaultState();
+}
+
+Input* Input::getInstance() {
+	if (instance.get() != nullptr) return instance.get();
+	return (instance = std::unique_ptr<Input>(new Input())).get();
 }
 
 void Input::update() {	

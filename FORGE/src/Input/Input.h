@@ -3,11 +3,14 @@
 #include <iostream>
 #include <unordered_map>
 #include <array>
+#include <memory>
 #include "SDL.h"
 #include "KeyNames.h"
 
 class Input {
 private:
+	static std::unique_ptr<Input> instance;
+
 	SDL_Event SDLPreviousEvent;
 	const Uint8* keyboardState;
 	// true -> presionada/mantenida, false -> soltada
@@ -44,6 +47,12 @@ public:
 	/// Crea el gestor de entrada
 	/// </summary>
 	Input();
+
+	/// <summary>
+	/// Devuelve la instancia del input y, si no existe, la crea
+	/// </summary>
+	/// <returns>Instancia singleton del Input</returns>
+	static Input* getInstance();
 
 	/// <summary>
 	/// Lee los eventos y llama a los metodos correspondientes de cada uno de ellos

@@ -5,7 +5,7 @@ int main() {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	auto window = SDL_CreateWindow("Prueba", 100, 100, 900, 600, SDL_WINDOW_SHOWN);
-	Input* input = new Input();
+	Input* input = Input::getInstance();
 	SDL_Event SDLevent;
 	SDL_GameController* controller = nullptr;
 
@@ -39,7 +39,7 @@ int main() {
 		//
 
 		input->refresh();
-	}      
+	}
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 
