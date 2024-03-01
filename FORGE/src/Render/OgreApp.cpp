@@ -13,6 +13,7 @@
 
 namespace Render {
 
+
 	OgreApp::OgreApp() {
 		mAppName = "FORGE";
 		mFSLayer = new Ogre::FileSystemLayer(mAppName);
@@ -22,6 +23,8 @@ namespace Render {
 	}
 
 	void OgreApp::createRoot() {
+
+		// Localizamos el archivo de plugins
 		Ogre::String pluginsPath;
 		pluginsPath = mFSLayer->getConfigFilePath("plugins.cfg");
 
@@ -31,66 +34,58 @@ namespace Render {
 			OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "IG2ApplicationContext::createRoot");
 		}
 
-		mSolutionPath = pluginsPath;    // IG2: añadido para definir directorios relativos al de la solución 
+		// Establecemos la ruta de los archivos de configuración en el sistema de archivos
+		mSolutionPath = pluginsPath;    
 		mSolutionPath.erase(mSolutionPath.find_last_of("\\") + 1, mSolutionPath.size() - 1);
-		mFSLayer->setHomePath(mSolutionPath);   // IG2: para los archivos de configuración ogre. (en el bin de la solubión)
-		mSolutionPath.erase(mSolutionPath.find_last_of("\\") + 1, mSolutionPath.size() - 1);   // IG2: Quito /bin
+		mFSLayer->setHomePath(mSolutionPath);   
+		mSolutionPath.erase(mSolutionPath.find_last_of("\\") + 1, mSolutionPath.size() - 1);
 
+		// Creamos la raíz de OGRE 
 		mRoot = new Ogre::Root(pluginsPath, mFSLayer->getWritablePath("ogre.cfg"), mFSLayer->getWritablePath("ogre.log"));
-
 		mOverlaySystem = new Ogre::OverlaySystem();
 	}
 
 	void OgreApp::setup() {
-		//mRoot->restoreConfig();  // IG2: no queremos que recupere la configuración guardada
+
+		// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
 		Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
 		mRoot->setRenderSystem(rs);
-		//rs->setConfigOption("Full Screen", "No");
-		//rs->setConfigOption("Video Mode", "800 x 600");
-		//rs->setConfigOption("sRGB Gamma Conversion", "Yes");
-		//rs->setConfigOption("VSync", "No");
-		//rs->setConfigOption("FSAA", "0");
-		//rs->setConfigOption("RTT Preferred Mode", "FBO");
+
+		// Inicializamos el sistema de renderizado
 		mRoot->initialise(false);
-		//Ogre::NameValuePairList misc;
-		//misc["externalWindowHandle"] = Ogre::StringConverter::toString((int)0);
-		//Ogre::RenderWindow* mWindow = mRoot->createRenderWindow("balls", 800, 600, false, &misc);
+
+		// Creamos la ventana
 		auto mWindow = createWindow(mAppName);
-		setWindowGrab(false);   // IG2: ratón libre
+		setWindowGrab(false);
 
+		// Inicializamos los recursos
 		locateResources();
-		//initialiseRTShaderSystem();
 
-		// adds context as listener to process context-level (above the sample level) events
+		// Creamos la escena
 		mRoot->addFrameListener(this);
-
 		mSM = mRoot->createSceneManager();
-
-		// register our scene with the RTSS
-		//mShaderGenerator->addSceneManager(mSM);
-
 		mSM->addRenderQueueListener(mOverlaySystem);
-
 		mSM->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
+		// Creamos una luz
 		Ogre::Light* light = mSM->createLight("MainLight");
 		Ogre::SceneNode* lightNode = mSM->getRootSceneNode()->createChildSceneNode();
 		lightNode->attachObject(light);
 		lightNode->setPosition(20, 80, 50);
 
+		// Creamos una cámara
 		Ogre::SceneNode* camNode = mSM->getRootSceneNode()->createChildSceneNode();
-
-		// create the camera
 		Ogre::Camera* cam = mSM->createCamera("myCam");
-		cam->setNearClipDistance(5); // specific to this sample
+		cam->setNearClipDistance(5);
 		cam->setAutoAspectRatio(true);
 		camNode->attachObject(cam);
 		camNode->setPosition(0, 0, 140);
 
-		// and tell it to render into the main window
+		// Creamos un viewport y cambiamos el color de fondo
 		Ogre::Viewport* vp = mWindow.render->addViewport(cam);
 		vp->setBackgroundColour(Ogre::ColourValue(1, 0, 0));
 
+		// Creamos una entidad y la añadimos a la escena
 		Ogre::Entity* ogreEntity = mSM->createEntity("ogrehead.mesh");
 		Ogre::SceneNode* ogreNode = mSM->getRootSceneNode()->createChildSceneNode();
 		ogreNode->attachObject(ogreEntity);
@@ -114,34 +109,35 @@ namespace Render {
 
 		if (!SDL_WasInit(SDL_INIT_VIDEO)) SDL_InitSubSystem(SDL_INIT_VIDEO);
 
+		// Establecemos la ventana como redimensionable por defecto
 		Uint32 flags = SDL_WINDOW_RESIZABLE;
 
+		// Si la opción de pantalla completa está activada, la ventana se establece como pantalla completa
 		if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
-		//else  flags = SDL_WINDOW_RESIZABLE;
 
+		// Creamos la ventana nativa de SDL
 		mWindow.native = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
 
+		// Establecemos los parámetros de la ventana de render y la creamos
 		SDL_SysWMinfo wmInfo;
 		SDL_VERSION(&wmInfo.version);
 		SDL_GetWindowWMInfo(mWindow.native, &wmInfo);
-
 		miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
-
 		mWindow.render = mRoot->createRenderWindow(name, w, h, false, &miscParams);
 		return mWindow;
 	}
 
 	void OgreApp::setWindowGrab(bool _grab)
 	{
+		// Establecemos el ratón como libre o no
 		SDL_bool grab = SDL_bool(_grab);
 		SDL_SetWindowGrab(mWindow.native, grab);
-		//SDL_SetRelativeMouseMode(grab);
 		SDL_ShowCursor(grab);
 	}
 
 	void OgreApp::locateResources()
 	{
-		// load resource paths from config file
+		// Cargamos los recursos del archivo resources.cfg
 		Ogre::ConfigFile cf;
 
 		Ogre::String resourcesPath = mFSLayer->getConfigFilePath("resources.cfg");
@@ -231,27 +227,34 @@ namespace Render {
 		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	}
 
-	/*bool OgreApp::initialiseRTShaderSystem()
-	{
-		if (Ogre::RTShader::ShaderGenerator::initialize())
-		{
-			mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-			// Core shader libs not found -> shader generating will fail.
-			if (mRTShaderLibPath.empty())
-				return false;
-			// Create and register the material manager listener if it doesn't exist yet.
-			if (!mMaterialMgrListener) {
-				mMaterialMgrListener = new SGTechniqueResolverListener(mShaderGenerator);
-				Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
-			}
-		}
+	//bool OgreApp::initialiseRTShaderSystem()
+	//{
+	//	if (Ogre::RTShader::ShaderGenerator::initialize())
+	//	{
+	//		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+	//		// Core shader libs not found -> shader generating will fail.
+	//		if (mRTShaderLibPath.empty())
+	//			return false;
+	//		// Create and register the material manager listener if it doesn't exist yet.
+	//		if (!mMaterialMgrListener) {
+	//			mMaterialMgrListener = new SGTechniqueResolverListener(mShaderGenerator);
+	//			Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
+	//		}
+	//	}
 
-		return true;
-	}*/
+	//	return true;
+	//}
 
-	bool OgreApp::go() {
+	void OgreApp::go() {
 		createRoot();
 		setup();
-		return mRoot->renderOneFrame();
+	}
+
+	Ogre::Root* OgreApp::getRoot() {
+		return mRoot;
+	}
+
+	bool OgreApp::isClosed() {
+		return mWindow.render->isClosed();
 	}
 }

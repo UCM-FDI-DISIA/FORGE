@@ -45,7 +45,7 @@ namespace Render {
 	public:
 		OgreApp();
 
-		bool go();
+		void go();
 		void createRoot();
 		void setup();
 
@@ -54,6 +54,9 @@ namespace Render {
 
 		void locateResources();
 		bool renderOneFrame();
+
+		Ogre::Root* getRoot();
+		bool isClosed();
 		//bool initialiseRTShaderSystem();
 	};
 }
