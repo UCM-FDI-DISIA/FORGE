@@ -4,15 +4,15 @@
 #include "EntityData.h"
 #include "ComponentData.h"
 #include "SceneManager.h"
+#include "LuaForge.h"
 
-EcsLoad::EcsLoad(std::string path) : 
+EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
 	sceneManager(*SceneManager::getInstance()) {
 	using namespace luabridge;
 
-	lua_State* lua = luaL_newstate();
-	luaL_openlibs(lua);
-	// TODO: funcion que agregue a Lua las clases que necesitemos de C++
-	luaL_dofile(lua, path.c_str());
+
+	luaForge.dofile(path);
+	lua_State* lua = luaForge.getState();
 	sceneManager.setLuaState(lua);
 
 	LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);

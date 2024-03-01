@@ -54,6 +54,11 @@ public:
     /// </returns>
     template <typename T>
     T get(std::string param) {
+        //bool is_vec = std::conditional < std::is_same<T, std::vector<typename T::value_type>>::value
+        //if (is_vec) {
+        //    return getVector(param);
+        //}
+
         auto p = (*data)[param];
         if (!p.isNil() && p.isInstance<T>()) {
             return p.cast<T>();
@@ -61,17 +66,17 @@ public:
         return T();
     }
 
-    template <typename T>
-    std::vector<T> getVector( std::string param ) {
-        std::vector<T> vec;
-        auto t = (*data)[param];
-        if (t.isTable()) {
-            for (auto&& p : pairs(t)) {
-                vec.push_back( p.first.cast<T>() );
-            }
-        }
-        return vec;
-    }
+    //template <typename U>
+    //std::vector<U> get<std::vector<U>>(std::string param) {
+    //    std::vector<U> vec;
+    //    auto t = (*data)[param];
+    //    if (t.isTable()) {
+    //        for (auto&& p : pairs(t)) {
+    //            vec.push_back(p.first.cast<U>());
+    //        }
+    //    }
+    //    return vec;
+    //}
 
 };
 

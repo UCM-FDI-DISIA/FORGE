@@ -1,6 +1,5 @@
 ﻿#include "EntityData.h"
-#include <lua.hpp>
-#include <LuaBridge/LuaBridge.h>
+#include "ComponentData.h"
 
 EntityData::~EntityData() {
 	for (auto& cmp : components) {

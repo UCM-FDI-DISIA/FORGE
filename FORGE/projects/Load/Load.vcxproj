@@ -90,9 +90,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Load\EcsLoad.cpp" />
+    <ClCompile Include="..\..\src\Load\LuaForge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Load\EcsLoad.h" />
+    <ClInclude Include="..\..\src\Load\LuaForge.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EC\EC.vcxproj">

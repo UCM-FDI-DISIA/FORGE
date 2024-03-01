@@ -1,7 +1,7 @@
 #include "Vector2D.h"
 
 Vector2D::Vector2D() :X(), Y() { }
-Vector2D::Vector2D( float x = 0, float y = 0 ):X(x), Y(y) { }
+Vector2D::Vector2D( float x, float y ):X(x), Y(y) { }
 Vector2D::Vector2D(const Vector2D& v) : X(v.X), Y(v.Y) { }
 Vector2D::~Vector2D(){}
 
