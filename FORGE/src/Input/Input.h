@@ -7,6 +7,11 @@
 #include "SDL.h"
 #include "KeyNames.h"
 
+#define CONTROLLER_AXIS_MAX 32767.0f
+#define CONTROLLER_AXIS_MIN -32768.0f
+#define CONTROLLER_AXIS_POS_DEADZONE (CONTROLLER_AXIS_MAX * 0.3f)
+#define CONTROLLER_AXIS_NEG_DEADZONE (CONTROLLER_AXIS_MIN * 0.3f)
+
 class Input {
 private:
 	static std::unique_ptr<Input> instance;
@@ -20,6 +25,12 @@ private:
 	bool mouseWheelUp;
 	bool mouseWheelDown;
 	std::array<bool, 3> mouseButtons;
+
+	bool isControllerButtonDownEvent;
+	bool isControllerButtonUpEvent;
+	bool isControllerAxisMotionEvent;
+	bool isControllerDeviceAddedEvent;
+	bool isControllerDeviceRemovedEvent;
 
 	/// <summary>
 	/// Traduccion de KeyNames a SDL_Scancodes, el numero es la cantidad de teclas mapeadas (constante de KeyNames.h).
@@ -41,6 +52,8 @@ private:
 		{SDL_SCANCODE_LGUI}, {SDL_SCANCODE_LALT},	{SDL_SCANCODE_SPACE},  {SDL_SCANCODE_LEFT}, {SDL_SCANCODE_UP},
 		{SDL_SCANCODE_DOWN}, {SDL_SCANCODE_RIGHT}
 	};
+
+	SDL_GameController* controller;
 
 public:
 	/// <summary>
@@ -144,4 +157,82 @@ public:
 	/// </summary>
 	/// <param name="button">- indice del boton del raton</param>
 	bool isMouseButtonPressed(int button);
+
+	/// <summary>
+	/// Evento de boton de mando presionado
+	/// </summary>
+	bool controllerButtonDownEvent();
+
+	/// <summary>
+	/// Evento de boton de mando levantado
+	/// </summary>
+	bool controllerButtonUpEvent();
+
+	/// <summary>
+	/// Evento de joystick de mando movido
+	/// </summary>
+	bool controllerAxisMotionEvent();
+
+	/// <summary>
+	/// Comprobacion de boton de mando presionado
+	/// </summary>
+	/// <returns>Booleano correspondiente al resultado</returns>
+	bool isControllerButtonDown(SDL_GameControllerButton button);
+
+	/// <summary>
+	/// Comprobacion de boton de mando presionado
+	/// </summary>
+	/// <returns>Booleano correspondiente al resultado</returns>
+	bool isControllerButtonUp(SDL_GameControllerButton button);
+
+	/// <summary>
+	/// Devuelve el valor del eje del joystick del mando
+	/// </summary>
+	int getControllerAxis(SDL_GameControllerAxis ax);
+
+	/// <summary>
+	/// Devuelve el valor normalizado del eje del joystick del mando
+	/// </summary>
+	/// <returns>Valor normalizado del eje</returns>
+	float getNormalizedControllerAxis(SDL_GameControllerAxis ax);
+
+	/// <summary>
+	/// Comprueba si hay un mando conectado
+	/// </summary>
+	bool isControllerConnected();
+	
+	/// <summary>
+	/// Evento de mando añadido
+	/// </summary>
+	bool controllerDeviceAddedEvent();
+
+	/// <summary>
+	/// Evento de mando quitado
+	/// </summary>
+	bool controllerDeviceRemovedEvent();
+
+	/// <summary>
+	/// Añade un nuevo mando
+	/// </summary>
+	void onControllerDeviceAdded();
+
+	/// <summary>
+	/// Quita un mando
+	/// </summary>
+	void onControllerDeviceRemoved();
+
+	/// <summary>
+	/// Cambia el evento de Button Down a true
+	/// </summary>
+	void onControllerButtonDown(const SDL_Event& event);
+
+	/// <summary>
+	/// Cambia el evento de Button UP a true
+	/// </summary>
+	void onControllerButtonUp(const SDL_Event& event);
+
+	/// <summary>
+	/// Cambia el evento de Axis Motion a true
+	/// </summary>
+	void onControllerAxisMotion(const SDL_Event& event);
 };
