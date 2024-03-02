@@ -7,7 +7,6 @@ int main() {
 	auto window = SDL_CreateWindow("Prueba", 100, 100, 900, 600, SDL_WINDOW_SHOWN);
 	Input* input = Input::getInstance();
 	SDL_Event SDLevent;
-	SDL_GameController* controller = nullptr;
 
 	bool end = false;
 	while (!end) {     
@@ -31,12 +30,6 @@ int main() {
 		input->keyUp(K_4);
 		if (input->keyDown(K_ESC)) end = true;
 
-		// MANDO
-		//input->controllerAxisMotion(SDLevent);
-		//input->controllerButtonDown(SDLevent);
-		//if (controller == nullptr && SDLevent.type == SDL_CONTROLLERDEVICEADDED) {
-		//	controller = SDL_GameControllerOpen(0);
-		//
 
 		input->refresh();
 	}

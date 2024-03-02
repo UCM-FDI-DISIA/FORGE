@@ -106,24 +106,6 @@ bool Input::keyUp(KeyNames k) {
 	return false;
 }
 
-char Input::controllerButtonDown(const SDL_Event& SDLevent) {
-	if (SDLevent.type == SDL_CONTROLLERBUTTONDOWN) {
-		std::cout << "mando boton\n";
-		SDLPreviousEvent.type = SDL_CONTROLLERBUTTONDOWN;
-		return SDLevent.key.keysym.sym;
-	}
-	return ' ';
-}
-
-char Input::controllerAxisMotion(const SDL_Event& SDLevent) {
-	if (SDLevent.type == SDL_CONTROLLERAXISMOTION) {
-		std::cout << "mando movimiento joystick\n";
-		SDLPreviousEvent.type = SDL_CONTROLLERAXISMOTION;
-		return SDLevent.key.keysym.sym;
-	}
-	return ' ';
-}
-
 void Input::onMouseMotion(const SDL_Event& event) {
 	mousePos.first = event.motion.x;
 	mousePos.second = event.motion.y;
