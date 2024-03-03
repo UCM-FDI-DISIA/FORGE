@@ -19,6 +19,36 @@ enum KeyNames {
 /// <summary>
 /// Nombres de los botones del raton desde fuera del motor
 /// </summary>
-enum ButtonNames {
-	B_LEFT, B_MIDDLE, B_RIGHT
+enum MouseNames {
+	M_LEFT, M_MIDDLE, M_RIGHT
+};
+
+/// <summary>
+/// Nombres de los botones del mando desde fuera del motor
+/// </summary>
+enum ControllerButtonNames {
+	C_BUTTON_INVALID = -1, 
+	C_BUTTON_A, C_BUTTON_B, C_BUTTON_X, C_BUTTON_Y,
+	C_BUTTON_BACK, C_BUTTON_GUIDE, C_BUTTON_START,
+	C_BUTTON_LEFTSTICK, C_BUTTON_RIGHTSTICK,
+	C_BUTTON_LEFT_SHOULDER, C_BUTTON_RIGHT_SHOULDER,
+	C_BUTTON_DPAD_UP, C_BUTTON_DPAD_DOWN, C_BUTTON_DPAD_LEFT, C_BUTTON_DPAD_RIGHT,
+	C_BUTTON_MISC1,    /* Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button */
+	C_BUTTON_PADDLE1,  /* Xbox Elite paddle P1 (upper left, facing the back) */
+	C_BUTTON_PADDLE2,  /* Xbox Elite paddle P3 (upper right, facing the back) */
+	C_BUTTON_PADDLE3,  /* Xbox Elite paddle P2 (lower left, facing the back) */
+	C_BUTTON_PADDLE4,  /* Xbox Elite paddle P4 (lower right, facing the back) */
+	C_BUTTON_TOUCHPAD, /* PS4/PS5 touchpad button */
+	C_BUTTON_MAX
+};
+
+/// <summary>
+/// Nombres de los ejes del mando desde fuera del motor
+/// </summary>
+enum ControllerAxisNames {
+	C_AXIX_INVALID = -1, 
+	C_AXIS_LEFTX, C_AXIS_LEFTY, 
+	C_AXIS_RIGHTX, C_AXIS_RIGHTY,
+	C_AXIS_TRIGGERLEFT, C_AXIS_TRIGGERRIGHT, 
+	C_AXIS_MAX
 };

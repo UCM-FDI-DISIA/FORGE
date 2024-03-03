@@ -2,6 +2,81 @@
 
 std::unique_ptr<Input> Input::instance = nullptr;
 
+void Input::onMouseMotion(const SDL_Event& event) {
+	mousePos.first = event.motion.x;
+	mousePos.second = event.motion.y;
+}
+
+void Input::onMouseWheelMotion(const SDL_Event& event) {
+	if (event.wheel.y == 1) {
+		mouseWheelUp = true;
+	}
+	else if (event.wheel.y == -1) {
+		mouseWheelDown = true;
+	}
+}
+
+void Input::onMouseButton(const SDL_Event& event, bool down) {
+	switch (event.button.button)
+	{
+	case SDL_BUTTON_LEFT:
+		mouseButtons[0] = down;
+		break;
+	case SDL_BUTTON_MIDDLE:
+		mouseButtons[1] = down;
+		break;
+	case SDL_BUTTON_RIGHT:
+		mouseButtons[2] = down;
+		break;
+	default:
+		break;
+	}
+}
+
+bool Input::controllerButtonDownEvent() {
+	return isControllerButtonDownEvent;
+}
+
+bool Input::controllerButtonUpEvent() {
+	return isControllerButtonUpEvent;
+}
+
+bool Input::controllerAxisMotionEvent() {
+	return isControllerAxisMotionEvent;
+}
+
+void Input::onControllerDeviceAdded() {
+	if (controller == nullptr) {
+		controller = SDL_GameControllerOpen(0);
+		isControllerDeviceAddedEvent = true;
+	}
+}
+void Input::onControllerDeviceRemoved() {
+	if (controller != nullptr) {
+		SDL_GameControllerClose(controller);
+		controller = nullptr;
+		isControllerDeviceRemovedEvent = true;
+	}
+}
+
+bool Input::controllerDeviceAddedEvent() {
+	return isControllerDeviceAddedEvent;
+}
+
+bool Input::controllerDeviceRemovedEvent() {
+	return isControllerDeviceRemovedEvent;
+}
+
+void Input::onControllerButtonDown(const SDL_Event& event) {
+	isControllerButtonDownEvent = true;
+}
+void Input::onControllerButtonUp(const SDL_Event& event) {
+	isControllerButtonUpEvent = true;
+}
+void Input::onControllerAxisMotion(const SDL_Event& event) {
+	isControllerAxisMotionEvent = true;
+}
+
 Input::Input() {
 	SDLPreviousEvent.type = SDL_KEYDOWN;
 	keyboardState = SDL_GetKeyboardState(0);
@@ -76,7 +151,6 @@ void Input::setDefaultState() {
 
 bool Input::keyDown(KeyNames k) {
 	if (keyboardState[SCANCODE[k]] && (!keys.count(k) || !keys[k])) {
-		std::cout << "pulsada: " << k << "\n";
 		keys[k] = true;
 		return true;
 	}
@@ -90,7 +164,6 @@ bool Input::keyPressed(KeyNames k) {
 			return false;
 		}
 		else if (keys[k]) {
-			std::cout << "mantenida: " << k << "\n";
 			return true;
 		}
 	}
@@ -99,29 +172,14 @@ bool Input::keyPressed(KeyNames k) {
 
 bool Input::keyUp(KeyNames k) {
 	if (!keyboardState[SCANCODE[k]] && keys[k]) {
-		std::cout << "soltada: " << k << "\n";
 		keys[k] = false;
 		return true;
 	}
 	return false;
 }
 
-void Input::onMouseMotion(const SDL_Event& event) {
-	mousePos.first = event.motion.x;
-	mousePos.second = event.motion.y;
-}
-
 std::pair<int, int> Input::getMousePosition() {
 	return mousePos;
-}
-
-void Input::onMouseWheelMotion(const SDL_Event& event) {
-	if (event.wheel.y == 1) {
-		mouseWheelUp = true;
-	}
-	else if (event.wheel.y == -1) {
-		mouseWheelDown = true;
-	}
 }
 
 bool Input::wheelUp() {
@@ -132,49 +190,20 @@ bool Input::wheelDown() {
 	return mouseWheelDown;
 }
 
-void Input::onMouseButton(const SDL_Event& event, bool down) {
-	switch (event.button.button)
-	{
-		case SDL_BUTTON_LEFT:
-			mouseButtons[0] = down;
-			break;
-		case SDL_BUTTON_MIDDLE:
-			mouseButtons[1] = down;
-			break;
-		case SDL_BUTTON_RIGHT:
-			mouseButtons[2] = down;
-			break;
-		default:
-			break;
-	}
-}
-
-bool Input::isMouseButtonPressed(int button) {
+bool Input::isMouseButtonPressed(MouseNames button) {
 	return mouseButtons[button];
 }
 
-bool Input::controllerButtonDownEvent() {
-	return isControllerButtonDownEvent;
+bool Input::isControllerButtonDown(ControllerButtonNames button) {
+	return controllerButtonDownEvent() && SDL_GameControllerGetButton(controller, (SDL_GameControllerButton) button) == 1;
 }
 
-bool Input::controllerButtonUpEvent() {
-	return isControllerButtonUpEvent;
+bool Input::isControllerButtonUp(ControllerButtonNames button) {
+	return controllerButtonUpEvent() && SDL_GameControllerGetButton(controller, (SDL_GameControllerButton) button) == 0;
 }
 
-bool Input::controllerAxisMotionEvent() {
-	return isControllerAxisMotionEvent;
-}
-
-bool Input::isControllerButtonDown(SDL_GameControllerButton button) {
-	return controllerButtonDownEvent() && SDL_GameControllerGetButton(controller, button) == 1;
-}
-
-bool Input::isControllerButtonUp(SDL_GameControllerButton button) {
-	return controllerButtonUpEvent() && SDL_GameControllerGetButton(controller, button) == 0;
-}
-
-int Input::getControllerAxis(SDL_GameControllerAxis ax) {
-	int axis = SDL_GameControllerGetAxis(controller, ax);
+int Input::getControllerAxis(ControllerAxisNames ax) {
+	int axis = SDL_GameControllerGetAxis(controller, (SDL_GameControllerAxis) ax);
 	float dz = (axis >= 0) ? CONTROLLER_AXIS_POS_DEADZONE : CONTROLLER_AXIS_NEG_DEADZONE;
 	float max = (axis >= 0) ? CONTROLLER_AXIS_MAX : CONTROLLER_AXIS_MIN;
 
@@ -182,37 +211,11 @@ int Input::getControllerAxis(SDL_GameControllerAxis ax) {
 	return axis - (dz * ((max - axis) / (max - dz)));
 }
 
-float Input::getNormalizedControllerAxis(SDL_GameControllerAxis ax) {
+float Input::getNormalizedControllerAxis(ControllerAxisNames ax) {
 	float axis = getControllerAxis(ax);
 	return axis / abs((axis >= 0) ? CONTROLLER_AXIS_MAX : CONTROLLER_AXIS_MIN);
 }
 
-bool Input::isControllerConnected() { return controller != nullptr; }
-
-bool Input::controllerDeviceAddedEvent() { return isControllerDeviceAddedEvent; }
-
-bool Input::controllerDeviceRemovedEvent() { return isControllerDeviceRemovedEvent; }
-
-void Input::onControllerDeviceAdded() {
-	if (controller == nullptr) {
-		controller = SDL_GameControllerOpen(0);
-		isControllerDeviceAddedEvent = true;
-	}
-}
-void Input::onControllerDeviceRemoved() {
-	if (controller != nullptr) {
-		SDL_GameControllerClose(controller);
-		controller = nullptr;
-		isControllerDeviceRemovedEvent = true;
-	}
-}
-
-void Input::onControllerButtonDown(const SDL_Event& event) {
-	isControllerButtonDownEvent = true;
-}
-void Input::onControllerButtonUp(const SDL_Event& event) {
-	isControllerButtonUpEvent = true;
-}
-void Input::onControllerAxisMotion(const SDL_Event& event) {
-	isControllerAxisMotionEvent = true;
+bool Input::isControllerConnected() {
+	return controller != nullptr;
 }

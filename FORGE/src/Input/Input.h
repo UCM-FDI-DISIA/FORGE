@@ -1,9 +1,8 @@
 #pragma once
 
-#include <iostream>
+#include <memory>
 #include <unordered_map>
 #include <array>
-#include <memory>
 #include "SDL.h"
 #include "KeyNames.h"
 
@@ -55,6 +54,83 @@ private:
 
 	SDL_GameController* controller;
 
+	/// <summary>
+	/// Guarda la posicion actual del raton
+	/// </summary>
+	/// <param name="event">- evento al que reaccionar</param>
+	void onMouseMotion(const SDL_Event& event);
+
+	/// <summary>
+	/// Detecta si la rueda se ha movido hacia arriba o hacia abajo
+	/// </summary>
+	/// <param name="event">- evento al que reaccionar</param>
+	void onMouseWheelMotion(const SDL_Event& event);
+
+	/// <summary>
+	/// Marca en el array de los botones del raton si este se pulsa o se deja de pulsar
+	/// </summary>
+	/// <param name="event">- evento al que reaccionar</param>
+	/// <param name="down">- 'true' si esta siendo pulsado, 'false' si no</param>
+	void onMouseButton(const SDL_Event& event, bool down);
+
+	/// <summary>
+	/// Evento de boton de mando presionado
+	/// </summary>
+	/// <returns>El estado del evento</returns>
+	bool controllerButtonDownEvent();
+
+	/// <summary>
+	/// Evento de boton de mando levantado
+	/// </summary>
+	/// <returns>El estado del evento</returns>
+	bool controllerButtonUpEvent();
+
+	/// <summary>
+	/// Añade un nuevo mando
+	/// </summary>
+	void onControllerDeviceAdded();
+
+	/// <summary>
+	/// Quita un mando
+	/// </summary>
+	void onControllerDeviceRemoved();
+
+	/// <summary>
+	/// Evento de mando añadido
+	/// </summary>
+	/// <returns>El estado del evento</returns>
+	bool controllerDeviceAddedEvent();
+
+	/// <summary>
+	/// Evento de mando quitado
+	/// </summary>
+	/// <returns>El estado del evento</returns>
+	bool controllerDeviceRemovedEvent();
+
+	/// <summary>
+	/// Cambia el evento de Button Down a true
+	/// </summary>
+	/// <param name="event">- evento al que reaccionar</param>
+	void onControllerButtonDown(const SDL_Event& event);
+
+	/// <summary>
+	/// Cambia el evento de Button UP a true
+	/// </summary>
+	/// <param name="event">- evento al que reaccionar</param>
+	void onControllerButtonUp(const SDL_Event& event);
+
+	/// <summary>
+	/// Cambia el evento de Axis Motion a true
+	/// </summary>
+	/// <param name="event">- evento al que reaccionar</param>
+	void onControllerAxisMotion(const SDL_Event& event);
+
+	/// <summary>
+	/// Evento de joystick de mando movido
+	/// </summary>
+	/// <returns>El estado del evento</returns>
+	bool controllerAxisMotionEvent();
+	
 public:
 	/// <summary>
 	/// Crea el gestor de entrada
@@ -83,57 +159,28 @@ public:
 	void setDefaultState();
 
 	/// <summary>
-	/// Devolver el caracter correspondiente a la tecla que se ha pulsado
+	/// Devuelve si se ha pulsado la tecla correspondiente
 	/// </summary>
-	/// <param name="KeyNames">- tecla</param>
-	/// <returns>Caracter de la tecla pulsada</returns>
+	/// <param name="k">- tecla</param>
 	bool keyDown(KeyNames k);
 
 	/// <summary>
-	/// Devuelve el caracter correspondiente a la tecla que se esta manteniendo pulsada
+	/// Devuelve si se esta manteniendo la tecla correspondiente
 	/// </summary>
-	/// <param name="KeyNames">- tecla</param>
-	/// <returns>Caracter de la tecla mantenida</returns>
+	/// <param name="k">- tecla</param>
 	bool keyPressed(KeyNames k);
 
 	/// <summary>
-	/// Devuelve el caracter correspondiente a la tecla que se ha soltado
+	/// Devuelve si se ha soltado la tecla correspondiente
 	/// </summary>
-	/// <param name="KeyNames">- tecla</param>
-	/// <returns>Carcater de la tecla</returns>
+	/// <param name="k">- tecla</param>
 	bool keyUp(KeyNames k);
-
-	/// <summary>
-	/// Devuelve el caracter correspondiente a la boton del mando que se ha presionado
-	/// </summary>
-	/// <param name="SDLevent">- evento al que reaccionar</param>
-	/// <returns>Carcater del boton</returns>
-	char controllerButtonDown(const SDL_Event& SDLevent);
-
-	/// <summary>
-	/// Devuelve el caracter correspondiente a 
-	/// </summary>
-	/// <param name="SDLevent">- evento al que reaccionar</param>
-	/// <returns>Caracter del movimiento</returns>
-	char controllerAxisMotion(const SDL_Event& SDLevent);
-
-	/// <summary>
-	/// Guarda la posicion actual del raton
-	/// </summary>
-	/// <param name="SDLevent">- evento al que reaccionar</param>
-	void onMouseMotion(const SDL_Event& event);
 
 	/// <summary>
 	/// Obtiene la posicion actual del raton
 	/// </summary>
 	/// <returns>first = x, second = y</returns>
 	std::pair<int, int> getMousePosition();
-
-	/// <summary>
-	/// Detecta si la rueda se ha movido hacia arriba o hacia abajo
-	/// </summary>
-	/// <param name="SDLevent">- evento al que reaccionar</param>
-	void onMouseWheelMotion(const SDL_Event& event);
 
 	/// <summary>
 	/// Devuelve si la rueda del raton se ha movido hacia arriba
@@ -146,93 +193,37 @@ public:
 	bool wheelDown();
 
 	/// <summary>
-	/// Marca en el array de los botones del raton si este se pulsa o se deja de pulsar
-	/// </summary>
-	/// <param name="SDLevent">- evento al que reaccionar</param>
-	/// <param name="down">- 'true' si esta siendo pulsado, 'false' si no</param>
-	void onMouseButton(const SDL_Event& event, bool down);
-
-	/// <summary>
 	/// Devuelve si el boton del raton indicado se esta pulsando
 	/// </summary>
 	/// <param name="button">- indice del boton del raton</param>
-	bool isMouseButtonPressed(int button);
+	bool isMouseButtonPressed(MouseNames button);
 
 	/// <summary>
-	/// Evento de boton de mando presionado
+	/// Devuelve si se ha pulsado el boton del mando
 	/// </summary>
-	bool controllerButtonDownEvent();
+	/// <param name="button">- indice del boton del mando</param>
+	bool isControllerButtonDown(ControllerButtonNames button);
 
 	/// <summary>
-	/// Evento de boton de mando levantado
+	/// Devuelve si se ha soltado el boton del mando
 	/// </summary>
-	bool controllerButtonUpEvent();
-
-	/// <summary>
-	/// Evento de joystick de mando movido
-	/// </summary>
-	bool controllerAxisMotionEvent();
-
-	/// <summary>
-	/// Comprobacion de boton de mando presionado
-	/// </summary>
-	/// <returns>Booleano correspondiente al resultado</returns>
-	bool isControllerButtonDown(SDL_GameControllerButton button);
-
-	/// <summary>
-	/// Comprobacion de boton de mando presionado
-	/// </summary>
-	/// <returns>Booleano correspondiente al resultado</returns>
-	bool isControllerButtonUp(SDL_GameControllerButton button);
+	/// <param name="button">- indice del boton del mando</param>
+	bool isControllerButtonUp(ControllerButtonNames button);
 
 	/// <summary>
 	/// Devuelve el valor del eje del joystick del mando
 	/// </summary>
-	int getControllerAxis(SDL_GameControllerAxis ax);
+	/// <param name="ax">- eje del mando</param>
+	int getControllerAxis(ControllerAxisNames ax);
 
 	/// <summary>
 	/// Devuelve el valor normalizado del eje del joystick del mando
 	/// </summary>
-	/// <returns>Valor normalizado del eje</returns>
-	float getNormalizedControllerAxis(SDL_GameControllerAxis ax);
+	/// <param name="ax">- eje del mando</param>
+	float getNormalizedControllerAxis(ControllerAxisNames ax);
 
 	/// <summary>
-	/// Comprueba si hay un mando conectado
+	/// Devuelve si hay un mando conectado
 	/// </summary>
 	bool isControllerConnected();
-	
-	/// <summary>
-	/// Evento de mando añadido
-	/// </summary>
-	bool controllerDeviceAddedEvent();
-
-	/// <summary>
-	/// Evento de mando quitado
-	/// </summary>
-	bool controllerDeviceRemovedEvent();
-
-	/// <summary>
-	/// Añade un nuevo mando
-	/// </summary>
-	void onControllerDeviceAdded();
-
-	/// <summary>
-	/// Quita un mando
-	/// </summary>
-	void onControllerDeviceRemoved();
-
-	/// <summary>
-	/// Cambia el evento de Button Down a true
-	/// </summary>
-	void onControllerButtonDown(const SDL_Event& event);
-
-	/// <summary>
-	/// Cambia el evento de Button UP a true
-	/// </summary>
-	void onControllerButtonUp(const SDL_Event& event);
-
-	/// <summary>
-	/// Cambia el evento de Axis Motion a true
-	/// </summary>
-	void onControllerAxisMotion(const SDL_Event& event);
 };
