@@ -25,15 +25,15 @@ void Transform::setRotation(forge::Vector3 const& newRot) {
 }
 
 void Transform::rotateX(float xRot) {
-	rotation.rotate(Quaternion(1, 0, 0, xRot));
+	rotation *= Quaternion(1, 0, 0, xRot);
 }
 
 void Transform::rotateY(float yRot) {
-	rotation.rotate(Quaternion(0, 1, 0, yRot));
+	rotation *= Quaternion(0, 1, 0, yRot);
 }
 
 void Transform::rotateZ(float zRot) {
-	rotation.rotate(Quaternion(0, 0, 1, zRot));
+	rotation *= Quaternion(0, 0, 1, zRot);
 }
 
 void Transform::setPosition(forge::Vector3 const& newPos) {
@@ -60,8 +60,8 @@ void Transform::setScale(forge::Vector3 const& newScale) {
 	scale = newScale;
 }
 
-void Transform::setScale(float scale) {
-	scale = forge::Vector3(scale);
+void Transform::setScale(float newScale) {
+	scale = Vector3(newScale);
 }
 
 void Transform::doScale(forge::Vector3 const& rescale) {

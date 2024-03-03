@@ -24,7 +24,7 @@ private:
 public:
 	Transform();
 
-#pragma region setters
+	#pragma region setters
 	/// <summary>
 	/// Establece la rotacion al Quaternion pasado.
 	/// </summary>
@@ -98,8 +98,8 @@ public:
 	/// <param name="newScale">Escala a aplicar al Transform.</param>
 	void doScale(float scale);
 
-#pragma endregion //setters
-#pragma region getters
+	#pragma endregion //setters
+	#pragma region getters
 	/// <returns>Rotacion local.</returns>
 	forge::Quaternion const& getRotation() const;
 	/// <returns>Rotacion global.</returns>
@@ -116,7 +116,7 @@ public:
 	forge::Vector3 const& getScale() const;
 	/// <returns>Escala global.</returns>
 	forge::Vector3 getGlobalScale() const;
-#pragma endregion //getters
+	#pragma endregion //getters
 };
 
 #endif // !TRANSFORM_H_

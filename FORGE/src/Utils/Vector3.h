@@ -12,9 +12,15 @@ namespace forge {
 	protected:
 
 	public:
+		#pragma region Constructores
+
+		#pragma endregion
+
 		Vector3();
 
 		Vector3(float _x, float _y, float _z);
+
+		Vector3(float v);
 
 		Vector3(const Vector3& v);
 
@@ -43,34 +49,39 @@ namespace forge {
 		float distance(const Vector3& v) const;
 		Vector3 maxV(const Vector3& v) const;
 		Vector3 minV(const Vector3& v) const;
-		Vector3 Lerp(const Vector3& v, float t) const;
+		Vector3 lerp(const Vector3& v, float t) const;
 
-#pragma region Operadores
+		#pragma region Operadores
 		// Copia
 		Vector3& operator=(const Vector3& v);
 		// Suma
 		Vector3 operator+(const Vector3& v) const;
+		// Suma y asignacion
+		Vector3 operator+=(const Vector3& v);
 		// Resta
 		Vector3 operator-(const Vector3& v) const;
 		// Multiplica por constante (escalado)
 		Vector3 operator*(float d) const;
 		// Division por constante (escalado)
 		Vector3 operator/(float d) const;
-		// Multiplicacion escalar
-		float operator*(const Vector3& d) const;
+		// Multiplicacion por componentes (Hadamard)
+		Vector3 operator*(const Vector3& v) const;
+		// Multiplicacion por componentes (Hadamard) y asignacion
+		Vector3 operator*=(const Vector3& v);
 		// Iguales ?
 		bool operator==(const Vector3& v) const;
 		// Distintos ?
 		bool operator!=(const Vector3& v) const;
-#pragma endregion
+		#pragma endregion
 
 		// Cosas de angulos
 		float angle(const Vector3& v) const;
 		Vector3 reflect(const Vector3& normal) const;
 		Vector3 project(const Vector3& v);
 		Vector3 cross(const Vector3& v) const;
+		float dot(const Vector3& v) const;
 
-#pragma region Setters
+		#pragma region Setters
 		// Setters
 		void setX(float _x);
 		void setY(float _y);
@@ -86,14 +97,25 @@ namespace forge {
 		void set(const Vector3& v);
 		void set(const Vector3&& v);
 		void set(const Vector3* v);
-#pragma endregion
+		#pragma endregion
 
-#pragma region Getters
+		#pragma region Getters
 		// Getters
 		float getX() const;
 		float getY() const;
 		float getZ() const;
-#pragma endregion
+		#pragma endregion
+
+		#pragma region Constantes
+		static const Vector3 ZERO;
+		static const Vector3 RIGHT;
+		static const Vector3 LEFT;
+		static const Vector3 UP;
+		static const Vector3 DOWN;
+		static const Vector3 FORWARD;
+		static const Vector3 BACK;
+		static const Vector3 UNIT;
+		#pragma endregion
 	};
 }
 #endif
