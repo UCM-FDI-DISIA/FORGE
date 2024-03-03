@@ -47,13 +47,23 @@ Component* Entity::addComponent(ComponentData* data) {
 }
 
 Entity* Entity::addChild(Entity* child) {
-    children.push_back(child);
+    children.insert(child);
     child->setParent(this);
     return child;
 }
 
+Entity* Entity::removeChild(Entity* child) {
+    children.erase(child);
+}
+
 Entity* Entity::setParent(Entity* newParent) {
+    if (parent != nullptr) {
+        parent->removeChild(this);
+    }
     parent = newParent;
+    if (hasComponent("Transform") && parent->hasComponent("Transform")) {
+        getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+    }
     return parent;
 }
 

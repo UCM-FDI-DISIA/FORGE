@@ -1,6 +1,7 @@
 #include "Vector3.h"
+using namespace forge;
 
-#define PI 3.14159265358979323846264338327950288f
+#define PI 3.14159265358979323846264338327950288
 #define E 2.71828182845904523536
 
 Vector3::Vector3() : x(0), y(0), z(0) { } 

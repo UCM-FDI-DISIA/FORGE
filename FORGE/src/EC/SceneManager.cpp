@@ -17,14 +17,14 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	if (data->handler != "") {
 		scene->setHandler(data->handler,ent);
 	}
+	for (auto& c : data->components) {
+		ent->addComponent(c.second);
+	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
 			Entity* child = addEntity(scene, childData);
 			ent->addChild(child);
 		}
-	}
-	for (auto& c : data->components) {
-		ent->addComponent(c.second);
 	}
 }
 
@@ -112,18 +112,15 @@ int SceneManager::getGroupId(std::string group) {
 	return groups[group];
 }
 
-void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityData*> scene)
-{
+void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityData*> scene) {
 	sceneBlueprints.insert({ id,scene });
 }
 
-void SceneManager::addEntityBlueprint(std::string id, EntityData* entity)
-{
+void SceneManager::addEntityBlueprint(std::string id, EntityData* entity) {
 	entityBlueprints.insert({ id,entity });
 }
 
-EntityData* SceneManager::getEntityBlueprint(std::string id)
-{
+EntityData* SceneManager::getEntityBlueprint(std::string id) {
 	auto iter = entityBlueprints.find(id);
 	if (iter != entityBlueprints.end()) {
 		return entityBlueprints[id];

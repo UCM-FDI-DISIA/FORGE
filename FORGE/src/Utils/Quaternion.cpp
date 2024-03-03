@@ -1,4 +1,5 @@
 #include "Quaternion.h"
+using namespace forge;
 
 #define kEpsilon = 0.000001
 

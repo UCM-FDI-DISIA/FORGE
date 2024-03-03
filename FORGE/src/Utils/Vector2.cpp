@@ -1,69 +1,70 @@
-#include "Vector2D.h"
+#include "Vector2.h"
 #include <cmath>
+using namespace forge;
 
-Vector2D::Vector2D() :
+Vector2::Vector2() :
 	X(0.0f),
 	Y(0.0f) {
 }
-Vector2D::Vector2D(float x, float y) :
+Vector2::Vector2(float x, float y) :
 	X(x),
 	Y(y) {
 }
-Vector2D::Vector2D(const Vector2D& v) :
+Vector2::Vector2(const Vector2& v) :
 	X(v.X),
 	Y(v.Y) {
 }
 
-Vector2D::~Vector2D(){}
+Vector2::~Vector2(){}
 
-Vector2D Vector2D::operator+(const Vector2D& v) const {
-	return Vector2D( X + v.X, Y + v.Y );
+Vector2 Vector2::operator+(const Vector2& v) const {
+	return Vector2( X + v.X, Y + v.Y );
 }
-Vector2D Vector2D::operator-(const Vector2D& v) const {
-	return Vector2D( X - v.X, Y - v.Y );
+Vector2 Vector2::operator-(const Vector2& v) const {
+	return Vector2( X - v.X, Y - v.Y );
 }
-Vector2D Vector2D::operator*(float e) const {
-	return Vector2D( X * e, Y * e );
+Vector2 Vector2::operator*(float e) const {
+	return Vector2( X * e, Y * e );
 }
-Vector2D Vector2D::operator/(float e) const {
-	return Vector2D( X / e, Y / e );
+Vector2 Vector2::operator/(float e) const {
+	return Vector2( X / e, Y / e );
 }
-float Vector2D::operator *(const Vector2D& v) const {
+float Vector2::operator *(const Vector2& v) const {
 	return ( X * v.X + Y * v.Y );
 }
-bool Vector2D::operator==(const Vector2D& v) const {
+bool Vector2::operator==(const Vector2& v) const {
 	return (X == v.X && Y == v.Y);
 }
-bool Vector2D::operator!=(const Vector2D& v) const {
+bool Vector2::operator!=(const Vector2& v) const {
 	return (X != v.X || Y != v.Y);
 }
 
-float Vector2D::magnitude() const {
+float Vector2::magnitude() const {
 	return sqrtf( X*X + Y*Y );
 }
-Vector2D Vector2D::normalize() const {
+Vector2 Vector2::normalize() const {
 	return *this / magnitude();
 }
 
-float Vector2D::getX() const{
+float Vector2::getX() const{
 	return X;
 }
 
-float Vector2D::getY() const{
+float Vector2::getY() const{
 	return Y;
 }
 
-void Vector2D::setX(float x) {
+void Vector2::setX(float x) {
 	X = x;
 }
-void Vector2D::setY(float y) {
+void Vector2::setY(float y) {
 	Y = y;
 }
-void Vector2D::set(const Vector2D& v) {
+void Vector2::set(const Vector2& v) {
 	X = v.X;
 	Y = v.Y;
 }
-void Vector2D::set(float x, float y) {
+void Vector2::set(float x, float y) {
 	X = x;
 	Y = y;
 }

@@ -1,83 +1,121 @@
 ﻿#include "Transform.h"
 #include "Serializer.h"
+using namespace forge;
+
+void Transform::setParent(Transform* newParent) {
+	parent = newParent;
+}
 
 Transform::Transform() : 
 	position(),
 	rotation(),
-	scale() {
+	scale(),
+	parent(nullptr) {
 	serializer(position, "position");
 	serializer(rotation, "rotation");
 	serializer(scale, "scale");
 }
 
-void Transform::setRotation(forge::Quaternion newRot) {
-
+void Transform::setRotation(forge::Quaternion const& newRot) {
+	rotation = newRot;
 }
 
-void Transform::setRotation(forge::Vector3 newRot) {
-
+void Transform::setRotation(forge::Vector3 const& newRot) {
+	rotation = Quaternion(newRot);
 }
 
 void Transform::rotateX(float xRot) {
-
+	rotation.rotate(Quaternion(1, 0, 0, xRot));
 }
 
 void Transform::rotateY(float yRot) {
-
+	rotation.rotate(Quaternion(0, 1, 0, yRot));
 }
 
 void Transform::rotateZ(float zRot) {
-
+	rotation.rotate(Quaternion(0, 0, 1, zRot));
 }
 
-void Transform::setPosition(forge::Vector3 newPos) {
-
+void Transform::setPosition(forge::Vector3 const& newPos) {
+	position = newPos;
 }
 
-void Transform::movePosition(forge::Vector3 offset) {
-
+void Transform::movePosition(forge::Vector3 const& offset) {
+	position += offset;
 }
 
 void Transform::setPositionX(float newX) {
-
+	position.setX(newX);
 }
 
 void Transform::setPositionY(float newY) {
-
+	position.setY(newY);
 }
 
 void Transform::setPositionZ(float newZ) {
-
+	position.setZ(newZ);
 }
 
-void Transform::setScale(forge::Vector3 newScale) {
-
+void Transform::setScale(forge::Vector3 const& newScale) {
+	scale = newScale;
 }
 
 void Transform::setScale(float scale) {
-
+	scale = forge::Vector3(scale);
 }
 
-void Transform::doScale(forge::Vector3 newScale) {
-
+void Transform::doScale(forge::Vector3 const& rescale) {
+	scale *= rescale;
 }
 
-void Transform::doScale(float scale) {
-
+void Transform::doScale(float rescale) {
+	scale *= rescale;
 }
 
-forge::Quaternion Transform::getRotation() {
+
+forge::Quaternion const& Transform::getRotation() const {
 	return rotation;
 }
 
-forge::Vector3 Transform::getRotationEuler() {
-	return forge::Vector3();
+forge::Quaternion Transform::getGlobalRotation() const {
+	if (parent != nullptr) {
+		return rotation * parent->getGlobalRotation();
+	}
+	else {
+		return rotation;
+	}
 }
 
-forge::Vector3 Transform::getPosition() {
+forge::Vector3 const&& Transform::getRotationEuler() const {
+	return rotation.toEuler();
+}
+
+forge::Vector3 const&& Transform::getGlobalRotationEuler() const {
+	return getGlobalRotation().toEuler();
+}
+
+forge::Vector3 const& Transform::getPosition() const {
 	return position;
 }
 
-forge::Vector3 Transform::getScale() {
+forge::Vector3 Transform::getGlobalPosition() const {
+	if (parent != nullptr) {
+		return position + parent->getGlobalPosition(); 
+	}
+	else {
+		return position;
+	}
+}
+
+forge::Vector3 const& Transform::getScale() const {
 	return scale;
+}
+
+forge::Vector3 Transform::getGlobalScale() const {
+	if (parent != nullptr) {
+		return scale * parent->getGlobalScale();
+	}
+	else {
+		return scale;
+	}
 }

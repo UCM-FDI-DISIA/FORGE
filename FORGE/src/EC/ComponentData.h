@@ -57,17 +57,6 @@ public:
     std::string getId();
 
     /// <summary>
-    /// Agrega un nuevo parametro a los datos del componente
-    /// </summary>
-    /// <typeparam name="T"> Tipo del parametro </typeparam>
-    /// <param name="paramName"> Nombre del parametro </param>
-    /// <param name="param"> Valor del parametro </param>
-    template <typename T>
-    void add(std::string paramName, T param) {
-        (*data)[paramName] = param;
-    }
-
-    /// <summary>
     /// Devuelve el parametro pedido dentro del ComponentData
     /// </summary>
     /// <typeparam name="T">Tipo del valor a acceder</typeparam>
@@ -81,6 +70,16 @@ public:
         return getter<T>()(*data, param);
     }
 
+    /// <summary>
+    /// Agrega un nuevo parametro a los datos del componente
+    /// </summary>
+    /// <typeparam name="T"> Tipo del parametro </typeparam>
+    /// <param name="paramName"> Nombre del parametro </param>
+    /// <param name="param"> Valor del parametro </param>
+    template <typename T>
+    void add(std::string paramName, T param) {
+        (*data)[paramName] = param;
+    }
 };
 
 #endif // !COMPONENT_DATA_H_

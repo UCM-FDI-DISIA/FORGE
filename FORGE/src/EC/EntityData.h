@@ -10,9 +10,11 @@ struct EntityData {
 	bool isBlueprint = false;
 	std::string group = "";
 	std::string handler = "";
-	// Tiene que ser unordered map de punteros a LuaRef para funcionar el forwarding
 	std::unordered_map<std::string, ComponentData*> components;
 	std::vector<EntityData*> children;
+	/// <summary>
+	/// Elimina los ComponentData y los EntityData hijos de este que no sean blueprint.
+	/// </summary>
 	~EntityData();
 };
 #endif

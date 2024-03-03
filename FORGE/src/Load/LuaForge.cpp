@@ -1,9 +1,22 @@
 ﻿#include "LuaForge.h"
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Quaternion.h"
 
 void LuaForge::importForgeClassesToLua() {
-
+	luabridge::getGlobalNamespace(lua)
+		.beginClass<forge::Vector2>("Vector2")
+			.addConstructor<void(*)(double, double)>()
+		.endClass()
+		.beginClass<forge::Vector3>("Vector3")
+			.addConstructor<void(*)(double, double, double)>()
+		.endClass()
+		.beginClass<forge::Quaternion>("Quaternion")
+			.addConstructor<void(*)(double, double, double, double)>()
+		.endClass()
+	;
 }
 
 void LuaForge::importUserClassesToLua() {

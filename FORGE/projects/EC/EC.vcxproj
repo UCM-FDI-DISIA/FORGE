@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,7 +79,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,7 +104,6 @@
     <ClCompile Include="..\..\src\EC\SceneManager.cpp" />
     <ClCompile Include="..\..\src\EC\Serializer.cpp" />
     <ClCompile Include="..\..\src\EC\Transform.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\EC\Component.h" />
@@ -116,7 +115,11 @@
     <ClInclude Include="..\..\src\EC\SceneManager.h" />
     <ClInclude Include="..\..\src\EC\Serializer.h" />
     <ClInclude Include="..\..\src\EC\Transform.h" />
-    <ClInclude Include="Vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

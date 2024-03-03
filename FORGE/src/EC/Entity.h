@@ -3,7 +3,7 @@
 #define ENTITY_H_
 #include <unordered_map>
 #include <string>
-#include <vector>
+#include <unordered_set>
 
 class Scene;
 class Component;
@@ -17,7 +17,7 @@ private:
 	Scene* scene;
 	std::unordered_map<std::string, Component*> components;
 	Entity* parent;
-	std::vector<Entity*> children;
+	std::unordered_set<Entity*> children;
 	int groupId;
 	bool alive;
 
@@ -63,6 +63,7 @@ public:
 	/// <param name="child">Puntero a la Entity hija.</param>
 	/// <returns>Puntero a la Entity hija.</returns>
 	Entity* addChild(Entity* child);
+	Entity* removeChild(Entity* child);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
