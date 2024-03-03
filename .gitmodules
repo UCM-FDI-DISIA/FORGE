@@ -1,0 +1,3 @@
+[submodule "FORGE/Dependencies"]
+	path = FORGE/Dependencies
+	url = https://github.com/UCM-FDI-DISIA/FORGE_Dependencies.git
