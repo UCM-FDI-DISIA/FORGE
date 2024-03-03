@@ -47,24 +47,86 @@ void EcsLoad::extractEntityValues(EntityData& ed, luabridge::LuaRef& h, luabridg
 	}
 }
 
+void EcsLoad::extractChildren(EntityData& ed, luabridge::LuaRef& children) {
+	if (!children.isNil()) {
+		if (!ed.isBlueprint) {
+			for (auto&& child : pairs(children)) {
+				ed.children.push_back(parseEntityData(child.second));
+			}
+		}
+		else {
+			for (auto&& child : pairs(children)) {
+				luabridge::LuaRef index = child.second["index"];
+				if (index.isNil()) {
+					ed.children.push_back(parseEntityData(child.second));
+				}
+				else {
+					int i = index[0].cast<int>();
+					if (i < 0 || i >= ed.children.size()) {
+						ed.children.push_back(parseEntityData(child.second));
+					}
+					else {
+						std::string mode = index[1].cast<std::string>();
+						EntityData*& edChild = ed.children[i];
+						if (mode == "modify") {
+							// si estas modificando un blueprint lo copias
+							if (edChild->isBlueprint) {
+								edChild = new EntityData(*edChild);
+							}
+							modifyChildrenData(*edChild, child.second);
+						}
+						else {
+							if (edChild && !edChild->isBlueprint) {
+								delete edChild;
+							}
+							edChild = nullptr;
+							if (mode != "delete"/*|| (mode == "replace")*/) {
+								edChild = parseEntityData(child.second);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+void EcsLoad::modifyChildrenData(EntityData& cd, luabridge::LuaRef& data) {
+	luabridge::LuaRef
+		group = data["group"],
+		handler = data["handler"],
+		components = data["components"],
+		children = data["children"];
+	extractEntityValues(cd, handler, group, components);
+	cd.isBlueprint = true;
+	extractChildren(cd, children);
+	cd.isBlueprint = false;
+}
+
+
 EntityData* EcsLoad::parseEntityData(luabridge::LuaRef& l_entity) {
 	luabridge::LuaRef
 		group = l_entity["group"],
 		handler = l_entity["handler"],
 		blueprint = l_entity["blueprint"],
-		components = l_entity["components"];
+		components = l_entity["components"],
+		children = l_entity["children"];
+
 
 	EntityData* es;
 	if (blueprint.isNil()) {
 		es = new EntityData();
 		extractEntityValues(*es, handler, group, components);
+		extractChildren(*es, children);
 	}
 	else {
 		es = sceneManager.getEntityBlueprint(blueprint.cast<std::string>());
-		if (!(handler.isNil() && group.isNil() && components.isNil())) {
+		if (!(handler.isNil() && group.isNil() && components.isNil() && children.isNil())) {
 			es = new EntityData(*es);
-			es->isBlueprint = false;
 			extractEntityValues(*es, handler, group, components);
+			extractChildren(*es, children);
+			es->isBlueprint = false;
 		}
 	}
 
@@ -74,7 +136,7 @@ EntityData* EcsLoad::parseEntityData(luabridge::LuaRef& l_entity) {
 std::vector<EntityData*> EcsLoad::parseScene(luabridge::LuaRef& l_scene) {
 	std::vector<EntityData*> scene;
 	for (auto&& entity : pairs(l_scene)) {
-		scene.push_back( parseEntityData(entity.second));
+		scene.push_back(parseEntityData(entity.second));
 	}
 	return scene;
 }

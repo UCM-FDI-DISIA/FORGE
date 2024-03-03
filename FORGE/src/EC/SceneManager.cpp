@@ -12,6 +12,22 @@ SceneManager::SceneManager() :
 	lua(nullptr) {
 }
 
+Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
+	Entity* ent = scene->addEntity(getGroupId(data->group));
+	if (data->handler != "") {
+		scene->setHandler(data->handler,ent);
+	}
+	for (auto& childData : data->children) {
+		if (childData != nullptr) {
+			Entity* child = addEntity(scene, childData);
+			ent->addChild(child);
+		}
+	}
+	for (auto& c : data->components) {
+		ent->addComponent(c.second);
+	}
+}
+
 SceneManager::~SceneManager() {
 	for (auto& scene : loadedScenes) {
 		delete scene.second;
@@ -74,13 +90,7 @@ Scene* SceneManager::createScene(std::string id)
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* e : iter->second) {
-		Entity* ent = newScene->addEntity(getGroupId(e->group));
-		if (e->handler != "") {
-			newScene->setHandler(e->handler,ent);
-		}
-		for (auto& c : e->components) {
-			ent->addComponent(c.second);
-		}
+		addEntity(newScene, e);
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;

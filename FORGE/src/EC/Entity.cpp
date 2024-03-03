@@ -4,16 +4,21 @@
 #include "ComponentData.h"
 
 Entity::Entity() : 
+    fact(*Factory::getInstance()),
     scene(nullptr),
     components(),
-    alive(false),
+    parent(nullptr),
+    children(),
     groupId(0),
-    fact(*Factory::getInstance()){
+    alive(false) {
 }
 
 Entity::~Entity() { 
-    for (auto iter = components.begin(); iter != components.end(); iter = components.erase(iter)) {
-        delete iter->second;
+    for (auto& c : components) {
+        delete c.second;
+    }
+    for (auto& c : children) {
+        delete c;
     }
 }
 
@@ -39,6 +44,17 @@ Component* Entity::addComponent(ComponentData* data) {
     c->initSerialized(data);
     c->initComponent(data);
     return c;
+}
+
+Entity* Entity::addChild(Entity* child) {
+    children.push_back(child);
+    child->setParent(this);
+    return child;
+}
+
+Entity* Entity::setParent(Entity* newParent) {
+    parent = newParent;
+    return parent;
 }
 
 void Entity::removeComponent(std::string name) {

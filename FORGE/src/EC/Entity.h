@@ -3,6 +3,7 @@
 #define ENTITY_H_
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 class Scene;
 class Component;
@@ -15,8 +16,17 @@ private:
 	Factory& fact;
 	Scene* scene;
 	std::unordered_map<std::string, Component*> components;
+	Entity* parent;
+	std::vector<Entity*> children;
 	int groupId;
 	bool alive;
+
+	/// <summary>
+	/// Establece cual es la Entity padre de esta Entity.
+	/// </summary>
+	/// <param name="parent">Puntero a la Entity que se establece como padre.</param>
+	/// <returns>Puntero a la Entity que se establece como padre.</returns>
+	Entity* setParent(Entity* parent);
 public:
 	/// <summary>
 	/// Constructor por defecto de la clase Entity
@@ -47,6 +57,12 @@ public:
 	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Informacion del componente en formato de object de Lua</param>
 	Component* addComponent(ComponentData* data);
+	/// <summary>
+	/// Agrega una nueva Entity como hija de this, y establece this como el padre de la hija.
+	/// </summary>
+	/// <param name="child">Puntero a la Entity hija.</param>
+	/// <returns>Puntero a la Entity hija.</returns>
+	Entity* addChild(Entity* child);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>

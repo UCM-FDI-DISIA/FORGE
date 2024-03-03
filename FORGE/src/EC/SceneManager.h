@@ -27,6 +27,8 @@ private:
 
     SceneManager();
 
+	Entity* addEntity(Scene* scene, EntityData* data);
+
 public:
 	/// <summary>
 	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas

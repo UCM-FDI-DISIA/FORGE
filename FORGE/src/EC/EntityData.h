@@ -12,6 +12,7 @@ struct EntityData {
 	std::string handler = "";
 	// Tiene que ser unordered map de punteros a LuaRef para funcionar el forwarding
 	std::unordered_map<std::string, ComponentData*> components;
+	std::vector<EntityData*> children;
 	~EntityData();
 };
 #endif

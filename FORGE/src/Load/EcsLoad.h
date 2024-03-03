@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <tuple>
 
 class SceneManager;
 class LuaForge;
@@ -25,6 +26,18 @@ private:
 	/// <param name="g">Entrada en lua con el la informacion de group.</param>
 	/// <param name="cmps">Entrada en lua con la informacion de los componentes.</param>
 	void extractEntityValues( EntityData& ed, luabridge::LuaRef& h, luabridge::LuaRef& g, luabridge::LuaRef& cmps );
+	/// <summary>
+	/// Modifica una entidad hija en una copia de un blueprint.
+	/// </summary>
+	/// <param name="cd">Estructura donde se guardan los parametros del hijo.</param>
+	/// <param name="data">Entrada en lua con los datos de modificacion de la entidad.</param>
+	void modifyChildrenData(EntityData& cd, luabridge::LuaRef& data);
+	/// <summary>
+	/// Agrega al EntityData los hijos asignados en Lua.
+	/// </summary>
+	/// <param name="es">Estructura donde se guardan los parametros.</param>
+	/// <param name="children">Entrada en lua con los hijos de la entidad.</param>
+	void extractChildren(EntityData& ed, luabridge::LuaRef& children);
 	/// <summary>
 	/// Lee una entidad de lua y la introduce en el SceneManager.
 	/// </summary>
