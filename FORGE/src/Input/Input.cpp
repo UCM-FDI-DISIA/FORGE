@@ -81,6 +81,7 @@ Input::Input() {
 	SDLPreviousEvent.type = SDL_KEYDOWN;
 	keyboardState = SDL_GetKeyboardState(0);
 	setDefaultState();
+	SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 }
 
 Input* Input::getInstance() {
