@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Entity.h"
+#include "Component.h"
 #include "EntityData.h"
 #include "lua.hpp"
 #include "LuaBridge/LuaBridge.h"
@@ -13,12 +14,14 @@ SceneManager::SceneManager() :
 }
 
 Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
+	std::unordered_map<Component*, ComponentData*> initData;
 	Entity* ent = scene->addEntity(getGroupId(data->group));
 	if (data->handler != "") {
 		scene->setHandler(data->handler,ent);
 	}
 	for (auto& c : data->components) {
-		ent->addComponent(c.second);
+		Component* comp = ent->addComponent(c.first);
+		initData.insert({ comp,c.second });
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
@@ -26,6 +29,11 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 			ent->addChild(child);
 		}
 	}
+	for (auto& c : initData) {
+		c.first->initSerialized(c.second);
+		c.first->initComponent(c.second);
+	}
+
 }
 
 SceneManager::~SceneManager() {

@@ -55,6 +55,12 @@ public:
 	/// Agrega el Component dicho a la Entity
 	/// </summary>
 	/// <returns>Un puntero al Component agregado</returns>
+	/// <param name="data">Identificador del componente</param>
+	Component* addComponent(std::string id);
+	/// <summary>
+	/// Agrega el Component dicho a la Entity y lo inicializa
+	/// </summary>
+	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Informacion del componente en formato de object de Lua</param>
 	Component* addComponent(ComponentData* data);
 	/// <summary>
