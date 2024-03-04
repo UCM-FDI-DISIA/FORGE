@@ -258,8 +258,6 @@ namespace forge {
 		#pragma endregion
 
 		#pragma region Getters
-		// Getters
-
 		/// <summary>
 		/// Acceso a la componente en X del vector
 		/// </summary>

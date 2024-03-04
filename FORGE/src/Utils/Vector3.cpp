@@ -19,20 +19,20 @@ Vector3::Vector3(float v) :
 	y(v),
 	z(v) {}
 
-Vector3::Vector3(const Vector3& v) :
-	x(v.x),
-	y(v.y),
-	z(v.z) {}
+Vector3::Vector3(const Vector3& w) :
+	x(w.x),
+	y(w.y),
+	z(w.z) {}
 
-Vector3::Vector3(Vector3&& v) noexcept :
-	x(v.x),
-	y(v.y),
-	z(v.z) {}
+Vector3::Vector3(Vector3&& w) noexcept :
+	x(w.x),
+	y(w.y),
+	z(w.z) {}
 
-Vector3::Vector3(const Vector3* v) :
-	x(v->x),
-	y(v->y),
-	z(v->z) {}
+Vector3::Vector3(const Vector3* w) :
+	x(w->x),
+	y(w->y),
+	z(w->z) {}
 
 Vector3::~Vector3() {}
 #pragma endregion
@@ -50,44 +50,44 @@ Vector3 Vector3::normalised() const{
 	return Vector3(x / m, y / m, z / m);
 }
 
-float Vector3::distance(const Vector3& v) const {
-	float m = Vector3(x - v.x, y - v.y, z - v.z).magnitude();
+float Vector3::distance(const Vector3& w) const {
+	float m = Vector3(x - w.x, y - w.y, z - w.z).magnitude();
 	return m;
 }
 
-Vector3 Vector3::maxV(const Vector3& v) const {
-	return Vector3(std::fmaxf(x, v.x), std::fmaxf(y, v.y), std::fmaxf(z, v.z));
+Vector3 Vector3::maxV(const Vector3& w) const {
+	return Vector3(std::fmaxf(x, w.x), std::fmaxf(y, w.y), std::fmaxf(z, w.z));
 }
 
-Vector3 Vector3::minV(const Vector3& v) const {
-	return Vector3(std::fminf(x, v.x), std::fminf(y, v.y), std::fminf(z, v.z));
+Vector3 Vector3::minV(const Vector3& w) const {
+	return Vector3(std::fminf(x, w.x), std::fminf(y, w.y), std::fminf(z, w.z));
 }
 
-Vector3 Vector3::lerp(const Vector3& v, float t) const {
-	return Vector3(x + (v.x - x) * t, y + (v.y - y) * t, z + (v.z - z) * t);
+Vector3 Vector3::lerp(const Vector3& w, float t) const {
+	return Vector3(x + (w.x - x) * t, y + (w.y - y) * t, z + (w.z - z) * t);
 }
 
 #pragma region Operadores
-Vector3& Vector3::operator=(const Vector3& v) {
-	x = v.x;
-	y = v.y;
-	z = v.z;
+Vector3& Vector3::operator=(const Vector3& w) {
+	x = w.x;
+	y = w.y;
+	z = w.z;
 	return *this;
 }
 
-Vector3 Vector3::operator-(const Vector3& v) const {
-	return Vector3(x - v.x, y - v.y, z - v.z);
+Vector3 Vector3::operator+(const Vector3& w)  const {
+	return Vector3(x + w.x, y + w.y, z + w.z);
 }
 
-Vector3 Vector3::operator+(const Vector3& v)  const {
-	return Vector3(x + v.x, y + v.y, z + v.z);
-}
-
-Vector3 Vector3::operator+=(const Vector3& v) {
-	x += v.x;
-	y += v.y;
-	z += v.z;
+Vector3 Vector3::operator+=(const Vector3& w) {
+	x += w.x;
+	y += w.y;
+	z += w.z;
 	return *this;
+}
+
+Vector3 Vector3::operator-(const Vector3& w) const {
+	return Vector3(x - w.x, y - w.y, z - w.z);
 }
 
 Vector3 Vector3::operator*(float d)  const {
@@ -98,38 +98,32 @@ Vector3 Vector3::operator/(float d)  const {
 	return Vector3(x / d, y / d, z / d);
 }
 
-Vector3 Vector3::operator*(const Vector3& v)  const {
-	return Vector3(x*v.x, y*v.y, z * v.z);
+Vector3 Vector3::operator*(const Vector3& w)  const {
+	return Vector3(x * w.x, y * w.y, z * w.z);
 }
 
-Vector3 Vector3::operator*=(const Vector3& v) {
-	x *= v.x;
-	y *= v.y;
-	z *= v.z;
+Vector3 Vector3::operator*=(const Vector3& w) {
+	x *= w.x;
+	y *= w.y;
+	z *= w.z;
 	return *this;
 }
 
-bool Vector3::operator==(const Vector3& v) const {
+bool Vector3::operator==(const Vector3& w) const {
 	float min = pow(1, E - 5);
-	return (abs(x - v.x) <= min && abs(y - v.y) <= min && abs(z - v.z) <= min);
-	float m1 = magnitude();
-	float m2 = v.magnitude();
-	return (abs(m1 - m2) <= min);
+	return (abs(x - w.x) <= min && abs(y - w.y) <= min && abs(z - w.z) <= min);
 }
 
-bool Vector3::operator!=(const Vector3& v)  const {
+bool Vector3::operator!=(const Vector3& w)  const {
 	float min = pow(1, E - 5);
-	return (abs(x - v.x) > min && abs(y - v.y) > min && abs(z - v.z) > min);
-	Vector3 diff = Vector3(x, y, z) - v;
-	float min = 1 * pow(10, -5);
-	return (abs(diff.magnitude()) <= min);
+	return (abs(x - w.x) > min && abs(y - w.y) > min && abs(z - w.z) > min);
 }
 #pragma endregion
 
 #pragma region Angulos
-float Vector3::angle(const Vector3& v) const {
-	float prodEsc = dot(v);
-	float angle = std::acos(prodEsc / (magnitude() * v.magnitude()));
+float Vector3::angle(const Vector3& w) const {
+	float prodEsc = dot(w);
+	float angle = std::acos(prodEsc / (magnitude() * w.magnitude()));
 
 	return angle * 180 / PI;
 }
@@ -141,21 +135,21 @@ Vector3 Vector3::reflect(const Vector3& normal) const {
 	return Vector3(x, y, z) - reflectPart;
 }
 
-Vector3 Vector3::project(const Vector3& v) const {
-	float dotProduct = dot(v);
-	float div = dotProduct / v.sqrMagnitude();
-	return v * div;
+Vector3 Vector3::project(const Vector3& w) const {
+	float dotProduct = dot(w);
+	float div = dotProduct / w.sqrMagnitude();
+	return w * div;
 }
 
-Vector3 Vector3::cross(const Vector3& v) const {
-	float compX = y * v.z - z * v.y;
-	float compY = x * v.z - z * v.x;
-	float compZ = x * v.y - y * v.x;
+Vector3 Vector3::cross(const Vector3& w) const {
+	float compX = y * w.z - z * w.y;
+	float compY = x * w.z - z * w.x;
+	float compZ = x * w.y - y * w.x;
 	return Vector3(compX, -1.0f * compY, compZ);
 }
 
-float forge::Vector3::dot(const Vector3& v) const {
-	return v.x * x + v.y * y + v.z * z;
+float forge::Vector3::dot(const Vector3& w) const {
+	return w.x * x + w.y * y + w.z * z;
 }
 #pragma endregion
 
@@ -178,22 +172,22 @@ void Vector3::set(float newX, float newY, float newZ) {
 	z = newZ;
 }
 
-void Vector3::set(const Vector3& v) {
-	x = v.x;
-	y = v.y;
-	z = v.z;
+void Vector3::set(const Vector3& w) {
+	x = w.x;
+	y = w.y;
+	z = w.z;
 }
 
-void Vector3::set(const Vector3&& v) {
-	x = v.x;
-	y = v.y;
-	z = v.z;
+void Vector3::set(const Vector3&& w) {
+	x = w.x;
+	y = w.y;
+	z = w.z;
 }
 
-void Vector3::set(const Vector3* v) {
-	x = v->x;
-	y = v->y;
-	z = v->z;
+void Vector3::set(const Vector3* w) {
+	x = w->x;
+	y = w->y;
+	z = w->z;
 }
 #pragma endregion
 
