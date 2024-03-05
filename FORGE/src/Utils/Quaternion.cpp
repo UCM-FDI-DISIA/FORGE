@@ -98,11 +98,11 @@ Vector3 Quaternion::operator*(const Vector3& v) const {
 }
 
 bool Quaternion::operator==(const Quaternion& q) const{
-	return dot(q) > 0.999999f;
+	return x == q.x && y == q.y && z == q.z && w == q.w;
 }
 
 bool Quaternion::operator!=(const Quaternion& q) const{
-	return dot(q) <= 0.999999f;
+	return x != q.x && y != q.y && z != q.z && w != q.w;
 }
 #pragma endregion
 
