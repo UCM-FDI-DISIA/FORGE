@@ -25,10 +25,6 @@ public:
 	/// </summary>
 	LuaForge();
 	/// <summary>
-	/// Elimina su lua_State
-	/// </summary>
-	~LuaForge();
-	/// <summary>
 	/// Devuelve el lua_State contenido
 	/// </summary>
 	/// <returns>Un puntero al lua_State contenido en la clase</returns>

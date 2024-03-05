@@ -50,6 +50,7 @@ SceneManager::~SceneManager() {
 	for (auto& entity : entityBlueprints) {
 		delete entity.second;
 	}
+	lua_close(lua);
 }
 
 SceneManager* SceneManager::getInstance() {
