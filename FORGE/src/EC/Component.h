@@ -57,10 +57,24 @@ public:
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion del Component</param>
 	void setEnabled(bool _enabled);
+
+	#pragma region Getters
 	/// <returns>
 	///	Si el Component esta activado
 	/// </returns>
-	bool isEnabled();
+	bool isEnabled() const;
+	/// <returns>
+	///	La Entity a la que pertenece el Component
+	/// </returns>
+	Entity* getEntity() const;
+	/// <returns>
+	///	La Scene a la que pertenece la Entity padre
+	/// </returns>
+	Scene* getScene() const;
+	#pragma endregion
+
+
+
 
 };
 

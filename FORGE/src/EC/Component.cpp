@@ -32,6 +32,14 @@ void Component::setEnabled(bool _enabled) {
     enabled = _enabled;
 }
 
-bool Component::isEnabled() {
+bool Component::isEnabled() const {
     return enabled;
+}
+
+Entity* Component::getEntity() const {
+    return entity;
+}
+
+Scene* Component::getScene() const {
+    return scene;
 }
