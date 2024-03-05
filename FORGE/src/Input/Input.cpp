@@ -19,17 +19,17 @@ void Input::onMouseWheelMotion(const SDL_Event& event) {
 void Input::onMouseButton(const SDL_Event& event, bool down) {
 	switch (event.button.button)
 	{
-	case SDL_BUTTON_LEFT:
-		mouseButtons[0] = down;
-		break;
-	case SDL_BUTTON_MIDDLE:
-		mouseButtons[1] = down;
-		break;
-	case SDL_BUTTON_RIGHT:
-		mouseButtons[2] = down;
-		break;
-	default:
-		break;
+		case SDL_BUTTON_LEFT:
+			mouseButtons[0] = down;
+			break;
+		case SDL_BUTTON_MIDDLE:
+			mouseButtons[1] = down;
+			break;
+		case SDL_BUTTON_RIGHT:
+			mouseButtons[2] = down;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -78,7 +78,6 @@ void Input::onControllerAxisMotion(const SDL_Event& event) {
 }
 
 Input::Input() {
-	SDLPreviousEvent.type = SDL_KEYDOWN;
 	keyboardState = SDL_GetKeyboardState(0);
 	setDefaultState();
 	SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
@@ -205,11 +204,11 @@ bool Input::isControllerButtonUp(ControllerButtonNames button) {
 
 int Input::getControllerAxis(ControllerAxisNames ax) {
 	int axis = SDL_GameControllerGetAxis(controller, (SDL_GameControllerAxis) ax);
-	float dz = (axis >= 0) ? CONTROLLER_AXIS_POS_DEADZONE : CONTROLLER_AXIS_NEG_DEADZONE;
+	float deadZone = (axis >= 0) ? CONTROLLER_AXIS_POS_DEADZONE : CONTROLLER_AXIS_NEG_DEADZONE;
 	float max = (axis >= 0) ? CONTROLLER_AXIS_MAX : CONTROLLER_AXIS_MIN;
 
-	if (abs(axis) < abs(dz)) return 0;
-	return axis - (dz * ((max - axis) / (max - dz)));
+	if (abs(axis) < abs(deadZone)) return 0;
+	return axis - (deadZone * ((max - axis) / (max - deadZone)));
 }
 
 float Input::getNormalizedControllerAxis(ControllerAxisNames ax) {
