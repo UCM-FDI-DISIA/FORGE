@@ -6,9 +6,9 @@ namespace forge {
 	class Vector2 {
 	private:
 		// Primera coordenada
-		float X;
+		float x;
 		// Segunda coordenada
-		float Y;
+		float y;
 	public:
 		/// <summary>
 		/// Constructora por defecto de la clase Vector2D
@@ -17,7 +17,7 @@ namespace forge {
 		/// <summary>
 		/// Constructora a partir de parametros
 		/// </summary>	
-		Vector2(float x, float y);
+		Vector2(float _x, float _y);
 		/// <summary>
 		/// Constructora a partir de otro vector
 		/// </summary>	
@@ -77,11 +77,11 @@ namespace forge {
 		/// <summary>
 		/// Setea el valor de la coordenada X
 		/// </summary>	
-		void setX(float x);
+		void setX(float _x);
 		/// <summary>
 		/// Setea el valor de la coordenada y
 		/// </summary>	
-		void setY(float y);
+		void setY(float _y);
 		/// <summary>
 		/// Setea un vector a través de otro vector
 		/// </summary>	
@@ -89,7 +89,7 @@ namespace forge {
 		/// <summary>
 		/// Setea un vector a través de floats
 		/// </summary>	
-		void set(float x, float y);
+		void set(float _x, float _y);
 	};
 }
 #endif

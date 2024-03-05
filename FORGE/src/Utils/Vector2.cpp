@@ -3,68 +3,62 @@
 using namespace forge;
 
 Vector2::Vector2() :
-	X(0.0f),
-	Y(0.0f) {
+	x(0.0f),
+	y(0.0f) {
 }
-Vector2::Vector2(float x, float y) :
-	X(x),
-	Y(y) {
+Vector2::Vector2(float _x, float _y) :
+	x(_x),
+	y(_y) {
 }
 Vector2::Vector2(const Vector2& v) :
-	X(v.X),
-	Y(v.Y) {
+	x(v.x),
+	y(v.y) {
 }
 
 Vector2::~Vector2(){}
 
 Vector2 Vector2::operator+(const Vector2& v) const {
-	return Vector2( X + v.X, Y + v.Y );
+	return Vector2(x + v.x, y + v.y);
 }
 Vector2 Vector2::operator-(const Vector2& v) const {
-	return Vector2( X - v.X, Y - v.Y );
+	return Vector2(x - v.x, y - v.y);
 }
 Vector2 Vector2::operator*(float e) const {
-	return Vector2( X * e, Y * e );
+	return Vector2(x * e, y * e );
 }
 Vector2 Vector2::operator/(float e) const {
-	return Vector2( X / e, Y / e );
+	return Vector2(x / e, y / e );
 }
 float Vector2::operator *(const Vector2& v) const {
-	return ( X * v.X + Y * v.Y );
+	return (x * v.x + y * v.y);
 }
 bool Vector2::operator==(const Vector2& v) const {
-	return (X == v.X && Y == v.Y);
+	return (x == v.x && y == v.y);
 }
 bool Vector2::operator!=(const Vector2& v) const {
-	return (X != v.X || Y != v.Y);
+	return (x != v.x || y != v.y);
 }
 
 float Vector2::magnitude() const {
-	return sqrtf( X*X + Y*Y );
+	return sqrtf(x * x + y * y);
 }
 Vector2 Vector2::normalize() const {
 	return *this / magnitude();
 }
 
-float Vector2::getX() const{
-	return X;
-}
+float Vector2::getX() const { return x; }
 
-float Vector2::getY() const{
-	return Y;
-}
+float Vector2::getY() const { return y; }
 
-void Vector2::setX(float x) {
-	X = x;
-}
-void Vector2::setY(float y) {
-	Y = y;
-}
+void Vector2::setX(float _x) {	x = _x; }
+
+void Vector2::setY(float _y) {	y = _y; }
+
 void Vector2::set(const Vector2& v) {
-	X = v.X;
-	Y = v.Y;
+	x = v.x;
+	y = v.y;
 }
-void Vector2::set(float x, float y) {
-	X = x;
-	Y = y;
+void Vector2::set(float _x, float _y) {
+	x = _x;
+	y = _y;
 }
