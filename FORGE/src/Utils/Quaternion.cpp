@@ -54,10 +54,11 @@ Quaternion& Quaternion::operator=(const Quaternion& q) {
 	y = q.y;
 	z = q.z;
 	w = q.w;
+	return *this;
 }
 
 Quaternion& forge::Quaternion::operator=(const Vector3& e) {
-	*this = Quaternion(e);
+	return *this = Quaternion(e);
 }
 
 float Quaternion::dot(const Quaternion& q) const{

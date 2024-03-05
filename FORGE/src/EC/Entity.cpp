@@ -60,6 +60,7 @@ Entity* Entity::addChild(Entity* child) {
 
 Entity* Entity::removeChild(Entity* child) {
     children.erase(child);
+    return child;
 }
 
 Entity* Entity::setParent(Entity* newParent) {

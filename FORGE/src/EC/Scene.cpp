@@ -37,10 +37,6 @@ void Scene::fixedUpdate() {
     }
 }
 
-void Scene::render() const {
-
-}
-
 void Scene::refresh() {
     for (auto& group : entitiesByGroup) {
         group.erase(
