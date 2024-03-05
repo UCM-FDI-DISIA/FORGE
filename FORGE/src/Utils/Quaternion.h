@@ -1,0 +1,198 @@
+#pragma once
+#include "Vector3.h"
+namespace forge {
+	class Quaternion {
+	private:
+		float x;
+		float y;
+		float z;
+		float w;
+	public:
+		#pragma region Constructores
+		/// <summary>
+		/// Constructor predeterminado: Quaternion(0,0,0,0)
+		/// </summary>
+		Quaternion();
+
+		/// <summary>
+		/// Constructor completo
+		/// </summary>
+		/// <param name="_x">Valor en la componente X</param>
+		/// <param name="_y">Valor en la componente Y</param>
+		/// <param name="_z">Valor en la componente Z</param>
+		/// <param name="_w">Valor w</param>
+		Quaternion(float _x, float _y, float _z, float _w);
+
+		/// <summary>
+		/// Constructor por copia
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar</param>
+		Quaternion(const Quaternion& q);
+
+		/// <summary>
+		/// Constructor por copia (referencia)
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar</param>
+		Quaternion(Quaternion&& q) noexcept;
+
+		/// <summary>
+		/// Constructor por copia (puntero)
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar</param>
+		Quaternion(const Quaternion* q);
+
+		/// <summary>
+		/// Contructor a partir de un vector (Euleriano)
+		/// </summary>
+		/// <param name="e">Vector euleriano a comvertir en cuaternion</param>
+		Quaternion(const Vector3& e);
+
+		~Quaternion();
+		#pragma endregion
+
+		#pragma region Operadores
+		/// <summary>
+		/// Asigna la informacion de Q a este cuaternion
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar</param>
+		/// <returns>Cuaternion actualizado</returns>
+		Quaternion& operator=(const Quaternion& q);
+		
+		/// <summary>
+		/// Asigna la informacion del vector E (Euleriano) a este cuaternion
+		/// </summary>
+		/// <param name="e">Euleriano a convertir</param>
+		/// <returns>Cuaternion actualizado</returns>
+		Quaternion& operator=(const Vector3& e);
+
+		/// <summary>
+		/// Calcula el producto escalar de los quaterniones
+		/// </summary>
+		/// <param name="q">El otro cuaternion</param>
+		/// <returns>Producto escalar de ambos</returns>
+		float dot(const Quaternion& q) const;
+		
+		/// <summary>
+		/// Multiplicacion polinomial de cuaterniones
+		/// </summary>
+		/// <param name="q">El otro cuaternion</param>
+		/// <returns>El resultado de la multiplicacion polinomial</returns>
+		Quaternion operator*(const Quaternion& q) const;
+		
+		/// <summary>
+		/// Calcula la multiplicacion polinomial de cuaterniones y asigna su resultado a este cuaternion
+		/// </summary>
+		/// <param name="q">El otro cuaternion</param>
+		/// <returns>El cuaternion actualizado</returns>
+		Quaternion operator*=(const Quaternion& q);
+		
+		/// <summary>
+		/// Rotacion de un vector aplicando este cuaternion
+		/// </summary>
+		/// <param name="v">El vector a rotar</param>
+		/// <returns>El vector V rotado</returns>
+		Vector3 operator*(const Vector3& v) const;
+
+		/// <summary>
+		/// Compara dos cuaterniones. Seran iguales si su producto escalar es igual a 1
+		/// </summary>
+		/// <param name="q">El otro cuaternion</param>
+		/// <returns>Si son iguales</returns>
+		bool operator==(const Quaternion& q) const;
+		
+		/// <summary>
+		/// Compara dos cuaterniones. Seran distintos si su producto escalar es menor a 1
+		/// </summary>
+		/// <param name="q">El otro cuaternion</param>
+		/// <returns>Si son distintos</returns>
+		bool operator!=(const Quaternion& q) const;
+		#pragma endregion
+
+		/// <summary>
+		/// Calcula un vector Euleriano a partir del cuaternion
+		/// </summary>
+		/// <returns>El vector Euleriano constante</returns>
+		Vector3 toEuler() const;
+
+		#pragma region Setters
+		/// <summary>
+		/// Asigna un nuevo valor a la componente en X del cuaternion
+		/// </summary>
+		/// <param name="newX">Nuevo valor en X</param>
+		void setX(float newX);
+
+		/// <summary>
+		/// Asigna un nuevo valor a la componente en Y del cuaternion
+		/// </summary>
+		/// <param name="newY">Nuevo valor en Y</param>
+		void setY(float newY);
+
+		/// <summary>
+		/// Asigna un nuevo valor a la componente en Z del cuaternion
+		/// </summary>
+		/// <param name="newZ">Nuevo valor en Z</param>
+		void setZ(float newZ);
+
+		/// <summary>
+		/// Asigna un nuevo valor W
+		/// </summary>
+		/// <param name="newW">Nuevo valor W</param>
+		void setW(float newW);
+
+		/// <summary>
+		/// Asigna nuevos valores al cuaternion
+		/// </summary>
+		/// <param name="newX">Valor del cuaternion en el eje X</param>
+		/// <param name="newY">Valor del cuaternion en el eje Y</param>
+		/// <param name="newZ">Valor del cuaternion en el eje Z</param>
+		/// <param name="newW">Valor W del cuaternion</param>
+		void set(float newX, float newY, float newZ, float newW);
+
+		/// <summary>
+		/// Asigna nuevos valores al cuaternion copiando los de Q
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar</param>
+		void set(const Quaternion& q);
+
+		/// <summary>
+		/// Asigna nuevos valores al cuaternion copiando los de Q
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar (referencia)</param>
+		void set(const Quaternion&& q);
+
+		/// <summary>
+		/// Asigna nuevos valores al cuaternion copiando los del cuaternion al que apunta Q
+		/// </summary>
+		/// <param name="q">Cuaternion a copiar (puntero)</param>
+		void set(const Quaternion* q);
+		#pragma endregion
+
+		#pragma region Getters
+		/// <summary>
+		/// Acceso a la componente en X del cuaternion
+		/// </summary>
+		/// <returns>Devuelve la componente en X</returns>
+		float getX() const;
+
+		/// <summary>
+		/// Acceso a la componente en Y del cuaternion
+		/// </summary>
+		/// <returns>Devuelve la componente en Y</returns>
+		float getY() const;
+
+		/// <summary>
+		/// Acceso a la componente en Z del cuaternion
+		/// </summary>
+		/// <returns>Devuelve la componente en Z</returns>
+		float getZ() const;
+
+		/// <summary>
+		/// Acceso al valor W del cuaternion
+		/// </summary>
+		/// <returns>Devuelve el valor W</returns>
+		float getW() const;
+		#pragma endregion
+
+		static const Quaternion IDENTITY;
+	};
+}
