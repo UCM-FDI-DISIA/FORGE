@@ -69,7 +69,13 @@ namespace forge {
 		/// Calcula el vector normalizado sin modificar el actual
 		/// </summary>
 		/// <returns>El vector normalizado</returns>
-		Vector3 normalised() const;
+		Vector3 normalized() const;
+
+		/// <summary>
+		/// Normaliza el vector
+		/// </summary>
+		/// <returns>Una referencia al vector normalizado</returns>
+		Vector3* normalize();
 
 		/// <summary>
 		/// Calcula la longitud entre 2 puntos

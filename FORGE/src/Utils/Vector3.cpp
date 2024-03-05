@@ -45,9 +45,17 @@ float Vector3::sqrMagnitude() const {
 	return magnitude() * magnitude();
 }
 
-Vector3 Vector3::normalised() const{
+Vector3 Vector3::normalized() const{
 	float m = magnitude();
 	return Vector3(x / m, y / m, z / m);
+}
+
+Vector3* Vector3::normalize() {
+	float m = magnitude();
+	x /= m;
+	y /= m;
+	z /= m;
+	return this;
 }
 
 float Vector3::distance(const Vector3& w) const {
