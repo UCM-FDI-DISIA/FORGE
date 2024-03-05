@@ -3,7 +3,6 @@
 #include <OgreRoot.h>
 #include <SDL.h>
 #include <OgreFileSystemLayer.h>
-#include <OgreOverlaySystem.h>
 #include <OgreBuildSettings.h>
 #include <OgreLogManager.h>
 #include <OgrePlugin.h>
@@ -12,6 +11,9 @@
 #include <OgreRTShaderConfig.h>
 #include <OgreRTShaderExports.h>
 
+/// <summary>
+/// a elminar
+/// </summary>
 namespace Render {
 	typedef SDL_Window NativeWindowType;
 
@@ -31,7 +33,6 @@ namespace Render {
 		NativeWindowPair mWindow; // the window
 
 		Ogre::FileSystemLayer* mFSLayer; // File system abstraction layer
-		Ogre::OverlaySystem* mOverlaySystem;  // Overlay system
 		
 		bool mFirstRun;
 		Ogre::String mAppName;

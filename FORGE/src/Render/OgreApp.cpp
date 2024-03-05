@@ -18,7 +18,6 @@ namespace Render {
 		mAppName = "FORGE";
 		mFSLayer = new Ogre::FileSystemLayer(mAppName);
 		mRoot = nullptr;
-		mOverlaySystem = nullptr;
 		mFirstRun = true;
 	}
 
@@ -42,7 +41,6 @@ namespace Render {
 
 		// Creamos la raíz de OGRE 
 		mRoot = new Ogre::Root(pluginsPath, mFSLayer->getWritablePath("ogre.cfg"), mFSLayer->getWritablePath("ogre.log"));
-		mOverlaySystem = new Ogre::OverlaySystem();
 	}
 
 	void OgreApp::setup() {
@@ -64,7 +62,6 @@ namespace Render {
 		// Creamos la escena
 		mRoot->addFrameListener(this);
 		mSM = mRoot->createSceneManager();
-		mSM->addRenderQueueListener(mOverlaySystem);
 		mSM->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
 		// Creamos una luz
