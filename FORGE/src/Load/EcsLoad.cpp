@@ -79,7 +79,8 @@ void EcsLoad::extractChildren(EntityData& entityData, LuaRef& children) {
 								delete childData;
 							}
 							childData = nullptr;
-							if (mode != "delete"/*|| (mode == "replace")*/) {
+							//Modo por defecto "replace", si no se ha especificado modo o el modo es incorrecto
+							if (mode != "delete") {
 								childData = parseEntityData(child.second);
 							}
 						}

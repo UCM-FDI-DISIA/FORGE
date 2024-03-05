@@ -29,10 +29,6 @@ public:
 	/// </summary>
     virtual void fixedUpdate();
     /// <summary>
-    /// Dibuja la Scene en pantalla
-    /// </summary>
-    virtual void render() const;
-    /// <summary>
     /// Borra todas las Entity no vivas
     /// </summary>
     void refresh();

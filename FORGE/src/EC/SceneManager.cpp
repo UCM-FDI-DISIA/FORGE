@@ -33,7 +33,7 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 		componentInit.first->initSerialized(componentInit.second);
 		componentInit.first->initComponent(componentInit.second);
 	}
-
+	return entity;
 }
 
 SceneManager::~SceneManager() {

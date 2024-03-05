@@ -137,7 +137,7 @@ float Vector3::angle(const Vector3& w) const {
 }
 
 Vector3 Vector3::reflect(const Vector3& normal) const {
-	Vector3 nNormalised = normal.normalised();
+	Vector3 nNormalised = normal.normalized();
 	float dotProduct = dot(nNormalised);
 	Vector3 reflectPart = nNormalised * (2 * dotProduct);
 	return Vector3(x, y, z) - reflectPart;
