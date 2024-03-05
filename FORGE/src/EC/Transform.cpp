@@ -100,7 +100,7 @@ forge::Vector3 const& Transform::getPosition() const {
 
 forge::Vector3 Transform::getGlobalPosition() const {
 	if (parent != nullptr) {
-		return position + parent->getGlobalPosition(); 
+		return parent->getGlobalRotation()*(position * parent->getGlobalScale()) + parent->getGlobalPosition(); 
 	}
 	else {
 		return position;
