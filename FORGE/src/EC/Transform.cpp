@@ -6,6 +6,8 @@ void Transform::setParent(Transform* newParent) {
 	parent = newParent;
 }
 
+const std::string Transform::id = "Transform";
+
 Transform::Transform() : 
 	position(),
 	rotation(),

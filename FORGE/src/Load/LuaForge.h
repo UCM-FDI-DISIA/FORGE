@@ -37,23 +37,11 @@ public:
 	/// Llama a lua_dofile para el  lua_State contenido
 	/// </summary>
 	/// <param name="path">Ruta del archivo .lua que se quiere ejecutar</param>
-	void dofile(std::string path);
+	void doFile(std::string path);
 	/// <summary>
-	/// Permite agregar una clase propia al lua_State contenido a través de LuaBridge
+	/// Permite agregar una clase propia al lua_State contenido a traves de LuaBridge.
 	/// </summary>
-	/// <param name="classCreation">Funcion que recibe lua_State* y que agrega una clase al lua_State recibido</param>
-	/// <example>
-	/// Ejemplo:
-	/// <code>
-	/// auto classCreation = [](lua_State* L) {
-	///		luabridge::getGlobalNamespace(L)
-	///			.beginClass<Vector3>("Vector3")
-	///				.addConstructor<void(*)(double, double, double)>()
-	///			.endClass();
-	/// };
-	/// importClassToLua(classCreation);
-	/// </code>
-	/// </example>
+	/// <param name="classCreation">Funcion que recibe lua_State* y que agrega una clase al lua_State recibido.</param>
 	void importClassToLua(std::function<void(lua_State*)> classCreation);
 };
 

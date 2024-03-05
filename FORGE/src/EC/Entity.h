@@ -74,7 +74,7 @@ public:
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
 	/// <param name="name">Nombre del Component a eliminar</param>
-	void removeComponent(std::string name);
+	void removeComponent(std::string id);
 	/// <returns>
 	/// Un puntero al Component pedido de esta Entity
 	/// </returns>

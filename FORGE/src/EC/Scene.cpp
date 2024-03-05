@@ -5,24 +5,24 @@
 Scene::Scene() :
     entitiesByGroup(SceneManager::getInstance()->getMaxGroupId()),
     handlers() {
-    for (auto & grpEnts : entitiesByGroup) {
-        grpEnts.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
+    for (auto & group : entitiesByGroup) {
+        group.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
     }
 }
 
 Scene::~Scene() {
     for (auto& group : entitiesByGroup) {
-        for (auto& e : group) {
-            delete e;
-            e = nullptr;
+        for (auto& entity : group) {
+            delete entity;
+            entity = nullptr;
         }
     }
 }
 
 void Scene::update() {
     for (auto& group : entitiesByGroup) {
-        for (auto& e : group) {
-            e->update();
+        for (auto& entity : group) {
+            entity->update();
         }
     }
 
@@ -31,8 +31,8 @@ void Scene::update() {
 
 void Scene::fixedUpdate() {
     for (auto& group : entitiesByGroup) {
-        for (auto& e : group) {
-            e->fixedUpdate();
+        for (auto& entity : group) {
+            entity->fixedUpdate();
         }
     }
 }
@@ -42,28 +42,28 @@ void Scene::render() const {
 }
 
 void Scene::refresh() {
-    for (auto& grpEnts : entitiesByGroup) {
-        grpEnts.erase(
-            std::remove_if(grpEnts.begin(), grpEnts.end(),
-                [](Entity* e) {
-                    if (e->isAlive()) {
+    for (auto& group : entitiesByGroup) {
+        group.erase(
+            std::remove_if(group.begin(), group.end(),
+                [](Entity* entity) {
+                    if (entity->isAlive()) {
                         return false;
                     }
                     else {
-                        delete e;
+                        delete entity;
                         return true;
                     }
                 }),
-            grpEnts.end());
+            group.end());
     }
 }
 
 Entity* Scene::addEntity(int groupId) {
-    Entity* e = new Entity();
-    e->setAlive(true);
-    e->setContext(this, groupId);
-	entitiesByGroup[groupId].push_back(e);
-    return e;
+    Entity* entity = new Entity();
+    entity->setAlive(true);
+    entity->setContext(this, groupId);
+	entitiesByGroup[groupId].push_back(entity);
+    return entity;
 }
 
 const std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
@@ -74,13 +74,13 @@ const std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
 }
 
 const Entity* Scene::getEntityByHandler(std::string handler) {
-    auto handIt = handlers.find(handler);
-    if (handIt == handlers.end()) {
+    auto iter = handlers.find(handler);
+    if (iter == handlers.end()) {
         return nullptr;
     }
-    return handIt->second;
+    return iter->second;
 }
 
-bool Scene::setHandler(std::string handler, Entity* ent) {
-    return handlers.insert(std::pair<std::string, Entity*>(handler, ent)).second;
+bool Scene::setHandler(std::string handler, Entity* entity) {
+    return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
 }

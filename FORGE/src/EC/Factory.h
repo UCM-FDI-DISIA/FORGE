@@ -29,13 +29,13 @@ public:
     /// );
     /// </code>
     /// </example>
-    bool registerComponent(std::string compName, std::function<Component*()> generator);
+    bool registerComponent(std::string id, std::function<Component*()> generator);
     /// <summary>
     /// Crea una instancia del componente con nombre pedido
     /// </summary>
     /// <param name="compName">Nombre del componente que se quiere agregar</param>
     /// <returns>Un puntero a la instancia de componente creada</returns>
-    Component* generateComponent(std::string compName);
+    Component* generateComponent(std::string id);
 };
 
 #endif // !FACTORY_H_

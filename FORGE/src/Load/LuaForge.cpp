@@ -40,7 +40,7 @@ lua_State* LuaForge::getState() const {
 	return lua;
 }
 
-void LuaForge::dofile(std::string path) {
+void LuaForge::doFile(std::string path) {
 	luaL_dofile(lua, path.c_str());
 }
 

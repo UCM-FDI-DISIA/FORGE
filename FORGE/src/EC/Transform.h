@@ -22,6 +22,8 @@ private:
 	/// <param name="newParent">Puntero al Transform de la nueva Entity padre.</param>
 	void setParent(Transform* newParent);
 public:
+	static const std::string id;
+
 	Transform();
 
 	#pragma region setters

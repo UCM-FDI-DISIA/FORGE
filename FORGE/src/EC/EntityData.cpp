@@ -2,8 +2,8 @@
 #include "ComponentData.h"
 
 EntityData::~EntityData() {
-	for (auto& cmp : components) {
-		delete cmp.second;
+	for (auto& component : components) {
+		delete component.second;
 	}
 	for (auto& child : children) {
 		if (!child->isBlueprint) { 

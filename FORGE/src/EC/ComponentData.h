@@ -21,11 +21,11 @@ private:
     template <typename U>
     struct getter<std::vector<U>> {
         std::vector<U> operator()(luabridge::LuaRef& data, std::string param) {
-            auto t = data[param];
+            auto table = data[param];
             std::vector<U> vec;
-            if (t.isTable()) {
-                for (auto&& p : pairs(t)) {
-                    vec.push_back(p.first.cast<U>());
+            if (table.isTable()) {
+                for (auto&& pair : pairs(table)) {
+                    vec.push_back(pair.first.cast<U>());
                 }
             }
             return vec;
@@ -39,13 +39,13 @@ public:
     /// Constructora por defecto de la clase ComponentData
     /// </summary>
     /// <param name="compId"> Identificador del componente </param>
-    ComponentData(std::string compId);
+    ComponentData(std::string _id);
 	/// <summary>
 	/// Constructora a partir de datos leidos de lua
 	/// </summary>
 	/// <param name="compId"> Identificador del componente </param>
 	/// <param name="lrData"> Referencia a una LuaTable</param>
-	ComponentData(std::string compId, luabridge::LuaRef* lrData);
+	ComponentData(std::string _id, luabridge::LuaRef* _data);
     /// <summary>
     /// Destruye la instancia de LuaRef apuntada
     /// </summary>

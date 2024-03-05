@@ -15,23 +15,23 @@ SceneManager::SceneManager() :
 
 Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	std::unordered_map<Component*, ComponentData*> initData;
-	Entity* ent = scene->addEntity(getGroupId(data->group));
+	Entity* entity = scene->addEntity(getGroupId(data->group));
 	if (data->handler != "") {
-		scene->setHandler(data->handler,ent);
+		scene->setHandler(data->handler,entity);
 	}
-	for (auto& c : data->components) {
-		Component* comp = ent->addComponent(c.first);
-		initData.insert({ comp,c.second });
+	for (auto& componentData : data->components) {
+		Component* component = entity->addComponent(componentData.first);
+		initData.insert({ component,componentData.second });
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
 			Entity* child = addEntity(scene, childData);
-			ent->addChild(child);
+			entity->addChild(child);
 		}
 	}
-	for (auto& c : initData) {
-		c.first->initSerialized(c.second);
-		c.first->initComponent(c.second);
+	for (auto& componentInit : initData) {
+		componentInit.first->initSerialized(componentInit.second);
+		componentInit.first->initComponent(componentInit.second);
 	}
 
 }
@@ -41,14 +41,14 @@ SceneManager::~SceneManager() {
 		delete scene.second;
 	}
 	for (auto& scene : sceneBlueprints) {
-		for (auto& ent : scene.second) {
-			if (!ent->isBlueprint) {
-				delete ent;
+		for (auto& entity : scene.second) {
+			if (!entity->isBlueprint) {
+				delete entity;
 			}
 		}
 	}
-	for (auto& ent : entityBlueprints) {
-		delete ent.second;
+	for (auto& entity : entityBlueprints) {
+		delete entity.second;
 	}
 }
 
@@ -97,8 +97,8 @@ Scene* SceneManager::createScene(std::string id)
 		return nullptr;
 	}
 	Scene* newScene = new Scene();
-	for (EntityData* e : iter->second) {
-		addEntity(newScene, e);
+	for (EntityData* entity : iter->second) {
+		addEntity(newScene, entity);
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;

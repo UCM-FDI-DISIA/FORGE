@@ -1,14 +1,14 @@
 #include "ComponentData.h"
 #include "SceneManager.h"
 
-ComponentData::ComponentData(std::string compId) :
-    id(compId),
+ComponentData::ComponentData(std::string _id) :
+    id(_id),
     data(new luabridge::LuaRef(luabridge::newTable(SceneManager::getInstance()->getLuaState()))) {        
 }
 
-ComponentData::ComponentData(std::string compId, luabridge::LuaRef* lrData) :
-    id(compId),
-    data(lrData) {
+ComponentData::ComponentData(std::string _id, luabridge::LuaRef* _data) :
+    id(_id),
+    data(_data) {
 }
 
 ComponentData::~ComponentData() {

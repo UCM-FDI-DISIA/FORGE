@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Factory.h"
 #include "ComponentData.h"
+#include "Transform.h"
 
 Entity::Entity() : 
     fact(*Factory::getInstance()),
@@ -14,11 +15,11 @@ Entity::Entity() :
 }
 
 Entity::~Entity() { 
-    for (auto& c : components) {
-        delete c.second;
+    for (auto& component : components) {
+        delete component.second;
     }
-    for (auto& c : children) {
-        delete c;
+    for (auto& child : children) {
+        delete child;
     }
 }
 
@@ -37,18 +38,18 @@ void Entity::setAlive(bool _alive) {
 }
 
 Component* Entity::addComponent(std::string id) {
-    Component* c = fact.generateComponent(id);
+    Component* component = fact.generateComponent(id);
     removeComponent(id);
-    components.insert(std::pair<std::string, Component*>(id, c));
-    c->setContext(this, scene);
-    return c;
+    components.insert(std::pair<std::string, Component*>(id, component));
+    component->setContext(this, scene);
+    return component;
 }
 
 Component* Entity::addComponent(ComponentData* data) {
-    Component* c = addComponent(data->getId());
-    c->initSerialized(data);
-    c->initComponent(data);
-    return c;
+    Component* component = addComponent(data->getId());
+    component->initSerialized(data);
+    component->initComponent(data);
+    return component;
 }
 
 Entity* Entity::addChild(Entity* child) {
@@ -72,16 +73,16 @@ Entity* Entity::setParent(Entity* newParent) {
     return parent;
 }
 
-void Entity::removeComponent(std::string name) {
-    auto iter = components.find(name);
+void Entity::removeComponent(std::string id) {
+    auto iter = components.find(id);
     if (iter != components.end()) {
         delete iter->second;
         components.erase(iter);
     }
 }
 
-bool Entity::hasComponent(std::string name) {
-    return components.count(name);
+bool Entity::hasComponent(std::string id) {
+    return components.count(id);
 }
 
 int Entity::getGroup() {
@@ -89,19 +90,19 @@ int Entity::getGroup() {
 }
 
 void Entity::update() {
-	for (auto& c : components) {
-        Component* cmp = c.second;
-        if(cmp->isEnabled()) {
-		    cmp->update();
+	for (auto& componentPair : components) {
+        Component* component = componentPair.second;
+        if(component->isEnabled()) {
+		    component->update();
         }
 	}
 }
 
 void Entity::fixedUpdate() {
-	for (auto& c : components) {
-		Component* cmp = c.second;
-		if (cmp->isEnabled()) {
-			cmp->fixedUpdate();
+	for (auto& componentPair : components) {
+		Component* component = componentPair.second;
+		if (component->isEnabled()) {
+			component->fixedUpdate();
 		}
 	}
 }
