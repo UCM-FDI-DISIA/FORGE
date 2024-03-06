@@ -9,12 +9,13 @@
 class ForgeMain
 {
 public:
-
-
 	//Al ser un singleton, no se puede copiar ni igualar
 	ForgeMain(ForgeMain const&) = delete;
 	void operator=(ForgeMain const&) = delete;
 
+	/// <summary>
+	/// </summary>
+	/// <returns>la instancia de ForgeMain</returns>
 	static ForgeMain* getInstance();
 	
 	/// <summary>
@@ -29,19 +30,36 @@ public:
 	/// </summary>
 	void startMainLoop();
 
+	
+	
 	/// <summary>
 	/// Tiempo pasado desde el ultimo frame.
 	/// </summary>
 	static double deltaTime;
+
+	/// <summary>
+	/// Valor que indica si el bucle principal esta corriendo. Modificado por el resto de modulos para el cierre del programa.
+	/// </summary>
+	bool isRunning;
 private:
-
-
+	/// <summary>
+	/// Instancia de ForgeMain, para el patron singleton.
+	/// </summary>
 	static ForgeMain* instance;
+
+	/// <summary>
+	/// Trata el cierre de todos los modulos.
+	/// </summary>
+	void manageModuleShutdowns();
+
 	/// <summary>
 	/// Constructor de la clase ForgeMain y de todos los modulos. Inicializa el bucle principal.
 	/// </summary>
 	ForgeMain();
 
+	/// <summary>
+	/// Destructor de la clase ForgeMain y de todos los modulos.
+	/// </summary>
 	~ForgeMain();
 
 	//Forge::Render renderModule*;
@@ -52,13 +70,10 @@ private:
 	//Forge::EC ECModule*;
 	//Forge::GUI GUIModule*;
 
-
-
 	/// <summary>
 	/// Acumulador de tiempo para los fixed updates
 	/// </summary>
 	double fixedUpdateAccumulator;
-
 
 	/// <summary>
 	/// Controla el tiempo entre updates, y si ha pasado el tiempo suficiente, llama a fixedUpdate cuantas veces sea necesario.

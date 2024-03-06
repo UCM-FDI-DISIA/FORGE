@@ -11,8 +11,13 @@ a cambiar cuando se enlacen los modulos
 #include "GUI.h"
 */
 
-ForgeMain::ForgeMain()
-{
+#include "EcsLoad.h"
+#include <iostream>
+
+ForgeMain* ForgeMain::instance = nullptr;
+double ForgeMain::deltaTime = 0;
+
+ForgeMain::ForgeMain() {
 	fixedUpdateAccumulator = 0;
 	deltaTime = 0;
 
@@ -23,12 +28,9 @@ ForgeMain::ForgeMain()
 	//loadModule = new Forge::Load();
 	//ECModule = new Forge::EC();
 	//GUIModule = new Forge::GUI();
-
-	
 }
 
-ForgeMain* ForgeMain::getInstance()
-{
+ForgeMain* ForgeMain::getInstance() {
 	if (instance == nullptr)
 	{
 		instance = new ForgeMain();
@@ -36,8 +38,7 @@ ForgeMain* ForgeMain::getInstance()
 	return instance;
 }
 
-ForgeMain::~ForgeMain()
-{
+ForgeMain::~ForgeMain() {
 	//delete renderModule;
 	//delete inputModule;
 	//delete physicsModule;
@@ -47,8 +48,7 @@ ForgeMain::~ForgeMain()
 	//delete GUIModule;
 }
 
-void ForgeMain::init(std::string LuaConfigPath)
-{
+void ForgeMain::init(std::string LuaConfigPath) {
 	//inicializar todos los modulos
 	// @TODO: implementar todos los inicializadores de los modulos y actualizar este metodo
 	//loadModule->init(LuaConfigPath);
@@ -60,10 +60,8 @@ void ForgeMain::init(std::string LuaConfigPath)
 	//GUIModule->init();
 }
 
-void ForgeMain::startMainLoop()
-{
-	while (true /* !inputModule->exit */) //Desde Input?
-	{
+void ForgeMain::startMainLoop() {
+	while (isRunning) {
 		manageFixedUpdates();
 		double beforeFrame = 10; //@TODO: Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre. A lo mejor renderModule->getCurrentTime()?
 		//inputModule->update();
@@ -73,10 +71,20 @@ void ForgeMain::startMainLoop()
 		double afterFrame = 20; //@TODO: Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre. A lo mejor renderModule->getCurrentTime()?
 		deltaTime = afterFrame - beforeFrame; //Se podria guardar en una estructura de tiempo? Habra que ver como evoluciona el codigo y las necesidades 
 	}
+	manageModuleShutdowns();
 }
 
-void ForgeMain::manageFixedUpdates()
-{
+void ForgeMain::manageModuleShutdowns() {
+	//renderModule->shutdown();
+	//inputModule->shutdown();
+	//physicsModule->shutdown();
+	//audioModule->shutdown();
+	//loadModule->shutdown();
+	//ECModule->shutdown();
+	//GUIModule->shutdown();
+}
+
+void ForgeMain::manageFixedUpdates() {
 	fixedUpdateAccumulator += deltaTime;
 	while (fixedUpdateAccumulator >= FIXED_UPDATE_RATE)
 	{
