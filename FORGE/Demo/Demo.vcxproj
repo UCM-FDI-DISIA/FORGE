@@ -70,6 +70,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)bin</OutDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\Dependencies\include\SDL2;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Render;$(SolutionDir)src\Load;$(SolutionDir)src\Input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Load\;$(SolutionDir)src\Input\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,6 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Load\;$(SolutionDir)src\Input\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

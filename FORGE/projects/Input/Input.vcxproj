@@ -64,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\build\x64\SDL2-2.28.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -72,6 +72,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\Ogre\build\x64\SDL2-build\$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2d.lib</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>SDL2d.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL2\build\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -81,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\build\x64\SDL2-2.28.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,6 +97,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\Ogre\build\x64\SDL2-build\$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>SDL2.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL2\build\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

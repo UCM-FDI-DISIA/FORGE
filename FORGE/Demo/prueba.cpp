@@ -1,5 +1,6 @@
 // Este archivo es para que se suba la carpeta src/Render a Github
 #define _CRTDBG_MAP_ALLOC
+#define SDL_MAIN_HANDLED
 #include <stdlib.h>
 #include <crtdbg.h>
 
