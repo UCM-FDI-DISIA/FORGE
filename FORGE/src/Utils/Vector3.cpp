@@ -118,20 +118,20 @@ Vector3 Vector3::operator*=(const Vector3& w) {
 }
 
 bool Vector3::operator==(const Vector3& w) const {
-	float min = pow(1, E - 5);
+	double min = pow(1, E - 5);
 	return (abs(x - w.x) <= min && abs(y - w.y) <= min && abs(z - w.z) <= min);
 }
 
 bool Vector3::operator!=(const Vector3& w)  const {
-	float min = pow(1, E - 5);
+	double min = pow(1, E - 5);
 	return (abs(x - w.x) > min && abs(y - w.y) > min && abs(z - w.z) > min);
 }
 #pragma endregion
 
 #pragma region Angulos
-float Vector3::angle(const Vector3& w) const {
-	float prodEsc = dot(w);
-	float angle = std::acos(prodEsc / (magnitude() * w.magnitude()));
+double Vector3::angle(const Vector3& w) const {
+	double prodEsc = dot(w);
+	double angle = std::acos(prodEsc / (magnitude() * w.magnitude()));
 
 	return angle * 180 / PI;
 }

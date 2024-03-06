@@ -185,7 +185,7 @@ namespace forge {
 		/// </summary>
 		/// <param name="w">El otro Vector3 que conforma el angulo</param>
 		/// <returns>El angulo que forman ambos vectores</returns>
-		float angle(const Vector3& w) const;
+		double angle(const Vector3& w) const;
 
 		/// <summary>
 		/// Dado un vector normal de un plano, devuelve el vector resultante de 
