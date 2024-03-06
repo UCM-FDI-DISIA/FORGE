@@ -83,10 +83,10 @@ void ForgeMain::manageModuleShutdowns() {
 }
 
 void ForgeMain::manageFixedUpdates() {
-	fixedUpdateAccumulator += deltaTime;
-	while (fixedUpdateAccumulator >= FIXED_UPDATE_RATE)
+	fixedUpdateTimer += deltaTime;
+	while (fixedUpdateTimer >= FIXED_UPDATE_RATE)
 	{
 		//ecsmodule->fixedUpdate();
-		fixedUpdateAccumulator -= FIXED_UPDATE_RATE;
+		fixedUpdateTimer -= FIXED_UPDATE_RATE;
 	}
 }

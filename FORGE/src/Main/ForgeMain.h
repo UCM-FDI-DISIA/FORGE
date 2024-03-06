@@ -30,8 +30,6 @@ public:
 	/// </summary>
 	void startMainLoop();
 
-	
-	
 	/// <summary>
 	/// Tiempo pasado desde el ultimo frame.
 	/// </summary>
@@ -73,7 +71,7 @@ private:
 	/// <summary>
 	/// Acumulador de tiempo para los fixed updates
 	/// </summary>
-	double fixedUpdateAccumulator;
+	double fixedUpdateTimer;
 
 	/// <summary>
 	/// Controla el tiempo entre updates, y si ha pasado el tiempo suficiente, llama a fixedUpdate cuantas veces sea necesario.
