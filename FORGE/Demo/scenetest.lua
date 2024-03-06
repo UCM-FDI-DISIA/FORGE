@@ -10,7 +10,7 @@ local scenes = {
                 Transform = {
                     position = Vector3(-10, 0 -10)
                 },
-                Mesh {
+                Mesh = {
                     mesh = "ogrehead.mesh"
                 }
             }
@@ -21,7 +21,7 @@ local scenes = {
                 Transform = {
                     position = Vector3(10, 0 -10)
                 },
-                Mesh {
+                Mesh = {
                     mesh = "Barrel.mesh"
                 }
             }
