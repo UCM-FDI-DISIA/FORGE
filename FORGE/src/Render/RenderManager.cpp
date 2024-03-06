@@ -215,6 +215,7 @@ bool RenderManager::render() {
 			pair.first->setOrientation({rotation.getX(), rotation.getY(), rotation.getZ(), rotation.getW()});
 			const forge::Vector3& scale = pair.second->getGlobalScale();
 			pair.first->setScale({scale.getX(),scale.getY(),scale.getZ()});
+			pair.second->setNeedsUpdate(false);
 		}
 	}
 	return myRoot->renderOneFrame();

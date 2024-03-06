@@ -13,7 +13,7 @@ Transform::Transform() :
 	rotation(),
 	scale(),
 	parent(nullptr),
-	needsUpdate(false) {
+	needsUpdate(true) {
 	serializer(position, "position");
 	serializer(rotation, "rotation");
 	serializer(scale, "scale");
