@@ -18,8 +18,6 @@ ForgeMain* ForgeMain::instance = nullptr;
 double ForgeMain::deltaTime = 0;
 
 ForgeMain::ForgeMain() {
-	fixedUpdateAccumulator = 0;
-	deltaTime = 0;
 
 	//renderModule = new Forge::Render();
 	//inputModule = new Forge::Input();

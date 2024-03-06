@@ -40,7 +40,7 @@ public:
 	/// <summary>
 	/// Valor que indica si el bucle principal esta corriendo. Modificado por el resto de modulos para el cierre del programa.
 	/// </summary>
-	bool isRunning;
+	bool isRunning = true;
 private:
 	/// <summary>
 	/// Instancia de ForgeMain, para el patron singleton.
