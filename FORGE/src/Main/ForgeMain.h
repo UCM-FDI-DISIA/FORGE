@@ -17,11 +17,21 @@ public:
 
 	static ForgeMain* getInstance();
 	
-
+	/// <summary>
+	/// Inicializador de todos los modulos, a partir de un archivo de configuracion Lua.
+	/// @TODO Especificar el formato del archivo de configuracion.
+	/// </summary>
+	/// <param name="LuaConfigPath">El camino al archivo de configuracion</param>
 	void init(std::string LuaConfigPath);
 
+	/// <summary>
+	/// Inicializa el bucle principal del juego.
+	/// </summary>
 	void startMainLoop();
 
+	/// <summary>
+	/// Tiempo pasado desde el ultimo frame.
+	/// </summary>
 	static double deltaTime;
 private:
 
@@ -33,6 +43,7 @@ private:
 	ForgeMain();
 
 	~ForgeMain();
+
 	//Forge::Render renderModule*;
 	//Forge::Input inputModule*;
 	//Forge::Physics physicsModule*;
@@ -43,9 +54,15 @@ private:
 
 
 
-
+	/// <summary>
+	/// Acumulador de tiempo para los fixed updates
+	/// </summary>
 	double fixedUpdateAccumulator;
 
+
+	/// <summary>
+	/// Controla el tiempo entre updates, y si ha pasado el tiempo suficiente, llama a fixedUpdate cuantas veces sea necesario.
+	/// </summary>
 	void manageFixedUpdates();
 };
 

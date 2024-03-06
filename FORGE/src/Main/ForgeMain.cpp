@@ -68,6 +68,7 @@ void ForgeMain::startMainLoop()
 		//inputModule->update();
 		//update();
 		//render();
+		//refresh();
 		double afterFrame = 20; //Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre
 		deltaTime = afterFrame - beforeFrame; //Se podria guardar en una estructura de tiempo?
 	}
