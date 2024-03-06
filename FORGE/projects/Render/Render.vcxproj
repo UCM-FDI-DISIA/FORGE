@@ -19,7 +19,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\Dependencies\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\Dependencies\include\SDL2;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,12 +87,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Render\Camera.cpp" />
+    <ClCompile Include="..\..\src\Render\Light.cpp" />
+    <ClCompile Include="..\..\src\Render\Mesh.cpp" />
     <ClCompile Include="..\..\src\Render\OgreApp.cpp" />
     <ClCompile Include="..\..\src\Render\RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Render\Camera.h" />
+    <ClInclude Include="..\..\src\Render\Light.h" />
+    <ClInclude Include="..\..\src\Render\Mesh.h" />
     <ClInclude Include="..\..\src\Render\OgreApp.h" />
     <ClInclude Include="..\..\src\Render\RenderManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

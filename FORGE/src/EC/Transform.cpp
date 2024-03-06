@@ -74,6 +74,10 @@ void Transform::doScale(float rescale) {
 	scale *= rescale;
 }
 
+void Transform::setNeedsUpdate(bool needed) {
+	needsUpdate = needed;
+}
+
 
 forge::Quaternion const& Transform::getRotation() const {
 	return rotation;
@@ -120,4 +124,8 @@ forge::Vector3 Transform::getGlobalScale() const {
 	else {
 		return scale;
 	}
+}
+
+bool Transform::getNeedsUpdate() const {
+	return needsUpdate || (parent && parent->getNeedsUpdate());
 }
