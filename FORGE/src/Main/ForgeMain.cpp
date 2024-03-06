@@ -50,13 +50,14 @@ ForgeMain::~ForgeMain()
 void ForgeMain::init(std::string LuaConfigPath)
 {
 	//inicializar todos los modulos
-	//loadModule.init(LuaConfigPath);
-	//renderModule.init();
-	//inputModule.init();
-	//physicsModule.init();
-	//audioModule.init();
-	//ECModule.init();
-	//GUIModule.init();
+	// @TODO: implementar todos los inicializadores de los modulos y actualizar este metodo
+	//loadModule->init(LuaConfigPath);
+	//renderModule->init();
+	//inputModule->init();
+	//physicsModule->init();
+	//audioModule->init();
+	//ECModule->init();
+	//GUIModule->init();
 }
 
 void ForgeMain::startMainLoop()
@@ -64,13 +65,13 @@ void ForgeMain::startMainLoop()
 	while (true /* !inputModule->exit */) //Desde Input?
 	{
 		manageFixedUpdates();
-		double beforeFrame = 10; //Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre
+		double beforeFrame = 10; //@TODO: Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre. A lo mejor renderModule->getCurrentTime()?
 		//inputModule->update();
-		//update();
-		//render();
+		//ECModule->update();
+		//renderModule->render();
 		//refresh();
-		double afterFrame = 20; //Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre
-		deltaTime = afterFrame - beforeFrame; //Se podria guardar en una estructura de tiempo?
+		double afterFrame = 20; //@TODO: Se checkearia el tiempo con SDL_GetCurrentTime o sucedaneo de Ogre. A lo mejor renderModule->getCurrentTime()?
+		deltaTime = afterFrame - beforeFrame; //Se podria guardar en una estructura de tiempo? Habra que ver como evoluciona el codigo y las necesidades 
 	}
 }
 
