@@ -231,7 +231,9 @@ void RenderManager::setWindowGrab(bool _grab) {
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
-	entity->setMaterialName(mesh->getMaterial());
+	if (mesh->getMaterial() != "") {
+		entity->setMaterialName(mesh->getMaterial());
+	}
 	node->attachObject(entity);
 	transforms.insert({node, mesh->getEntity()->getComponent<Transform>()});
 	return entity;
@@ -243,7 +245,9 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 	node->detachObject(entity);
 	mySceneManager->destroyEntity(entity);
 	Ogre::Entity* newEntity = mySceneManager->createEntity(mesh->getMesh());
-	newEntity->setMaterialName(mesh->getMaterial());
+	if (mesh->getMaterial() != "") {
+		newEntity->setMaterialName(mesh->getMaterial());
+	}
 	node->attachObject(entity);
 	return newEntity;
 }

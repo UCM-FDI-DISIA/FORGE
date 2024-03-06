@@ -51,7 +51,10 @@ private:
 	Ogre::SceneManager* mySceneManager;
 
 	std::unordered_map<Ogre::SceneNode*, Transform*> transforms;
-
+	
+	/// <summary>
+	/// Constructora del render manager.
+	/// </summary>
 	RenderManager();
 
 	/// <summary>
@@ -74,8 +77,14 @@ private:
 	NativeWindowPair createWindow();
 
 public:
+
+	/// <summary>
+	/// Destructora del RenderManager
+	/// </summary>
 	~RenderManager();
 
+	
+	/// <returns>Devuelve una instancia al RenderManager</returns>
 	static RenderManager* getInstance();
 #pragma region Setup
 	/// <summary>
@@ -99,23 +108,38 @@ public:
 
 
 #pragma region ECS
-/// <summary>
-/// Añade un mesh a la escena
-/// </summary>
-/// <param name="mesh:">El mesh a añadir</param>
-Ogre::Entity* addMeshNode(Mesh* mesh);
+	/// <summary>
+	/// Añade un mesh a la escena
+	/// </summary>
+	/// <param name="mesh:">El mesh a añadir</param>
+	/// <returns>Devuelve puntero de la entidad</returns>
+	Ogre::Entity* addMeshNode(Mesh* mesh);
 	
-/// <summary>
-/// Actualiza el mesh de una escena, cambiandolo por otro distinto
-/// </summary>
-/// <param name="entity:">La entidad a cambiar</param>
-/// <param name="mesh:">El mesh para sustituir</param>
+	/// <summary>
+	/// Actualiza el mesh de una escena, cambiandolo por otro distinto
+	/// </summary>
+	/// <param name="entity:">La entidad a cambiar</param>
+	/// <param name="mesh:">El mesh para sustituir</param>
+	/// <returns>Devuelve puntero de la entidad</returns>
 	Ogre::Entity* updateMeshNode(Ogre::Entity* entity, Mesh* mesh);
 
+	/// <summary>
+	/// Añade una camara a la escena
+	/// </summary>
+	/// <param name="camera:">La camara a añadir</param>
+	/// <returns>Devuelve puntero de la camara</returns>
 	Ogre::Camera* addCameraNode(Camera* camera);
 
-	Ogre::Light* addLightNode(Light* camera);
+	/// <summary>
+	/// Añade una luz a la escena
+	/// </summary>
+	/// <param name="luz:">La luz a añadir</param>
+	/// <returns>Devuelve puntero de la luz</returns>
+	Ogre::Light* addLightNode(Light* light);
 
+	/// <summary>
+	/// Quita un nodo de la escena
+	/// </summary>
 	void removeNode(Ogre::MovableObject* entity);
 
 #pragma endregion

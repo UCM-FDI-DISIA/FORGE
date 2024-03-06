@@ -11,7 +11,10 @@ const std::string Camera::id = "Mesh";
 Camera::Camera() :
     ogreCamera(nullptr),
     renderManager(nullptr) {
-
+    serializer(name, "name");
+    serializer(nearClipDistance, "nearClipDistance");
+    serializer(autoAspectRatio, "autoAspectRatio");
+    serializer(backgroundColor, "backGroundColor");
 }
 
 Camera::~Camera() {

@@ -9,6 +9,7 @@ const std::string Light::id = "Light";
 Light::Light() :
     ogreLight(nullptr),
     renderManager(nullptr) {
+    serializer(type, "type");
 }
 
 Light::~Light() {
