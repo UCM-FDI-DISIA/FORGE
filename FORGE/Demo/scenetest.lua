@@ -8,7 +8,7 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {-10, 0 -10}
+                    position = {10, 0, -10}
                 },
                 Mesh = {
                     mesh = "ogrehead.mesh"
@@ -19,7 +19,7 @@ local scenes = {
             group = "obstacle",
             components = {
                 Transform = {
-                    position = {10, 0 -10}
+                    position = {10, 0, -10}
                 },
                 Mesh = {
                     mesh = "Barrel.mesh"

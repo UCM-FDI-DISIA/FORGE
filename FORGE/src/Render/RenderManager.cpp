@@ -198,7 +198,7 @@ void RenderManager::setup(std::string appName) {
 
 	// Creamos la ventana
 	myWindow = createWindow();
-	setWindowGrab(true);
+	setWindowGrab(false);
 
 	// Inicializamos los recursos
 	locateResources();

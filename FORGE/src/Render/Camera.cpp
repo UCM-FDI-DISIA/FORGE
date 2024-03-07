@@ -14,7 +14,7 @@ Camera::Camera() :
     serializer(name, "name");
     serializer(nearClipDistance, "nearClipDistance");
     serializer(autoAspectRatio, "autoAspectRatio");
-    serializer(backgroundColor, "backGroundColor");
+    serializer(backgroundColor, "backgroundColor");
 }
 
 Camera::~Camera() {

@@ -1,5 +1,6 @@
 #include "ComponentData.h"
 #include "SceneManager.h"
+#include <Vector3.h>
 
 ComponentData::ComponentData(std::string _id) :
     id(_id),
