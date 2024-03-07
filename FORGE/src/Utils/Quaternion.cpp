@@ -1,14 +1,15 @@
 #include "Quaternion.h"
+#include <cmath>
 using namespace forge;
 
 #define kEpsilon = 0.000001
 
 #pragma region Constructores
 Quaternion::Quaternion() : 
-	x(0), 
-	y(0), 
-	z(0), 
-	w(1) {}
+	x(0.0f), 
+	y(0.0f), 
+	z(0.0f),
+	w(1.0f) {}
 
 Quaternion::Quaternion(float _x, float _y, float _z, float _w) {
 	set(_x, _y, _z, _w);
@@ -132,26 +133,33 @@ Vector3 Quaternion::toEuler() const{
 
 #pragma region Setters
 void Quaternion::setX(float newX) { 
-	x = newX; 
+	x = newX;// * sinf(acosf(w));
 }
 
 void Quaternion::setY(float newY) { 
-	y = newY; 
+	y = newY;// * sinf(acosf(w));
 }
 
 void Quaternion::setZ(float newZ) { 
-	z = newZ; 
+	z = newZ;// * sinf(acosf(w));
 }
 
-void Quaternion::setW(float newW) { 
-	w = newW; 
+void Quaternion::setW(float newW) {
+	w = newW;
+	//float prevSin = sinf(acosf(w));
+	//float newSin = sinf(newW / 2.0f);
+	//w = cosf(newW / 2.0f);
+	//x = (x / prevSin) * newSin;
+	//y = (y / prevSin) * newSin;
+	//z = (z / prevSin) * newSin;
 }
 
 void Quaternion::set(float newX, float newY, float newZ, float newW) {
-	x = newX; 
-	y = newY;
-	z = newZ; 
-	w = newW;
+	float sinWHalf = sinf(newW / 2.0f);
+	x = newX * sinWHalf;
+	y = newY * sinWHalf;
+	z = newZ * sinWHalf;
+	w = cosf(newW / 2.0f);
 }
 
 void Quaternion::set(const Quaternion& v) {
@@ -178,20 +186,20 @@ void Quaternion::set(const Quaternion* v) {
 
 #pragma region Getters
 float Quaternion::getX() const { 
-	return x; 
+	return x;// / sinf(acosf(w));
 }
 
 float Quaternion::getY() const { 
-	return y;
+	return y;// / sinf(acosf(w));
 }
 
 float Quaternion::getZ() const { 
-	return z; 
+	return z;// / sinf(acosf(w));
 }
 
 float Quaternion::getW() const { 
-	return w; 
+	return w;//acosf(w) * 2.0f; 
 }
 #pragma endregion
 
-const Quaternion Quaternion::IDENTITY	(0, 0, 0, 1);
+const Quaternion Quaternion::IDENTITY	(0.0f, 0.0f, 0.0f, 0.0f);

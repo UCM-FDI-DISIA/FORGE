@@ -15,6 +15,7 @@
 #include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
+#include "TestMovement.h"
 
 
 void factory() {
@@ -36,6 +37,11 @@ void factory() {
     Factory::getInstance()->registerComponent("Camera",
 	[]()-> Component* {
 		return new Camera();
+	}
+	);
+    Factory::getInstance()->registerComponent("TestMovement",
+	[]()-> Component* {
+		return new TestMovement();
 	}
 	);
 }
