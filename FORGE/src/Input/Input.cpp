@@ -3,8 +3,7 @@
 std::unique_ptr<Input> Input::instance = nullptr;
 
 void Input::onMouseMotion(const SDL_Event& event) {
-	mousePos.first = event.motion.x;
-	mousePos.second = event.motion.y;
+	mousePos.set(event.motion.x, event.motion.y);
 }
 
 void Input::onMouseWheelMotion(const SDL_Event& event) {
@@ -178,7 +177,7 @@ bool Input::keyUp(KeyNames k) {
 	return false;
 }
 
-std::pair<int, int> Input::getMousePosition() {
+forge::Vector2 Input::getMousePosition() {
 	return mousePos;
 }
 

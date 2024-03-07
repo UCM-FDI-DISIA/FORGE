@@ -1,9 +1,12 @@
 #pragma once
+#ifndef INPUT_H_
+#define INPUT_H_
 
 #include <memory>
 #include <unordered_map>
 #include <array>
 #include "SDL.h"
+#include "Vector2.h"
 
 #define CONTROLLER_AXIS_MAX 32767.0f
 #define CONTROLLER_AXIS_MIN -32768.0f
@@ -77,7 +80,7 @@ private:
 	/// </summary>
 	std::unordered_map<KeyNames, bool> keys;
 
-	std::pair<int, int> mousePos;
+	forge::Vector2 mousePos;
 	bool mouseWheelUp;
 	bool mouseWheelDown;
 	std::array<bool, 3> mouseButtons;
@@ -237,7 +240,7 @@ public:
 	/// Obtiene la posicion actual del raton
 	/// </summary>
 	/// <returns>first = x, second = y</returns>
-	std::pair<int, int> getMousePosition();
+	forge::Vector2 getMousePosition();
 
 	/// <summary>
 	/// Devuelve si la rueda del raton se ha movido hacia arriba
@@ -284,3 +287,4 @@ public:
 	/// </summary>
 	bool isControllerConnected();
 };
+#endif // !INPUT_H_
