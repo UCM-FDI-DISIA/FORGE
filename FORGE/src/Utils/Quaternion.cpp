@@ -8,7 +8,7 @@ Quaternion::Quaternion() :
 	x(0), 
 	y(0), 
 	z(0), 
-	w(0) {}
+	w(1) {}
 
 Quaternion::Quaternion(float _x, float _y, float _z, float _w) {
 	set(_x, _y, _z, _w);
@@ -194,4 +194,4 @@ float Quaternion::getW() const {
 }
 #pragma endregion
 
-const Quaternion Quaternion::IDENTITY	(1, 1, 1, 0);
+const Quaternion Quaternion::IDENTITY	(0, 0, 0, 1);

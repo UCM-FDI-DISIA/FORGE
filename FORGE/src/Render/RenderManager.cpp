@@ -40,7 +40,9 @@ RenderManager::RenderManager() :
 
 }
 
-RenderManager::~RenderManager() {}
+RenderManager::~RenderManager() {
+	//TODO
+}
 
 
 Ogre::Root* RenderManager::createRoot() {
@@ -196,7 +198,7 @@ void RenderManager::setup(std::string appName) {
 
 	// Creamos la ventana
 	myWindow = createWindow();
-	setWindowGrab(false);
+	setWindowGrab(true);
 
 	// Inicializamos los recursos
 	locateResources();

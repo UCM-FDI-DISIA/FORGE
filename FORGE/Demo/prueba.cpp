@@ -51,8 +51,10 @@ int main(int argc, char* argv[]) {
     Input& input = *Input::getInstance();
     sceneManager.changeScene("Test");
     while (!input.keyUp(K_ESC)) {
+        input.refresh();
         input.update();
         sceneManager.getScene("Test")->update();
+		sceneManager.getScene("Test")->refresh();
         if(!render.render())
 			break;
     }
