@@ -55,7 +55,9 @@ private:
 		/// </summary>
 		/// <param name="data">ComponentData dentro del que esta la informacion de la variable serializada.</param>
 		void initialize(ComponentData& data) override {
-			var = data.get<T>(name);
+			if (data.has(name)) {
+				var = data.get<T>(name);
+			}
 		}
 	};
 

@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) {
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
-        sceneManager.getScene("Test")->update();
-		sceneManager.getScene("Test")->refresh();
+        sceneManager.update();
+		sceneManager.refresh();
         if(!render.render())
 			break;
     }

@@ -58,6 +58,8 @@ public:
     /// </returns>
     std::string getId();
 
+    bool has(std::string param);
+
     /// <summary>
     /// Devuelve el parametro pedido dentro del ComponentData
     /// </summary>

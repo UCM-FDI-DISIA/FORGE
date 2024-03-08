@@ -22,7 +22,8 @@ local scenes = {
             group = "obstacle",
             components = {
                 Transform = {
-                    position = {10, 0, -10}
+                    position = {10, 0, -10},
+                    scale = {5, 5, 5}
                 },
                 Mesh = {
                     mesh = "Barrel.mesh"

@@ -81,6 +81,14 @@ public:
 	/// Cantidad total de grupos
 	/// </returns>
 	int getMaxGroupId();
+	/// <returns>
+	/// Actualiza las entidades de la escena activa
+	/// </returns>
+	void update();
+	/// <returns>
+	/// Borra todas las Entity no vivas de la escena activa
+	/// </returns>
+	void refresh();
 	/// <summary>
 	/// Devuelve la id de un grupo a partir de su nombre
 	/// </summary>

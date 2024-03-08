@@ -6,7 +6,7 @@
 #include "OgreColourValue.h"
 #include "OgreViewport.h"
 
-const std::string Camera::id = "Mesh";
+const std::string Camera::id = "Camera";
 
 Camera::Camera() :
     ogreCamera(nullptr),

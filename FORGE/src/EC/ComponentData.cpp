@@ -19,3 +19,8 @@ ComponentData::~ComponentData() {
 std::string ComponentData::getId() {
     return id;
 }
+
+bool ComponentData::has(std::string param)
+{
+    return !(*data)[param].isNil();
+}

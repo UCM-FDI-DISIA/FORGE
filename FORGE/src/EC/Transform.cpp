@@ -16,7 +16,7 @@ Transform::Transform() :
 	needsUpdate(true) {
 	serializer(position, "position");
 	serializer(rotation, "rotation");
-	//TODO serializar la escala con 1 1 1 por defecto
+	serializer(scale, "scale");
 }
 
 void Transform::setRotation(forge::Quaternion const& newRot) {

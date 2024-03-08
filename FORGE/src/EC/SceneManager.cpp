@@ -122,6 +122,14 @@ int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
+void SceneManager::update() {
+	activeScene->update();
+}
+
+void SceneManager::refresh() {
+	activeScene->refresh();
+}
+
 int SceneManager::getGroupId(std::string group) {
 	return groups[group];
 }
