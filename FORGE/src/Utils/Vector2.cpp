@@ -62,3 +62,12 @@ void Vector2::set(float _x, float _y) {
 	x = _x;
 	y = _y;
 }
+
+#pragma region Constantes
+const Vector2 Vector2::ZERO(0.0f, 0.0f);
+const Vector2 Vector2::RIGHT(1.0f, 0.0f);
+const Vector2 Vector2::LEFT(-1.0f, 0.0f);
+const Vector2 Vector2::UP(0.0f, 1.0f);
+const Vector2 Vector2::DOWN(0.0f, -1.0f);
+const Vector2 Vector2::UNIT(1.0f, 1.0f);
+#pragma endregion

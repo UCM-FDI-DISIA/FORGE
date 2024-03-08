@@ -90,6 +90,15 @@ namespace forge {
 		/// Setea un vector a través de floats
 		/// </summary>	
 		void set(float _x, float _y);
+
+		#pragma region Constantes
+		static const Vector2 ZERO;
+		static const Vector2 RIGHT;
+		static const Vector2 LEFT;
+		static const Vector2 UP;
+		static const Vector2 DOWN;
+		static const Vector2 UNIT;
+		#pragma endregion
 	};
 }
 #endif
