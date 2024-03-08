@@ -19,31 +19,12 @@
 
 
 void factory() {
-    Factory::getInstance()->registerComponent("Transform",
-		[]()-> Component* {
-			return new Transform();
-		}
-	);
-    Factory::getInstance()->registerComponent("Mesh",
-	[]()-> Component* {
-		return new Mesh();
-	}
-	);
-    Factory::getInstance()->registerComponent("Light",
-	[]()-> Component* {
-		return new Light();
-	}
-	);
-    Factory::getInstance()->registerComponent("Camera",
-	[]()-> Component* {
-		return new Camera();
-	}
-	);
-    Factory::getInstance()->registerComponent("TestMovement",
-	[]()-> Component* {
-		return new TestMovement();
-	}
-	);
+	Factory& f = *Factory::getInstance();
+	f.registerComponent<Transform>();
+	f.registerComponent<Mesh>();
+	f.registerComponent<Light>();
+	f.registerComponent<Camera>();
+	f.registerComponent<TestMovement>();
 }
 
 int main(int argc, char* argv[]) {
