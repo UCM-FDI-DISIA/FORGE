@@ -41,7 +41,8 @@ RenderManager::RenderManager() :
 }
 
 RenderManager::~RenderManager() {
-	//TODO
+	delete myFileSystemLayer;
+	delete myRoot;
 }
 
 
@@ -232,8 +233,8 @@ void RenderManager::setWindowGrab(bool _grab) {
 }
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
 	Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
+	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
 	if (mesh->getMaterial() != "") {
 		entity->setMaterialName(mesh->getMaterial());
 	}

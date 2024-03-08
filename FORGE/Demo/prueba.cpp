@@ -3,8 +3,8 @@
 #define SDL_MAIN_HANDLED
 #include <stdlib.h>
 #include <crtdbg.h>
-
 #include "RenderManager.h"
+
 #include "SceneManager.h"
 #include "Scene.h"
 #include "LuaForge.h"
@@ -49,10 +49,10 @@ void factory() {
 int main(int argc, char* argv[]) {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
-    LuaForge* lf = new LuaForge();
-	EcsLoad ecs ("scenetest.lua", *lf);
-    RenderManager& render = *RenderManager::getInstance();
+	RenderManager& render = *RenderManager::getInstance();
     render.setup("Test FORGE");
+	LuaForge* lf = new LuaForge();
+	EcsLoad ecs("scenetest.lua", *lf);
     SceneManager& sceneManager = *SceneManager::getInstance();
     Input& input = *Input::getInstance();
     sceneManager.changeScene("Test");
@@ -64,7 +64,8 @@ int main(int argc, char* argv[]) {
         if(!render.render())
 			break;
     }
-    delete lf;
+	delete lf;
+	sceneManager.cleanUp();
     return 0;
 }
 
