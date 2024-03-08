@@ -31,9 +31,13 @@ private:
 
 public:
 	/// <summary>
-	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas
+	/// Destruye la instancia
 	/// </summary>
 	~SceneManager();
+	/// <summary>
+	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas
+	/// </summary>
+	void cleanUp();
 	/// <summary>
 	/// Devuelve la instancia de SceneManager y si no existe la crea
 	/// </summary>

@@ -11,12 +11,12 @@ const std::string Transform::id = "Transform";
 Transform::Transform() : 
 	position(),
 	rotation(),
-	scale(),
+	scale(1,1,1),
 	parent(nullptr),
 	needsUpdate(true) {
 	serializer(position, "position");
 	serializer(rotation, "rotation");
-	serializer(scale, "scale");
+	//TODO serializar la escala con 1 1 1 por defecto
 }
 
 void Transform::setRotation(forge::Quaternion const& newRot) {

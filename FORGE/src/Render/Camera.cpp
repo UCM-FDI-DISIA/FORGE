@@ -18,7 +18,7 @@ Camera::Camera() :
 }
 
 Camera::~Camera() {
-    renderManager->removeNode(ogreCamera);
+   renderManager->removeNode(ogreCamera);
 }
 
 void Camera::initComponent(ComponentData* data) {

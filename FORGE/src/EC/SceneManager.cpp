@@ -11,6 +11,7 @@ std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 SceneManager::SceneManager() : 
 	activeScene(nullptr),
 	lua(nullptr) {
+	groups.insert({"default",0});
 }
 
 Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
@@ -37,6 +38,10 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 }
 
 SceneManager::~SceneManager() {
+
+}
+
+void SceneManager::cleanUp() {
 	for (auto& scene : loadedScenes) {
 		delete scene.second;
 	}
