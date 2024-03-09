@@ -10,32 +10,32 @@ Quaternion::Quaternion() :
 	x(0.0f), 
 	y(0.0f), 
 	z(0.0f),
-	w(1.0f)
-	{}
+	w(1.0f) {
+}
 
 Quaternion::Quaternion(float _x, float _y, float _z, float _angle) {
 	set(_x, _y, _z, _angle);
 }
 
-Quaternion::Quaternion(const Quaternion& q) {
-	x = q.x;
-	y = q.y;
-	z = q.z;
-	w = q.w;
+Quaternion::Quaternion(const Quaternion& q) :
+	x(q.x),
+	y(q.y),
+	z(q.z),
+	w(q.w) {
 }
 
-Quaternion::Quaternion(Quaternion&& q) noexcept {
-	x = q.x;
-	y = q.y;
-	z = q.z;
-	w = q.w;
+Quaternion::Quaternion(Quaternion&& q) noexcept : 
+	x(q.x), 
+	y(q.y), 
+	z(q.z), 
+	w(q.w) {
 }
 
-Quaternion::Quaternion(const Quaternion* q) {
-	x = q->x;
-	y = q->y;
-	z = q->z;
-	w = q->w;
+Quaternion::Quaternion(const Quaternion* q) : 
+	x(q->x),
+	y(q->y),
+	z(q->z),
+	w(q->w) {
 }
 
 Quaternion::Quaternion(const Vector3& e) {
@@ -208,26 +208,26 @@ Quaternion::operator Ogre::Quaternion() const {
 	return Ogre::Quaternion(w, x, y, z);
 }
 
+Quaternion::Quaternion(const Ogre::Quaternion& q) : 
+	x(q.x),
+	y(q.y),
+	z(q.z),
+	w(q.w) {
+}
+
+Quaternion::Quaternion(Ogre::Quaternion&& q) noexcept :
+	x(q.x),
+	y(q.y),
+	z(q.z),
+	w(q.w) {
+}
+
 Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
 	x = q.x;
 	y = q.y;
 	z = q.z;
 	w = q.w;
 	return (*this);
-}
-
-Quaternion::Quaternion(const Ogre::Quaternion& q) {
-	x = q.x;
-	y = q.y;
-	z = q.z;
-	w = q.w;
-}
-
-Quaternion::Quaternion(Ogre::Quaternion&& q) noexcept {
-	x = q.x;
-	y = q.y;
-	z = q.z;
-	w = q.w;
 }
 #pragma endregion
 
