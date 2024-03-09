@@ -1,5 +1,6 @@
 #include "Quaternion.h"
 #include <cmath>
+#include <OgreQuaternion.h>
 using namespace forge;
 
 #define kEpsilon = 0.000001
@@ -9,10 +10,11 @@ Quaternion::Quaternion() :
 	x(0.0f), 
 	y(0.0f), 
 	z(0.0f),
-	w(1.0f) {}
+	w(1.0f)
+	{}
 
-Quaternion::Quaternion(float _x, float _y, float _z, float _w) {
-	set(_x, _y, _z, _w);
+Quaternion::Quaternion(float _x, float _y, float _z, float _angle) {
+	set(_x, _y, _z, _angle);
 }
 
 Quaternion::Quaternion(const Quaternion& q) {
@@ -40,10 +42,10 @@ Quaternion::Quaternion(const Vector3& e) {
 	float bank = e.getX();
 	float pitch = e.getY();
 	float heading = e.getZ();
-	x = cosf(bank / 2) * cosf(pitch / 2) * cosf(heading / 2) + sinf(bank / 2) * sinf(pitch / 2) * sinf(heading / 2);
-	y = sinf(bank / 2) * cosf(pitch / 2) * cosf(heading / 2) - cosf(bank / 2) * sinf(pitch / 2) * sinf(heading / 2);
-	z = cosf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2) + sinf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2);
-	w = cosf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2) - sinf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2);
+	w = cosf(bank / 2) * cosf(pitch / 2) * cosf(heading / 2) + sinf(bank / 2) * sinf(pitch / 2) * sinf(heading / 2);
+	x = sinf(bank / 2) * cosf(pitch / 2) * cosf(heading / 2) - cosf(bank / 2) * sinf(pitch / 2) * sinf(heading / 2);
+	y = cosf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2) + sinf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2);
+	z = cosf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2) - sinf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2);	
 }
 
 Quaternion::~Quaternion() {}
@@ -62,7 +64,7 @@ Quaternion& forge::Quaternion::operator=(const Vector3& e) {
 	return *this = Quaternion(e);
 }
 
-float Quaternion::dot(const Quaternion& q) const{
+float Quaternion::dot(const Quaternion& q) const {
 	return x * q.x + y * q.y + z * q.z + w * q.w;
 }
 
@@ -99,16 +101,16 @@ Vector3 Quaternion::operator*(const Vector3& v) const {
 	return Vector3(rX, rY, rZ);
 }
 
-bool Quaternion::operator==(const Quaternion& q) const{
+bool Quaternion::operator==(const Quaternion& q) const {
 	return x == q.x && y == q.y && z == q.z && w == q.w;
 }
 
-bool Quaternion::operator!=(const Quaternion& q) const{
+bool Quaternion::operator!=(const Quaternion& q) const {
 	return x != q.x && y != q.y && z != q.z && w != q.w;
 }
 #pragma endregion
 
-Vector3 Quaternion::toEuler() const{
+Vector3 Quaternion::toEuler() const {
 	// Rotacion en Z, Y y X respectivamente
 	float heading = 0, pitch = 0, bank = 0;
 
@@ -132,34 +134,33 @@ Vector3 Quaternion::toEuler() const{
 }
 
 #pragma region Setters
-void Quaternion::setX(float newX) { 
-	x = newX;// * sinf(acosf(w));
+void Quaternion::setX(float newX) {
+	x = newX * sinf(acos(w));
 }
 
-void Quaternion::setY(float newY) { 
-	y = newY;// * sinf(acosf(w));
+void Quaternion::setY(float newY) {
+	y = newY * sinf(acos(w));
 }
 
-void Quaternion::setZ(float newZ) { 
-	z = newZ;// * sinf(acosf(w));
+void Quaternion::setZ(float newZ) {
+	z = newZ * sinf(acos(w));
 }
 
-void Quaternion::setW(float newW) {
-	w = newW;
-	//float prevSin = sinf(acosf(w));
-	//float newSin = sinf(newW / 2.0f);
-	//w = cosf(newW / 2.0f);
-	//x = (x / prevSin) * newSin;
-	//y = (y / prevSin) * newSin;
-	//z = (z / prevSin) * newSin;
+void Quaternion::setAngle(float newAngle) {
+	float prevSin = sinf(acos(w));
+	float newSin = sinf(newAngle / 2.0f);
+	w = cosf(newAngle / 2.0f);
+	x = (x / prevSin) * newSin;
+	y = (y / prevSin) * newSin;
+	z = (z / prevSin) * newSin;
 }
 
-void Quaternion::set(float newX, float newY, float newZ, float newW) {
-	float sinWHalf = sinf(newW / 2.0f);
+void Quaternion::set(float newX, float newY, float newZ, float newAngle) {
+	float sinWHalf = sinf(newAngle / 2.0f);
 	x = newX * sinWHalf;
 	y = newY * sinWHalf;
 	z = newZ * sinWHalf;
-	w = cosf(newW / 2.0f);
+	w = cosf(newAngle / 2.0f);
 }
 
 void Quaternion::set(const Quaternion& v) {
@@ -185,21 +186,25 @@ void Quaternion::set(const Quaternion* v) {
 #pragma endregion
 
 #pragma region Getters
-float Quaternion::getX() const { 
-	return x;// / sinf(acosf(w));
+float Quaternion::getX() const {
+	return x / sinf(acosf(w));
 }
 
-float Quaternion::getY() const { 
-	return y;// / sinf(acosf(w));
+float Quaternion::getY() const {
+	return y / sinf(acosf(w));
 }
 
-float Quaternion::getZ() const { 
-	return z;// / sinf(acosf(w));
+float Quaternion::getZ() const {
+	return z / sinf(acosf(w));
 }
 
-float Quaternion::getW() const { 
-	return w;//acosf(w) * 2.0f; 
+float Quaternion::getAngle() const {
+	return acosf(w) * 2.0f; 
 }
 #pragma endregion
+
+Quaternion::operator Ogre::Quaternion() const {
+	return Ogre::Quaternion(w, x, y, z);
+}
 
 const Quaternion Quaternion::IDENTITY	(0.0f, 0.0f, 0.0f, 0.0f);

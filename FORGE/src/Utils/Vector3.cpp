@@ -1,4 +1,5 @@
 #include "Vector3.h"
+#include <cmath>
 using namespace forge;
 
 #define PI 3.14159265358979323846264338327950288
