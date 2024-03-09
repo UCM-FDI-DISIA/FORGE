@@ -213,11 +213,11 @@ bool RenderManager::render() {
 	for (auto&& pair : transforms) {
 		if (pair.second->getNeedsUpdate()) {
 			const forge::Vector3& position = pair.second->getGlobalPosition();
-			pair.first->setPosition({position.getX(),position.getY(),position.getZ()});
+			pair.first->setPosition(position);
 			const forge::Quaternion& rotation = pair.second->getGlobalRotation();
 			pair.first->setOrientation(rotation);
 			const forge::Vector3& scale = pair.second->getGlobalScale();
-			pair.first->setScale({scale.getX(),scale.getY(),scale.getZ()});
+			pair.first->setScale(scale);
 			pair.second->setNeedsUpdate(false);
 		}
 	}

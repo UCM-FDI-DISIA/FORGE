@@ -1,7 +1,10 @@
 #pragma once
 #ifndef VECTOR3_H_
 #define VECTOR3_H_
-
+namespace Ogre {
+	template <int dims, typename T> class Vector;
+	typedef Vector<3, float> Vector3f;
+}
 namespace forge {
 	class Vector3 {
 	private:
@@ -280,6 +283,32 @@ namespace forge {
 		/// </summary>
 		/// <returns>Devuelve la componente en Z</returns>
 		float getZ() const;
+		#pragma endregion
+
+		#pragma region Conversiones
+		/// <summary>
+		/// Conversion implicita de forge::Vector3 a Ogre::Vector3
+		/// </summary>
+		operator Ogre::Vector3f() const;
+
+		/// <summary>
+		/// Constructor por copia de Ogre::Vector3
+		/// </summary>
+		/// <param name="w">Vector de Ogre a copiar</param>
+		Vector3(const Ogre::Vector3f& w);
+		
+		/// <summary>
+		/// Constructor por copia de referencia a R value de Ogre::Vector3
+		/// </summary>
+		/// <param name="w">Vector de Ogre a copiar</param>
+		Vector3(Ogre::Vector3f&& w) noexcept;
+		
+		/// <summary>
+		/// Asigna la informacion del Ogre::Vector3 W a este forge::Vector3
+		/// </summary>
+		/// <param name="w">Vector de Ogre a asignar</param>
+		/// <returns>El vector actualizado</returns>
+		Vector3& operator=(const Ogre::Vector3f& w);
 		#pragma endregion
 
 		#pragma region Constantes

@@ -27,6 +27,10 @@ void factory() {
 	f.registerComponent<TestMovement>();
 }
 
+void e(forge::Quaternion q) {
+
+}
+
 int main(int argc, char* argv[]) {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
@@ -47,6 +51,9 @@ int main(int argc, char* argv[]) {
     }
 	delete lf;
 	sceneManager.cleanUp();
+
+	e(Ogre::Quaternion());
+
     return 0;
 }
 

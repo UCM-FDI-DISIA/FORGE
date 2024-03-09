@@ -198,11 +198,32 @@ namespace forge {
 		float getAngle() const;
 		#pragma endregion
 
+		#pragma region Conversiones
 		/// <summary>
-		/// Conversion implicita a OgreQuaternion
+		/// Conversion implicita de forge::Quaternion a Ogre::Quaternion
 		/// </summary>
 		operator Ogre::Quaternion() const;
-	
+
+		/// <summary>
+		/// Constructor por copia de Ogre::Quaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		Quaternion(const Ogre::Quaternion& q);
+
+		/// <summary>
+		/// Constructor por copia de referencia a R value de Ogre::Quaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		Quaternion(Ogre::Quaternion&& q) noexcept;
+
+		/// <summary>
+		/// Asigna la informacion de Q a este cuaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		/// <returns>Cuaternion actualizado</returns>
+		Quaternion& operator=(const Ogre::Quaternion& q);
+		#pragma endregion
+
 		static const Quaternion IDENTITY;
 	};
 }

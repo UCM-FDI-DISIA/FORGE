@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="prueba.cpp">
+    <ClCompile Include="..\..\src\Demo\prueba.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="TestMovement.cpp">
+    <ClCompile Include="..\..\src\Demo\TestMovement.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TestMovement.h">
+    <ClInclude Include="..\..\src\Demo\TestMovement.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

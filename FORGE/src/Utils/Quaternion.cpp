@@ -203,8 +203,32 @@ float Quaternion::getAngle() const {
 }
 #pragma endregion
 
+#pragma region Conversiones
 Quaternion::operator Ogre::Quaternion() const {
 	return Ogre::Quaternion(w, x, y, z);
 }
+
+Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
+	x = q.x;
+	y = q.y;
+	z = q.z;
+	w = q.w;
+	return (*this);
+}
+
+Quaternion::Quaternion(const Ogre::Quaternion& q) {
+	x = q.x;
+	y = q.y;
+	z = q.z;
+	w = q.w;
+}
+
+Quaternion::Quaternion(Ogre::Quaternion&& q) noexcept {
+	x = q.x;
+	y = q.y;
+	z = q.z;
+	w = q.w;
+}
+#pragma endregion
 
 const Quaternion Quaternion::IDENTITY	(0.0f, 0.0f, 0.0f, 0.0f);
