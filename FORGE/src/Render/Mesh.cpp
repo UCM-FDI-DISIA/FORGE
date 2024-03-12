@@ -26,6 +26,16 @@ void Mesh::initComponent(ComponentData* data) {
     }
 }
 
+void Mesh::setEnabled(bool newActive) {
+    Component::setEnabled(newActive);
+    if (newActive) {
+        renderManager->addMeshNode(this);
+    }
+    else {
+        renderManager->removeNode(ogreEntity);
+    }
+}
+
 void Mesh::setMesh(std::string newMesh) {
     mesh = newMesh;
     ogreEntity = renderManager->updateMeshNode(ogreEntity, this);
