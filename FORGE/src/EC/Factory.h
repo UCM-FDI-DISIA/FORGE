@@ -9,6 +9,7 @@
 class Component;
 
 class Factory : private std::unordered_map<std::string, std::function<Component*()>> {
+private:
     static std::unique_ptr<Factory> instance;
 public:
     /// <returns>Devuelve un puntero a la unica instancia de la clase</returns>
@@ -16,20 +17,17 @@ public:
     /// <summary>
     /// Almacena el nombre de un Component y una funcion que genera una instancia de ese Component para que se pueda crear desde el motor
     /// </summary>
-    /// <param name="compName">Nombre del Component a registrar</param>
-    /// <param name="generator">Funcion que devuelve la instancia de un Component de ese tipo</param>
+    /// <typeparam name="ComponentType">Clase de un componente implementado heredado de Component</typeparam>
     /// <returns>Si se ha registrado correctamnte el Component</returns>
-    /// <example>
-    /// Para agregar componentes al motor a traves de la Factory se usaria el metodo de la siguiente manera:
-    /// <code>
-    /// registerComponent("Transform", 
-    ///     []() -> Component* {
-    ///         return new Transform();
-    ///     }
-    /// );
-    /// </code>
-    /// </example>
-    bool registerComponent(std::string id, std::function<Component*()> generator);
+    template <class ComponentType>
+    bool registerComponent() {
+        return insert(std::pair<std::string, std::function<Component*()>>(ComponentType::id,
+            [] () -> Component* {
+                return new ComponentType();
+            })
+        ).second;
+    }
+
     /// <summary>
     /// Crea una instancia del componente con nombre pedido
     /// </summary>
@@ -44,13 +42,11 @@ public:
  * @TODO:
  * (importante)
  * Para poder llamar a la función de inicialización de componentes desde la inicialización del motor
- * habería que tener una función callback por defecto vacía (nullptr) en el motor que se asigna en el 
+ * habría que tener una función callback por defecto vacía (nullptr) en el motor que se asigna en el 
  * archivo en el que se crea la función nueva chula de registerComponents
  * Ejemplo:
  * void registerComponents() {
- *  Factory::getInstance()->registerComponent("Transform", []()->Component*{
- *      return new Transform();
- *  });
+ *  Factory::getInstance()->registerComponent<Transform>();
  * }
  * 
  * forge->setComponentRegistrier(registerComponents);
