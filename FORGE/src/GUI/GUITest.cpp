@@ -85,6 +85,9 @@ int main(int, char**) {
 
     // Main loop
     bool done = false;
+    gui->loadFont("Supercharge", "supercharge.ttf", 100);
+    gui->loadFont("Saeda", "LTSaeada-Black.otf", 100);
+    gui->showLoadedFonts();
     while (!done) {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -140,7 +143,10 @@ int main(int, char**) {
         //        show_another_window = false;
         //    ImGui::End();
         //}
-        gui->createText("HOLA"/*, forge::Vector2(100, 200)*/, 5, GUI::Vector4({1.0, 1.0, 0.0, 1.0}));
+        
+        gui->createText("prueba", "Saeda", forge::Vector2(100, 200), GUI::Vector4({ 1.0, 1.0, 0.0, 1.0 }), "Saeda");
+        gui->createText("prueba1", "Supercharge", forge::Vector2(100, 400), GUI::Vector4({ 1.0, 1.0, 0.0, 1.0 }), "Supercharge");
+        
         // Rendering
         ImGui::Render();
         SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
@@ -148,6 +154,8 @@ int main(int, char**) {
         SDL_RenderClear(renderer);
         ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
         SDL_RenderPresent(renderer);
+
+        gui->freeIds();
     }
 
     // Cleanup
