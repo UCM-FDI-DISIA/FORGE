@@ -86,20 +86,11 @@
     <ProjectReference Include="..\EC\EC.vcxproj">
       <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\GUI\GUI.vcxproj">
-      <Project>{cec9e50f-ff08-49a1-b636-479eebfff93f}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{b5c0fcf0-3753-4906-bf1c-20044e9fc4ba}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Load\Load.vcxproj">
       <Project>{a25433b1-436f-4bff-904a-a7b1de4e99bb}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Main\Main.vcxproj">
-      <Project>{4ef5fd19-2c0e-47a0-b8ff-a921240ff6aa}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Physics\Physics.vcxproj">
-      <Project>{a43f2981-4da2-48c7-b2f0-e4468c4caa51}</Project>
     </ProjectReference>
     <ProjectReference Include="..\projects\EC\EC.vcxproj">
       <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>

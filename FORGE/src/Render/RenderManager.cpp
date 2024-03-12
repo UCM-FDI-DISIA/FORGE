@@ -49,19 +49,17 @@ RenderManager::~RenderManager() {
 Ogre::Root* RenderManager::createRoot() {
 	myFileSystemLayer = new Ogre::FileSystemLayer(myAppName);
 
-	//Crear Ogre Root
 	Ogre::String pluginsPath;
 	pluginsPath = myFileSystemLayer->getConfigFilePath("plugins.cfg");
 
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
-		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "IG2ApplicationContext::createRoot");
+		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "RenderManager::createRoot");
 	}
 
-	// Establecemos la ruta de los archivos de configuración en el sistema de archivos
 	mySolutionPath = pluginsPath;
 	mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
 	myFileSystemLayer->setHomePath(mySolutionPath);
-	mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
+	//mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
 
 	// Creamos la raíz de OGRE 
 	return new Ogre::Root(pluginsPath, myFileSystemLayer->getWritablePath("ogre.cfg"), myFileSystemLayer->getWritablePath("ogre.log"));
@@ -129,7 +127,12 @@ void RenderManager::locateResources() {
 		// go through all resource paths
 		for (i = settings.begin(); i != settings.end(); i++) {
 			type = i->first;
-			arch = Ogre::FileSystemLayer::resolveBundlePath(i->second);
+			arch = i->second;
+			if (arch[0] == '.' && (arch[1] == '/' || arch[1] == '\\')) {
+				arch = arch.substr(2);
+				arch = myFileSystemLayer->getWritablePath(arch);
+			}
+			arch = Ogre::FileSystemLayer::resolveBundlePath(arch);
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parámetro sería "sec" si dividieramos en secciones
 		}
 	}
