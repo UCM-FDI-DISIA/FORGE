@@ -4,51 +4,34 @@
 /// </summary>
 #include <memory>
 #include <unordered_map>
-#include <SDL_syswm.h>
-#include <OgreString.h>
+#include <string>
+
+class RenderForge;
+class Mesh;
+class Camera;
+class Light;
+class Transform;
 
 namespace Ogre {
-	class FileSystemLayer;
 	class Entity;
 	class Camera;
 	class Light;
 	class Root;
 	class SceneNode;
 	class SceneManager;
-	class RenderWindow;
 	class MovableObject;
 }
 
-class Mesh;
-class Camera;
-class Light;
-class Transform;
 
-typedef SDL_Window NativeWindowType;
-
-
-struct NativeWindowPair
-{
-	Ogre::RenderWindow* render = nullptr;
-	NativeWindowType* native = nullptr;
-};
-	
 class RenderManager
 {
 
 private:
 	static std::unique_ptr<RenderManager> instance;
 
-	Ogre::Root* myRoot;        
-	NativeWindowPair myWindow; 
-
-	Ogre::FileSystemLayer* myFileSystemLayer; 
-
-	Ogre::String myAppName;
-	Ogre::String mySolutionPath;
-		
-	Ogre::String myRTShaderLibPath;
-	Ogre::SceneManager* mySceneManager;
+	RenderForge* forge;
+	Ogre::Root* root;        
+	Ogre::SceneManager* sceneManager;
 
 	std::unordered_map<Ogre::SceneNode*, Transform*> transforms;
 	
@@ -57,33 +40,13 @@ private:
 	/// </summary>
 	RenderManager();
 
-	/// <summary>
-	/// Crea la root de Ogre y la devuelve.
-	/// </summary>
-	/// <returns>Devuelve el Root</returns>
-	Ogre::Root* createRoot();
-
-
-	/// <summary>
-	/// Ubica donde estan los recursos para que los use el RenderManager
-	/// </summary>
-	void locateResources();
-
-
-	//<summary>
-	//Este metodo crea una ventana de SDL para renderizar OGRE
-	//</summary>
-	//<returns>Devuele la ventana de SDL y la de render de Ogre</returns>
-	NativeWindowPair createWindow();
 
 public:
-
 	/// <summary>
 	/// Destructora del RenderManager
 	/// </summary>
 	~RenderManager();
 
-	
 	/// <returns>Devuelve una instancia al RenderManager</returns>
 	static RenderManager* getInstance();
 #pragma region Setup
@@ -91,19 +54,13 @@ public:
 	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de Ogre sin mas.
 	/// </summary>
 	//<param name="name"> Nombre de la aplicacion</param>
-	void setup(Ogre::String appName);
+	void setup(std::string appName);
 
 	/// <summary>
 	/// Renderiza un frame
 	/// </summary>
 	/// <returns>Devuelve True si ha podido renderizar</returns>
 	bool render();
-
-	/// <summary>
-	/// Metodo para decir si el raton esta libre en la ventana
-	/// </summary>
-	/// <param name="_grab"></param>
-	void setWindowGrab(bool active);
 #pragma endregion
 
 
