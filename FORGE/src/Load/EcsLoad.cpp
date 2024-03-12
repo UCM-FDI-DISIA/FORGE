@@ -10,7 +10,8 @@ using namespace luabridge;
 EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
 	sceneManager(*SceneManager::getInstance()) {
 
-	luaForge.doFile(path);
+	std::string realPath = "Assets/scenes/" + path;
+	luaForge.doFile(realPath);
 	lua_State* lua = luaForge.getState();
 	sceneManager.setLuaState(lua);
 
