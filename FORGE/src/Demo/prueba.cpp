@@ -31,12 +31,12 @@ void factory() {
 int main(int argc, char* argv[]) {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
-	RenderManager& render = *RenderManager::getInstance();
-    render.setup("Test FORGE");
-	LuaForge* lf = new LuaForge();
-	EcsLoad ecs("scenetest.lua", *lf);
-    SceneManager& sceneManager = *SceneManager::getInstance();
-    Input& input = *Input::getInstance();
+	RenderManager& render = *RenderManager::getInstance();	
+	render.setup("Test FORGE");
+	LuaForge* lf = new LuaForge();	
+	EcsLoad ecs("scenetest.lua", *lf);	
+	SceneManager& sceneManager = *SceneManager::getInstance();
+	Input& input = *Input::getInstance();	
     sceneManager.changeScene("Test");
     while (!input.keyUp(K_ESC)) {
         input.refresh();

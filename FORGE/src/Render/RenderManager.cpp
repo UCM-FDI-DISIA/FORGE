@@ -23,6 +23,7 @@
 #include <OgreEntity.h>
 
 #include <SDL_video.h>
+#include <iostream>
 
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
@@ -53,8 +54,10 @@ Ogre::Root* RenderManager::createRoot() {
 	Ogre::String pluginsPath;
 	pluginsPath = myFileSystemLayer->getConfigFilePath("plugins.cfg");
 
+	// Si no existe el archivo de plugins se le dice al usuario que no se ha encontrado
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
-		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "IG2ApplicationContext::createRoot");
+		std::cerr << "No se ha encontrado el archivo de plugins" << std::endl;
+		return nullptr;
 	}
 
 	// Establecemos la ruta de los archivos de configuración en el sistema de archivos
@@ -190,6 +193,7 @@ RenderManager* RenderManager::getInstance() {
 void RenderManager::setup(std::string appName) {
 	myAppName = appName;
 	myRoot = createRoot();
+	if(myRoot == nullptr) return;
 	// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
 	Ogre::RenderSystem* rs = myRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
 	myRoot->setRenderSystem(rs);
@@ -210,6 +214,7 @@ void RenderManager::setup(std::string appName) {
 }
 
 bool RenderManager::render() {
+	if(myRoot == nullptr) return false;
 	for (auto&& pair : transforms) {
 		if (pair.second->getNeedsUpdate()) {
 			const forge::Vector3& position = pair.second->getGlobalPosition();
@@ -233,6 +238,7 @@ void RenderManager::setWindowGrab(bool _grab) {
 }
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
+	if(myRoot == nullptr) return nullptr;
 	Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
 	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
 	if (mesh->getMaterial() != "") {
@@ -257,7 +263,7 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
-
+	if(myRoot == nullptr) return nullptr;
 	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
 	Ogre::Camera* ogreCamera = mySceneManager->createCamera(camera->getName());
 	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
@@ -274,6 +280,7 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 }
 
 Ogre::Light* RenderManager::addLightNode(Light* light) {
+	if (myRoot == nullptr) return nullptr;
 	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
 	Ogre::Light* ogreLight = mySceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
 	node->attachObject(ogreLight);
@@ -282,6 +289,7 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 }
 
 void RenderManager::removeNode(Ogre::MovableObject* object) {
+	if(myRoot == nullptr) return;
 	Ogre::SceneNode* node = object->getParentSceneNode();
 	node->detachObject(object);
 	mySceneManager->destroyEntity(object);
