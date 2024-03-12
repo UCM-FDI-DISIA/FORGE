@@ -5,13 +5,15 @@
 #include <vector>
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
+#include <Vector3.h>
+#include <Quaternion.h>
 
 class ComponentData {
 private:
     template <typename T>
     struct getter {
         T operator()(luabridge::LuaRef& data, std::string param) {
-            auto p = data[param];
+            luabridge::LuaRef p = data[param];
             if (!p.isNil() && p.isInstance<T>()) {
                 return p.cast<T>();
             }
@@ -21,11 +23,11 @@ private:
     template <typename U>
     struct getter<std::vector<U>> {
         std::vector<U> operator()(luabridge::LuaRef& data, std::string param) {
-            auto table = data[param];
+            luabridge::LuaRef table = data[param];
             std::vector<U> vec;
             if (table.isTable()) {
                 for (auto&& pair : pairs(table)) {
-                    vec.push_back(pair.first.cast<U>());
+                    vec.push_back(pair.second.cast<U>());
                 }
             }
             return vec;
@@ -56,6 +58,8 @@ public:
     /// </returns>
     std::string getId();
 
+    bool has(std::string param);
+
     /// <summary>
     /// Devuelve el parametro pedido dentro del ComponentData
     /// </summary>
@@ -68,7 +72,28 @@ public:
     template <typename T>
     T get(std::string param) {
         return getter<T>()(*data, param);
+    } 
+
+    template <>
+    forge::Vector3 get<forge::Vector3>(std::string param) {
+        std::vector<float> input = getter<std::vector<float>>()(*data,param);
+        forge::Vector3 vector = forge::Vector3();
+        if (input.size() >= 3) {
+            vector = forge::Vector3(input[0], input[1], input[2]);
+        }
+        return vector;
     }
+
+    template <>
+    forge::Quaternion get<forge::Quaternion>(std::string param) {
+        std::vector<float> input = getter<std::vector<float>>()(*data, param);
+        forge::Quaternion quaternion = forge::Quaternion();
+        if (input.size() >= 4) {
+            quaternion = forge::Quaternion(input[0], input[1], input[2], input[3]);
+        }
+        return quaternion;
+    }
+
 
     /// <summary>
     /// Agrega un nuevo parametro a los datos del componente

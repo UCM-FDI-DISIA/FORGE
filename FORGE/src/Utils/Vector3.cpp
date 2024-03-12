@@ -1,4 +1,6 @@
 #include "Vector3.h"
+#include <cmath>
+#include <OgreVector3.h>
 using namespace forge;
 
 #define PI 3.14159265358979323846264338327950288
@@ -118,20 +120,20 @@ Vector3 Vector3::operator*=(const Vector3& w) {
 }
 
 bool Vector3::operator==(const Vector3& w) const {
-	float min = pow(1, E - 5);
+	double min = pow(1, E - 5);
 	return (abs(x - w.x) <= min && abs(y - w.y) <= min && abs(z - w.z) <= min);
 }
 
 bool Vector3::operator!=(const Vector3& w)  const {
-	float min = pow(1, E - 5);
+	double min = pow(1, E - 5);
 	return (abs(x - w.x) > min && abs(y - w.y) > min && abs(z - w.z) > min);
 }
 #pragma endregion
 
 #pragma region Angulos
-float Vector3::angle(const Vector3& w) const {
-	float prodEsc = dot(w);
-	float angle = std::acos(prodEsc / (magnitude() * w.magnitude()));
+double Vector3::angle(const Vector3& w) const {
+	double prodEsc = dot(w);
+	double angle = std::acos(prodEsc / (magnitude() * w.magnitude()));
 
 	return angle * 180 / PI;
 }
@@ -213,8 +215,33 @@ float Vector3::getZ() const {
 }
 #pragma endregion
 
+#pragma region Conversiones
+forge::Vector3::operator Ogre::Vector3f() const {
+	return Ogre::Vector3f(x, y, z);
+}
+
+Vector3::Vector3(const Ogre::Vector3f& w) :
+	x(w.x),
+	y(w.y),
+	z(w.z) {
+}
+
+Vector3::Vector3(Ogre::Vector3f&& w) noexcept :
+	x(w.x),
+	y(w.y),
+	z(w.z) {
+}
+
+Vector3& Vector3::operator=(const Ogre::Vector3f& w) {
+	x = w.x;
+	y = w.y;
+	z = w.z;
+	return *this;
+}
+#pragma endregion
+
 #pragma region Constantes
-const Vector3 Vector3::ZERO		(0.0f,0.0f,0.0f);
+const Vector3 Vector3::ZERO		(0.0f, 0.0f, 0.0f);
 const Vector3 Vector3::RIGHT	(1.0f, 0.0f, 0.0f);
 const Vector3 Vector3::LEFT		(-1.0f, 0.0f, 0.0f);
 const Vector3 Vector3::UP		(0.0f, 1.0f, 0.0f);

@@ -14,6 +14,8 @@ private:
 	forge::Quaternion rotation;
 	forge::Vector3 scale;
 
+	bool needsUpdate;
+
 	Transform* parent;
 
 	/// <summary>
@@ -99,6 +101,11 @@ public:
 	/// </summary>
 	/// <param name="newScale">Escala a aplicar al Transform.</param>
 	void doScale(float scale);
+	/// <summary>
+	/// Establece si requiere actualizarse la instancia del transform
+	/// </summary>
+	/// <param name="needed">True si lo necesita, falase sita no lo necesita.</param>
+	void setNeedsUpdate(bool needed);
 
 	#pragma endregion //setters
 	#pragma region getters
@@ -118,6 +125,8 @@ public:
 	forge::Vector3 const& getScale() const;
 	/// <returns>Escala global.</returns>
 	forge::Vector3 getGlobalScale() const;
+	///<returns>Se ha actualizado el transform.</returns>
+	bool getNeedsUpdate() const;
 	#pragma endregion //getters
 };
 
