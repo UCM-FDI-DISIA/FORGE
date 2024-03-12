@@ -16,7 +16,7 @@
 #include "Light.h"
 #include "Camera.h"
 #include "TestMovement.h"
-
+#include "Audio.h"
 
 void factory() {
 	Factory& f = *Factory::getInstance();
