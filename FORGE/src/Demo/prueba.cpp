@@ -16,6 +16,7 @@
 #include "Light.h"
 #include "Camera.h"
 #include "TestMovement.h"
+#include "test.h"
 
 
 void factory() {
@@ -38,6 +39,7 @@ int main(int argc, char* argv[]) {
     SceneManager& sceneManager = *SceneManager::getInstance();
     Input& input = *Input::getInstance();
     sceneManager.changeScene("Test");
+	testFisico* myTest = new testFisico();
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
