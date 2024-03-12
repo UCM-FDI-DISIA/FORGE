@@ -13,19 +13,19 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</ProjectGuid>
-    <RootNamespace>Utils</RootNamespace>
+    <ProjectGuid>{af1fe739-e187-408f-8b07-64558e47ea2a}</ProjectGuid>
+    <RootNamespace>Demo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -44,13 +44,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)bin</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -58,16 +58,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Load\;$(SolutionDir)src\Input\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain_d.lib</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -77,7 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Load\;$(SolutionDir)src\Input\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -85,20 +81,54 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib</AdditionalDependencies>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Utils\Quaternion.cpp" />
-    <ClCompile Include="..\..\src\Utils\Vector2.cpp" />
-    <ClCompile Include="..\..\src\Utils\Vector3.cpp" />
+    <ProjectReference Include="..\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.vcxproj">
+      <Project>{cec9e50f-ff08-49a1-b636-479eebfff93f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Input\Input.vcxproj">
+      <Project>{b5c0fcf0-3753-4906-bf1c-20044e9fc4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Load\Load.vcxproj">
+      <Project>{a25433b1-436f-4bff-904a-a7b1de4e99bb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Main\Main.vcxproj">
+      <Project>{4ef5fd19-2c0e-47a0-b8ff-a921240ff6aa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.vcxproj">
+      <Project>{a43f2981-4da2-48c7-b2f0-e4468c4caa51}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\projects\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\projects\Input\Input.vcxproj">
+      <Project>{b5c0fcf0-3753-4906-bf1c-20044e9fc4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\projects\Load\Load.vcxproj">
+      <Project>{a25433b1-436f-4bff-904a-a7b1de4e99bb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\projects\Render\Render.vcxproj">
+      <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\projects\Utils\Utils.vcxproj">
+      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Render\Render.vcxproj">
+      <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Utils\Quaternion.h" />
-    <ClInclude Include="..\..\src\Utils\Vector2.h" />
-    <ClInclude Include="..\..\src\Utils\Vector3.h" />
+    <ClCompile Include="..\..\src\Demo\prueba.cpp" />
+    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

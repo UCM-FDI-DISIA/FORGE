@@ -1,12 +1,17 @@
 #pragma once
 #include "Vector3.h"
+namespace Ogre {
+	class Quaternion;
+}
 namespace forge {
+	/// TO DO: Adaptar para que los set y get de los parametros los pueda tratar el usuario como par rotacion. Habrá que guardar el angulo o el seno.
 	class Quaternion {
 	private:
 		float x;
 		float y;
 		float z;
 		float w;
+
 	public:
 		#pragma region Constructores
 		/// <summary>
@@ -20,8 +25,8 @@ namespace forge {
 		/// <param name="_x">Valor en la componente X</param>
 		/// <param name="_y">Valor en la componente Y</param>
 		/// <param name="_z">Valor en la componente Z</param>
-		/// <param name="_w">Valor w</param>
-		Quaternion(float _x, float _y, float _z, float _w);
+		/// <param name="_angle">Valor del angulo del par rotacion</param>
+		Quaternion(float _x, float _y, float _z, float _angle);
 
 		/// <summary>
 		/// Constructor por copia
@@ -116,37 +121,37 @@ namespace forge {
 
 		#pragma region Setters
 		/// <summary>
-		/// Asigna un nuevo valor a la componente en X del cuaternion
+		/// Asigna un nuevo valor a la componente en X del par-rotacion
 		/// </summary>
 		/// <param name="newX">Nuevo valor en X</param>
 		void setX(float newX);
 
 		/// <summary>
-		/// Asigna un nuevo valor a la componente en Y del cuaternion
+		/// Asigna un nuevo valor a la componente en Y del par-rotacion
 		/// </summary>
 		/// <param name="newY">Nuevo valor en Y</param>
 		void setY(float newY);
 
 		/// <summary>
-		/// Asigna un nuevo valor a la componente en Z del cuaternion
+		/// Asigna un nuevo valor a la componente en Z del par-rotacion
 		/// </summary>
 		/// <param name="newZ">Nuevo valor en Z</param>
 		void setZ(float newZ);
 
 		/// <summary>
-		/// Asigna un nuevo valor W
+		/// Asigna un nuevo angulo
 		/// </summary>
-		/// <param name="newW">Nuevo valor W</param>
-		void setW(float newW);
+		/// <param name="newAngle">Nuevo valor del angulo del par rotacion</param>
+		void setAngle(float newAngle);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion
 		/// </summary>
-		/// <param name="newX">Valor del cuaternion en el eje X</param>
-		/// <param name="newY">Valor del cuaternion en el eje Y</param>
-		/// <param name="newZ">Valor del cuaternion en el eje Z</param>
-		/// <param name="newW">Valor W del cuaternion</param>
-		void set(float newX, float newY, float newZ, float newW);
+		/// <param name="newX">Valor del par-rotacion en el eje X</param>
+		/// <param name="newY">Valor del par-rotacion en el eje Y</param>
+		/// <param name="newZ">Valor del par-rotacion en el eje Z</param>
+		/// <param name="newAngle">Valor del angulo del par rotacion</param>
+		void set(float newX, float newY, float newZ, float newAngle);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion copiando los de Q
@@ -169,28 +174,54 @@ namespace forge {
 
 		#pragma region Getters
 		/// <summary>
-		/// Acceso a la componente en X del cuaternion
+		/// Acceso a la componente en X del par-rotacion que representa el cuaternion
 		/// </summary>
-		/// <returns>Devuelve la componente en X</returns>
+		/// <returns>Devuelve la orientacion en X</returns>
 		float getX() const;
 
 		/// <summary>
-		/// Acceso a la componente en Y del cuaternion
+		/// Acceso a la componente en Y del par-rotacion que representa el cuaternion
 		/// </summary>
-		/// <returns>Devuelve la componente en Y</returns>
+		/// <returns>Devuelve la orientacion en Y</returns>
 		float getY() const;
 
 		/// <summary>
-		/// Acceso a la componente en Z del cuaternion
+		/// Acceso a la componente en Z del par-rotacion que representa el cuaternion
 		/// </summary>
-		/// <returns>Devuelve la componente en Z</returns>
+		/// <returns>Devuelve la orientacion en Z</returns>
 		float getZ() const;
 
 		/// <summary>
-		/// Acceso al valor W del cuaternion
+		/// Acceso al angulo del cuaternion
 		/// </summary>
-		/// <returns>Devuelve el valor W</returns>
-		float getW() const;
+		/// <returns>Devuelve el angulo entre 0 y 2PI</returns>
+		float getAngle() const;
+		#pragma endregion
+
+		#pragma region Conversiones
+		/// <summary>
+		/// Conversion implicita de forge::Quaternion a Ogre::Quaternion
+		/// </summary>
+		operator Ogre::Quaternion() const;
+
+		/// <summary>
+		/// Constructor por copia de Ogre::Quaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		Quaternion(const Ogre::Quaternion& q);
+
+		/// <summary>
+		/// Constructor por copia de referencia a R value de Ogre::Quaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		Quaternion(Ogre::Quaternion&& q) noexcept;
+
+		/// <summary>
+		/// Asigna la informacion de Q a este cuaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		/// <returns>Cuaternion actualizado</returns>
+		Quaternion& operator=(const Ogre::Quaternion& q);
 		#pragma endregion
 
 		static const Quaternion IDENTITY;

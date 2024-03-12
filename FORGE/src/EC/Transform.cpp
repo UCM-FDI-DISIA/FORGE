@@ -11,8 +11,9 @@ const std::string Transform::id = "Transform";
 Transform::Transform() : 
 	position(),
 	rotation(),
-	scale(),
-	parent(nullptr) {
+	scale(1,1,1),
+	parent(nullptr),
+	needsUpdate(true) {
 	serializer(position, "position");
 	serializer(rotation, "rotation");
 	serializer(scale, "scale");
@@ -20,58 +21,76 @@ Transform::Transform() :
 
 void Transform::setRotation(forge::Quaternion const& newRot) {
 	rotation = newRot;
+	needsUpdate = true;
 }
 
 void Transform::setRotation(forge::Vector3 const& newRot) {
 	rotation = Quaternion(newRot);
+	needsUpdate = true;
 }
 
 void Transform::rotateX(float xRot) {
 	rotation *= Quaternion(1, 0, 0, xRot);
+	needsUpdate = true;
 }
 
 void Transform::rotateY(float yRot) {
 	rotation *= Quaternion(0, 1, 0, yRot);
+	needsUpdate = true;
 }
 
 void Transform::rotateZ(float zRot) {
 	rotation *= Quaternion(0, 0, 1, zRot);
+	needsUpdate = true;
 }
 
 void Transform::setPosition(forge::Vector3 const& newPos) {
 	position = newPos;
+	needsUpdate = true;
 }
 
 void Transform::movePosition(forge::Vector3 const& offset) {
 	position += offset;
+	needsUpdate = true;
 }
 
 void Transform::setPositionX(float newX) {
 	position.setX(newX);
+	needsUpdate = true;
 }
 
 void Transform::setPositionY(float newY) {
 	position.setY(newY);
+	needsUpdate = true;
 }
 
 void Transform::setPositionZ(float newZ) {
 	position.setZ(newZ);
+	needsUpdate = true;
 }
 
 void Transform::setScale(forge::Vector3 const& newScale) {
 	scale = newScale;
+	needsUpdate = true;
 }
 
 void Transform::setScale(float newScale) {
 	scale = Vector3(newScale);
+	needsUpdate = true;
 }
 
 void Transform::doScale(forge::Vector3 const& rescale) {
 	scale *= rescale;
+	needsUpdate = true;
 }
 
 void Transform::doScale(float rescale) {
 	scale *= rescale;
+	needsUpdate = true;
+}
+
+void Transform::setNeedsUpdate(bool needed) {
+	needsUpdate = needed;
 }
 
 
@@ -120,4 +139,8 @@ forge::Vector3 Transform::getGlobalScale() const {
 	else {
 		return scale;
 	}
+}
+
+bool Transform::getNeedsUpdate() const {
+	return needsUpdate || (parent && parent->getNeedsUpdate());
 }
