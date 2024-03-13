@@ -1,32 +1,51 @@
 #include "Audio.h"
+#include <irrKlang.h>
+using namespace irrklang;
 
-Audio::Audio() {
-	engine = createIrrKlangDevice();
+Audio::Audio() :
+	engine(createIrrKlangDevice()) {
 }
 
 Audio::~Audio() {
-	for (auto s = soundLibrary.begin(); s != soundLibrary.end(); s++) {
-		s->second->drop();
-	}
+	//for (auto& s : soundLibrary) {
+	//	s.second->drop();
+	//}
 	engine->drop();
 }
 
-void Audio::AddSound(char* name, char* file) {
-	ISoundSource* newSound = engine->addSoundSourceFromFile(file);
-
-	soundLibrary.insert(std::pair<char*, ISoundSource*>(name, newSound));
+bool Audio::AddSound(std::string name, std::string file) {
+	ISoundSource* newSound = engine->addSoundSourceFromFile(file.c_str());
+	if (newSound != NULL) {
+		soundLibrary.insert(std::pair<std::string, ISoundSource*>(name, newSound)).second;
+		return true;
+	}
+	return false;
 }
 
-bool Audio::RemoveSound(char* name) {
-	bool result = soundLibrary[name]->drop();
-	soundLibrary.erase(name);
-	return result;
+bool Audio::RemoveSound(std::string name) {
+	auto sound = soundLibrary.find(name);
+	if (sound != soundLibrary.end()) {
+		engine->removeSoundSource(sound->second);
+		soundLibrary.erase(sound);
+		return true;
+	}
+	return false;
 }
 
-void Audio::PlayGlobalSound(char* name, bool loop) {
-	engine->play2D(soundLibrary[name], loop);
+bool Audio::PlayGlobalSound(std::string name, bool loop) {
+	auto sound = soundLibrary.find(name);
+	if (sound != soundLibrary.end()) {
+		engine->play2D(sound->second, loop);
+		return true;
+	}
+	return false;
 }
 
-void Audio::SetSoundVolume(char* name, float volume) {
-	soundLibrary[name]->setDefaultVolume(volume);
+bool Audio::SetSoundVolume(std::string name, float volume) {
+	auto sound = soundLibrary.find(name);
+	if (sound != soundLibrary.end()) {
+		sound->second->setDefaultVolume(volume);
+		return true;
+	}
+	return false;
 }

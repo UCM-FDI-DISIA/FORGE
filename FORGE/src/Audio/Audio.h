@@ -2,14 +2,16 @@
 #ifndef AUDIO_H_
 #define AUDIO_H_
 
-#include "irrKlang.h"
-#include "unordered_map"
-using namespace irrklang;
-
+#include <string>
+#include <unordered_map>
+namespace irrklang {
+	class ISoundEngine;
+	class ISoundSource;
+}
 class Audio {
 private:
-	ISoundEngine* engine;
-	std::unordered_map<char*, ISoundSource*> soundLibrary;
+	irrklang::ISoundEngine* engine;
+	std::unordered_map<std::string, irrklang::ISoundSource*> soundLibrary;
 public:
 	/// <summary>
 	/// Inicializa el sistema de audio
@@ -24,25 +26,28 @@ public:
 	/// </summary>
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="route">Archivo de sonido</param>
-	void AddSound(char* name, char* file);
+	/// <returns>Booleano que indica si se ha podido agregar el sonido</returns>
+	bool AddSound(std::string name, std::string file);
 	/// <summary>
 	/// Elimina un sonido de la libreria de sonidos de audio
 	/// </summary>
 	/// <param name="name">Identificador del sonido</param>
-	/// <returns>Booleano con el resultado de la operación</returns>
-	bool RemoveSound(char* name);
+	/// <returns>Booleano que indica si se encontro y elimino el sonido</returns>
+	bool RemoveSound(std::string name);
 	/// <summary>
 	/// Hace sonar un sonido de forma global sin tener en cuenta posiciones
 	/// </summary>
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="loop">Booleano de control de loop</param>
-	void PlayGlobalSound(char* name, bool loop);
+	/// <returns>Booleano que indica si se ha encontrado el sonido y se ha reproducido</returns>
+	bool PlayGlobalSound(std::string name, bool loop);
 	/// <summary>
 	/// Pone un sonido al volumen especificado
 	/// </summary>
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="volume">Volumen del sonido, va del 0 al 1f</param>
-	void SetSoundVolume(char* name, float volume);
+	/// <returns>Booleano que indica si se ha encontrado el sonido y cambiado su volumen</returns>
+	bool SetSoundVolume(std::string name, float volume);
 };
 
 #endif
