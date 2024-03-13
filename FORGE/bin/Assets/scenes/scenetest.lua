@@ -17,6 +17,7 @@ local scenes = {
                     name = "maincam"
                 }
             },
+            children = {
                 obstaculo = {
                     group = "obstacle",
                     components = {
