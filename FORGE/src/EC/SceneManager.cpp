@@ -86,6 +86,7 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 			activeScene = iter->second;
 		}
 	}
+	if (activeScene == nullptr) std::cerr << "ERROR: Escena no encontrada\n";
 }
 
 void SceneManager::removeScene(std::string id) {
@@ -122,8 +123,9 @@ int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
-void SceneManager::update() {
-	activeScene->update();
+bool SceneManager::update() {
+	if (activeScene != nullptr) activeScene->update();
+	return activeScene != nullptr;
 }
 
 void SceneManager::refresh() {

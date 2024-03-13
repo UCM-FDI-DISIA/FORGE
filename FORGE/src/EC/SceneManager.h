@@ -84,7 +84,7 @@ public:
 	/// <returns>
 	/// Actualiza las entidades de la escena activa
 	/// </returns>
-	void update();
+	bool update();
 	/// <returns>
 	/// Borra todas las Entity no vivas de la escena activa
 	/// </returns>

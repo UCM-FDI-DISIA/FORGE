@@ -41,7 +41,8 @@ int main(int argc, char* argv[]) {
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
-        sceneManager.update();
+        if(!sceneManager.update())
+			break;
 		sceneManager.refresh();
         if(!render.render())
 			break;
