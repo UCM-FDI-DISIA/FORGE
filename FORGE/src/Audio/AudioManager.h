@@ -4,23 +4,31 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
+
 namespace irrklang {
 	class ISoundEngine;
 	class ISoundSource;
+	class ISound;
 }
-class Audio {
+
+class Sound;
+
+class AudioManager {
 private:
 	irrklang::ISoundEngine* engine;
 	std::unordered_map<std::string, irrklang::ISoundSource*> soundLibrary;
+	std::unordered_multimap<irrklang::ISoundSource*, irrklang::ISound*> currentlyPlaying;
+	std::vector<Sound*> sounds;
 public:
 	/// <summary>
 	/// Inicializa el sistema de audio
 	/// </summary>
-	Audio();
+	AudioManager();
 	/// <summary>
 	/// Cierra el sistema de audio
 	/// </summary>
-	~Audio();
+	~AudioManager();
 	/// <summary>
 	/// Anade un sonido a la libreria de sonidos de audio
 	/// </summary>
@@ -40,7 +48,7 @@ public:
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="loop">Booleano de control de loop</param>
 	/// <returns>Booleano que indica si se ha encontrado el sonido y se ha reproducido</returns>
-	bool PlayGlobalSound(std::string name, bool loop);
+	bool PlayGlobalSound(std::string name, bool loop = false);
 	/// <summary>
 	/// Pone un sonido al volumen especificado
 	/// </summary>

@@ -16,7 +16,7 @@
 #include "Light.h"
 #include "Camera.h"
 #include "TestMovement.h"
-#include "Audio.h"
+#include "AudioManager.h"
 
 void factory() {
 	Factory& f = *Factory::getInstance();
@@ -34,10 +34,12 @@ int main(int argc, char* argv[]) {
 	RenderManager& render = *RenderManager::getInstance();
     render.setup("Test FORGE");
 	LuaForge* lf = new LuaForge();
-	EcsLoad ecs("scenetest.lua", *lf);
+	EcsLoad ecs("Assets/scenes/scenetest.lua", *lf);
     SceneManager& sceneManager = *SceneManager::getInstance();
     Input& input = *Input::getInstance();
+	AudioManager* ad = new AudioManager();
     sceneManager.changeScene("Test");
+	ad->AddSound("Test", "Assets/sounds/AllObjectivesComp.wav");
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
@@ -45,7 +47,11 @@ int main(int argc, char* argv[]) {
 		sceneManager.refresh();
         if(!render.render())
 			break;
+		if (input.keyDown(K_P)) {
+			ad->PlayGlobalSound("Test", false);
+		}
     }
+	delete ad;
 	delete lf;
 	sceneManager.cleanUp();
 
