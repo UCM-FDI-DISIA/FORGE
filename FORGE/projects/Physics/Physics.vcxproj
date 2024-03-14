@@ -12,9 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Physics\test.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Physics\test.h" />
+    <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="RigidBody.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -64,7 +68,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\hlocal\nullptr\FORGE\FORGE\Dependencies\Bullet\src\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Bullet\src\src;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

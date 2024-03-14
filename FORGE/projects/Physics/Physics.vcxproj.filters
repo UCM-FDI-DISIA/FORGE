@@ -18,10 +18,22 @@
     <ClCompile Include="..\..\src\Physics\test.cpp">
       <Filter>Archivos de encabezado</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Physics\test.h">
       <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
