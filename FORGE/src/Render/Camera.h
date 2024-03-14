@@ -27,6 +27,8 @@ public:
     
     ~Camera();
 
+    void setEnabled(bool newActive) override;
+
     void initComponent(ComponentData* data) override;
 
 	#pragma region setters

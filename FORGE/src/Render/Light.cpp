@@ -23,6 +23,17 @@ void Light::initComponent(ComponentData* data) {
     }
 }
 
+void Light::setEnabled(bool newActive) {
+    Component::setEnabled(newActive);
+    if (newActive) {
+        renderManager->addLightNode(this);
+    }
+    else {
+        renderManager->removeNode(ogreLight);
+    }
+}
+
+
 const int& Light::getType() const {
     return type;
 }
