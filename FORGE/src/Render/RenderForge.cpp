@@ -37,42 +37,6 @@ Ogre::Root* RenderForge::createRoot() {
 	return new Ogre::Root(pluginsPath, fileSystemLayer->getWritablePath("ogre.cfg"), fileSystemLayer->getWritablePath("ogre.log"));
 }
 
-NativeWindowPair RenderForge::createWindow() {
-	uint32_t w, h;
-	Ogre::NameValuePairList miscParams;
-
-	Ogre::ConfigOptionMap ropts = root->getRenderSystem()->getConfigOptions();
-
-	std::istringstream mode(ropts["Video Mode"].currentValue);
-	Ogre::String token;
-	mode >> w;
-	mode >> token;
-	mode >> h;
-
-	miscParams["FSAA"] = ropts["FSAA"].currentValue;
-	miscParams["vsync"] = ropts["VSync"].currentValue;
-	miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
-
-	if (!SDL_WasInit(SDL_INIT_VIDEO)) SDL_InitSubSystem(SDL_INIT_VIDEO);
-
-	// Establecemos la ventana como redimensionable por defecto
-	Uint32 flags = SDL_WINDOW_RESIZABLE;
-
-	// Si la opción de pantalla completa está activada, la ventana se establece como pantalla completa
-	if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
-
-	// Creamos la ventana nativa de SDL
-	window.native = SDL_CreateWindow(appName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
-
-	// Establecemos los parámetros de la ventana de render y la creamos
-	SDL_SysWMinfo wmInfo;
-	SDL_VERSION(&wmInfo.version);
-	SDL_GetWindowWMInfo(window.native, &wmInfo);
-	miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
-	window.render = root->createRenderWindow(appName, w, h, false, &miscParams);
-	return window;
-}
-
 void RenderForge::locateResources() {
 	// Cargamos los recursos del archivo resources.cfg
 	Ogre::ConfigFile cf;
@@ -88,7 +52,7 @@ void RenderForge::locateResources() {
 	}
 
 	Ogre::String sec, type, arch;
-	// go through all specified resource groups
+	// Iterar sobre todos los grupos de recursos
 	Ogre::ConfigFile::SettingsBySection_::const_iterator seci;
 	for (seci = cf.getSettingsBySection().begin(); seci != cf.getSettingsBySection().end(); ++seci) {
 		// Esto sirve para dividir los recursos en secciones. Al comentarlo se van todos a "General"
@@ -96,7 +60,7 @@ void RenderForge::locateResources() {
 		const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
 		Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
 
-		// go through all resource paths
+		// iterar por todas las rutas de configuracion
 		for (i = settings.begin(); i != settings.end(); i++) {
 			type = i->first;
 			arch = i->second;
@@ -118,7 +82,7 @@ void RenderForge::locateResources() {
 	arch = genLocs.front().archive->getName();
 	type = genLocs.front().archive->getType();
 
-	// Add locations for supported shader languages
+	// Anadir las ubicaciones de todos los lenguajes de shaders con soporte
 	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles")) {
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSLES", type, sec);
 	}
@@ -155,6 +119,41 @@ void RenderForge::locateResources() {
 	}
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+}
+
+NativeWindowPair RenderForge::createWindow() {
+	uint32_t w, h;
+	Ogre::NameValuePairList miscParams;
+
+	Ogre::ConfigOptionMap ropts = root->getRenderSystem()->getConfigOptions();
+
+	std::istringstream mode(ropts["Video Mode"].currentValue);
+	Ogre::String token;
+	mode >> w;
+	mode >> token;
+	mode >> h;
+
+	miscParams["FSAA"] = ropts["FSAA"].currentValue;
+	miscParams["vsync"] = ropts["VSync"].currentValue;
+	miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
+
+	if (!SDL_WasInit(SDL_INIT_VIDEO)) {
+		SDL_InitSubSystem(SDL_INIT_VIDEO);
+	}
+	Uint32 flags = SDL_WINDOW_RESIZABLE;
+
+	if (ropts["Full Screen"].currentValue == "Yes") {
+		flags = SDL_WINDOW_FULLSCREEN;
+	}
+	window.native = SDL_CreateWindow(appName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+
+	// Establecemos los parametros de la ventana de render y la creamos
+	SDL_SysWMinfo wmInfo;
+	SDL_VERSION(&wmInfo.version);
+	SDL_GetWindowWMInfo(window.native, &wmInfo);
+	miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
+	window.render = root->createRenderWindow(appName, w, h, false, &miscParams);
+	return window;
 }
 
 RenderForge::RenderForge(std::string _appName) :
