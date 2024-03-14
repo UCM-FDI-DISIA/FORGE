@@ -2,6 +2,7 @@
 #include <cmath>
 using namespace forge;
 
+#pragma region Constructoras
 Vector2::Vector2() :
 	x(0.0f),
 	y(0.0f) {
@@ -16,7 +17,9 @@ Vector2::Vector2(const Vector2& v) :
 }
 
 Vector2::~Vector2(){}
+#pragma endregion
 
+#pragma region Operadores
 Vector2 Vector2::operator+(const Vector2& v) const {
 	return Vector2(x + v.x, y + v.y);
 }
@@ -38,6 +41,7 @@ bool Vector2::operator==(const Vector2& v) const {
 bool Vector2::operator!=(const Vector2& v) const {
 	return (x != v.x || y != v.y);
 }
+#pragma endregion
 
 float Vector2::magnitude() const {
 	return sqrtf(x * x + y * y);
@@ -46,10 +50,13 @@ Vector2 Vector2::normalize() const {
 	return *this / magnitude();
 }
 
+#pragma region Getters
 float Vector2::getX() const { return x; }
 
 float Vector2::getY() const { return y; }
+#pragma endregion
 
+#pragma region Setters
 void Vector2::setX(float _x) {	x = _x; }
 
 void Vector2::setY(float _y) {	y = _y; }
@@ -62,6 +69,7 @@ void Vector2::set(float _x, float _y) {
 	x = _x;
 	y = _y;
 }
+#pragma endregion
 
 #pragma region Constantes
 const Vector2 Vector2::ZERO(0.0f, 0.0f);

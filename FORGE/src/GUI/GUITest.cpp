@@ -11,6 +11,7 @@
 // For a multi-platform app consider using e.g. SDL+DirectX on Windows and SDL+OpenGL on Linux/OSX.
 
 #include "GUI.h"
+#include "Text.h"
 
 #if !SDL_VERSION_ATLEAST(2,0,17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
@@ -88,6 +89,11 @@ int main(int, char**) {
     gui->loadFont("Supercharge", "supercharge.ttf", 100);
     gui->loadFont("Saeda", "LTSaeada-Black.otf", 100);
     gui->showLoadedFonts();
+    Text* text = new Text("prueba", "Saeda", forge::Vector2(100, 200), forge::Vector4({ 1.0, 1.0, 1.0, 1.0 }), "Saeda");
+    text->setBackground();
+    text->removeBackground();
+    //text->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
+    //text->changeTextOpacity(0.3f);
     while (!done) {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -144,8 +150,9 @@ int main(int, char**) {
         //    ImGui::End();
         //}
         
-        gui->createText("prueba", "Saeda", forge::Vector2(100, 200), GUI::Vector4({ 1.0, 1.0, 0.0, 1.0 }), "Saeda");
-        gui->createText("prueba1", "Supercharge", forge::Vector2(100, 400), GUI::Vector4({ 1.0, 1.0, 0.0, 1.0 }), "Supercharge");
+        //gui->createText("prueba", "Saeda", forge::Vector2(100, 200), GUI::Vector4({ 1.0, 1.0, 0.0, 1.0 }), "Saeda");
+        //gui->createText("prueba1", "Supercharge", forge::Vector2(100, 400), GUI::Vector4({ 1.0, 1.0, 0.0, 1.0 }), "Supercharge");
+        text->update();
         
         // Rendering
         ImGui::Render();

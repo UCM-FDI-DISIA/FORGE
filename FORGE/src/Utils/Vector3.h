@@ -273,9 +273,9 @@ namespace forge {
 		float getX() const;
 
 		/// <summary>
-		/// Acceso a la componente en Z del vector
+		/// Acceso a la componente en Y del vector
 		/// </summary>
-		/// <returns>Devuelve la componente en Z</returns>
+		/// <returns>Devuelve la componente en Y</returns>
 		float getY() const;
 
 		/// <summary>

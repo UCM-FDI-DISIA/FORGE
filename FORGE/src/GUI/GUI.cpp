@@ -77,3 +77,10 @@ void GUI::showLoadedFonts() {
 void GUI::freeIds() {
     ids.clear();
 }
+
+std::unordered_map<std::string, ImFont*> GUI::getFonts() {
+    return fonts;
+}
+std::unordered_set<std::string> GUI::getIds() {
+    return ids;
+}

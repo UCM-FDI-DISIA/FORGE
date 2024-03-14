@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\Ogre\build\x64\SDL2-build\include\SDL2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\Ogre\build\x64\SDL2-build\include\SDL2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -75,7 +75,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\Ogre\build\x64\SDL2-build\include\SDL2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\Ogre\build\x64\SDL2-build\include\SDL2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -96,6 +96,7 @@
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_textedit.h" />
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_truetype.h" />
     <ClInclude Include="..\..\src\GUI\GUI.h" />
+    <ClInclude Include="..\..\src\GUI\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdl2.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="..\..\dependencies\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\..\src\GUI\GUI.cpp" />
     <ClCompile Include="..\..\src\GUI\GUITest.cpp" />
+    <ClCompile Include="..\..\src\GUI\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utils\Utils.vcxproj">

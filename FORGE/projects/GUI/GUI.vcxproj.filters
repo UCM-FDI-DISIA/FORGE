@@ -48,6 +48,9 @@
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_truetype.h">
       <Filter>Archivos de encabezado\ImGUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Text.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GUI\GUI.cpp">
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="..\..\dependencies\ImGUI\imgui_widgets.cpp">
       <Filter>Archivos de origen\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Text.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

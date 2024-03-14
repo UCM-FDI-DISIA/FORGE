@@ -44,4 +44,7 @@ public:
 	void showLoadedFonts();
 
 	void freeIds();
+
+	std::unordered_map<std::string, ImFont*> getFonts();
+	std::unordered_set<std::string> getIds();
 };

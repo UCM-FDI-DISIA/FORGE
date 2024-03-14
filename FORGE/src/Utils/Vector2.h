@@ -10,6 +10,7 @@ namespace forge {
 		// Segunda coordenada
 		float y;
 	public:
+		#pragma region Constructoras
 		/// <summary>
 		/// Constructora por defecto de la clase Vector2D
 		/// </summary>	
@@ -26,7 +27,9 @@ namespace forge {
 		/// Destructora por defecto de la clase Vector2D
 		/// </summary>
 		~Vector2();
+		#pragma endregion
 
+		#pragma region Operadores
 		/// <summary>
 		/// Suma dos vectores
 		/// </summary>	
@@ -55,6 +58,7 @@ namespace forge {
 		/// Desigualdad de dos vectores
 		/// </summary>
 		bool operator!=(const Vector2& v) const;
+		#pragma endregion
 
 		/// <summary>
 		/// Calcula el modulo de un vector
@@ -65,6 +69,7 @@ namespace forge {
 		/// </summary>
 		Vector2 normalize() const;
 
+		#pragma region Getters
 		/// <summary>
 		/// Devuelve el valor de la coordenada X
 		/// </summary>	
@@ -73,7 +78,9 @@ namespace forge {
 		/// Devuelve el valor de la coordenada y
 		/// </summary>	
 		float getY() const;
+		#pragma endregion
 
+		#pragma region Setters
 		/// <summary>
 		/// Setea el valor de la coordenada X
 		/// </summary>	
@@ -90,6 +97,7 @@ namespace forge {
 		/// Setea un vector a través de floats
 		/// </summary>	
 		void set(float _x, float _y);
+		#pragma endregion
 
 		#pragma region Constantes
 		static const Vector2 ZERO;
