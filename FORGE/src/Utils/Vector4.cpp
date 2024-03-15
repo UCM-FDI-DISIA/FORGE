@@ -1,13 +1,10 @@
 #include "Vector4.h"
-//#include "imgui.h"
+#include "imgui.h"
 using namespace forge;
 Vector4::Vector4(){}
 Vector4::Vector4(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
 Vector4::Vector4(const Vector4& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
 Vector4::~Vector4(){}
-//forge::Vector4::operator ImGui::ImVec4() const {
-//	return ImGui::ImVec4(x, y, z, w);
-//}
 
 #pragma region Getters
 float Vector4::getX() const {
@@ -50,3 +47,10 @@ void Vector4::set(float _x, float _y, float _z, float _w) {
 	w = _w;
 }
 #pragma endregion
+
+#pragma region Conversiones
+Vector4::operator ImVec4() const {
+	return ImVec4(x, y, z, w);
+}
+#pragma endregion
+

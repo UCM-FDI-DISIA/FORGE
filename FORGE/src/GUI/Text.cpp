@@ -35,19 +35,19 @@ void Text::update() {
         ImGui::SetNextWindowSize(ImVec2(textSize.x * 1.07f, textSize.y));
     }
     else {
-        ImGui::SetNextWindowSize(ImVec2(size.getX(), size.getY()));
+        ImGui::SetNextWindowSize(size);
     }
-    ImGui::SetNextWindowPos(ImVec2(pos.getX(), pos.getY()));
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(bgColor.getX(), bgColor.getY(), bgColor.getZ(), bgColor.getW()));
+    ImGui::SetNextWindowPos(pos);
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, bgColor);
     ImGui::Begin(windowName, NULL, window_flags);
     // Texto con fuente cargada
     if(font != nullptr){
         ImGui::PushFont(font);
-        ImGui::TextColored(ImVec4(color.getX(), color.getY(), color.getZ(), color.getW()), text);
+        ImGui::TextColored(color, text);
         ImGui::PopFont();
     }
     else {
-        ImGui::TextColored(ImVec4(color.getX(), color.getY(), color.getZ(), color.getW()), text);
+        ImGui::TextColored(color, text);
         ImGui::SetWindowFontScale(1);
     }
 
@@ -72,6 +72,7 @@ void Text::removeBackground() {
 }
 
 void Text::changeFont(std::string fontName_) {
+    fontName = fontName_;
     if (fontName != "" && gui->getFonts().count(fontName)) {
         font = gui->getFonts()[fontName];
     }
@@ -79,4 +80,8 @@ void Text::changeFont(std::string fontName_) {
 
 void Text::changeTextOpacity(float op) {
     color.setW(op);
+}
+
+void Text::changeBackgroundOpacity(float op) {
+    bgColor.setW(op);
 }

@@ -1,7 +1,9 @@
 #pragma once
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
-
+//#ifdef GUI
+#include "imgui.h"
+//#endif
 namespace forge {
 	class Vector2 {
 	private:
@@ -97,6 +99,15 @@ namespace forge {
 		/// Setea un vector a través de floats
 		/// </summary>	
 		void set(float _x, float _y);
+		#pragma endregion
+
+		#pragma region Conversiones
+		//#ifdef GUI
+		/// <summary>
+		/// Sobrecarga del operador de conversión a ImVec2
+		/// </summary>	
+		operator ImVec2() const;
+		//#endif
 		#pragma endregion
 
 		#pragma region Constantes

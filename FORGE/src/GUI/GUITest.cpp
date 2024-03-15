@@ -91,9 +91,11 @@ int main(int, char**) {
     gui->showLoadedFonts();
     Text* text = new Text("prueba", "Saeda", forge::Vector2(100, 200), forge::Vector4({ 1.0, 1.0, 1.0, 1.0 }), "Saeda");
     text->setBackground();
-    text->removeBackground();
+    //text->removeBackground();
     //text->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
     //text->changeTextOpacity(0.3f);
+    text->changeFont("Supercharge");
+    text->changeBackgroundOpacity(0.3f);
     while (!done) {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.

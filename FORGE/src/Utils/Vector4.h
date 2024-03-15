@@ -1,10 +1,7 @@
 #pragma once
 #ifndef VECTOR4_H_
 #define VECTOR4_H_
-//namespace ImGui {
-//	template <int dims, typename T> class Vector;
-//	typedef Vector<4, float> ImVec4;
-//}
+#include "imgui.h"
 namespace forge {
 	class Vector4 {
 	private:
@@ -35,11 +32,6 @@ namespace forge {
 		/// </summary>
 		~Vector4();
 		#pragma endregion
-
-		/// <summary>
-		/// Conversion implicita de forge::Vector4 a ImGui::ImVec4
-		/// </summary>
-		//operator ImGui::ImVec4() const;
 
 		#pragma region Getters
 		/// <summary>
@@ -94,6 +86,12 @@ namespace forge {
 		void set(float _x, float _y, float _z, float _w);
 		#pragma endregion
 
+		#pragma region Conversiones
+		/// <summary>
+		/// Sobrecarga del operador de conversión a ImVec4
+		/// </summary>	
+		operator ImVec4() const;
+		#pragma endregion
 	};
 }
 #endif
