@@ -19,7 +19,7 @@ local scenes = {
                 },
                 Animator = {
                     activeAnimations = {
-                        "Idle"
+                       "Walk"
                     }
                 }
             },

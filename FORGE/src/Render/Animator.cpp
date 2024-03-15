@@ -33,8 +33,9 @@ void Animator::update() {
 		entity->removeComponent("Animator");
 	}
 	else {
+		//auto map = ogreAnimations->getAnimationStates();
 		for (std::string animation : activeAnimations) {
-			ogreAnimations->getAnimationState(animation)->addTime(1 /*TODO: DELTA TIME*/);
+			ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
 		}
 	}
 }
