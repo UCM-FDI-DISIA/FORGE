@@ -3,37 +3,41 @@
 #define ANIMATOR_H_
 #include <Component.h>
 #include <string>
-#include <list>
+#include <unordered_set>
 
 class RenderManager;
 namespace Ogre {
-    class Entity;
+    class AnimationStateSet;
 }
 
 class Animator : public Component {
-private:
-    std::list <std::string > activeAnimations;
-    Ogre::AnimationStateSet* ogreEntity;
+    std::unordered_set<std::string> activeAnimations;
+    Ogre::AnimationStateSet* ogreAnimations;
     RenderManager* renderManager;
 
 public:
     static const std::string id;
+
     Animator();
 
     ~Animator();
 
-    void initComponent(ComponentData* data) override;
+    void init(RenderManager* manager, Ogre::AnimationStateSet* animationSet);
 
-    void setEnabled(bool newActive) override;
+    void update() override;
 
     #pragma region setters
-    void setMesh(std::string newMesh);
-    void setMaterial(std::string newMaterial);
+    void setLoop(std::string animation, bool looped);
+    void setActive(std::string animation, bool active);
+    void setLoop(std::vector<std::string> animations, bool looped);
+    void setActive(std::vector<std::string> activeAnimations, bool active);
+    void changeActive(std::string animation);
+    void changeActive(std::vector<std::string> activeAnimations);
     #pragma endregion
 
     #pragma region getters
-    const std::string& getMesh() const;
-    const std::string& getMaterial() const;
+    Ogre::AnimationStateSet* getAnimations();
+    std::unordered_set<std::string> getActiveAnimations();
     #pragma endregion
 };
 

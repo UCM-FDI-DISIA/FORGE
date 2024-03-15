@@ -2,20 +2,18 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
+#include "Animator.h"
 #include "OgreEntity.h"
 
-const std::string RenderData::id = "Mesh";
+const std::string Mesh::id = "Mesh";
 
 Mesh::Mesh() :
 	mesh(),
 	material(),
-    activeAnimation(),
     ogreEntity(nullptr),
-    animations(nullptr),
     renderManager(nullptr) {
 	serializer(mesh, "mesh");
 	serializer(material, "material");
-	serializer(activeAnimation, "activeAnimation");
 }
 
 Mesh::~Mesh() {
@@ -26,7 +24,9 @@ void Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
-        animations = ogreEntity->getAllAnimationStates();
+        if (entity->hasComponent("Animator")) {
+            entity->getComponent<Animator>()->init(renderManager,ogreEntity->getAllAnimationStates());
+        }
     }
 }
 
@@ -34,12 +34,10 @@ void Mesh::setEnabled(bool newActive) {
     Component::setEnabled(newActive);
     if (newActive) {
         ogreEntity = renderManager->addMeshNode(this);
-        animations = ogreEntity->getAllAnimationStates();
     }
     else {
         renderManager->removeNode(ogreEntity);
         ogreEntity = nullptr;
-        animations = nullptr;
     }
 }
 
@@ -50,12 +48,6 @@ void Mesh::setMesh(std::string newMesh) {
 
 void Mesh::setMaterial(std::string newMaterial) {
     material = newMaterial;
-    ogreEntity->setMaterialName(newMaterial);
-}
-
-
-void Mesh::setAnimation(std::string newMaterial) {
-    activeAnimation = animations;
     ogreEntity->setMaterialName(newMaterial);
 }
 

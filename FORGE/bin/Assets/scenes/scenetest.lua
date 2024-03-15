@@ -8,13 +8,19 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {0, 0, 0}
+                    position = {0, 0, 0},
+                    scale = {0.25, 0.25, 0.25}
                 },
                 Mesh = {
-                    mesh = "ogrehead.mesh"
+                    mesh = "ninja.mesh"
                 },
                 TestMovement = {
                     name = "maincam"
+                },
+                Animator = {
+                    activeAnimations = {
+                        "Idle"
+                    }
                 }
             },
             children = {
@@ -23,7 +29,7 @@ local scenes = {
                     components = {
                         Transform = {
                             position = {100, 0, -100},
-                            scale = {5, 5, 5}
+                            scale = {10, 10, 10}
                         },
                         Mesh = {
                             mesh = "Barrel.mesh"

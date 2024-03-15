@@ -32,6 +32,8 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& componentInit : initData) {
 		componentInit.first->initSerialized(componentInit.second);
+	}
+	for (auto& componentInit : initData) {
 		componentInit.first->initComponent(componentInit.second);
 	}
 	return entity;

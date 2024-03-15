@@ -3,10 +3,11 @@
 #define COMPONENT_DATA_H_
 #include <string>
 #include <vector>
-#include <lua.hpp>
-#include <LuaBridge/LuaBridge.h>
+#include <unordered_set>
 #include <Vector3.h>
 #include <Quaternion.h>
+#include <lua.hpp>
+#include <LuaBridge/LuaBridge.h>
 
 class ComponentData {
 private:
@@ -31,6 +32,19 @@ private:
                 }
             }
             return vec;
+        }
+    };
+    template <typename U>
+    struct getter<std::unordered_set<U>> {
+        std::unordered_set<U> operator()(luabridge::LuaRef& data, std::string param) {
+            luabridge::LuaRef table = data[param];
+            std::unordered_set<U> set;
+            if (table.isTable()) {
+                for (auto&& pair : pairs(table)) {
+                    set.insert(pair.second.cast<U>());
+                }
+            }
+            return set;
         }
     };
 protected:

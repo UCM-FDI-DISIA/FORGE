@@ -16,6 +16,7 @@
 #include "Light.h"
 #include "Camera.h"
 #include "TestMovement.h"
+#include "Animator.h"
 
 
 void factory() {
@@ -25,6 +26,7 @@ void factory() {
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
 	f.registerComponent<TestMovement>();
+	f.registerComponent<Animator>();
 }
 
 
