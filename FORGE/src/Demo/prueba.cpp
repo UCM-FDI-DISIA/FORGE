@@ -17,6 +17,7 @@
 #include "Camera.h"
 #include "TestMovement.h"
 #include "AudioManager.h"
+#include "Sound.h"
 
 void factory() {
 	Factory& f = *Factory::getInstance();
@@ -39,7 +40,7 @@ int main(int argc, char* argv[]) {
     Input& input = *Input::getInstance();
 	AudioManager* ad = new AudioManager();
     sceneManager.changeScene("Test");
-	ad->AddSound("Test", "Assets/sounds/AllObjectivesComp.wav");
+	ad->addSound("Test", "Assets/sounds/AllObjectivesComp.wav");
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
@@ -48,7 +49,7 @@ int main(int argc, char* argv[]) {
         if(!render.render())
 			break;
 		if (input.keyDown(K_P)) {
-			ad->PlayGlobalSound("Test", false);
+			ad->getSound("Test")->play();
 		}
     }
 	delete ad;

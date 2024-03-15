@@ -4,7 +4,7 @@
 
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <list>
 
 namespace irrklang {
 	class ISoundEngine;
@@ -17,9 +17,8 @@ class Sound;
 class AudioManager {
 private:
 	irrklang::ISoundEngine* engine;
-	std::unordered_map<std::string, irrklang::ISoundSource*> soundLibrary;
-	std::unordered_multimap<irrklang::ISoundSource*, irrklang::ISound*> currentlyPlaying;
-	std::vector<Sound*> sounds;
+	std::unordered_map<std::string, Sound*> soundLibrary;
+	std::list<Sound*> currentlyPlaying;
 public:
 	/// <summary>
 	/// Inicializa el sistema de audio
@@ -29,33 +28,20 @@ public:
 	/// Cierra el sistema de audio
 	/// </summary>
 	~AudioManager();
+	void update();
 	/// <summary>
 	/// Anade un sonido a la libreria de sonidos de audio
 	/// </summary>
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="route">Archivo de sonido</param>
 	/// <returns>Booleano que indica si se ha podido agregar el sonido</returns>
-	bool AddSound(std::string name, std::string file);
+	Sound* addSound(std::string name, std::string file);
 	/// <summary>
-	/// Elimina un sonido de la libreria de sonidos de audio
+	/// Accede al sonido con el identificador solicitado
 	/// </summary>
-	/// <param name="name">Identificador del sonido</param>
-	/// <returns>Booleano que indica si se encontro y elimino el sonido</returns>
-	bool RemoveSound(std::string name);
-	/// <summary>
-	/// Hace sonar un sonido de forma global sin tener en cuenta posiciones
-	/// </summary>
-	/// <param name="name">Identificador del sonido</param>
-	/// <param name="loop">Booleano de control de loop</param>
-	/// <returns>Booleano que indica si se ha encontrado el sonido y se ha reproducido</returns>
-	bool PlayGlobalSound(std::string name, bool loop = false);
-	/// <summary>
-	/// Pone un sonido al volumen especificado
-	/// </summary>
-	/// <param name="name">Identificador del sonido</param>
-	/// <param name="volume">Volumen del sonido, va del 0 al 1f</param>
-	/// <returns>Booleano que indica si se ha encontrado el sonido y cambiado su volumen</returns>
-	bool SetSoundVolume(std::string name, float volume);
+	/// <param name="name">Identificador del sonido al que se quiere acceder</param>
+	/// <returns>Puntero al sonido solicitado. nullptr si no existe</returns>
+	Sound* getSound(std::string name);
 };
 
 #endif

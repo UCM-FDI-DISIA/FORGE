@@ -1,6 +1,7 @@
 #include "Vector3.h"
 #include <cmath>
 #include <OgreVector3.h>
+#include <ik_vec3d.h>
 using namespace forge;
 
 #define PI 3.14159265358979323846264338327950288
@@ -237,6 +238,9 @@ Vector3& Vector3::operator=(const Ogre::Vector3f& w) {
 	y = w.y;
 	z = w.z;
 	return *this;
+}
+forge::Vector3::operator irrklang::vec3df() const {
+	return irrklang::vec3df(x, y, z);
 }
 #pragma endregion
 

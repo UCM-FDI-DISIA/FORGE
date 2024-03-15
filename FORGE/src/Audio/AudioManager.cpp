@@ -8,42 +8,30 @@ AudioManager::AudioManager() :
 }
 
 AudioManager::~AudioManager() {
+	for (auto& s : soundLibrary) {
+		delete s.second;
+	}
 	engine->drop();
 }
 
-bool AudioManager::AddSound(std::string name, std::string file) {
+void AudioManager::update() {
+
+}
+
+Sound* AudioManager::addSound(std::string name, std::string file) {
 	ISoundSource* newSound = engine->addSoundSourceFromFile(file.c_str(), ESM_AUTO_DETECT , true);
 	if (newSound != NULL) {
-		soundLibrary.insert(std::pair<std::string, ISoundSource*>(name, newSound)).second;
-		return true;
+		Sound* s = new Sound(*engine, newSound, currentlyPlaying);
+		soundLibrary.insert(std::pair<std::string, Sound*>(name, s)).second;
+		return s;
 	}
-	return false;
+	return nullptr;
 }
 
-bool AudioManager::RemoveSound(std::string name) {
-	auto sound = soundLibrary.find(name);
-	if (sound != soundLibrary.end()) {
-		engine->removeSoundSource(sound->second);
-		soundLibrary.erase(sound);
-		return true;
+Sound* AudioManager::getSound(std::string name) {
+	auto s = soundLibrary.find(name);
+	if (s != soundLibrary.end()) {
+		return s->second;
 	}
-	return false;
-}
-
-bool AudioManager::PlayGlobalSound(std::string name, bool loop) {
-	auto sound = soundLibrary.find(name);
-	if (sound != soundLibrary.end()) {
-		engine->play2D(sound->second, loop);
-		return true;
-	}
-	return false;
-}
-
-bool AudioManager::SetSoundVolume(std::string name, float volume) {
-	auto sound = soundLibrary.find(name);
-	if (sound != soundLibrary.end()) {
-		sound->second->setDefaultVolume(volume);
-		return true;
-	}
-	return false;
+	return nullptr;
 }

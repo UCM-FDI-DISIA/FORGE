@@ -14,25 +14,26 @@ namespace forge {
 }
 class Sound {
 private:
+	using Sounds = std::list<Sound*>;
 	irrklang::ISoundEngine& engine;
-	using SoundMap = std::unordered_multimap<irrklang::ISoundSource*, irrklang::ISound*>;
-	SoundMap& sounds;
-	SoundMap::iterator position;
 	irrklang::ISoundSource* source;
 	irrklang::ISound* sound;
-	bool looped;
+	Sounds& currentlyPlaying;
+	Sounds::iterator it;
+	bool loop;
 public:
-	Sound(irrklang::ISoundEngine& _engine, SoundMap& _sounds, irrklang::ISoundSource* _source, bool loop);
+	Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source, std::list<Sound*>& _currentlyPlaying);
 	~Sound();
-	void update();
 	bool pause();
 	bool resume();
 	bool stop();
-	bool play();
-	bool play(forge::Vector3 const& position);
+	bool play(bool looped = false);
+	bool play(forge::Vector3 const& position, bool looped = false);
 	bool restart();
-	bool setVolume();
-	bool loop();
+	bool restart(forge::Vector3 const& position);
+	void setVolume(float volume);
+	void loopedToggle();
+	void setLooped(bool looped);
 	bool isFinished();
 };
 
