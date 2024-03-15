@@ -31,7 +31,9 @@ void PhysicsManager::initPhysics() {
 }
 
 PhysicsManager* PhysicsManager::getInstance() {
-	if (instance.get() != nullptr) return instance.get();
+    if (instance.get() != nullptr) {
+        return instance.get();
+    }
 	return (instance = std::unique_ptr<PhysicsManager>(new PhysicsManager())).get();
 }
 btRigidBody* PhysicsManager::createBody(RigidBody* body) {
@@ -42,9 +44,14 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     btQuaternion quat = btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle());
     btVector3 vect = btVector3(forVect.getX(), forVect.getY(), forVect.getZ());
     btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat,vect));
+    
     btRigidBody::btRigidBodyConstructionInfo bodyCI = 
         btRigidBody::btRigidBodyConstructionInfo(body->getMass(), motionState, body->getShape(), bodyInertia);
     transforms.insert({new btRigidBody(bodyCI), body->getEntity()->getComponent<Transform>() });
+
+    btRigidBody* rigidBody = new btRigidBody(bodyCI);
+    
+    return rigidBody;
 }
 
 void  PhysicsManager::deleteBody(btRigidBody* body) {

@@ -1,6 +1,7 @@
 #include "RigidBody.h"
 #include "PhysicsManager.h"
 #include "Entity.h"
+#include <Transform.h>
 
 const std::string RigidBody::id = "RigidBody";
 
@@ -22,10 +23,25 @@ void RigidBody::initComponent(ComponentData* data) {
     }
 }
 
-void RigidBody::setMass(float newMass) {
-    
-    mass = newMass;
-    physicsManager->updateMass(myBody, mass);
+void RigidBody::fixedUpdate() {
+    if (entity->hasComponent("Transform")) {
+        Transform* transform = entity->getComponent<Transform>();
+        //myBody->applyForce();
+        //myBody->applyGravity();
+        transform->setPosition((forge::Vector3(myBody->getCenterOfMassPosition().getX(), myBody->getCenterOfMassPosition().getY(), myBody->getCenterOfMassPosition().getZ())));
+    }
+}
+
+void RigidBody::applyForce(forge::Vector3 force) {
+    myBody->applyCentralForce({force.getX(), force.getY(), force.getZ()});
+}
+
+void RigidBody::applyGravity() {
+    myBody->applyGravity();
+}
+
+void RigidBody::clearForces() {
+    myBody->clearForces();
 }
 
 void RigidBody::setFriction(float newFriction) {

@@ -5,6 +5,8 @@
 #include <string>
 
 class PhysicsManager;
+class btRigidBody;
+class btCollisionShape;
 
 class RigidBody : public Component {
 private:
@@ -24,9 +26,14 @@ public:
 
     void initComponent(ComponentData* data) override;
 
-    #pragma region setters
-    void setMass(float newMass);
+    virtual void fixedUpdate();
 
+    void applyForce(forge::Vector3 force);
+
+    void applyGravity();
+
+    void clearForces();
+    #pragma region setters
     void setFriction(float newFriction);
 
     void setRestitution(float newRestitution);
