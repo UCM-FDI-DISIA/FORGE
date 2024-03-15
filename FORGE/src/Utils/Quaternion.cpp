@@ -1,6 +1,7 @@
 #include "Quaternion.h"
 #include <cmath>
 #include <OgreQuaternion.h>
+#include <btQuaternion.h>
 using namespace forge;
 
 #define kEpsilon = 0.000001
@@ -227,6 +228,30 @@ Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
 	y = q.y;
 	z = q.z;
 	w = q.w;
+	return (*this);
+}
+
+Quaternion::operator btQuaternion() const {
+	return btQuaternion(w, x, y, z);
+}
+
+Quaternion::Quaternion(const btQuaternion& q) :
+	x(q.getX()),
+	y(q.getY()),
+	z(q.getZ()),
+	w(q.getW()) {}
+
+Quaternion::Quaternion(btQuaternion&& q) noexcept :
+	x(q.getX()),
+	y(q.getY()),
+	z(q.getZ()),
+	w(q.getW()) {}
+
+Quaternion& Quaternion::operator=(const btQuaternion& q) {
+	x = q.getX();
+	y = q.getY();
+	z = q.getZ();
+	w = q.getW();
 	return (*this);
 }
 #pragma endregion

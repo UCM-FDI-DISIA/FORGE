@@ -1,13 +1,13 @@
 #include "PhysicsManager.h"
+#include <Entity.h>
+#include <Component.h>
+#include <EntityData.h>
+#include <lua.hpp>
+#include <LuaBridge/LuaBridge.h>
+#include <Scene.h>
 #include "SceneManager.h"
-#include "Scene.h"
-#include "Entity.h"
-#include "Component.h"
-#include "EntityData.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
 #include "RigidBody.h"
-#include "Transform.h"
+#include <Transform.h>
 
 std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
 

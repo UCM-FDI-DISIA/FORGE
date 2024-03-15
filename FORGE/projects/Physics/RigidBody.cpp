@@ -1,4 +1,3 @@
-#include "RigidBody.h"
 #include "PhysicsManager.h"
 #include "Entity.h"
 #include <Transform.h>
@@ -46,9 +45,10 @@ void RigidBody::initComponent(ComponentData* data) {
 void RigidBody::fixedUpdate() {
     if (entity->hasComponent("Transform")) {
         Transform* transform = entity->getComponent<Transform>();
-        //myBody->applyForce();
-        //myBody->applyGravity();
         transform->setPosition((forge::Vector3(myBody->getCenterOfMassPosition().getX(), myBody->getCenterOfMassPosition().getY(), myBody->getCenterOfMassPosition().getZ())));
+        
+        forge::Quaternion quat = myBody->getOrientation();
+        transform->setRotation(quat);
     }
 }
 
