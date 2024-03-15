@@ -50,11 +50,17 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     transforms.insert({new btRigidBody(bodyCI), body->getEntity()->getComponent<Transform>() });
 
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
-    
+    body->setRigidBody(rigidBody);
     return rigidBody;
+}
+btRigidBody* PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
+    btRigidBody* auxBody = createBody(body);
+    importantObjects.insert({ name,auxBody });
+    return auxBody;
 }
 
 void  PhysicsManager::deleteBody(btRigidBody* body) {
     auto auxTransform = transforms.find(body);
+    delete (*auxTransform).second;
     transforms.erase(auxTransform);
 }

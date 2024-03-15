@@ -3,10 +3,19 @@
 #define RIGIDBODY_H_
 #include <Component.h>
 #include <string>
+#include<Vector3.h>
 
 class PhysicsManager;
 class btRigidBody;
 class btCollisionShape;
+
+enum collisionShape
+{
+    ballShape, boxShape
+};
+namespace forge {
+    class Vector3;
+};
 
 class RigidBody : public Component {
 private:
@@ -17,6 +26,10 @@ private:
     bool kinematic;
     btRigidBody* myBody;
     btCollisionShape* myShape;
+    collisionShape shapeType;
+    forge::Vector3 myScale;
+
+    btRigidBody* getBody();
 public:
     static const std::string id;
 
@@ -33,10 +46,18 @@ public:
     void applyGravity();
 
     void clearForces();
+
+    bool hasCollidedWith(RigidBody* other);
     #pragma region setters
     void setFriction(float newFriction);
 
     void setRestitution(float newRestitution);
+
+    void setRigidBody(btRigidBody* body);
+
+    void setRigidScale(forge::Vector3 scale);
+
+    void setRigidScale(float radius);
     #pragma endregion
 
     #pragma region setters
@@ -47,6 +68,9 @@ public:
     float getRestitution();
 
     btCollisionShape* getShape();
+
+    forge::Vector3 getRigidScale();
+
     #pragma endregion
 };
 

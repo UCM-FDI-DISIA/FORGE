@@ -16,6 +16,7 @@ private:
     btSequentialImpulseConstraintSolver* solver;
     btDiscreteDynamicsWorld* world;
     std::unordered_map<btRigidBody*, Transform*> transforms;
+    std::unordered_map<std::string, btRigidBody*> importantObjects;
 
     /// <summary>
     /// Constructora del physics manager.
@@ -32,6 +33,7 @@ public:
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* getInstance();
     btRigidBody* createBody(RigidBody* body);
+    btRigidBody* createImportantBody(RigidBody* body, std::string name);
     void deleteBody(btRigidBody* body);
 };
 
