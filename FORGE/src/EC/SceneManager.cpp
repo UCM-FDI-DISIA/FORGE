@@ -101,6 +101,7 @@ Scene* SceneManager::createScene(std::string id)
 {
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
+		std::cerr << "ERROR: Si una escena no aparece en los archivos, no existe" << std::endl;
 		return nullptr;
 	}
 	Scene* newScene = new Scene();

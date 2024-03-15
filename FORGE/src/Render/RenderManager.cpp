@@ -14,15 +14,12 @@
 #include <OgreFrameListener.h>
 #include <OgreRTShaderConfig.h>
 #include <OgreRTShaderExports.h>
-
 #include <OgreGpuProgramManager.h>
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
 #include <OgreViewport.h>
 #include <OgreDataStream.h>
 #include <OgreEntity.h>
-
-#include <SDL_video.h>
 #include <iostream>
 
 
@@ -50,13 +47,13 @@ RenderManager::~RenderManager() {
 Ogre::Root* RenderManager::createRoot() {
 	myFileSystemLayer = new Ogre::FileSystemLayer(myAppName);
 
-	//Crear Ogre Root
+	// Crear Ogre Root
 	Ogre::String pluginsPath;
 	pluginsPath = myFileSystemLayer->getConfigFilePath("plugins.cfg");
 
 	// Si no existe el archivo de plugins se le dice al usuario que no se ha encontrado
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
-		std::cerr << "No se ha encontrado el archivo de plugins" << std::endl;
+		std::cerr << "ERROR: No se ha encontrado el archivo de plugins" << std::endl;
 		return nullptr;
 	}
 
@@ -74,14 +71,19 @@ NativeWindowPair RenderManager::createWindow() {
 	uint32_t w, h;
 	Ogre::NameValuePairList miscParams;
 
+	if(myRoot == nullptr) return {nullptr, nullptr};
+
+	// Obtenemos las opciones de configuración del sistema de renderizado
 	Ogre::ConfigOptionMap ropts = myRoot->getRenderSystem()->getConfigOptions();
 
+	// Obtenemos el modo de vídeo y lo parseamos
 	std::istringstream mode(ropts["Video Mode"].currentValue);
 	Ogre::String token;
 	mode >> w;
 	mode >> token;
 	mode >> h;
 
+	// Establecemos los parámetros de la ventana
 	miscParams["FSAA"] = ropts["FSAA"].currentValue;
 	miscParams["vsync"] = ropts["VSync"].currentValue;
 	miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
@@ -98,7 +100,7 @@ NativeWindowPair RenderManager::createWindow() {
 	myWindow.native = SDL_CreateWindow(myAppName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
 
 	// Establecemos los parámetros de la ventana de render y la creamos
-	SDL_SysWMinfo wmInfo;
+	SDL_SysWMinfo wmInfo = { 0 };
 	SDL_VERSION(&wmInfo.version);
 	SDL_GetWindowWMInfo(myWindow.native, &wmInfo);
 	miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
