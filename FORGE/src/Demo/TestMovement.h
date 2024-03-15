@@ -14,7 +14,7 @@ public:
 	static const std::string id;
 
 	TestMovement();
-	void initComponent(ComponentData* data) override;
+	bool initComponent(ComponentData* data) override;
 	void update() override;
 
 };

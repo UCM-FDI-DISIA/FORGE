@@ -16,11 +16,12 @@ Light::~Light() {
     renderManager->removeNode(ogreLight);
 }
 
-void Light::initComponent(ComponentData* data) {
+bool Light::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreLight = renderManager->addLightNode(this);
     }
+    return ogreLight != nullptr;
 }
 
 const int& Light::getType() const {

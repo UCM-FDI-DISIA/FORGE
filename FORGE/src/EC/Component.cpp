@@ -22,7 +22,7 @@ void Component::initSerialized(ComponentData* data) {
     serializer.initialize(*data);
 }
 
-void Component::initComponent(ComponentData* data) {}
+bool Component::initComponent(ComponentData* data) { return true; }
 
 void Component::update() {}
 

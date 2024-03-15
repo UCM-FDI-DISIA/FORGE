@@ -21,11 +21,12 @@ Camera::~Camera() {
    renderManager->removeNode(ogreCamera);
 }
 
-void Camera::initComponent(ComponentData* data) {
+bool Camera::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreCamera = renderManager->addCameraNode(this);
     }
+    return ogreCamera != nullptr;
 }
 
 void Camera::setNearClipDistance(float newNearClipDistance) {

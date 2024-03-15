@@ -11,8 +11,9 @@ TestMovement::TestMovement() :
 	movement(10.0f) {
 }
 
-void TestMovement::initComponent(ComponentData* data) {
+bool TestMovement::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
+	return transform != nullptr;
 }
 
 void TestMovement::update() {

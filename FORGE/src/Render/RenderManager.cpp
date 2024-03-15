@@ -241,14 +241,19 @@ void RenderManager::setWindowGrab(bool _grab) {
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 	if(myRoot == nullptr) return nullptr;
-	Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
-	if (mesh->getMaterial() != "") {
-		entity->setMaterialName(mesh->getMaterial());
+	try {
+		Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
+		Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
+		if (mesh->getMaterial() != "") {
+			entity->setMaterialName(mesh->getMaterial());
+		}
+		node->attachObject(entity);
+		transforms.insert({ node, mesh->getEntity()->getComponent<Transform>() });
+		return entity;
 	}
-	node->attachObject(entity);
-	transforms.insert({node, mesh->getEntity()->getComponent<Transform>()});
-	return entity;
+	catch (std::exception e) {
+		std::cerr << "ERROR: No se ha podido cargar " << mesh->getMesh() << "\n";
+	}
 }
 
 

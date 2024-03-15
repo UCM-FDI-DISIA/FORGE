@@ -23,7 +23,10 @@ public:
     
     ~Mesh();
 
-    void initComponent(ComponentData* data) override;
+    /// <summary>
+    /// Devuelve si un componente ha sido inicializado correctamente
+    /// </summary>
+    bool initComponent(ComponentData* data) override;
 
 	#pragma region setters
     void setMesh(std::string newMesh);

@@ -19,11 +19,12 @@ Mesh::~Mesh() {
     renderManager->removeNode(ogreEntity);
 }
 
-void Mesh::initComponent(ComponentData* data) {
+bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
     }
+    return ogreEntity != nullptr;
 }
 
 void Mesh::setMesh(std::string newMesh) {

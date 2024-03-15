@@ -43,7 +43,7 @@ public:
 	/// Inicializa el Component con los parametros adecuados
 	/// </summary>
 	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-	virtual void initComponent(ComponentData* data);
+	virtual bool initComponent(ComponentData* data);
 	/// <summary>
 	/// Actualiza la logica del Component
 	/// </summary>

@@ -19,7 +19,7 @@ public:
     
     ~Light();
 
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
 
 	#pragma region setters
 	#pragma endregion

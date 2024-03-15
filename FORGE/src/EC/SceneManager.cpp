@@ -15,10 +15,11 @@ SceneManager::SceneManager() :
 }
 
 Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
+
 	std::unordered_map<Component*, ComponentData*> initData;
 	Entity* entity = scene->addEntity(getGroupId(data->group));
 	if (data->handler != "") {
-		scene->setHandler(data->handler,entity);
+		scene->setHandler(data->handler, entity);
 	}
 	for (auto& componentData : data->components) {
 		Component* component = entity->addComponent(componentData.first);
@@ -32,9 +33,11 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& componentInit : initData) {
 		componentInit.first->initSerialized(componentInit.second);
-		componentInit.first->initComponent(componentInit.second);
+		// Si un componente se inicializa mal no se inicia la escena
+		if(!componentInit.first->initComponent(componentInit.second)) entity = nullptr;
 	}
 	return entity;
+
 }
 
 SceneManager::~SceneManager() {
@@ -106,7 +109,7 @@ Scene* SceneManager::createScene(std::string id)
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* entity : iter->second) {
-		addEntity(newScene, entity);
+		if(addEntity(newScene, entity) == nullptr) return nullptr;
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;
