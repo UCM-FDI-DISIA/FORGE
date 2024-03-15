@@ -66,12 +66,18 @@ bool Sound::play(Vector3 const& position, bool looped) {
 	return false;
 }
 
+bool Sound::update() {
+	if (sound != nullptr && sound->isFinished()) {
+		stop();
+		return true;
+	}
+	return false;
+}
+
 bool Sound::restart() {
 	bool result;
 	result = stop();
-	if (result) {
-		result = play();
-	}
+	result = play() || result;
 	return result;
 }
 

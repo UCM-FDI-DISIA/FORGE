@@ -15,7 +15,9 @@ AudioManager::~AudioManager() {
 }
 
 void AudioManager::update() {
-
+	for (auto& s : soundLibrary) {
+		s.second->update();
+	}
 }
 
 Sound* AudioManager::addSound(std::string name, std::string file) {

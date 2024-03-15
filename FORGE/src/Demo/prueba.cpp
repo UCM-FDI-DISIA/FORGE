@@ -46,10 +46,11 @@ int main(int argc, char* argv[]) {
         input.update();
         sceneManager.update();
 		sceneManager.refresh();
+		ad->update();
         if(!render.render())
 			break;
 		if (input.keyDown(K_P)) {
-			ad->getSound("Test")->play();
+			ad->getSound("Test")->restart();
 		}
     }
 	delete ad;

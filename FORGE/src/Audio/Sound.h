@@ -29,6 +29,7 @@ public:
 	bool stop();
 	bool play(bool looped = false);
 	bool play(forge::Vector3 const& position, bool looped = false);
+	bool update();
 	bool restart();
 	bool restart(forge::Vector3 const& position);
 	void setVolume(float volume);
