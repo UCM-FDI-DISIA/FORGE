@@ -38,12 +38,12 @@ int main(int argc, char* argv[]) {
 	SceneManager& sceneManager = *SceneManager::getInstance();
 	Input& input = *Input::getInstance();	
     sceneManager.changeScene("Test");
-    while (!input.keyUp(K_ESC)) {
-        input.refresh();
-        input.update();
-        if(!sceneManager.update())
+	while (!input.keyUp(K_ESC)) {
+		input.refresh();
+		input.update();
+		if (!sceneManager.update()) {
 			break;
-		sceneManager.refresh();
+		}			
         if(!render.render())
 			break;
     }

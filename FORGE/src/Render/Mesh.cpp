@@ -16,7 +16,7 @@ Mesh::Mesh() :
 }
 
 Mesh::~Mesh() {
-    renderManager->removeNode(ogreEntity);
+    if(ogreEntity != nullptr) renderManager->removeNode(ogreEntity);
 }
 
 bool Mesh::initComponent(ComponentData* data) {
