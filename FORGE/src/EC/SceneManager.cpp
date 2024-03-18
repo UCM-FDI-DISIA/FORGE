@@ -32,9 +32,13 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 		}
 	}
 	for (auto& componentInit : initData) {
-		componentInit.first->initSerialized(componentInit.second);
-		// Si un componente se inicializa mal no se inicia la escena
-		if (!componentInit.first->initComponent(componentInit.second)) {
+		if (componentInit.first->initSerialized(componentInit.second)) {
+			// Si un componente se inicializa mal no se inicia la escena
+			if (!componentInit.first->initComponent(componentInit.second)) {
+				entity->setAlive(false);
+			}
+		}
+		else {
 			entity->setAlive(false);
 		}
 	}
@@ -91,7 +95,7 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 			activeScene = iter->second;
 		}
 	}
-	if (activeScene->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar\n";
+	if (activeScene == nullptr || activeScene->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
 }
 
 void SceneManager::removeScene(std::string id) {
@@ -130,8 +134,9 @@ int SceneManager::getMaxGroupId() {
 }
 
 bool SceneManager::update() {
-	activeScene->update();
-	return !activeScene->getEndScene();
+	if (activeScene != nullptr) activeScene->update();
+	// Devuelve false en caso de que endScene sea true o la escena sea nula
+	return (activeScene != nullptr) ? !activeScene->getEndScene() : false;
 }
 
 void SceneManager::refresh() {

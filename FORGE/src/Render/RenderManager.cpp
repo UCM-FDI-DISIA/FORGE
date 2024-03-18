@@ -252,7 +252,7 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 		return entity;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar " << mesh->getMesh() << "\n";
+		std::cerr << "ERROR: No se ha podido cargar un mesh " << mesh->getMesh() << "\n";
 		return nullptr;
 	}
 }

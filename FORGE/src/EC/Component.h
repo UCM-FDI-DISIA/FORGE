@@ -38,7 +38,7 @@ public:
 	/// Inicializa los parametros serializados del Component
 	/// </summary>
 	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-	void initSerialized(ComponentData* data);
+	bool initSerialized(ComponentData* data);
 	/// <summary>
 	/// Inicializa el Component con los parametros adecuados
 	/// </summary>
