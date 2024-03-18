@@ -1,4 +1,5 @@
 #include "Vector3.h"
+#include <btVector3.h>
 #include <cmath>
 #include <OgreVector3.h>
 using namespace forge;
@@ -236,6 +237,27 @@ Vector3& Vector3::operator=(const Ogre::Vector3f& w) {
 	x = w.x;
 	y = w.y;
 	z = w.z;
+	return *this;
+}
+
+forge::Vector3::operator btVector3() const {
+	return btVector3(x, y, z);
+}
+
+Vector3::Vector3(const btVector3& w) :
+	x(w.getX()),
+	y(w.getY()),
+	z(w.getZ()) {}
+
+Vector3::Vector3(btVector3&& w) noexcept :
+	x(w.getX()),
+	y(w.getY()),
+	z(w.getZ()) {}
+
+Vector3& Vector3::operator=(const btVector3& w) {
+	x = w.getX();
+	y = w.getY();
+	z = w.getZ();
 	return *this;
 }
 #pragma endregion
