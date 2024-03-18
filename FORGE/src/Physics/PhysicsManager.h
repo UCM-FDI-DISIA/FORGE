@@ -30,6 +30,11 @@ public:
     /// </summary>
     void initPhysics();
 
+    /// <summary>
+    /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
+    /// </summary>
+    void updatePhysics();
+
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* getInstance();
     btRigidBody* createBody(RigidBody* body);

@@ -27,7 +27,11 @@ void PhysicsManager::initPhysics() {
     solver = new btSequentialImpulseConstraintSolver();
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-    world->setGravity(btVector3(0, -9.8, 0));
+    world->setGravity(btVector3((btScalar)0, (btScalar)-9.8, (btScalar)0));
+}
+
+void PhysicsManager::updatePhysics() {
+    world->stepSimulation(1 / 50.f, 20);
 }
 
 PhysicsManager* PhysicsManager::getInstance() {
@@ -38,6 +42,7 @@ PhysicsManager* PhysicsManager::getInstance() {
 }
 btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     btVector3 bodyInertia;
+    
     body->getShape()->calculateLocalInertia(body->getMass(), bodyInertia);
     forge::Quaternion forQuat = body->getEntity()->getComponent<Transform>()->getRotation();
     forge::Vector3 forVect = body->getEntity()->getComponent<Transform>()->getGlobalPosition();
@@ -47,9 +52,18 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     
     btRigidBody::btRigidBodyConstructionInfo bodyCI = 
         btRigidBody::btRigidBodyConstructionInfo(body->getMass(), motionState, body->getShape(), bodyInertia);
+    bodyCI.m_startWorldTransform = btTransform(
+        btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle()),
+        btVector3(forVect.getX(), forVect.getY(), forVect.getZ()
+        ));
+
     transforms.insert({new btRigidBody(bodyCI), body->getEntity()->getComponent<Transform>() });
 
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
+    /*rigidBody->setWorldTransform(btTransform(
+        btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle()),
+        btVector3(forVect.getX(), forVect.getY(), forVect.getZ())
+    ));*/
     body->setRigidBody(rigidBody);
     return rigidBody;
 }

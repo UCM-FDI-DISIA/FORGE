@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PhysicsManager.cpp" />
-    <ClCompile Include="RigidBody.cpp" />
+    <ClInclude Include="..\..\src\Physics\PhysicsManager.h" />
+    <ClInclude Include="..\..\src\Physics\RigidBody.h" />
+    <ClInclude Include="..\..\src\Physics\test.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PhysicsManager.h" />
-    <ClInclude Include="RigidBody.h" />
+    <ClCompile Include="..\..\src\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="..\..\src\Physics\RigidBody.cpp" />
+    <ClCompile Include="..\..\src\Physics\test.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

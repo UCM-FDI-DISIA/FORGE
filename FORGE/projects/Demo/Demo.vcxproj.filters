@@ -26,5 +26,8 @@
     <ClInclude Include="..\..\src\Demo\TestMovement.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Demo\prueba.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

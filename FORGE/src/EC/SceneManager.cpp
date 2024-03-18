@@ -126,6 +126,10 @@ void SceneManager::update() {
 	activeScene->update();
 }
 
+void SceneManager::fixedUpdate() {
+	activeScene->fixedUpdate();
+}
+
 void SceneManager::refresh() {
 	activeScene->refresh();
 }

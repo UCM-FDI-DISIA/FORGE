@@ -15,6 +15,13 @@ local scenes = {
                 },
                 TestMovement = {
                     name = "maincam"
+                },
+                RigidBody = {
+                    scale = {1, 1, 1},
+                    mass = 1,
+                    friction = 0.5,
+                    restitution = 0.6,
+                    shapeType = "Box"
                 }
             }
         },
@@ -49,7 +56,7 @@ local scenes = {
                     position = {20, 80, 0}
                 },
                 Light = {
-                    type = 0 
+                    type = 0
                 }
             }
         }

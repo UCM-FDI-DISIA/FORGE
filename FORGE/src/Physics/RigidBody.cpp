@@ -1,3 +1,4 @@
+#include "RigidBody.h"
 #include "PhysicsManager.h"
 #include "Entity.h"
 #include <Transform.h>
@@ -11,7 +12,7 @@ RigidBody::RigidBody() :
     , kinematic(false), myBody(nullptr) 
     , myShape(nullptr), friction(0), restitution(0)
     , shapeType(boxShape) {
-    myScale = forge::Vector3(0, 0, 0);
+    serializer(myScale, "scale");
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");
@@ -22,10 +23,6 @@ RigidBody::~RigidBody() {
 }
 
 void RigidBody::initComponent(ComponentData* data) {
-    if (entity->hasComponent("Transform")) {
-        physicsManager = PhysicsManager::getInstance();
-        myBody = physicsManager->createBody(this);
-    }
     std::string shapeType;
     shapeType = data->get<std::string>("shapeType");
     if (shapeType == "Box") {
@@ -40,13 +37,20 @@ void RigidBody::initComponent(ComponentData* data) {
         myScale = forge::Vector3(forVect.getX(), forVect.getX(), forVect.getX());
         myShape = new btSphereShape(forVect.getX()/2);
     }
+
+    if (entity->hasComponent("Transform")) {
+        physicsManager = PhysicsManager::getInstance();
+        myBody = physicsManager->createBody(this);
+    }
 }
 
 void RigidBody::fixedUpdate() {
     if (entity->hasComponent("Transform")) {
         Transform* transform = entity->getComponent<Transform>();
-        transform->setPosition((forge::Vector3(myBody->getCenterOfMassPosition().getX(), myBody->getCenterOfMassPosition().getY(), myBody->getCenterOfMassPosition().getZ())));
-        
+        forge::Vector3 pos = forge::Vector3(
+            myBody->getWorldTransform().getOrigin()
+        );
+        transform->setPosition(pos);
         forge::Quaternion quat = myBody->getOrientation();
         transform->setRotation(quat);
     }

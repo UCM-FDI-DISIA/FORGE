@@ -4,12 +4,12 @@
 a cambiar cuando se enlacen los modulos
 #include "Render.h"
 #include "Input.h"
-#include "Physics.h"
 #include "Audio.h"
 #include "Load.h"
 #include "EC.h"
 #include "GUI.h"
 */
+#include "PhysicsManager.h"
 
 #include "EcsLoad.h"
 #include <iostream>
@@ -21,7 +21,7 @@ ForgeMain::ForgeMain() {
 
 	//renderModule = new Forge::Render();
 	//inputModule = new Forge::Input();
-	//physicsModule = new Forge::Physics();
+	
 	//audioModule = new Forge::Audio();
 	//loadModule = new Forge::Load();
 	//ECModule = new Forge::EC();
