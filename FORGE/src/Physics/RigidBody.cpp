@@ -25,6 +25,7 @@ RigidBody::~RigidBody() {
 void RigidBody::initComponent(ComponentData* data) {
     std::string shapeType;
     shapeType = data->get<std::string>("shapeType");
+    staticBody = data->get<bool>("static");
     if (shapeType == "Box") {
         shapeType = boxShape;
         forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
@@ -34,10 +35,24 @@ void RigidBody::initComponent(ComponentData* data) {
     else if (shapeType == "Ball") {
         shapeType = ballShape;
         forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
-        myScale = forge::Vector3(forVect.getX(), forVect.getX(), forVect.getX());
+        myScale = forVect;
         myShape = new btSphereShape(forVect.getX()/2);
     }
-
+    else if (shapeType == "Capsule") {
+        shapeType = capsuleShape;
+        forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
+        myScale = forVect;
+        myShape = new btCapsuleShape(forVect.getX() / 2, forVect.getY());
+    }
+    else if (shapeType == "Cilinder") {
+        shapeType = cilinderShape;
+        forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
+        myScale = forVect;
+        //forVect. = forVect/2;
+        btVector3 vect = forVect.operator btVector3();
+        myShape = new btCylinderShape(vect);
+    }
+    
     if (entity->hasComponent("Transform")) {
         physicsManager = PhysicsManager::getInstance();
         myBody = physicsManager->createBody(this);
@@ -116,6 +131,10 @@ float RigidBody::getFriction() {
 
 float RigidBody::getRestitution() {
     return restitution;
+}
+
+bool RigidBody::isStatic() {
+    return staticBody;
 }
 
 btCollisionShape* RigidBody::getShape() {

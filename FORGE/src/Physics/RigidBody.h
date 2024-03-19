@@ -11,7 +11,7 @@ class btCollisionShape;
 
 enum collisionShape
 {
-    ballShape, boxShape
+    ballShape, boxShape , capsuleShape, cilinderShape, planeShape
 };
 namespace forge {
     class Vector3;
@@ -24,6 +24,7 @@ private:
     float friction;
     float restitution;
     bool kinematic;
+    bool staticBody;
     btRigidBody* myBody;
     btCollisionShape* myShape;
     collisionShape shapeType;
@@ -66,6 +67,8 @@ public:
     float getFriction();
 
     float getRestitution();
+
+    bool isStatic();
 
     btCollisionShape* getShape();
 

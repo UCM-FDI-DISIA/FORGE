@@ -21,7 +21,8 @@ local scenes = {
                     mass = 1,
                     friction = 0.5,
                     restitution = 0.6,
-                    shapeType = "Box"
+                    shapeType = "Capsule",
+                    static = false
                 }
             }
         },

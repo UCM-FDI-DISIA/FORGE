@@ -61,7 +61,11 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
         btVector3(forVect.getX(), forVect.getY(), forVect.getZ()
         ));*/
 
+    
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
+    if (body->isStatic()) {
+        rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+    }
     transforms.insert({rigidBody, body->getEntity()->getComponent<Transform>() });
 
     
