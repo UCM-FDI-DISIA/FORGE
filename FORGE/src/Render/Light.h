@@ -21,6 +21,8 @@ public:
 
     bool initComponent(ComponentData* data) override;
 
+    void setEnabled(bool newActive) override;
+
 	#pragma region setters
 	#pragma endregion
 

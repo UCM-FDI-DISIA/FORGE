@@ -29,6 +29,8 @@ public:
 
     bool initComponent(ComponentData* data) override;
 
+    void setEnabled(bool newActive) override;
+
 	#pragma region setters
     void setNearClipDistance(float newNearClipDistance);
     void setAutoAspectRatio(bool newAutoAspectRatio);

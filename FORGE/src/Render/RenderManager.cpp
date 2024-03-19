@@ -1,4 +1,5 @@
 #include "RenderManager.h"
+#include "RenderForge.h"
 #include "Mesh.h"
 #include "Camera.h"
 #include "Light.h"
@@ -17,23 +18,17 @@
 #include <OgreGpuProgramManager.h>
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
-#include <OgreViewport.h>
-#include <OgreDataStream.h>
 #include <OgreEntity.h>
 #include <iostream>
-
+#include <OgreViewport.h>
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 
 
 RenderManager::RenderManager() : 
-	myRoot(nullptr),
-	myWindow({nullptr, nullptr}),
-	myFileSystemLayer(nullptr),
-	myAppName(),
-	mySolutionPath(),
-	myRTShaderLibPath(),
-	mySceneManager(nullptr),
+	forge(nullptr),
+	root(nullptr),
+	sceneManager(nullptr),
 	transforms() {
 
 }
@@ -57,13 +52,13 @@ Ogre::Root* RenderManager::createRoot() {
 		return nullptr;
 	}
 
-	// Establecemos la ruta de los archivos de configuración en el sistema de archivos
+	// Establecemos la ruta de los archivos de configuraciÃ³n en el sistema de archivos
 	mySolutionPath = pluginsPath;
 	mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
 	myFileSystemLayer->setHomePath(mySolutionPath);
 	mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
 
-	// Creamos la raíz de OGRE 
+	// Creamos la raÃ­z de OGRE 
 	return new Ogre::Root(pluginsPath, myFileSystemLayer->getWritablePath("ogre.cfg"), myFileSystemLayer->getWritablePath("ogre.log"));
 }
 
@@ -73,17 +68,17 @@ NativeWindowPair RenderManager::createWindow() {
 
 	if(myRoot == nullptr) return {nullptr, nullptr};
 
-	// Obtenemos las opciones de configuración del sistema de renderizado
+	// Obtenemos las opciones de configuraciÃ³n del sistema de renderizado
 	Ogre::ConfigOptionMap ropts = myRoot->getRenderSystem()->getConfigOptions();
 
-	// Obtenemos el modo de vídeo y lo parseamos
+	// Obtenemos el modo de vÃ­deo y lo parseamos
 	std::istringstream mode(ropts["Video Mode"].currentValue);
 	Ogre::String token;
 	mode >> w;
 	mode >> token;
 	mode >> h;
 
-	// Establecemos los parámetros de la ventana
+	// Establecemos los parÃ¡metros de la ventana
 	miscParams["FSAA"] = ropts["FSAA"].currentValue;
 	miscParams["vsync"] = ropts["VSync"].currentValue;
 	miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
@@ -93,13 +88,13 @@ NativeWindowPair RenderManager::createWindow() {
 	// Establecemos la ventana como redimensionable por defecto
 	Uint32 flags = SDL_WINDOW_RESIZABLE;
 
-	// Si la opción de pantalla completa está activada, la ventana se establece como pantalla completa
+	// Si la opciÃ³n de pantalla completa estÃ¡ activada, la ventana se establece como pantalla completa
 	if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
 
 	// Creamos la ventana nativa de SDL
 	myWindow.native = SDL_CreateWindow(myAppName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
 
-	// Establecemos los parámetros de la ventana de render y la creamos
+	// Establecemos los parÃ¡metros de la ventana de render y la creamos
 	SDL_SysWMinfo wmInfo = { 0 };
 	SDL_VERSION(&wmInfo.version);
 	SDL_GetWindowWMInfo(myWindow.native, &wmInfo);
@@ -135,7 +130,7 @@ void RenderManager::locateResources() {
 		for (i = settings.begin(); i != settings.end(); i++) {
 			type = i->first;
 			arch = Ogre::FileSystemLayer::resolveBundlePath(i->second);
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parámetro sería "sec" si dividieramos en secciones
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parÃ¡metro serÃ­a "sec" si dividieramos en secciones
 		}
 	}
 
@@ -185,6 +180,7 @@ void RenderManager::locateResources() {
 	}
 
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	delete forge;
 }
 
 RenderManager* RenderManager::getInstance() {
@@ -193,26 +189,12 @@ RenderManager* RenderManager::getInstance() {
 }
 
 void RenderManager::setup(std::string appName) {
-	myAppName = appName;
-	myRoot = createRoot();
-	if(myRoot == nullptr) return;
-	// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
-	Ogre::RenderSystem* rs = myRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
-	myRoot->setRenderSystem(rs);
-
-	// Inicializamos el sistema de renderizado
-	myRoot->initialise(false);
-
-	// Creamos la ventana
-	myWindow = createWindow();
-	setWindowGrab(false);
-
-	// Inicializamos los recursos
-	locateResources();
-
+	forge = new RenderForge(appName);
+	root = forge->getRoot();
+	if (root == nullptr) return;
 	// Creamos la escena
-	mySceneManager = myRoot->createSceneManager();
-	mySceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	sceneManager = root->createSceneManager();
+	sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 }
 
 bool RenderManager::render() {
@@ -228,22 +210,15 @@ bool RenderManager::render() {
 			pair.second->setNeedsUpdate(false);
 		}
 	}
-	return myRoot->renderOneFrame();
+	return root->renderOneFrame();
 }
 
-
-void RenderManager::setWindowGrab(bool _grab) {
-	// Establecemos el ratón como libre o no
-	SDL_bool grab = SDL_bool(_grab);
-	SDL_SetWindowGrab(myWindow.native, grab);
-	SDL_ShowCursor(grab);
-}
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 	if(myRoot == nullptr) return nullptr;
 	try {
-		Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
-		Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
+		Ogre::Entity* entity = sceneManager->createEntity(mesh->getMesh());
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 		if (mesh->getMaterial() != "") {
 			entity->setMaterialName(mesh->getMaterial());
 		}
@@ -261,8 +236,8 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 	Ogre::SceneNode* node = entity->getParentSceneNode();
 	node->detachObject(entity);
-	mySceneManager->destroyEntity(entity);
-	Ogre::Entity* newEntity = mySceneManager->createEntity(mesh->getMesh());
+	sceneManager->destroyEntity(entity);
+	Ogre::Entity* newEntity = sceneManager->createEntity(mesh->getMesh());
 	if (mesh->getMaterial() != "") {
 		newEntity->setMaterialName(mesh->getMaterial());
 	}
@@ -272,12 +247,12 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 	if(myRoot == nullptr) return nullptr;
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Camera* ogreCamera = mySceneManager->createCamera(camera->getName());
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	Ogre::Camera* ogreCamera = sceneManager->createCamera(camera->getName());
 	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
 	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
 	node->attachObject(ogreCamera);
-	Ogre::Viewport* viewport = myWindow.render->addViewport(ogreCamera);
+	Ogre::Viewport* viewport = forge->getWindow().render->addViewport(ogreCamera);
 	Ogre::ColourValue value = Ogre::ColourValue(
 		camera->getBackgroundColor().getX(),
 		camera->getBackgroundColor().getY(),
@@ -289,8 +264,8 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 
 Ogre::Light* RenderManager::addLightNode(Light* light) {
 	if (myRoot == nullptr) return nullptr;
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Light* ogreLight = mySceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
 	node->attachObject(ogreLight);
 	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
 	return ogreLight;
@@ -300,8 +275,8 @@ void RenderManager::removeNode(Ogre::MovableObject* object) {
 	if(myRoot == nullptr) return;
 	Ogre::SceneNode* node = object->getParentSceneNode();
 	node->detachObject(object);
-	mySceneManager->destroyEntity(object);
-	mySceneManager->destroySceneNode(node);
+	sceneManager->destroyEntity(object);
+	sceneManager->destroySceneNode(node);
 	transforms.erase(node);
 }
 

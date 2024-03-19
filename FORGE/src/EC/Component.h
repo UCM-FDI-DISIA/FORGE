@@ -56,7 +56,7 @@ public:
 	///	Establece si el componente esta activado
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion del Component</param>
-	void setEnabled(bool _enabled);
+	virtual void setEnabled(bool _enabled);
 
 	#pragma region Getters
 	/// <returns>

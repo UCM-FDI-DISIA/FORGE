@@ -95,15 +95,19 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Render\Animator.cpp" />
     <ClCompile Include="..\..\src\Render\Camera.cpp" />
     <ClCompile Include="..\..\src\Render\Light.cpp" />
     <ClCompile Include="..\..\src\Render\Mesh.cpp" />
+    <ClCompile Include="..\..\src\Render\RenderForge.cpp" />
     <ClCompile Include="..\..\src\Render\RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Render\Animator.h" />
     <ClInclude Include="..\..\src\Render\Camera.h" />
     <ClInclude Include="..\..\src\Render\Light.h" />
     <ClInclude Include="..\..\src\Render\Mesh.h" />
+    <ClInclude Include="..\..\src\Render\RenderForge.h" />
     <ClInclude Include="..\..\src\Render\RenderManager.h" />
   </ItemGroup>
   <ItemGroup>
