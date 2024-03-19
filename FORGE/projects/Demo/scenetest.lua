@@ -26,6 +26,27 @@ local scenes = {
                 }
             }
         },
+        amenaza = {
+            handler = "menace",
+            components = {
+                Transform = {
+                    position = {0, -10, 0}
+                },
+                Mesh = {
+                    mesh = "ogrehead.mesh"
+                },
+                TestMovement = {
+                    name = "maincam"
+                },
+                RigidBody = {
+                    scale = {1, 1, 1},
+                    mass = 0.1,
+                    friction = 0.5,
+                    restitution = 0.6,
+                    shapeType = "Box"
+                }
+            }
+        },
         obstaculo = {
             group = "obstacle",
             components = {

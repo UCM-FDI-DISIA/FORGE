@@ -24,6 +24,9 @@
     <ClInclude Include="..\..\src\Physics\test.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Physics\DebugMode.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Physics\PhysicsManager.cpp">
