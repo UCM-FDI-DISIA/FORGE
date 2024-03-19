@@ -1,14 +1,16 @@
 #include "RenderManager.h"
 #include "RenderForge.h"
+#include "Entity.h"
+#include "Transform.h"
 #include "Mesh.h"
 #include "Camera.h"
 #include "Light.h"
+#include "ParticleSystem.h"
 #include "Billboard.h"
-#include "Entity.h"
-#include "Transform.h"
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreEntity.h>
+#include <OgreParticleSystem.h>
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
 
@@ -116,6 +118,15 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 	node->attachObject(ogreLight);
 	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
 	return ogreLight;
+}
+
+Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+	node->attachObject(ogreParticleSystem);
+	ogreParticleSystem->setEmitting(particleSystem->getEmitting());
+	transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>()});
+	return ogreParticleSystem;
 }
 
 void RenderManager::removeNode(Ogre::MovableObject* object) {

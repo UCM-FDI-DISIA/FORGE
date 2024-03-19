@@ -1,22 +1,24 @@
 #include "Animator.h"
-#include "OgreAnimation.h"
 #include "Serializer.h"
 #include "Entity.h"
+#include "OgreAnimation.h"
+#include "OgreEntity.h"
 
 const std::string Animator::id = "Animator";
 
 Animator::Animator() : 
 	activeAnimations(),
-	ogreAnimations(nullptr),
-	renderManager(nullptr) {
+	ogreAnimations(nullptr) {
+	serializer(mesh, "mesh");
+	serializer(material, "material");
 	serializer(activeAnimations, "activeAnimations");
 }
 
 Animator::~Animator() {}
 
-void Animator::init(RenderManager* manager, Ogre::AnimationStateSet* animationSet) {
-	renderManager = manager;
-	ogreAnimations = animationSet;
+void Animator::initComponent(ComponentData* data) {
+	Mesh::initComponent(data);
+	ogreAnimations = ogreEntity->getAllAnimationStates();
 	for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
 		if (ogreAnimations->hasAnimationState(*it)) {
 			ogreAnimations->getAnimationState(*it)->setEnabled(true);

@@ -24,9 +24,6 @@ void Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
-        if (entity->hasComponent("Animator")) {
-            entity->getComponent<Animator>()->init(renderManager,ogreEntity->getAllAnimationStates());
-        }
     }
 }
 

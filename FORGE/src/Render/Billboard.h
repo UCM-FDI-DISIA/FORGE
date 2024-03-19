@@ -1,6 +1,6 @@
 #pragma once
-#ifndef Billboard_H_
-#define Billboard_H_
+#ifndef BILLBOARD_H_
+#define BILLBOARD_H_
 #include <Component.h>
 #include <Vector3.h>
 #include <Vector2.h>
@@ -47,4 +47,4 @@ public:
 
 };
 
-#endif
+#endif//BILLBOARD_H_

@@ -1,7 +1,7 @@
 #pragma once
 #ifndef ANIMATOR_H_
 #define ANIMATOR_H_
-#include <Component.h>
+#include "Mesh.h"
 #include <string>
 #include <unordered_set>
 
@@ -10,10 +10,9 @@ namespace Ogre {
     class AnimationStateSet;
 }
 
-class Animator : public Component {
+class Animator : public Mesh {
     std::unordered_set<std::string> activeAnimations;
     Ogre::AnimationStateSet* ogreAnimations;
-    RenderManager* renderManager;
 
 public:
     static const std::string id;
@@ -22,7 +21,7 @@ public:
 
     ~Animator();
 
-    void init(RenderManager* manager, Ogre::AnimationStateSet* animationSet);
+    void initComponent(ComponentData* data) override;
 
     void update() override;
 
