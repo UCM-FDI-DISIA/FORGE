@@ -28,6 +28,7 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
 			Entity* child = addEntity(scene, childData);
+			if (!child->isAlive()) entity->setAlive(false);
 			entity->addChild(child);
 		}
 	}
@@ -115,7 +116,9 @@ Scene* SceneManager::createScene(std::string id)
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* entity : iter->second) {
-		if(!addEntity(newScene, entity)->isAlive()) newScene->endScene();
+		if (!addEntity(newScene, entity)->isAlive()) {
+			newScene->endScene();
+		}
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;

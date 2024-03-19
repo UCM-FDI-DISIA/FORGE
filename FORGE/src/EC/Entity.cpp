@@ -18,9 +18,10 @@ Entity::~Entity() {
     for (auto& component : components) {
         delete component.second;
     }
-    for (auto& child : children) {
-        delete child;
-    }
+    //for (auto& child : children) {
+    //    delete child;
+    //}
+    //parent->removeChild(this);
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {

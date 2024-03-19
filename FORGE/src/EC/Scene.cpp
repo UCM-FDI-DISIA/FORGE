@@ -20,13 +20,13 @@ Scene::~Scene() {
 }
 
 void Scene::update() {
+    refresh();
     for (auto& group : entitiesByGroup) {
         for (auto& entity : group) {
             entity->update();
         }
     }
-
-    refresh();
+    
 }
 
 void Scene::fixedUpdate() {

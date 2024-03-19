@@ -24,10 +24,11 @@ bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
-        if (entity->hasComponent("Animator")) {
+        if (ogreEntity != nullptr && entity->hasComponent("Animator")) {
             entity->getComponent<Animator>()->init(renderManager,ogreEntity->getAllAnimationStates());
         }
     }
+    return ogreEntity != nullptr;
 }
 
 void Mesh::setEnabled(bool newActive) {
@@ -39,7 +40,6 @@ void Mesh::setEnabled(bool newActive) {
         renderManager->removeNode(ogreEntity);
         ogreEntity = nullptr;
     }
-    return ogreEntity != nullptr;
 }
 
 void Mesh::setMesh(std::string newMesh) {
