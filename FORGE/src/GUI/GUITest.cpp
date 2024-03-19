@@ -115,7 +115,10 @@ int main(int, char**) {
         
         text->update();
         button->update();
-        
+        //if (button->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
+        //    cont++;
+        //    //ImGui::SameLine();
+        //    ImGui::Text("counter = %d", cont);
         // Rendering
         ImGui::Render();
         SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);

@@ -13,6 +13,7 @@ private:
 	std::string fontName;
 	ImFont* font = nullptr;
 	forge::Vector2 buttonSize;
+	bool pressed;
 
 public:
 	#pragma region Constructores
@@ -68,6 +69,10 @@ public:
 	/// </summary>	
 	/// <param name = "text_">Posicion</param>
 	void changeText(const char* text_);
+	/// <summary>
+	/// Devuelve true si el boton esta pulsado
+	/// </summary>	
+	bool isPressed();
 };
 #endif // !BUTTON_H_
 

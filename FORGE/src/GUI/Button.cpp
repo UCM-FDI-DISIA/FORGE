@@ -5,7 +5,7 @@ const std::string Button::id = "Button";
 
 Button::Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_):UIComponent(buttonId, pos_), text(buttonText),
 textColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), fontName(""),font(nullptr), buttonSize(forge::Vector2::ZERO), 
-buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) { }
+buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), pressed(false) { }
 
 Button::~Button() { }
 
@@ -26,7 +26,7 @@ bool Button::update() {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
     if (font != nullptr) {
         ImGui::PushFont(font);
-        ImGui::Button(text, buttonSize);
+        pressed = ImGui::Button(text, buttonSize);
         ImGui::PopFont();
     }
     else {
@@ -87,4 +87,8 @@ void Button::changeButtonOpacity(float op) {
 
 void Button::changeText(const char* text_) {
     text = text_;
+}
+
+bool Button::isPressed() {
+    return pressed;
 }
