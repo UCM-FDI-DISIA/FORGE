@@ -9,6 +9,7 @@ class RigidBody;
 namespace forge {
     class Vector3;
 };
+
 class PhysicsManager
 {
 private:
