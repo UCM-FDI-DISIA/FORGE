@@ -54,3 +54,8 @@ Vector4::operator ImVec4() const {
 }
 #pragma endregion
 
+#pragma region Operadores
+Vector4 Vector4::operator+(const Vector4& v)  const {
+	return Vector4(x + v.x, y + v.y, z + v.z, w + v.w);
+}
+#pragma endregion

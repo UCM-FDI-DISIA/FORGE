@@ -1,41 +1,34 @@
 #pragma once
 #ifndef TEXT_H_
 #define TEXT_H_
-#include <Component.h>
-#include "Vector2.h"
-#include "Vector4.h"
-#include "imgui.h"
-class GUI;
-class Text /* : public Component*/ {
+#include "UIComponent.h"
+class Text  : public UIComponent {
 private:
 	static const std::string id;
-	const char* windowName;
 	const char* text;
-	// preguntar como hacer la conversion a ImVec
-	forge::Vector2 pos;
 	forge::Vector4 color;
 	forge::Vector4 bgColor;
 	std::string fontName;
-	ImGuiWindowFlags window_flags = 0;
 	ImFont* font = nullptr;
 	forge::Vector2 size;
-	GUI* gui;
-
 public:
 	/// <summary>
-	/// Crea un texto fijo
+	/// Crea un texto fijo. Por defecto se crea el texto en color
+	///  blanco y con la primera fuente cargada por defecto. Para cambiar las
+	/// caracteristicas del texto utilizar metodos set.
 	/// </summary>	
 	/// <param name = "textId">Nombre del texto</param>
 	/// <param name = "text_">Texto a mostrar</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
-	/// <param name = "color_">Color del texto</param>
-	/// <param name = "fontName_">Nombre de la fuente en el mapa</param>
-	Text(const char* textId, const char* text_, forge::Vector2 pos_ = forge::Vector2::ZERO,
-		forge::Vector4 color_ = forge::Vector4({ 1.0, 1.0, 1.0, 1.0 }), std::string fontName_ = "");
+	Text(const char* textId, const char* text_, forge::Vector2 pos_ = forge::Vector2::ZERO);
+	/// <summary>
+	/// Destructora
+	/// </summary>	
+	~Text();
 	/// <summary>
 	/// Actualizacion del texto
 	/// </summary>	
-	void update();
+	bool update();
 	/// <summary>
 	/// Cambia el color del texto
 	/// </summary>	
@@ -66,5 +59,10 @@ public:
 	/// </summary>	
 	/// <param name = "op">Opacidad</param>
 	void changeBackgroundOpacity(float op = 1.0f);
+	/// <summary>
+	/// Cambia el texto
+	/// </summary>	
+	/// <param name = "text_">Posicion</param>
+	void changeText(const char* text_);
 };
 #endif // !TEXT_H_

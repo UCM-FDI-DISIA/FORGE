@@ -92,6 +92,15 @@ namespace forge {
 		/// </summary>	
 		operator ImVec4() const;
 		#pragma endregion
+
+		#pragma region Operadores
+		/// <summary>
+		/// Suma los vectores
+		/// </summary>
+		/// <param name="w">Vector sumando</param>
+		/// <returns>El vector suma resultante</returns>
+		Vector4 operator+(const Vector4& w) const;
+		#pragma endregion
 	};
 }
 #endif

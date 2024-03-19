@@ -3,32 +3,12 @@
 
 const std::string Text::id = "Text";
 
-Text::Text(const char* textId, const char* text_, forge::Vector2 pos_, forge::Vector4 color_, std::string fontName_):
-windowName(textId), text(text_), pos(pos_), color(color_), fontName(fontName_), font (nullptr), size(forge::Vector2::ZERO), bgColor(color_), gui(GUI::getInstance()){
-    if (gui->getIds().count(textId)) {
-    #ifdef _DEBUG
-        std::cerr << "El id " + (std::string)textId + " ya existe\n";
-    #endif // _DEBUG
-        return;
-    }
+Text::Text(const char* textId, const char* text_, forge::Vector2 pos_) : UIComponent(textId, pos_), text(text_), color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), 
+fontName(""), font(nullptr), size(forge::Vector2::ZERO), bgColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) { }
 
-    // Flags
-    window_flags |= ImGuiWindowFlags_NoTitleBar;
-    window_flags |= ImGuiWindowFlags_NoScrollbar;
-    window_flags |= ImGuiWindowFlags_NoMove;
-    window_flags |= ImGuiWindowFlags_NoResize;
-    window_flags |= ImGuiWindowFlags_NoCollapse;
-    window_flags |= ImGuiWindowFlags_NoNav;
-    window_flags |= ImGuiWindowFlags_NoBackground;
+Text::~Text(){}
 
-    gui->getIds().insert(textId);
-    if (fontName != "" && gui->getFonts().count(fontName)) {
-        font = gui->getFonts()[fontName];
-    }
-    
-}
-
-void Text::update() {
+bool Text::update() {
     // Tamano y posicion de la ventana
     if (size == forge::Vector2::ZERO) {
         ImVec2 textSize = ImGui::CalcTextSize(text);
@@ -53,6 +33,7 @@ void Text::update() {
 
     ImGui::End();
     ImGui::PopStyleColor();
+    return true;
 }
 
 void Text::setColor(forge::Vector4 color_) {
@@ -84,4 +65,8 @@ void Text::changeTextOpacity(float op) {
 
 void Text::changeBackgroundOpacity(float op) {
     bgColor.setW(op);
+}
+
+void Text::changeText(const char* text_) {
+    text = text_;
 }

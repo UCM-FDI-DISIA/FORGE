@@ -95,8 +95,10 @@
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_rectpack.h" />
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_textedit.h" />
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_truetype.h" />
+    <ClInclude Include="..\..\src\GUI\Button.h" />
     <ClInclude Include="..\..\src\GUI\GUI.h" />
     <ClInclude Include="..\..\src\GUI\Text.h" />
+    <ClInclude Include="..\..\src\GUI\UIComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdl2.cpp" />
@@ -106,9 +108,11 @@
     <ClCompile Include="..\..\dependencies\ImGUI\imgui_draw.cpp" />
     <ClCompile Include="..\..\dependencies\ImGUI\imgui_tables.cpp" />
     <ClCompile Include="..\..\dependencies\ImGUI\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\src\GUI\Button.cpp" />
     <ClCompile Include="..\..\src\GUI\GUI.cpp" />
     <ClCompile Include="..\..\src\GUI\GUITest.cpp" />
     <ClCompile Include="..\..\src\GUI\Text.cpp" />
+    <ClCompile Include="..\..\src\GUI\UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utils\Utils.vcxproj">

@@ -51,6 +51,12 @@
     <ClInclude Include="..\..\src\GUI\Text.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Button.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\UIComponent.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GUI\GUI.cpp">
@@ -81,6 +87,12 @@
       <Filter>Archivos de origen\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GUI\Text.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Button.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\UIComponent.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
