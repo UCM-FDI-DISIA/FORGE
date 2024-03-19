@@ -27,11 +27,15 @@ void PhysicsManager::initPhysics() {
     solver = new btSequentialImpulseConstraintSolver();
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-    world->setGravity(btVector3((btScalar)0, (btScalar)-9.8, (btScalar)0));
+    world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
 }
 
 void PhysicsManager::updatePhysics() {
     world->stepSimulation(1 / 50.f, 20);
+}
+
+void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
+    world->setGravity(newGravity.operator btVector3());
 }
 
 PhysicsManager* PhysicsManager::getInstance() {
@@ -46,25 +50,27 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     body->getShape()->calculateLocalInertia(body->getMass(), bodyInertia);
     forge::Quaternion forQuat = body->getEntity()->getComponent<Transform>()->getRotation();
     forge::Vector3 forVect = body->getEntity()->getComponent<Transform>()->getGlobalPosition();
-    btQuaternion quat = btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle());
-    btVector3 vect = btVector3(forVect.getX(), forVect.getY(), forVect.getZ());
+    btQuaternion quat = forQuat.operator btQuaternion();
+    btVector3 vect = forVect.operator btVector3();
     btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat,vect));
     
     btRigidBody::btRigidBodyConstructionInfo bodyCI = 
         btRigidBody::btRigidBodyConstructionInfo(body->getMass(), motionState, body->getShape(), bodyInertia);
-    bodyCI.m_startWorldTransform = btTransform(
+    /*/bodyCI.m_startWorldTransform = btTransform(
         btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle()),
         btVector3(forVect.getX(), forVect.getY(), forVect.getZ()
-        ));
-
-    transforms.insert({new btRigidBody(bodyCI), body->getEntity()->getComponent<Transform>() });
+        ));*/
 
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
+    transforms.insert({rigidBody, body->getEntity()->getComponent<Transform>() });
+
+    
     /*rigidBody->setWorldTransform(btTransform(
         btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle()),
         btVector3(forVect.getX(), forVect.getY(), forVect.getZ())
     ));*/
     body->setRigidBody(rigidBody);
+    world->addRigidBody(rigidBody);
     return rigidBody;
 }
 btRigidBody* PhysicsManager::createImportantBody(RigidBody* body, std::string name) {

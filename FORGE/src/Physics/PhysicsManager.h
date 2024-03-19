@@ -6,6 +6,9 @@
 
 class Transform;
 class RigidBody;
+namespace forge {
+    class Vector3;
+};
 class PhysicsManager
 {
 private:
@@ -34,6 +37,8 @@ public:
     /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
     /// </summary>
     void updatePhysics();
+    
+    void changeGravity(forge::Vector3 newGravity);
 
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* getInstance();

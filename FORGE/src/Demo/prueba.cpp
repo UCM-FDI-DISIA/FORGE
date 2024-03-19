@@ -20,7 +20,7 @@
 #include "PhysicsManager.h"
 #include "RigidBody.h"
 
-#define FIXED_UPDATE_RATE 0.02
+#define FIXED_UPDATE_RATE 20
 
 void factory() {
 	Factory& f = *Factory::getInstance();

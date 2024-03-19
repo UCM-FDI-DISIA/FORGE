@@ -232,7 +232,7 @@ Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
 }
 
 Quaternion::operator btQuaternion() const {
-	return btQuaternion(w, x, y, z);
+	return btQuaternion(x, y, z, w);
 }
 
 Quaternion::Quaternion(const btQuaternion& q) :
