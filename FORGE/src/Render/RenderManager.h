@@ -11,11 +11,13 @@ class Mesh;
 class Camera;
 class Light;
 class Transform;
+class Billboard;
 
 namespace Ogre {
 	class Entity;
 	class Camera;
 	class Light;
+	class BillboardSet;
 	class Root;
 	class SceneNode;
 	class SceneManager;
@@ -79,6 +81,16 @@ public:
 	/// <param name="mesh:">El mesh para sustituir</param>
 	/// <returns>Devuelve puntero de la entidad</returns>
 	Ogre::Entity* updateMeshNode(Ogre::Entity* entity, Mesh* mesh);
+
+	/// <summary>
+	/// Añade un BillboardSet a la escena
+	/// </summary>
+	/// <param name="bs">El billboard a añadir</param>
+	/// <returns>Devuelve el puntero del BillboardSet</returns>
+	Ogre::BillboardSet* addBillboardNode(Billboard* bs);
+
+
+	//Ogre::BillboardSet* add(Ogre::BillboardSet bs, Billboard b);
 
 	/// <summary>
 	/// Añade una camara a la escena

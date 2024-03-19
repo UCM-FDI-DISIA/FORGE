@@ -3,11 +3,13 @@
 #include "Mesh.h"
 #include "Camera.h"
 #include "Light.h"
+#include "Billboard.h"
 #include "Entity.h"
 #include "Transform.h"
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreEntity.h>
+#include <OgreBillboardSet.h>
 #include <OgreViewport.h>
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
@@ -77,6 +79,18 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 	}
 	node->attachObject(entity);
 	return newEntity;
+}
+
+Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
+	Ogre::BillboardSet* set = sceneManager->createBillboardSet(bs->getSize());
+	set->setDefaultDimensions(bs->getBillboardWidth(), bs->getBillboardHeight());
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	if (bs->getMaterial() != "") {
+		set->setMaterialName(bs->getMaterial());
+	}
+	node->attachObject(set);
+	transforms.insert({ node, bs->getEntity()->getComponent<Transform>()});
+	return set;
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
