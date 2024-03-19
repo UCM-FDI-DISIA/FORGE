@@ -25,6 +25,9 @@
     <ClInclude Include="..\..\src\Audio\SoundGenerator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.vcxproj">
       <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
     </ProjectReference>
@@ -77,7 +80,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\irrKlang\src\include\;$(SolutionDir)src\Utils\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\irrKlang\src\include\;$(SolutionDir)src\Utils\;$(SolutionDir)src\EC\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

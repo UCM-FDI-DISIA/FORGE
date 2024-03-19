@@ -42,29 +42,25 @@ bool Sound::stop() {
 	return false;
 }
 
-bool Sound::play(bool looped) {
+bool Sound::play() {
 	if (sound == nullptr) {
-		loop = looped;
 		sound = engine.play2D(source, loop, false, true);
 		return true;
 	}
 	return false;
 }
-bool Sound::play(Vector3 const& position, bool looped) {
+bool Sound::play(Vector3 const& position) {
 	if (sound == nullptr) {
-		loop = looped;
-		sound = engine.play3D(source, position, looped, false, true);
+		sound = engine.play3D(source, position, loop, false, true);
 		return true;
 	}
 	return false;
 }
 
-bool Sound::update() {
+void Sound::update() {
 	if (sound != nullptr && sound->isFinished()) {
 		stop();
-		return true;
 	}
-	return false;
 }
 
 bool Sound::restart() {
@@ -106,4 +102,12 @@ void Sound::setLooped(bool looped) {
 
 bool Sound::isFinished() {
 	return sound == nullptr;
+}
+
+bool Sound::setPosition(forge::Vector3 const& position) {
+	if (sound != nullptr) {
+		sound->setPosition(position);
+		return true;
+	}
+	return false;
 }

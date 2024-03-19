@@ -3,6 +3,7 @@
 #define AUDIO_H_
 
 #include <string>
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -20,15 +21,22 @@ private:
 	irrklang::ISoundEngine* engine;
 	std::unordered_map<std::string, SoundGenerator*> soundLibrary;
 	std::unordered_set<Sound*> currentSounds;
-public:
 	/// <summary>
 	/// Inicializa el sistema de audio
 	/// </summary>
 	AudioManager();
+	static std::unique_ptr<AudioManager> instance;
+public:
+	static AudioManager* getInstance();
+	AudioManager(AudioManager const&) = delete;
+	void operator=(AudioManager const&) = delete;
 	/// <summary>
 	/// Cierra el sistema de audio
 	/// </summary>
 	~AudioManager();
+	/// <summary>
+	/// Actualiza los sonidos que existen
+	/// </summary>
 	void update();
 	/// <summary>
 	/// Anade un sonido a la libreria de sonidos de audio
