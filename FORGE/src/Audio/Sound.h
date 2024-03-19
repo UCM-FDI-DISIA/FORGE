@@ -14,18 +14,35 @@ namespace forge {
 }
 class Sound {
 private:
-	using Sounds = std::list<Sound*>;
 	irrklang::ISoundEngine& engine;
 	irrklang::ISoundSource* source;
 	irrklang::ISound* sound;
-	Sounds& currentlyPlaying;
-	Sounds::iterator it;
 	bool loop;
 public:
-	Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source, std::list<Sound*>& _currentlyPlaying);
+	/// <summary>
+	/// Crea una nueva instancia de Sound
+	/// </summary>
+	/// <param name="_engine">Engine de irrklang desde el que sonara el audio</param>
+	/// <param name="_source">ISoundSource de irrklang con el sonido que sonara</param>
+	Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source);
+	/// <summary>
+	/// Detiene el sonido y lo destruye
+	/// </summary>
 	~Sound();
+	/// <summary>
+	/// Pausa el sonido si esta sonando
+	/// </summary>
+	/// <returns>Si se ha podido pausar</returns>
 	bool pause();
+	/// <summary>
+	/// Reanuda el sonido desde donde se habia pausado
+	/// </summary>
+	/// <returns>Si se ha podido reanudar</returns>
 	bool resume();
+	/// <summary>
+	/// Detiene por completo el sonido
+	/// </summary>
+	/// <returns>Si se ha podido detener</returns>
 	bool stop();
 	bool play(bool looped = false);
 	bool play(forge::Vector3 const& position, bool looped = false);

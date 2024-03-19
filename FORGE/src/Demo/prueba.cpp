@@ -50,7 +50,8 @@ int main(int argc, char* argv[]) {
         if(!render.render())
 			break;
 		if (input.keyDown(K_P)) {
-			ad->getSound("Test")->restart();
+			ad->getSound("Test")->play();
+			ad->getSound("Test")->play();
 		}
     }
 	delete ad;

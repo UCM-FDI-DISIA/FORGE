@@ -15,12 +15,14 @@
     <ClCompile Include="..\..\src\Audio\AudioManager.cpp" />
     <ClCompile Include="..\..\src\Audio\AudioSource.cpp" />
     <ClCompile Include="..\..\src\Audio\Sound.cpp" />
+    <ClCompile Include="..\..\src\Audio\SoundGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Audio\AudioListener.h" />
     <ClInclude Include="..\..\src\Audio\AudioManager.h" />
     <ClInclude Include="..\..\src\Audio\AudioSource.h" />
     <ClInclude Include="..\..\src\Audio\Sound.h" />
+    <ClInclude Include="..\..\src\Audio\SoundGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utils\Utils.vcxproj">

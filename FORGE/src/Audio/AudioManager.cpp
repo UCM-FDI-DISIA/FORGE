@@ -1,6 +1,7 @@
 #include "AudioManager.h"
-#include "Sound.h"
 #include <irrKlang.h>
+#include "Sound.h"
+#include "SoundGenerator.h"
 using namespace irrklang;
 
 AudioManager::AudioManager() :
@@ -8,6 +9,9 @@ AudioManager::AudioManager() :
 }
 
 AudioManager::~AudioManager() {
+	for (auto& s : currentSounds) {
+		delete s;
+	}
 	for (auto& s : soundLibrary) {
 		delete s.second;
 	}
@@ -15,16 +19,16 @@ AudioManager::~AudioManager() {
 }
 
 void AudioManager::update() {
-	for (auto& s : soundLibrary) {
-		s.second->update();
+	for (auto& s : currentSounds) {
+		s->update();
 	}
 }
 
-Sound* AudioManager::addSound(std::string name, std::string file) {
+SoundGenerator* AudioManager::addSound(std::string name, std::string file) {
 	ISoundSource* newSound = engine->addSoundSourceFromFile(file.c_str(), ESM_AUTO_DETECT , true);
 	if (newSound != NULL) {
-		Sound* s = new Sound(*engine, newSound, currentlyPlaying);
-		soundLibrary.insert(std::pair<std::string, Sound*>(name, s)).second;
+		SoundGenerator* s = new SoundGenerator(*engine, newSound);
+		soundLibrary.insert(std::pair<std::string, SoundGenerator*>(name, s)).second;
 		return s;
 	}
 	return nullptr;
@@ -33,7 +37,17 @@ Sound* AudioManager::addSound(std::string name, std::string file) {
 Sound* AudioManager::getSound(std::string name) {
 	auto s = soundLibrary.find(name);
 	if (s != soundLibrary.end()) {
-		return s->second;
+		Sound* snd = s->second->instanciate();
+		currentSounds.insert(snd);
+		return snd;
 	}
 	return nullptr;
+}
+
+bool AudioManager::removeSound(Sound* sound) {
+	bool res = currentSounds.erase(sound);
+	if (res) {
+		delete sound;
+	}
+	return res;
 }

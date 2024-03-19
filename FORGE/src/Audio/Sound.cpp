@@ -5,18 +5,15 @@
 using namespace irrklang;
 using namespace forge;
 
-Sound::Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source, std::list<Sound*>& _currentlyPlaying) :
+Sound::Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source) :
 	engine(_engine),
 	sound(nullptr),
 	source(_source),
-	currentlyPlaying(_currentlyPlaying),
-	it(_currentlyPlaying.end()),
 	loop(false) {
 }
 
 Sound::~Sound() {
 	stop();
-	engine.removeSoundSource(source);
 }
 
 bool Sound::pause() {
@@ -40,8 +37,6 @@ bool Sound::stop() {
 		sound->stop();
 		sound->drop();
 		sound = nullptr;
-		currentlyPlaying.erase(it);
-		it = currentlyPlaying.end();
 		return true;
 	}
 	return false;
@@ -51,7 +46,6 @@ bool Sound::play(bool looped) {
 	if (sound == nullptr) {
 		loop = looped;
 		sound = engine.play2D(source, loop, false, true);
-		it = currentlyPlaying.insert(it, this);
 		return true;
 	}
 	return false;
@@ -60,7 +54,6 @@ bool Sound::play(Vector3 const& position, bool looped) {
 	if (sound == nullptr) {
 		loop = looped;
 		sound = engine.play3D(source, position, looped, false, true);
-		it = currentlyPlaying.insert(it, this);
 		return true;
 	}
 	return false;
@@ -112,5 +105,5 @@ void Sound::setLooped(bool looped) {
 }
 
 bool Sound::isFinished() {
-	return it != currentlyPlaying.end();
+	return sound == nullptr;
 }
