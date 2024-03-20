@@ -44,6 +44,7 @@ private:
 	/// </summary>
 	RenderManager();
 
+	void updateNodePositions();
 
 public:
 	/// <summary>
@@ -114,6 +115,14 @@ public:
 	/// <param name="particleSystem:">El sistema de particulas a a�adir</param>
 	/// <returns>Devuelve puntero del sistema de particulas</returns>
 	Ogre::ParticleSystem* addParticleSystemNode(ParticleSystem* particleSystem);
+
+	/// <summary>
+	/// Actualiza el ParticleSystem de una escena, cambiandolo por otro distinto
+	/// </summary>
+	/// <param name="entity:">El ParticleSystem de ogre a cambiar</param>
+	/// <param name="mesh:">El ParticleSystem con la informacion</param>
+	/// <returns>Devuelve puntero del ParticleSystem de ogre</returns>
+	Ogre::ParticleSystem* updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem);
 
 
 	/// <summary>

@@ -25,6 +25,20 @@ RenderManager::RenderManager() :
 
 }
 
+void RenderManager::updateNodePositions() {
+	for (auto&& pair : transforms) {
+		if (pair.second->getNeedsUpdate()) {
+			const forge::Vector3& position = pair.second->getGlobalPosition();
+			pair.first->setPosition(position);
+			const forge::Quaternion& rotation = pair.second->getGlobalRotation();
+			pair.first->setOrientation(rotation);
+			const forge::Vector3& scale = pair.second->getGlobalScale();
+			pair.first->setScale(scale);
+			pair.second->setNeedsUpdate(false);
+		}
+	}
+}
+
 RenderManager::~RenderManager() {
 	delete forge;
 }
@@ -44,17 +58,7 @@ void RenderManager::setup(std::string appName) {
 }
 
 bool RenderManager::render() {
-	for (auto&& pair : transforms) {
-		if (pair.second->getNeedsUpdate()) {
-			const forge::Vector3& position = pair.second->getGlobalPosition();
-			pair.first->setPosition(position);
-			const forge::Quaternion& rotation = pair.second->getGlobalRotation();
-			pair.first->setOrientation(rotation);
-			const forge::Vector3& scale = pair.second->getGlobalScale();
-			pair.first->setScale(scale);
-			pair.second->setNeedsUpdate(false);
-		}
-	}
+	updateNodePositions();
 	return root->renderOneFrame();
 }
 
@@ -128,6 +132,18 @@ Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* parti
 	transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>()});
 	return ogreParticleSystem;
 }
+
+
+Ogre::ParticleSystem* RenderManager::updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem) {
+	Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
+	node->detachObject(ogreParticleSystem);
+	sceneManager->destroyEntity(ogreParticleSystem);
+	Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+	newParticleSystem->setEmitting(particleSystem->getEmitting());
+	node->attachObject(newParticleSystem);
+	return newParticleSystem;
+}
+
 
 void RenderManager::removeNode(Ogre::MovableObject* object) {
 	Ogre::SceneNode* node = object->getParentSceneNode();

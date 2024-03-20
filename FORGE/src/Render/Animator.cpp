@@ -31,14 +31,8 @@ void Animator::initComponent(ComponentData* data) {
 }
 
 void Animator::update() {
-	if(ogreAnimations == nullptr){
-		entity->removeComponent("Animator");
-	}
-	else {
-		//auto map = ogreAnimations->getAnimationStates();
-		for (std::string animation : activeAnimations) {
-			ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
-		}
+	for (std::string animation : activeAnimations) {
+		ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
 	}
 }
 
@@ -74,8 +68,9 @@ void Animator::setActive(std::vector<std::string> animations, bool active) {
 
 void Animator::changeActive(std::string newAnimation) {
 	for (std::string animation : activeAnimations) {
-		setActive(animation, false);
+		ogreAnimations->getAnimationState(animation)->setEnabled(false);
 	}
+	activeAnimations.clear();
 	setActive(newAnimation, true);
 }
 
@@ -86,8 +81,14 @@ void Animator::changeActive(std::vector<std::string> newAnimations) {
 	setActive(newAnimations, true);
 }
 
-Ogre::AnimationStateSet* Animator::getAnimations() {
-	return ogreAnimations;
+std::vector<std::string> Animator::getAnimations() {
+	std::vector<std::string> animations;
+	auto iterator = ogreAnimations->getAnimationStateIterator();
+	while (iterator.hasMoreElements()) {
+		animations.push_back(iterator.peekNextKey());
+		iterator.moveNext();
+	}
+	return animations;
 }
 
 std::unordered_set<std::string> Animator::getActiveAnimations() {

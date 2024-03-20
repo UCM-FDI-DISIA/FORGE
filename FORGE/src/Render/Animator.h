@@ -3,6 +3,7 @@
 #define ANIMATOR_H_
 #include "Mesh.h"
 #include <string>
+#include <vector>
 #include <unordered_set>
 
 class RenderManager;
@@ -35,7 +36,7 @@ public:
     #pragma endregion
 
     #pragma region getters
-    Ogre::AnimationStateSet* getAnimations();
+    std::vector<std::string> getAnimations();
     std::unordered_set<std::string> getActiveAnimations();
     #pragma endregion
 };

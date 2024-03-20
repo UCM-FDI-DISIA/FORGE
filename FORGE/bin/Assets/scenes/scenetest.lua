@@ -11,9 +11,7 @@ local scenes = {
                     position = {0, 0, 0},
                     scale = {0.25, 0.25, 0.25}
                 },
-                TestMovement = {
-                    name = "maincam"
-                },
+                TestMovement = 0,
                 Animator = {
  		             mesh = "ninja.mesh",
                     activeAnimations = {
@@ -29,8 +27,9 @@ local scenes = {
                             position = {100, 0, -100},
                             scale = {10, 10, 10}
                         },
-                        Mesh = {
-                            mesh = "Barrel.mesh"
+                        ParticleSystem = {
+                            particle = "Examples/GreenyNimbus",
+                            emitting = true
                         }
                     }
                 }

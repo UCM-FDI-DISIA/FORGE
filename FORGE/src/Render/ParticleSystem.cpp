@@ -40,7 +40,7 @@ void ParticleSystem::setEnabled(bool newActive) {
 
 void ParticleSystem::setParticle(std::string newParticle) {
     particle = newParticle;
-
+    renderManager->updateParticleSystemNode(ogreParticleSystem,this);
 }
 
 void ParticleSystem::setEmitting(bool newEmitting) {
