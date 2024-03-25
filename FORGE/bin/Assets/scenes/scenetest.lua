@@ -45,7 +45,7 @@ local scenes = {
                 },
                 Camera = {
                     name = "maincam",
-                    nearClipDistance = 1000000000000000000000000000000000000000000000000000000000000000000,
+                    nearClipDistance = 1000000000000000000000000000000000000000000000000000000000000000000000,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
                 }

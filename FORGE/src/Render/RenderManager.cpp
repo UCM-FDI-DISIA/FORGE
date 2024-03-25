@@ -84,9 +84,6 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 		std::cerr << "ERROR: No se ha podido cargar un mesh " << mesh->getMesh() << "\n";
 		return nullptr;
 	}
-	node->attachObject(entity);
-	transforms.insert({ node, mesh->getEntity()->getComponent<Transform>() });
-	return entity;
 }
 
 
@@ -129,7 +126,7 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 }
 
 void RenderManager::removeNode(Ogre::MovableObject* object) {
-	if(root == nullptr) return;
+	if(root == nullptr || object == nullptr) return;
 	Ogre::SceneNode* node = object->getParentSceneNode();
 	node->detachObject(object);
 	sceneManager->destroyEntity(object);
