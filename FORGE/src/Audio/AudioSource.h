@@ -8,28 +8,30 @@ class Transform;
 class AudioManager;
 class AudioSource : public Component {
 private:
-	Sound* sound;
-	Transform* transform;
 	AudioManager& manager;
+	Transform* transform;
+	Sound* sound;
+	
 	bool playOnAwake;
-	forge::Vector3 offset;
-	float maxVolumeRadious;
-	float hearingRadious;
-	float pan;
 	float volume;
+	float pan;
+	float fullVolumeRadious;
+	float hearingRadious;
+	forge::Vector3 offset;
+
 public:
 	static const std::string id;
 	/// <summary>
-	/// 
+	/// Constructora por defecto del component AudioSource
 	/// </summary>
 	AudioSource();
 	/// <summary>
-	/// 
+	/// Se llama en la creacion del componente AudioSource
 	/// </summary>
-	/// <param name="data"></param>
+	/// <param name="data">Bloque con la informacion guardada para el componente</param>
 	void initComponent(ComponentData* data) override;
 	/// <summary>
-	/// 
+	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>
 	void update() override;
 	/// <summary>

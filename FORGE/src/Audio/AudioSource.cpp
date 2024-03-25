@@ -1,10 +1,10 @@
 #include "AudioSource.h"
-#include "AudioManager.h"
 #include "ComponentData.h"
+#include "Serializer.h"
+#include "AudioManager.h"
 #include "Transform.h"
 #include "Entity.h"
 #include "Sound.h"
-#include "Serializer.h"
 
 const std::string AudioSource::id = "AudioSource";
 
@@ -14,14 +14,14 @@ AudioSource::AudioSource() :
 	manager(*AudioManager::getInstance()),
 	playOnAwake(false),
 	offset(),
-	maxVolumeRadious(0.0f),
-	hearingRadious(0.0f),
+	fullVolumeRadious(5.0f),
+	hearingRadious(50.0f),
 	pan(0.0f),
 	volume(1.0f) {
 
 	serializer(playOnAwake, "playOnAwake");
 	serializer(offset, "offset");
-	serializer(maxVolumeRadious, "maxVolumeRadious");
+	serializer(fullVolumeRadious, "fullVolumeRadious");
 	serializer(hearingRadious, "hearingRadious");
 	serializer(pan, "pan");
 	serializer(volume, "volume");
@@ -54,7 +54,6 @@ bool AudioSource::stop() {
 }
 
 bool AudioSource::play() {
-
 	if (transform != nullptr) {
 		return sound->play(transform->getGlobalPosition() + offset);
 	}
