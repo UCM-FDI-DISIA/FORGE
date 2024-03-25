@@ -141,6 +141,11 @@ public:
 	/// </summary>
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
 	void initialize(ComponentData& data);
+	/// <summary>
+	/// Comprueba posibles errores en la inicializacion de las variables.
+	/// </summary>
+	/// <typeparam name="U">Tipo de la variable</typeparam>
+	/// <param name="var">La variable casteada que se va a comprobar</param>
 	template<typename U>
 	void handle_initialize(U& var);
 	template<>
