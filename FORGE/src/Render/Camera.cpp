@@ -24,9 +24,14 @@ Camera::~Camera() {
 bool Camera::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
-        ogreCamera = renderManager->addCameraNode(this);
+        try {
+			ogreCamera = renderManager->addCameraNode(this);
+            return ogreCamera != nullptr;
+        } catch (std::exception e) {
+			std::cerr << "ERROR: No se ha podido cargar la camara \n";  
+            return false;
+		}
     }
-    return ogreCamera != nullptr;
 }
 
 void Camera::setEnabled(bool newActive) {

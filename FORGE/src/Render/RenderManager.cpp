@@ -84,6 +84,9 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 		std::cerr << "ERROR: No se ha podido cargar un mesh " << mesh->getMesh() << "\n";
 		return nullptr;
 	}
+	node->attachObject(entity);
+	transforms.insert({ node, mesh->getEntity()->getComponent<Transform>() });
+	return entity;
 }
 
 

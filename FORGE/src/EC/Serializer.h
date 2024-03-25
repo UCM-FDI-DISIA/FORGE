@@ -6,6 +6,7 @@
 #include <vector>
 #include "Component.h"
 #include "ComponentData.h"
+#include <type_traits>
 
 
 /// <summary>

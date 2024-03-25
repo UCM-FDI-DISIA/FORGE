@@ -28,7 +28,6 @@ bool Mesh::initComponent(ComponentData* data) {
             entity->getComponent<Animator>()->init(renderManager,ogreEntity->getAllAnimationStates());
         }
     }
-    return ogreEntity != nullptr;
 }
 
 void Mesh::setEnabled(bool newActive) {
