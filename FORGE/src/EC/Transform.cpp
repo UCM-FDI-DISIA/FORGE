@@ -107,11 +107,11 @@ forge::Quaternion Transform::getGlobalRotation() const {
 	}
 }
 
-forge::Vector3 const&& Transform::getRotationEuler() const {
+forge::Vector3 Transform::getRotationEuler() const {
 	return rotation.toEuler();
 }
 
-forge::Vector3 const&& Transform::getGlobalRotationEuler() const {
+forge::Vector3 Transform::getGlobalRotationEuler() const {
 	return getGlobalRotation().toEuler();
 }
 

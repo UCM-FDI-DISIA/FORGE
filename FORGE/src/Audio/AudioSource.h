@@ -2,6 +2,7 @@
 #ifndef AUDIO_SOURCE_H_
 #define AUDIO_SOURCE_H_
 #include "Component.h"
+#include "Vector3.h"
 class Sound;
 class Transform;
 class AudioManager;

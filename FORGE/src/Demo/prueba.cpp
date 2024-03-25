@@ -38,23 +38,22 @@ int main(int argc, char* argv[]) {
 	EcsLoad ecs("Assets/scenes/scenetest.lua", *lf);
     SceneManager& sceneManager = *SceneManager::getInstance();
     Input& input = *Input::getInstance();
-	AudioManager* ad = new AudioManager();
+	AudioManager& ad = *AudioManager::getInstance();
     sceneManager.changeScene("Test");
-	ad->addSound("Test", "Assets/sounds/AllObjectivesComp.wav");
+	ad.addSound("Test", "Assets/sounds/AllObjectivesComp.wav");
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
         sceneManager.update();
 		sceneManager.refresh();
-		ad->update();
+		ad.update();
         if(!render.render())
 			break;
 		if (input.keyDown(K_P)) {
-			ad->getSound("Test")->play();
-			ad->getSound("Test")->play();
+			ad.getSound("Test")->play();
+			ad.getSound("Test")->play();
 		}
     }
-	delete ad;
 	delete lf;
 	sceneManager.cleanUp();
 

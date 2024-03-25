@@ -44,13 +44,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
-    <OutDir>$(SolutionDir)bin</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin</OutDir>
-    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -89,6 +89,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Demo\prueba.cpp" />
+    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Audio\Audio.vcxproj">
       <Project>{a5aa2fa6-a50f-49eb-94e5-42297dc3ff20}</Project>
     </ProjectReference>
@@ -104,34 +111,12 @@
     <ProjectReference Include="..\Main\Main.vcxproj">
       <Project>{4ef5fd19-2c0e-47a0-b8ff-a921240ff6aa}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\projects\EC\EC.vcxproj">
-      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\projects\Input\Input.vcxproj">
-      <Project>{b5c0fcf0-3753-4906-bf1c-20044e9fc4ba}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\projects\Load\Load.vcxproj">
-      <Project>{a25433b1-436f-4bff-904a-a7b1de4e99bb}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\projects\Render\Render.vcxproj">
-      <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\projects\Utils\Utils.vcxproj">
-      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Render\Render.vcxproj">
       <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.vcxproj">
       <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\Demo\prueba.cpp" />
-    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

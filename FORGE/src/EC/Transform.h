@@ -114,9 +114,9 @@ public:
 	/// <returns>Rotacion global.</returns>
 	forge::Quaternion getGlobalRotation() const;
 	/// <returns>Rotacion local en angulos de Euler.</returns>
-	forge::Vector3 const&& getRotationEuler() const;
+	forge::Vector3 getRotationEuler() const;
 	/// <returns>Rotacion global en angulos de Euler.</returns>
-	forge::Vector3 const&& getGlobalRotationEuler() const;
+	forge::Vector3 getGlobalRotationEuler() const;
 	/// <returns>Posicion local.</returns>
 	forge::Vector3 const& getPosition() const;
 	/// <returns>Posicion global.</returns>
