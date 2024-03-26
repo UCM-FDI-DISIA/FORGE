@@ -9,6 +9,7 @@
 #include "RigidBody.h"
 #include <Transform.h>
 #include "DebugMode.h"
+#include <RenderManager.h>
 
 std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
 
@@ -19,6 +20,7 @@ PhysicsManager::PhysicsManager() {
     dispatcher = nullptr;
     solver = nullptr;
     world = nullptr;
+    debugger = nullptr;
 }
 
 void PhysicsManager::initPhysics() {
@@ -28,17 +30,17 @@ void PhysicsManager::initPhysics() {
     solver = new btSequentialImpulseConstraintSolver();
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-    DebugMode* draw = new DebugMode();
-    draw->setDebugMode(draw->getDebugMode()
-                      | btIDebugDraw::DBG_DrawWireframe);
-    world->setDebugDrawer(draw);
+    debugger = new DebugMode(RenderManager::getInstance()->getSceneManager());
+    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+    world->setDebugDrawer(debugger);
 
     world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
-    world->debugDrawWorld();
+    
 }
 
 void PhysicsManager::updatePhysics() {
     world->stepSimulation(1 / 50.f, 20);
+    world->debugDrawWorld();
 }
 
 void PhysicsManager::changeGravity(forge::Vector3 newGravity) {

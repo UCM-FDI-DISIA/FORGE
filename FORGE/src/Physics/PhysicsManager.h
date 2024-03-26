@@ -6,6 +6,7 @@
 
 class Transform;
 class RigidBody;
+class DebugMode;
 namespace forge {
     class Vector3;
 };
@@ -21,6 +22,7 @@ private:
     btDiscreteDynamicsWorld* world;
     std::unordered_map<btRigidBody*, Transform*> transforms;
     std::unordered_map<std::string, btRigidBody*> importantObjects;
+    DebugMode* debugger;
 
     /// <summary>
     /// Constructora del physics manager.

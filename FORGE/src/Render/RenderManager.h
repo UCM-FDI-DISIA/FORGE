@@ -143,6 +143,16 @@ public:
 	void removeNode(Ogre::MovableObject* entity);
 
 #pragma endregion
+
+#pragma region Getters
+	// <summary>
+	/// Devuelve el sceneManager
+	/// </summary>
+	inline Ogre::SceneManager* getSceneManager() {
+		return mySceneManager;
+	}
+#pragma endregion
+
 };
 
 
