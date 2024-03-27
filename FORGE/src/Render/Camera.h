@@ -1,9 +1,8 @@
 #pragma once
 #ifndef CAMERA_H_
 #define CAMERA_H_
-#include <Component.h>
+#include "Component.h"
 #include <string>
-#include <OgreColourValue.h>
 #include "Vector3.h"
 
 class RenderManager;

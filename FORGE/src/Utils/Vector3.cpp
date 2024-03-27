@@ -1,6 +1,12 @@
 #include "Vector3.h"
 #include <cmath>
-#include <OgreVector3.h>
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26495)
+#include <OgreVector.h>
+#pragma warning(pop)
+#include <ik_vec3d.h>
 using namespace forge;
 
 #define PI 3.14159265358979323846264338327950288
@@ -133,7 +139,7 @@ bool Vector3::operator!=(const Vector3& w)  const {
 #pragma region Angulos
 double Vector3::angle(const Vector3& w) const {
 	double prodEsc = dot(w);
-	double angle = std::acos(prodEsc / (magnitude() * w.magnitude()));
+	double angle = std::acos(prodEsc / (static_cast<double>(magnitude()) * static_cast<double>(w.magnitude())));
 
 	return angle * 180 / PI;
 }
@@ -237,6 +243,9 @@ Vector3& Vector3::operator=(const Ogre::Vector3f& w) {
 	y = w.y;
 	z = w.z;
 	return *this;
+}
+forge::Vector3::operator irrklang::vec3df() const {
+	return irrklang::vec3df(x, y, z);
 }
 #pragma endregion
 

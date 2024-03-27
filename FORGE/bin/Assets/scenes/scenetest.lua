@@ -15,6 +15,10 @@ local scenes = {
                 },
                 TestMovement = {
                     name = "maincam"
+                },
+                AudioSource = {
+                    sound = "Test",
+                    playOnAwake = true
                 }
             },
             children = {
@@ -42,6 +46,9 @@ local scenes = {
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
+                },
+                AudioListener = {
+                    jej = ""
                 }
             }
         },

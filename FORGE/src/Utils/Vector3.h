@@ -5,6 +5,10 @@ namespace Ogre {
 	template <int dims, typename T> class Vector;
 	typedef Vector<3, float> Vector3f;
 }
+namespace irrklang{
+	template <class T> class vec3d;
+	typedef vec3d<float> vec3df;
+}
 namespace forge {
 	class Vector3 {
 	private:
@@ -309,6 +313,11 @@ namespace forge {
 		/// <param name="w">Vector de Ogre a asignar</param>
 		/// <returns>El vector actualizado</returns>
 		Vector3& operator=(const Ogre::Vector3f& w);
+
+		/// <summary>
+		/// Conversion implicita de forge::Vector3 a irrklang::vec3df
+		/// </summary>
+		operator irrklang::vec3df() const;
 		#pragma endregion
 
 		#pragma region Constantes

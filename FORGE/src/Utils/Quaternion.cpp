@@ -1,6 +1,9 @@
 #include "Quaternion.h"
 #include <cmath>
+#pragma warning(push)
+#pragma warning(disable : 26495)
 #include <OgreQuaternion.h>
+#pragma warning(pop)
 using namespace forge;
 
 #define kEpsilon = 0.000001
