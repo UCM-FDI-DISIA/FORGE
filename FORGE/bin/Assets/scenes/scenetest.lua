@@ -85,6 +85,45 @@ local scenes = {
                 }
             }
         }
+    },
+    Play = {
+        jugador = {
+            handler = "player",
+            components = {
+                Transform = {
+                    position = {0, 0, 0},
+                    scale = {0.25, 0.25, 0.25}
+                },
+                Animator = {
+ 		             mesh = "ogrehead.mesh",
+                    activeAnimations = {
+                       "Walk"
+                    }
+                }
+            }
+        },
+        cam = {
+            components = {
+                Transform = {
+                    position = {0, 0, 140}
+                },
+                Camera = {
+                    nearClipDistance = 1,
+                    autoAspectRatio = true,
+                    backgroundColor = {0.6, 0.3, 0.3}
+                }
+            }
+        },
+        luz = {
+            components = {
+                Transform = {
+                    position = {20, 80, 0}
+                },
+                Light = {
+                    type = 0 
+                }
+            }
+        }
     }
 }
 

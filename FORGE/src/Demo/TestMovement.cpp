@@ -4,6 +4,7 @@
 #include "ComponentData.h"
 #include "Entity.h"
 #include "Animator.h"
+#include "SceneManager.h"
 
 const std::string TestMovement::id = "TestMovement";
 
@@ -59,5 +60,9 @@ void TestMovement::update() {
 	}
 	if (input.keyPressed(K_LEFT)) {
 		transform->rotateY(-movement);
+	}
+
+	if (input.keyDown(K_R)) {
+		SceneManager::getInstance()->changeScene("Play");
 	}
 }

@@ -24,6 +24,7 @@ namespace Ogre {
 	class SceneNode;
 	class SceneManager;
 	class MovableObject;
+	class NameGenerator;
 }
 
 
@@ -36,9 +37,12 @@ private:
 	RenderForge* forge;
 	Ogre::Root* root;        
 	Ogre::SceneManager* sceneManager;
-
 	std::unordered_map<Ogre::SceneNode*, Transform*> transforms;
-	
+
+	//Generadores de nombres aleatorios
+	Ogre::NameGenerator* cameraNames;
+	Ogre::NameGenerator* particleSystemsNames;
+
 	/// <summary>
 	/// Constructora del render manager.
 	/// </summary>
@@ -130,6 +134,7 @@ public:
 	/// </summary>
 	void removeNode(Ogre::MovableObject* entity);
 
+	void removeCamera(Ogre::Camera* camera);
 #pragma endregion
 };
 

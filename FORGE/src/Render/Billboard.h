@@ -27,6 +27,8 @@ public:
 
     ~Billboard();
 
+    void setEnabled(bool newActive) override;
+
     void initComponent(ComponentData* data) override;
 
     void addBillboards();

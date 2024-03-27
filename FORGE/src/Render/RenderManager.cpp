@@ -22,7 +22,9 @@ RenderManager::RenderManager() :
 	forge(nullptr),
 	root(nullptr),
 	sceneManager(nullptr),
-	transforms() {
+	transforms(),
+	cameraNames(new Ogre::NameGenerator("Camera")),
+	particleSystemsNames(new Ogre::NameGenerator("ParticleSystem")) {
 
 }
 
@@ -41,6 +43,8 @@ void RenderManager::updateNodePositions() {
 }
 
 RenderManager::~RenderManager() {
+	delete cameraNames;
+	delete particleSystemsNames;
 	delete forge;
 }
 
@@ -62,7 +66,6 @@ bool RenderManager::render() {
 	updateNodePositions();
 	return root->renderOneFrame();
 }
-
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 	Ogre::Entity* entity = sceneManager->createEntity(mesh->getMesh());
@@ -101,10 +104,8 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
-
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	std::string name = Ogre::NameGenerator("Camera").generate();
-	Ogre::Camera* ogreCamera = sceneManager->createCamera(name);
+	Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
 	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
 	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
 	node->attachObject(ogreCamera);
@@ -128,7 +129,7 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 
 Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	std::string name = Ogre::NameGenerator("ParticleSystem").generate();
+	std::string name = particleSystemsNames->generate();
 	Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
 	node->attachObject(ogreParticleSystem);
 	ogreParticleSystem->setEmitting(particleSystem->getEmitting());
@@ -156,4 +157,11 @@ void RenderManager::removeNode(Ogre::MovableObject* object) {
 	transforms.erase(node);
 }
 
-
+void RenderManager::removeCamera(Ogre::Camera* camera) {
+	Ogre::SceneNode* node = camera->getParentSceneNode();
+	node->detachObject(camera);
+	forge->getWindow().render->removeViewport(camera->getViewport()->getZOrder());
+	sceneManager->destroyCamera(camera);
+	sceneManager->destroySceneNode(node);
+	transforms.erase(node);
+}

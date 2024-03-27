@@ -24,6 +24,17 @@ Billboard::~Billboard() {
 	renderManager->removeNode(bSet);
 }
 
+void Billboard::setEnabled(bool newActive) {
+	Component::setEnabled(newActive);
+	if (newActive) {
+		bSet = renderManager->addBillboardNode(this);
+	}
+	else {
+		renderManager->removeNode(bSet);
+		bSet = nullptr;
+	}
+}
+
 void Billboard::initComponent(ComponentData* data) {
 	if (entity->hasComponent("Transform")) {
 		renderManager = RenderManager::getInstance();

@@ -30,10 +30,11 @@ void Camera::initComponent(ComponentData* data) {
 void Camera::setEnabled(bool newActive) {
     Component::setEnabled(newActive);
     if (newActive) {
-        renderManager->addCameraNode(this);
+        ogreCamera = renderManager->addCameraNode(this);
     }
     else {
-        renderManager->removeNode(ogreCamera);
+        renderManager->removeCamera(ogreCamera);
+        ogreCamera = nullptr;
     }
 }
 

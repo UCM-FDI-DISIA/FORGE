@@ -19,14 +19,19 @@ Animator::~Animator() {}
 void Animator::initComponent(ComponentData* data) {
 	Mesh::initComponent(data);
 	ogreAnimations = ogreEntity->getAllAnimationStates();
-	for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
-		if (ogreAnimations->hasAnimationState(*it)) {
-			ogreAnimations->getAnimationState(*it)->setEnabled(true);
-			++it;
+	if (ogreAnimations != nullptr) {
+		for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
+			if (ogreAnimations->hasAnimationState(*it)) {
+				ogreAnimations->getAnimationState(*it)->setEnabled(true);
+				++it;
+			}
+			else {
+				it = activeAnimations.erase(it);
+			}
 		}
-		else { 
-			it = activeAnimations.erase(it);
-		}
+	}
+	else {
+		activeAnimations.clear();
 	}
 }
 
