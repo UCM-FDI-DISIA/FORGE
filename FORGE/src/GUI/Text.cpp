@@ -18,8 +18,11 @@ bool Text::update() {
         ImGui::SetNextWindowSize(size);
     }
     ImGui::SetNextWindowPos(pos);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, bgColor);
     ImGui::Begin(windowName, NULL, window_flags);
+
     // Texto con fuente cargada
     if(font != nullptr){
         ImGui::PushFont(font);
@@ -31,8 +34,9 @@ bool Text::update() {
         ImGui::SetWindowFontScale(1);
     }
 
-    ImGui::End();
+    ImGui::PopStyleVar();
     ImGui::PopStyleColor();
+    ImGui::End();
     return true;
 }
 

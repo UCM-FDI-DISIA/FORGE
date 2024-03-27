@@ -1,16 +1,24 @@
 #pragma once
+
 #ifndef TEXT_H_
 #define TEXT_H_
+
 #include "UIComponent.h"
+
 class Text  : public UIComponent {
 private:
 	static const std::string id;
+
 	const char* text;
+
 	forge::Vector4 color;
 	forge::Vector4 bgColor;
+
 	std::string fontName;
 	ImFont* font = nullptr;
+
 	forge::Vector2 size;
+
 public:
 	/// <summary>
 	/// Crea un texto fijo. Por defecto se crea el texto en color
@@ -21,14 +29,17 @@ public:
 	/// <param name = "text_">Texto a mostrar</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
 	Text(const char* textId, const char* text_, forge::Vector2 pos_ = forge::Vector2::ZERO);
+	
 	/// <summary>
 	/// Destructora
 	/// </summary>	
 	~Text();
+
 	/// <summary>
 	/// Actualizacion del texto
 	/// </summary>	
 	bool update();
+
 	/// <summary>
 	/// Cambia el color del texto
 	/// </summary>	
@@ -44,11 +55,13 @@ public:
 	/// Quita el fondo
 	/// </summary>	
 	void removeBackground();
+	
 	/// <summary>
 	/// Cambia la fuente
 	/// </summary>	
 	/// <param name = "fontName_">Nombre de la fuente</param>
 	void changeFont(std::string fontName_);
+
 	/// <summary>
 	/// Cambia la opacidad del texto
 	/// </summary>	
@@ -59,6 +72,7 @@ public:
 	/// </summary>	
 	/// <param name = "op">Opacidad</param>
 	void changeBackgroundOpacity(float op = 1.0f);
+	
 	/// <summary>
 	/// Cambia el texto
 	/// </summary>	

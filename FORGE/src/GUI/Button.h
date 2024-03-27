@@ -1,25 +1,33 @@
 #pragma once
+
 #ifndef BUTTON_H_
 #define BUTTON_H_
+
 #include "UIComponent.h"
-class Button  : public UIComponent {
+
+class Button : public UIComponent {
 private:
  	static const std::string id;
+
 	const char* text;
+
 	forge::Vector4 textColor;
 	forge::Vector4 buttonColor;
 	forge::Vector4 buttonHoverColor;
 	forge::Vector4 buttonActiveColor;
+
 	std::string fontName;
 	ImFont* font = nullptr;
+
 	forge::Vector2 buttonSize;
+
 	bool pressed;
 
 public:
-	#pragma region Constructores
+	#pragma region Constructora y destructora
 	/// <summary>
 	/// Crea un boton. Por defecto se crea el texto en color
-	///  blanco, con la primera fuente cargada por defecto y el fondo azul. Para cambiar las
+	/// blanco, con la primera fuente cargada por defecto y el fondo azul. Para cambiar las
 	/// caracteristicas del boton utilizar metodos set.
 	/// </summary>	
 	/// <param name = "buttonId">Nombre del boton</param>
@@ -28,10 +36,17 @@ public:
 	Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_ = forge::Vector2::ZERO);
 	~Button();
 	#pragma endregion
+
 	/// <summary>
 	/// Actualizacion del boton
 	/// </summary>
 	bool update();
+
+	/// <summary>
+	/// Cambia el tamaño del boton  
+	/// </summary>	
+	/// <param name = "size">Nuevo tamaño</param>
+	void setSize(forge::Vector2 size);
 
 	/// <summary>
 	/// Cambia el color del boton en los tres estados (idle, hover y active)
@@ -69,10 +84,10 @@ public:
 	/// </summary>	
 	/// <param name = "text_">Posicion</param>
 	void changeText(const char* text_);
+
 	/// <summary>
 	/// Devuelve true si el boton esta pulsado
 	/// </summary>	
 	bool isPressed();
 };
 #endif // !BUTTON_H_
-

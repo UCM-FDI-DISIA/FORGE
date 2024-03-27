@@ -20,6 +20,8 @@ private:
 	std::unordered_map<std::string, ImFont*> fonts;
 	std::unordered_set<std::string> ids;
 
+	// TENEMOS QUE AÑADIR UN PUNTERO AL RENDERER Y UN GETRENDERER PARA LAS IMÁGENES
+
 public:
 	struct Vector4 { float x, y, z, w; };
 	static GUI* getInstance();

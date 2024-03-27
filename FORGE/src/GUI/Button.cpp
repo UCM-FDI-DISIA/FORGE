@@ -3,9 +3,9 @@
 
 const std::string Button::id = "Button";
 
-Button::Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_):UIComponent(buttonId, pos_), text(buttonText),
-textColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), fontName(""),font(nullptr), buttonSize(forge::Vector2::ZERO), 
-buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), pressed(false) { }
+Button::Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_) : UIComponent(buttonId, pos_),
+    text(buttonText), textColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), fontName(""), font(nullptr),
+    buttonSize(forge::Vector2::ZERO),  buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), pressed(false) { }
 
 Button::~Button() { }
 
@@ -15,10 +15,10 @@ bool Button::update() {
         ImVec2 textSize = ImGui::CalcTextSize(text);
         buttonSize = forge::Vector2(textSize.x * 1.1f, textSize.y * 1.3f);
     }
-    
     ImGui::SetNextWindowSize(buttonSize);
     ImGui::SetNextWindowPos(pos);
 
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::Begin(windowName, NULL, window_flags);
 
     ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
@@ -32,10 +32,15 @@ bool Button::update() {
     else {
         ImGui::Button(text);
     }
-    ImGui::PopStyleColor(3);
 
+    ImGui::PopStyleVar();
+    ImGui::PopStyleColor(3);
     ImGui::End();
     return true;
+}
+
+void Button::setSize(forge::Vector2 size) {
+    buttonSize = size;
 }
 
 void Button::setColor(forge::Vector4 color_) {

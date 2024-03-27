@@ -13,6 +13,7 @@
 #include "GUI.h"
 #include "Text.h"
 #include "Button.h"
+#include "Image.h"
 
 #if !SDL_VERSION_ATLEAST(2,0,17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
@@ -67,29 +68,37 @@ int main(int, char**) {
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    // COMPONENTES
+    //int cont = 0, con1 = 0;
+    // --- GUI ---
     GUI* gui = GUI::getInstance();
-
-    // Main loop
-    bool done = false;
-    int cont = 0, con1 = 0;
-    gui->loadFont("Supercharge", "supercharge.ttf", 100);
-    gui->loadFont("Saeda", "LTSaeada-Black.otf", 100);
+    gui->loadFont("Supercharge", "supercharge.ttf", 60);
+    gui->loadFont("Saeda", "LTSaeada-Black.otf", 60);
     gui->showLoadedFonts();
+    // --- TEXT ---
     Text* text = new Text("prueba", "Saeda", forge::Vector2(100, 200));
-    Button* button = new Button("prueba2", "hola");
-    button->setColor(forge::Vector4(0.0, 0.0, 1.0, 1.0));
-    button->changeText("Eyeyeyeye");
-    button->changeFont("Saeda");
-    button->changeButtonOpacity(0.5);
-    button->changePosition(forge::Vector2(100, 100));
     //text->setBackground();
     //text->removeBackground();
     text->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
     //text->changeTextOpacity(0.3f);
     //text->changeFont("Supercharge");
     //text->changeBackgroundOpacity(0.3f);
-   // text->changeText("Hola");
-    text->changePosition(forge::Vector2(0, 0));
+    text->changeText("Texto");
+    text->setPosition(forge::Vector2(600, 100));
+    // --- BUTTON ---
+    Button* button = new Button("prueba2", "hola");
+    button->setColor(forge::Vector4(0.0, 0.0, 1.0, 1.0));
+    button->changeText("Boton");
+    button->changeFont("Saeda");
+    button->changeButtonOpacity(0.5);
+    button->setPosition(forge::Vector2(100, 100));
+    // --- IMAGE ---
+    Image* img = new Image("panko", "panko.png", renderer, forge::Vector2(300, 300));
+    img->setPosition(forge::Vector2(250, 250));
+    img->setSize(forge::Vector2(400, 400));
+
+    // Main loop
+    bool done = false;
     while (!done) {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -115,10 +124,12 @@ int main(int, char**) {
         
         text->update();
         button->update();
+        img->update();
         //if (button->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
         //    cont++;
         //    //ImGui::SameLine();
         //    ImGui::Text("counter = %d", cont);
+
         // Rendering
         ImGui::Render();
         SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);

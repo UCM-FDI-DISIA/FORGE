@@ -7,9 +7,13 @@ class GUI;
 class UIComponent /*: public Component*/ {
 protected:
 	const char* windowName;
+
 	forge::Vector2 pos;
+
 	ImGuiWindowFlags window_flags = 0;
+
 	GUI* gui;
+
 public:
 	/// <summary>
 	/// Contruye un componente de interfaz
@@ -23,9 +27,9 @@ public:
 	~UIComponent();
 
 	/// <summary>
-	/// Cambia la posicion
+	/// Actualiza la posicion
 	/// </summary>	
 	/// <param name = "pos_">Posicion</param>
-	void changePosition(forge::Vector2 pos_);
+	void setPosition(forge::Vector2 pos_);
 };
 
