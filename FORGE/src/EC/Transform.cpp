@@ -144,3 +144,15 @@ forge::Vector3 Transform::getGlobalScale() const {
 bool Transform::getNeedsUpdate() const {
 	return needsUpdate || (parent && parent->getNeedsUpdate());
 }
+
+forge::Vector3 Transform::getForward() const {
+	return getGlobalRotation() * Vector3::FORWARD;
+}
+
+forge::Vector3 Transform::getUp() const {
+	return getGlobalRotation() * Vector3::UP;
+}
+
+forge::Vector3 Transform::getRight() const {
+	return getGlobalRotation() * Vector3::RIGHT;
+}

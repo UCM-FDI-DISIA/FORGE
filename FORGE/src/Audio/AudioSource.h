@@ -13,8 +13,6 @@ private:
 	Sound* sound;
 	
 	bool playOnAwake;
-	float volume;
-	float pan;
 	float fullVolumeRadious;
 	float hearingRadious;
 	forge::Vector3 offset;
@@ -65,6 +63,21 @@ public:
 	/// <param name="volume">Valor entre 0 y 1</param>
 	void setVolume(float volume);
 	/// <summary>
+	/// Devuelve el volumen con el que se reproduce el sonido
+	/// </summary>
+	/// <returns>Valor entre 0 y 1</returns>
+	void getVolume() const;
+	/// <summary>
+	/// Establece el valor del paneo
+	/// </summary>
+	/// <param name="pan">Valor del paneo entre -1 y 1</param>
+	void setPan(float pan);
+	/// <summary>
+	/// Devuelve el valor del paneo
+	/// </summary>
+	/// <returns>Valor del paneo actual entre -1 y 1</returns>
+	void getPan() const;
+	/// <summary>
 	/// Cambia el estado de bucle del sonido
 	/// </summary>
 	void loopedToggle();
@@ -74,9 +87,34 @@ public:
 	/// <param name="looped">Nuevo estado de bucle del sonido</param>
 	void setLooped(bool looped);
 	/// <summary>
+	/// Devuelve el estado de bucle del sonido
+	/// </summary>
+	/// <returns>Booleano que indica que el audio esta en bucle o no</returns>
+	bool isLooped() const;
+	/// <summary>
 	/// Comprueba si el sonido se esta reproduciendo
 	/// </summary>
 	/// <returns>Si el sonido se esta reproduciendo</returns>
-	bool isPlaying();
+	bool isPlaying() const;
+	/// <summary>
+	/// Establece el radio alrededor del objeto desde el que se escuchara el sonido con su maximo volumen
+	/// </summary>
+	/// <param name="value">Nuevo radio de escucha a maximo volumen</param>
+	void setFullVolumeRadious(float value);
+	/// <summary>
+	/// Devuelve el valor del radio alrededor del objeto desde el que se escuchara el sonido con su maximo volumen
+	/// </summary>
+	/// <returns>El radio de escucha a maximo volumen</returns>
+	float getFullVolumeRadious() const;
+	/// <summary>
+	/// Establece el radio alrededor del objeto a partir del que se empieza a escuchar
+	/// </summary>
+	/// <param name="value">El nuevo radio dentro del que se escucha el sonido</param>
+	void setHearingRadious(float value);
+	/// <summary>
+	/// Devuelve el radio alrededor del objeto a partir del que se empieza a escuchar
+	/// </summary>
+	/// <returns>El radio dentro del que se escucha el sonido</returns>
+	float getHearingRadious() const;
 };
 #endif // AUDIO_SOURCE_H_

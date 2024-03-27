@@ -5,11 +5,14 @@
 using namespace irrklang;
 using namespace forge;
 
-Sound::Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source) :
+Sound::Sound(ISoundEngine& _engine, ISoundSource* _source) :
 	engine(_engine),
 	sound(nullptr),
 	source(_source),
-	loop(false) {
+	loop(false),
+	pan(0.0f),
+	fullVolumeRadious(20.0f),
+	hearingRadious(200.0f) {
 }
 
 Sound::~Sound() {
@@ -52,6 +55,9 @@ bool Sound::play() {
 bool Sound::play(Vector3 const& position) {
 	if (sound == nullptr) {
 		sound = engine.play3D(source, position, loop, false, true);
+		sound->setMinDistance(fullVolumeRadious);
+		sound->setMaxDistance(hearingRadious);
+		sound->setPan(pan);
 		return true;
 	}
 	return false;
@@ -86,6 +92,10 @@ void Sound::setVolume(float volume) {
 	}
 }
 
+float Sound::getVolume() const {
+	return sound->getVolume();
+}
+
 void Sound::loopedToggle() {
 	loop = !loop;
 	if (sound != nullptr) {
@@ -100,7 +110,25 @@ void Sound::setLooped(bool looped) {
 	}
 }
 
-bool Sound::isFinished() {
+bool Sound::isLooped() const {
+	return loop;
+}
+
+void Sound::setPan(float value) {
+	pan = value;
+	if (sound != nullptr) {
+		sound->setPan(pan);
+	}
+}
+
+float Sound::getPan() const {
+	if (sound != nullptr) {
+		return sound->getPan();
+	}
+	return NAN;
+}
+
+bool Sound::isFinished() const {
 	return sound == nullptr;
 }
 
@@ -110,4 +138,32 @@ bool Sound::setPosition(forge::Vector3 const& position) {
 		return true;
 	}
 	return false;
+}
+
+void Sound::setFullVolumeRadious(float value) {
+	fullVolumeRadious = value;
+	if (sound != nullptr) {
+		sound->setMinDistance(value);
+	}
+}
+
+float Sound::getFullVolumeRadious() const {
+	if (sound != nullptr) {
+		return sound->getMinDistance();
+	}
+	return NAN;
+}
+
+void Sound::setHearingRadious(float value) {
+	hearingRadious = value;
+	if (sound != nullptr) {
+		sound->setMaxDistance(value);
+	}
+}
+
+float Sound::getHearingRadious() const {
+	if (sound != nullptr) {
+		return sound->getMaxDistance();
+	}
+	return NAN;
 }

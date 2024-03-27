@@ -15,21 +15,27 @@ AudioSource::AudioSource() :
 	playOnAwake(false),
 	offset(),
 	fullVolumeRadious(5.0f),
-	hearingRadious(50.0f),
-	pan(0.0f),
-	volume(1.0f) {
+	hearingRadious(50.0f) {
 
 	serializer(playOnAwake, "playOnAwake");
 	serializer(offset, "offset");
-	serializer(fullVolumeRadious, "fullVolumeRadious");
-	serializer(hearingRadious, "hearingRadious");
-	serializer(pan, "pan");
-	serializer(volume, "volume");
 }
 
 void AudioSource::initComponent(ComponentData* data) {
 	sound = manager.getSound(data->get<std::string>("sound"));
 	transform = entity->getComponent<Transform>();
+	if (data->has("volume")) {
+		sound->setVolume(data->get<float>("volume"));
+	}
+	if (data->has("pan")) {
+		sound->setPan(data->get<float>("pan"));
+	}
+	if (data->has("fullVolumeRadious")) {
+		sound->setFullVolumeRadious(data->get<float>("fullVolumeRadious"));
+	}
+	if (data->has("hearingRadious")) {
+		sound->setHearingRadious(data->get<float>("hearingRadious"));
+	}
 	if (playOnAwake) {
 		play();
 	}
@@ -70,6 +76,18 @@ void AudioSource::setVolume(float volume) {
 	sound->setVolume(volume);
 }
 
+void AudioSource::getVolume() const {
+	sound->getVolume();
+}
+
+void AudioSource::setPan(float pan) {
+	sound->setPan(pan);
+}
+
+void AudioSource::getPan() const {
+	sound->getPan();
+}
+
 void AudioSource::loopedToggle() {
 	sound->loopedToggle();
 }
@@ -78,6 +96,23 @@ void AudioSource::setLooped(bool looped) {
 	sound->setLooped(looped);
 }
 
-bool AudioSource::isPlaying() {
+bool AudioSource::isLooped() const {
+	return sound->isLooped();
+}
+
+bool AudioSource::isPlaying() const {
 	return !sound->isFinished();
+}
+
+void AudioSource::setFullVolumeRadious(float value) {
+	sound->setFullVolumeRadious(value);
+}
+float AudioSource::getFullVolumeRadious() const {
+	return sound->getFullVolumeRadious();
+}
+void AudioSource::setHearingRadious(float value) {
+	sound->setHearingRadious(value);
+}
+float AudioSource::getHearingRadious() const {
+	return sound->getHearingRadious();
 }

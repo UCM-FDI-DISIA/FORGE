@@ -16,6 +16,8 @@
 #include "Camera.h"
 #include "TestMovement.h"
 #include "AudioManager.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
 #include "Sound.h"
 
 void factory() {
@@ -25,6 +27,8 @@ void factory() {
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
 	f.registerComponent<TestMovement>();
+	f.registerComponent<AudioSource>();
+	f.registerComponent<AudioListener>();
 }
 
 
@@ -38,8 +42,8 @@ int main(int argc, char* argv[]) {
     SceneManager& sceneManager = *SceneManager::getInstance();
     Input& input = *Input::getInstance();
 	AudioManager& ad = *AudioManager::getInstance();
-    sceneManager.changeScene("Test");
 	ad.addSound("Test", "Assets/sounds/AllObjectivesComp.wav");
+    sceneManager.changeScene("Test");
     while (!input.keyUp(K_ESC)) {
         input.refresh();
         input.update();
@@ -48,10 +52,10 @@ int main(int argc, char* argv[]) {
 		ad.update();
         if(!render.render())
 			break;
-		if (input.keyDown(K_P)) {
+		/*if (input.keyDown(K_P)) {
 			ad.getSound("Test")->play();
 			ad.getSound("Test")->play();
-		}
+		}*/
     }
 	delete lf;
 	sceneManager.cleanUp();

@@ -6,6 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
+#include "Vector3.h"
 
 namespace irrklang {
 	class ISoundEngine;
@@ -57,6 +58,12 @@ public:
 	/// <param name="sound">Puntero del sonido a eliminar</param>
 	/// <returns>Si se ha encontrado el sonido a eliminar y se ha eliminado</returns>
 	bool removeSound(Sound* sound);
+	/// <summary>
+	/// Establece la position del escuchador de sonido
+	/// </summary>
+	/// <param name="position">Nueva posicion del escuchador</param>
+	/// <param name="lookAt">Direccion a la que mira el escuchador</param>
+	void setListenerPosition(forge::Vector3 position, forge::Vector3 lookAt);
 };
 
 #endif

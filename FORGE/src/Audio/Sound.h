@@ -18,6 +18,9 @@ private:
 	irrklang::ISoundSource* source;
 	irrklang::ISound* sound;
 	bool loop;
+	float pan;
+	float fullVolumeRadious;
+	float hearingRadious;
 public:
 	/// <summary>
 	/// Crea una nueva instancia de Sound
@@ -78,6 +81,11 @@ public:
 	/// <param name="volume">Valor entre 0 y 1</param>
 	void setVolume(float volume);
 	/// <summary>
+	/// Devuelve el volumen con el que se reproduce el sonido
+	/// </summary>
+	/// <returns>Valor entre 0 y 1</returns>
+	float getVolume() const;
+	/// <summary>
 	/// Cambia el estado de bucle del sonido
 	/// </summary>
 	void loopedToggle();
@@ -87,16 +95,53 @@ public:
 	/// <param name="looped">Nuevo estado de bucle del sonido</param>
 	void setLooped(bool looped);
 	/// <summary>
+	/// Devuelve si el sonido esta en bucle
+	/// </summary>
+	/// <returns>Booleano que indica que el audio esta en bucle o no</returns>
+	bool isLooped() const;
+	/// <summary>
+	/// Establece el valor del paneo
+	/// </summary>
+	/// <param name="value">Valor del paneo entre -1 y 1</param>
+	void setPan(float value);
+	/// <summary>
+	/// Devuelve el valor del paneo
+	/// </summary>
+	/// <returns>Valor del paneo entre -1 y 1, si no se ha podido acceder devuelve Nan</returns>
+	float getPan() const;
+	/// <summary>
 	/// Comprueba si el sonido ha terminado de reproducirse
 	/// </summary>
 	/// <returns>Si el sonido ha terminado o se ha detenido</returns>
-	bool isFinished();
+	bool isFinished() const;
 	/// <summary>
 	/// Establece la posicion desde la que se reproduce el sonido
 	/// </summary>
 	/// <param name="position">Posicion desde la que se reproducira el sonido</param>
 	/// <returns>Si se ha podido establecer la posicion del sonido</returns>
 	bool setPosition(forge::Vector3 const& position);
+	/// <summary>
+	/// Establece el radio a partir del que el sonido se escucha a maximo
+	/// volumen
+	/// </summary>
+	/// <param name="value">Nuevo radio a partir del que se escucha al maximo volumen</param>
+	void setFullVolumeRadious(float value);
+	/// <summary>
+	/// Devuelve el radio a partir del que el sonido se escucha a maximo
+	/// volumen
+	/// </summary>
+	/// <returns>El radio a partir del que se escucha al maximo volumen</returns>
+	float getFullVolumeRadious() const;
+	/// <summary>
+	/// Establece el radio a partir del que el sonido se empieza a escuchar
+	/// </summary>
+	/// <param name="value">Nuevo radio a partir del que se empieza a escuchar</param>
+	void setHearingRadious(float value);
+	/// <summary>
+	/// Devuelve el radio a partir del que el sonido se empieza a escuchar
+	/// </summary>
+	/// <returns>El radio a partir del que se empieza a escuchar</returns>
+	float getHearingRadious() const;
 };
 
 #endif
