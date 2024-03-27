@@ -25,7 +25,7 @@ public:
 	///  blanco y con la primera fuente cargada por defecto. Para cambiar las
 	/// caracteristicas del texto utilizar metodos set.
 	/// </summary>	
-	/// <param name = "textId">Nombre del texto</param>
+	/// <param name = "textId">Identificador del texto (los identificadores de componetes UI NO PUEDEN COINCIDIR)</param>
 	/// <param name = "text_">Texto a mostrar</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
 	Text(const char* textId, const char* text_, forge::Vector2 pos_ = forge::Vector2::ZERO);

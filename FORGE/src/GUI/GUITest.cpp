@@ -14,6 +14,7 @@
 #include "Text.h"
 #include "Button.h"
 #include "Image.h"
+#include "ImageButton.h"
 
 #if !SDL_VERSION_ATLEAST(2,0,17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
@@ -69,7 +70,7 @@ int main(int, char**) {
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // COMPONENTES
-    //int cont = 0, con1 = 0;
+    int cont = 0, con1 = 0;
     // --- GUI ---
     GUI* gui = GUI::getInstance();
     gui->loadFont("Supercharge", "supercharge.ttf", 60);
@@ -95,7 +96,11 @@ int main(int, char**) {
     // --- IMAGE ---
     Image* img = new Image("panko", "panko.png", renderer, forge::Vector2(300, 300));
     img->setPosition(forge::Vector2(250, 250));
-    img->setSize(forge::Vector2(400, 400));
+    img->setSize(forge::Vector2(200, 200));
+    // --- IMAGE BUTTON ---
+    ImageButton* imgb = new ImageButton("butImg", "panko.png", renderer, forge::Vector2(300, 300));
+    imgb->setPosition(forge::Vector2(550, 250));
+    imgb->setSize(forge::Vector2(200, 200));
 
     // Main loop
     bool done = false;
@@ -125,7 +130,8 @@ int main(int, char**) {
         text->update();
         button->update();
         img->update();
-        //if (button->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
+        imgb->update();
+        //if (imgb->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
         //    cont++;
         //    //ImGui::SameLine();
         //    ImGui::Text("counter = %d", cont);

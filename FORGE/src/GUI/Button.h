@@ -30,7 +30,7 @@ public:
 	/// blanco, con la primera fuente cargada por defecto y el fondo azul. Para cambiar las
 	/// caracteristicas del boton utilizar metodos set.
 	/// </summary>	
-	/// <param name = "buttonId">Nombre del boton</param>
+	/// <param name = "buttonId">Identificador del boton (los identificadores de componetes UI NO PUEDEN COINCIDIR)</param>
 	/// <param name = "buttonext">Texto del boton</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
 	Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_ = forge::Vector2::ZERO);

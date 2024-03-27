@@ -37,7 +37,7 @@ bool Image::update() {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(windowName, NULL, window_flags);
 
-	ImGui::Image((void*) texture, ImVec2(imageSize.getX(), imageSize.getY()));
+	ImGui::Image((void*) texture,imageSize);
 	
 	ImGui::PopStyleVar();
 	ImGui::End();
@@ -46,4 +46,24 @@ bool Image::update() {
 
 void Image::setSize(forge::Vector2 size) {
 	imageSize = size;
+}
+
+SDL_Texture* Image::getTexture() {
+	return texture;
+}
+
+unsigned int Image::getSourceWidth() {
+	return srcWidth;
+}
+
+unsigned int Image::getWidth() {
+	return imageSize.getX();
+}
+
+unsigned int Image::getSourceHeight() {
+	return srcHeight;
+}
+
+unsigned int Image::getHeight() {
+	return imageSize.getY();
 }
