@@ -11,7 +11,6 @@ const std::string Camera::id = "Camera";
 Camera::Camera() :
     ogreCamera(nullptr),
     renderManager(nullptr) {
-    serializer(name, "name");
     serializer(nearClipDistance, "nearClipDistance");
     serializer(autoAspectRatio, "autoAspectRatio");
     serializer(backgroundColor, "backgroundColor");
@@ -54,10 +53,6 @@ void Camera::setBackgroundColor(forge::Vector3 newbackgroundColor) {
     backgroundColor = newbackgroundColor;
     Ogre::ColourValue value = Ogre::ColourValue(backgroundColor.getX(), backgroundColor.getY(), backgroundColor.getZ());
     ogreCamera->getViewport()->setBackgroundColour(value);
-}
-
-const std::string& Camera::getName() const {
-    return name;
 }
 
 const float& Camera::getNearClipDistance() const {

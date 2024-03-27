@@ -18,31 +18,34 @@ TestMovement::TestMovement() :
 
 void TestMovement::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
-	animator = entity->getComponent<Animator>();
+	if (entity->hasComponent("Animator")) animator = entity->getComponent<Animator>();
 }
 
 void TestMovement::update() {
-	anims = animator->getAnimations();
+	if (animator != nullptr) {
+		anims = animator->getAnimations();
+
+		if (input.keyPressed(K_Q)) {
+			if (activeAnim <= 0) {
+				activeAnim = anims.size();
+			}
+			activeAnim--;
+			animator->changeActive(anims[activeAnim]);
+		}
+		if (input.keyPressed(K_E)) {
+			activeAnim++;
+			if (activeAnim >= anims.size()) {
+				activeAnim = 0;
+			}
+			animator->changeActive(anims[activeAnim]);
+		}
+	}
+
 	if (input.keyPressed(K_W)) {
 		transform->setPositionZ(transform->getPosition().getZ() + movement);
 	}
 	if (input.keyPressed(K_S)) {
 		transform->setPositionZ(transform->getPosition().getZ() - movement);
-
-	}
-	if (input.keyPressed(K_Q)) {
-		if (activeAnim <= 0) {
-			activeAnim = anims.size();
-		}
-		activeAnim--;
-		animator->changeActive(anims[activeAnim]);
-	}
-	if (input.keyPressed(K_E)) {
-		activeAnim++;
-		if (activeAnim >= anims.size()) {
-			activeAnim = 0;
-		}
-		animator->changeActive(anims[activeAnim]);
 
 	}
 	if (input.keyPressed(K_D)) {
@@ -52,9 +55,9 @@ void TestMovement::update() {
 		transform->setPositionX(transform->getPosition().getX() - movement);
 	}
 	if (input.keyPressed(K_RIGHT)) {
-		transform->rotateY(10 * movement);
+		transform->rotateY(movement);
 	}
 	if (input.keyPressed(K_LEFT)) {
-		transform->rotateY(-10 * movement);
+		transform->rotateY(-movement);
 	}
 }

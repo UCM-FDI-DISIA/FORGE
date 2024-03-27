@@ -13,6 +13,7 @@
 #include <OgreParticleSystem.h>
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
+#include "OgreNameGenerator.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 
@@ -102,7 +103,8 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Camera* ogreCamera = sceneManager->createCamera(camera->getName());
+	std::string name = Ogre::NameGenerator("Camera").generate();
+	Ogre::Camera* ogreCamera = sceneManager->createCamera(name);
 	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
 	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
 	node->attachObject(ogreCamera);
@@ -126,7 +128,8 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 
 Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+	std::string name = Ogre::NameGenerator("ParticleSystem").generate();
+	Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
 	node->attachObject(ogreParticleSystem);
 	ogreParticleSystem->setEmitting(particleSystem->getEmitting());
 	transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>()});

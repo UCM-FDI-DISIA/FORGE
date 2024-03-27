@@ -3,12 +3,13 @@
 #include "RenderManager.h"
 #include "Serializer.h"
 #include "OgreBillboardSet.h"
+#include <Random.h>
 
 const std::string Billboard::id = "Billboard";
 
 Billboard::Billboard() :
-	size(20),
-	billboardDimensions(),
+	size(1),
+	billboardDimensions(1,1),
 	totalDimensions(),
 	material(""),
 	bSet(nullptr), 
@@ -32,15 +33,17 @@ void Billboard::initComponent(ComponentData* data) {
 }
 
 void Billboard::addBillboards() {
+	forge::Random* rn = new forge::Random();
 	int width = totalDimensions.getX();
 	int height = totalDimensions.getY();
 	int depth = totalDimensions.getZ();
 	for (int i = 0; i < size; i++) {
-		forge::Vector3 pos = forge::Vector3(rand() % width - width / 2, 
-			rand() % height - height / 2, 
-			rand() % depth - depth / 2);
+		forge::Vector3 pos = forge::Vector3(rn->generateRange(-width / 2.0f, width / 2.0f), 
+			rn->generateRange(-height / 2.0f, height / 2.0f),
+			rn->generateRange(-depth / 2.0f, depth / 2.0f));
 		bSet->createBillboard(pos);
 	}
+	delete rn;
 }
 
 int Billboard::getSize() {
