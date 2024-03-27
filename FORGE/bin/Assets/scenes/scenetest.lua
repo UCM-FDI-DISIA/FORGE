@@ -20,17 +20,19 @@ local scenes = {
                     sound = "Test",
                     playOnAwake = true
                 }
-            }
-        },
-        obstaculo = {
-            group = "obstacle",
-            components = {
-                Transform = {
-                    position = {10, 0, -10},
-                    scale = {5, 5, 5}
-                },
-                Mesh = {
-                    mesh = "Barrel.mesh"
+            },
+            children = {
+                obstaculo = {
+                    group = "obstacle",
+                    components = {
+                        Transform = {
+                            position = {100, 0, -100},
+                            scale = {5, 5, 5}
+                        },
+                        Mesh = {
+                            mesh = "Barrel.mesh"
+                        }
+                    }
                 }
             }
         },
