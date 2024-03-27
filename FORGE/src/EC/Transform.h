@@ -40,20 +40,35 @@ public:
 	/// <param name="newRot">Nueva rotacion del Transform.</param>
 	void setRotation(forge::Vector3 const& newRot);
 	/// <summary>
-	/// Rota el transform en el eje x.
+	/// Rota el transform en el eje x (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="xRot">Rotacion a aplicar en el eje x.</param>
 	void rotateX(float xRot);
 	/// <summary>
-	/// Rota el transform en el eje y.
+	/// Rota el transform en el eje y (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="yRot">Rotacion a aplicar en el eje y.</param>
 	void rotateY(float yRot);
 	/// <summary>
-	/// Rota el transform en el eje z.
+	/// Rota el transform en el eje z (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
 	void rotateZ(float zRot);
+	/// <summary>
+	/// Rota el transform en el eje x (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="xRot">Rotacion a aplicar en el eje x.</param>
+	void rotateXRad(float xRot);
+	/// <summary>
+	/// Rota el transform en el eje y (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="yRot">Rotacion a aplicar en el eje y.</param>
+	void rotateYRad(float yRot);
+	/// <summary>
+	/// Rota el transform en el eje z (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
+	void rotateZRad(float zRot);
 
 	/// <summary>
 	/// Establece la posicion del Transform.

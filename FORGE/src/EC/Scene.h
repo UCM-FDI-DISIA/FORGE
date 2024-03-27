@@ -52,5 +52,7 @@ public:
     /// <param name="ent">Entidad que se asocia al Handler</param>
     /// <returns>Si se ha podido agregar el Handler</returns>
     bool setHandler(std::string handler, Entity* entity);
+
+    void setEnabled(bool enabled);
 };
 #endif // !COMPONENT_H_

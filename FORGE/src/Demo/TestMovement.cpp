@@ -3,42 +3,66 @@
 #include "Transform.h"
 #include "ComponentData.h"
 #include "Entity.h"
+#include "Animator.h"
+#include "SceneManager.h"
 
 const std::string TestMovement::id = "TestMovement";
 
 TestMovement::TestMovement() :
 	input(*Input::getInstance()),
-	movement(10.0f) {
+	movement(2.0f),
+	transform(nullptr),
+	animator(nullptr),
+	anims(),
+	activeAnim(0){
 }
 
 void TestMovement::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
+	if (entity->hasComponent("Animator")) animator = entity->getComponent<Animator>();
 }
 
 void TestMovement::update() {
-	if (input.keyDown(K_W)) {
-		transform->setPositionZ(transform->getPosition().getZ() + movement);
-		std::cout << transform->getPosition().getX() << " " << transform->getPosition().getY() << " " << transform->getPosition().getZ() << "\n";
+	if (animator != nullptr) {
+		anims = animator->getAnimations();
+
+		if (input.keyPressed(K_Q)) {
+			if (activeAnim <= 0) {
+				activeAnim = anims.size();
+			}
+			activeAnim--;
+			animator->changeActive(anims[activeAnim]);
+		}
+		if (input.keyPressed(K_E)) {
+			activeAnim++;
+			if (activeAnim >= anims.size()) {
+				activeAnim = 0;
+			}
+			animator->changeActive(anims[activeAnim]);
+		}
 	}
-	if (input.keyDown(K_S)) {
+
+	if (input.keyPressed(K_W)) {
+		transform->setPositionZ(transform->getPosition().getZ() + movement);
+	}
+	if (input.keyPressed(K_S)) {
 		transform->setPositionZ(transform->getPosition().getZ() - movement);
-		std::cout << transform->getPosition().getX() << " " << transform->getPosition().getY() << " " << transform->getPosition().getZ() << "\n";
 
 	}
-	if (input.keyDown(K_D)) {
+	if (input.keyPressed(K_D)) {
 		transform->setPositionX(transform->getPosition().getX() + movement);
-		std::cout << transform->getPosition().getX() << " " << transform->getPosition().getY() << " " << transform->getPosition().getZ() << "\n";
 	}
-	if (input.keyDown(K_A)) {
+	if (input.keyPressed(K_A)) {
 		transform->setPositionX(transform->getPosition().getX() - movement);
-		std::cout << transform->getPosition().getX() << " " << transform->getPosition().getY() << " " << transform->getPosition().getZ() << "\n";
 	}
-	if (input.keyDown(K_RIGHT)) {
-		transform->rotateY(10 * movement);
-		std::cout << transform->getRotationEuler().getX() << " " << transform->getRotationEuler().getY() << " " << transform->getRotationEuler().getZ() << "\n";
+	if (input.keyPressed(K_RIGHT)) {
+		transform->rotateY(movement);
 	}
-	if (input.keyDown(K_LEFT)) {
-		transform->rotateY(-10 * movement);
-		std::cout << transform->getRotationEuler().getX() << " " << transform->getRotationEuler().getY() << " " << transform->getRotationEuler().getZ() << "\n";
+	if (input.keyPressed(K_LEFT)) {
+		transform->rotateY(-movement);
+	}
+
+	if (input.keyDown(K_R)) {
+		SceneManager::getInstance()->changeScene("Play");
 	}
 }

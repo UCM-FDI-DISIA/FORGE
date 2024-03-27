@@ -10,7 +10,7 @@ namespace Ogre {
 }
 
 class Mesh : public Component {
-private:
+protected:
     std::string mesh;
     std::string material;
     Ogre::Entity* ogreEntity;
@@ -24,6 +24,8 @@ public:
     ~Mesh();
 
     void initComponent(ComponentData* data) override;
+
+    void setEnabled(bool newActive) override;
 
 	#pragma region setters
     void setMesh(std::string newMesh);

@@ -80,3 +80,11 @@ const Entity* Scene::getEntityByHandler(std::string handler) {
 bool Scene::setHandler(std::string handler, Entity* entity) {
     return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
 }
+
+void Scene::setEnabled(bool enabled) {
+    for (auto& group : entitiesByGroup) {
+        for (auto& entity : group) {
+            entity->setEnabled(enabled);
+        }
+    }
+}

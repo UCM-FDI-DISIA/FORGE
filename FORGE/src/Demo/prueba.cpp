@@ -16,6 +16,10 @@
 #include "Light.h"
 #include "Camera.h"
 #include "TestMovement.h"
+#include "Animator.h"
+#include "ParticleSystem.h"
+#include "Billboard.h"
+
 
 
 void factory() {
@@ -25,6 +29,10 @@ void factory() {
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
 	f.registerComponent<TestMovement>();
+	f.registerComponent<Animator>();
+	f.registerComponent<ParticleSystem>();
+	f.registerComponent<Billboard>();
+	f.registerComponent<Animator>();
 }
 
 
