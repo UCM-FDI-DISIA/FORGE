@@ -15,7 +15,8 @@ AudioSource::AudioSource() :
 	playOnAwake(false),
 	offset(),
 	fullVolumeRadious(5.0f),
-	hearingRadious(50.0f) {
+	hearingRadious(50.0f),
+	resumeOnEnable(false) {
 
 	serializer(playOnAwake, "playOnAwake");
 	serializer(offset, "offset");
@@ -47,12 +48,30 @@ void AudioSource::update() {
 	}
 }
 
+void AudioSource::onEnabled() {
+	if (resumeOnEnable) {
+		resumeOnEnable = false;
+		resume();
+	}
+}
+
+void AudioSource::onDisabled() {
+	if (isPlaying() && !isPaused()) {
+		resumeOnEnable = true;
+		pause();
+	}
+}
+
 bool AudioSource::pause() {
 	return sound->pause();
 }
 
 bool AudioSource::resume() {
 	return sound->resume();
+}
+
+bool AudioSource::isPaused() {
+	return sound->isPaused();
 }
 
 bool AudioSource::stop() {

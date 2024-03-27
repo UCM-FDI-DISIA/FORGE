@@ -17,6 +17,8 @@ private:
 	float hearingRadious;
 	forge::Vector3 offset;
 
+	bool resumeOnEnable;
+
 public:
 	static const std::string id;
 	/// <summary>
@@ -32,6 +34,8 @@ public:
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>
 	void update() override;
+	void onEnabled() override;
+	void onDisabled() override;
 	/// <summary>
 	/// Pausa el sonido si esta sonando
 	/// </summary>

@@ -43,6 +43,11 @@ public:
 	/// <returns>Si se ha podido reanudar</returns>
 	bool resume();
 	/// <summary>
+	/// Devuelve si la reproduccion del sonido esta en pausa
+	/// </summary>
+	/// <returns>Booleano que indica si la reproduccion esta en pausa</returns>
+	bool isPaused();
+	/// <summary>
 	/// Detiene por completo el sonido
 	/// </summary>
 	/// <returns>Si se ha podido detener</returns>

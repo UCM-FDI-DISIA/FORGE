@@ -35,6 +35,10 @@ bool Sound::resume() {
 	return false;
 }
 
+bool Sound::isPaused() {
+	return sound != nullptr && sound->getIsPaused();
+}
+
 bool Sound::stop() {
 	if (sound != nullptr) {
 		sound->stop();
