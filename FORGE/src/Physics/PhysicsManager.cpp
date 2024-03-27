@@ -21,6 +21,7 @@ PhysicsManager::PhysicsManager() {
     solver = nullptr;
     world = nullptr;
     debugger = nullptr;
+    debugMode = false;
 }
 
 void PhysicsManager::initPhysics() {
@@ -40,7 +41,7 @@ void PhysicsManager::initPhysics() {
 
 void PhysicsManager::updatePhysics() {
     world->stepSimulation(1 / 50.f, 20);
-    world->debugDrawWorld();
+    if (debugMode) world->debugDrawWorld();
 }
 
 void PhysicsManager::changeGravity(forge::Vector3 newGravity) {

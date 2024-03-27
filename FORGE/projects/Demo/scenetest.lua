@@ -17,12 +17,32 @@ local scenes = {
                     name = "maincam"
                 },
                 RigidBody = {
-                    scale = {0.2, 1, 0.2},
+                    scale = {30, 30, 30},
                     mass = 1,
                     friction = 0.5,
                     restitution = 0.6,
                     shapeType = "Capsule",
                     static = false
+                }
+            }
+        },amenaza = {
+            handler = "menace",
+            components = {
+                Transform = {
+                    position = {0, -10, 0}
+                },
+                Mesh = {
+                    mesh = "ogrehead.mesh"
+                },
+                TestMovement = {
+                    name = "maincam"
+                },
+                RigidBody = {
+                    scale = {10, 10, 10},
+                    mass = 0.1,
+                    friction = 0.5,
+                    restitution = 0.6,
+                    shapeType = "Box"
                 }
             }
         },
