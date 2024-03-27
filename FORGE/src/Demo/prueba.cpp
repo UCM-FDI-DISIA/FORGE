@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	RenderManager& render = *RenderManager::getInstance();
     render.setup("Test FORGE");
 	LuaForge* lf = new LuaForge();
-	EcsLoad ecs("Assets/scenes/scenetest.lua", *lf);
+	EcsLoad ecs("scenetest.lua", *lf);
     SceneManager& sceneManager = *SceneManager::getInstance();
     Input& input = *Input::getInstance();
 	AudioManager& ad = *AudioManager::getInstance();
