@@ -22,6 +22,10 @@ AudioSource::AudioSource() :
 	serializer(offset, "offset");
 }
 
+AudioSource::~AudioSource() {
+	manager.removeSound(sound);
+}
+
 void AudioSource::initComponent(ComponentData* data) {
 	sound = manager.getSound(data->get<std::string>("sound"));
 	transform = entity->getComponent<Transform>();

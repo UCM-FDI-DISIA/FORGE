@@ -126,10 +126,7 @@ void Sound::setPan(float value) {
 }
 
 float Sound::getPan() const {
-	if (sound != nullptr) {
-		return sound->getPan();
-	}
-	return NAN;
+	return pan;
 }
 
 bool Sound::isFinished() const {
@@ -152,10 +149,7 @@ void Sound::setFullVolumeRadious(float value) {
 }
 
 float Sound::getFullVolumeRadious() const {
-	if (sound != nullptr) {
-		return sound->getMinDistance();
-	}
-	return NAN;
+	return fullVolumeRadious;
 }
 
 void Sound::setHearingRadious(float value) {
@@ -166,8 +160,5 @@ void Sound::setHearingRadious(float value) {
 }
 
 float Sound::getHearingRadious() const {
-	if (sound != nullptr) {
-		return sound->getMaxDistance();
-	}
-	return NAN;
+	return hearingRadious;
 }

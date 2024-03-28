@@ -26,6 +26,10 @@ public:
 	/// </summary>
 	AudioSource();
 	/// <summary>
+	/// Elimina su sonido del gestor
+	/// </summary>
+	virtual ~AudioSource();
+	/// <summary>
 	/// Se llama en la creacion del componente AudioSource
 	/// </summary>
 	/// <param name="data">Bloque con la informacion guardada para el componente</param>
@@ -34,7 +38,13 @@ public:
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>
 	void update() override;
+	/// <summary>
+	/// Reanuda la reproduccion del sonido si se estaba reproduciendo cuando se desactivo el componente
+	/// </summary>
 	void onEnabled() override;
+	/// <summary>
+	/// Pausa la reproduccion del sonido
+	/// </summary>
 	void onDisabled() override;
 	/// <summary>
 	/// Pausa el sonido si esta sonando
@@ -45,7 +55,12 @@ public:
 	/// Reanuda el sonido desde donde se habia pausado
 	/// </summary>
 	/// <returns>Si se ha podido reanudar</returns>
-	bool resume();
+	bool resume();	
+	/// <summary>
+	/// Devuelve si la reproduccion del sonido esta en pausa
+	/// </summary>
+	/// <returns>Booleano que indica si la reproduccion esta en pausa</returns>
+	bool isPaused();
 	/// <summary>
 	/// Detiene por completo el sonido
 	/// </summary>
