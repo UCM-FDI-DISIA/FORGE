@@ -10,6 +10,7 @@ private:
 	static const std::string id;
 
 	bool pressed;
+	forge::Vector2 realPos;
 
 public:
 	/// <summary>
@@ -37,5 +38,11 @@ public:
 	/// Devuelve true si el boton esta pulsado
 	/// </summary>	
 	bool isPressed();
+
+	/// <summary>
+	/// Actualiza la posicion
+	/// </summary>	
+	/// <param name = "pos_">Posicion</param>
+	void setPosition(forge::Vector2 pos_) override;
 };
 #endif // !IMAGEBUTTON_H_

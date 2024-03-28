@@ -16,7 +16,7 @@ UIComponent::UIComponent(const char* id, forge::Vector2 pos_) : windowName(id), 
     window_flags |= ImGuiWindowFlags_NoResize;
     window_flags |= ImGuiWindowFlags_NoCollapse;
     window_flags |= ImGuiWindowFlags_NoNav;
-    //window_flags |= ImGuiWindowFlags_NoBackground;
+    window_flags |= ImGuiWindowFlags_NoBackground;
 
     gui->getIds().insert(id);
 }

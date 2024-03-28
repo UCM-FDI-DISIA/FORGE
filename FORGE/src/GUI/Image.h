@@ -48,32 +48,32 @@ public:
 	/// Cambia el tamano de la imagen  
 	/// </summary>	
 	/// <param name = "size">Nuevo tamano</param>
-	virtual void setSize(forge::Vector2 size);
+	void setSize(forge::Vector2 size);
 
 	/// <summary>
 	/// Devuelve la textura de SDL
 	/// </summary>	
-	virtual SDL_Texture* getTexture();
+	SDL_Texture* getTexture();
 
 	/// <summary>
 	/// Devuelve el ancho de la imagen original
 	/// </summary>	
-	virtual unsigned int getSourceWidth();
+	unsigned int getSourceWidth();
 
 	/// <summary>
 	/// Devuelve el ancho actual de la imagen
 	/// </summary>	
-	virtual unsigned int getWidth();
+	unsigned int getWidth();
 
 	/// <summary>
 	/// Devuelve el alto de la imagen original
 	/// </summary>
-	virtual unsigned int getSourceHeight();
+	unsigned int getSourceHeight();
 
 	/// <summary>
 	/// Devuelve el alto actual de la imagen
 	/// </summary>
-	virtual unsigned int getHeight();
+	unsigned int getHeight();
 };
 
 #endif // !IMAGE_H_

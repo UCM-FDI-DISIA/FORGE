@@ -30,6 +30,6 @@ public:
 	/// Actualiza la posicion
 	/// </summary>	
 	/// <param name = "pos_">Posicion</param>
-	void setPosition(forge::Vector2 pos_);
+	virtual void setPosition(forge::Vector2 pos_);
 };
 

@@ -100,7 +100,7 @@ int main(int, char**) {
     // --- IMAGE BUTTON ---
     ImageButton* imgb = new ImageButton("butImg", "panko.png", renderer, forge::Vector2(300, 300));
     imgb->setPosition(forge::Vector2(550, 250));
-    imgb->setSize(forge::Vector2(200, 200));
+    imgb->setSize(forge::Vector2(300, 300));
 
     // Main loop
     bool done = false;
