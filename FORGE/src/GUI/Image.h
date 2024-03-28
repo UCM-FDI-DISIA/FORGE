@@ -15,9 +15,7 @@ private:
 protected:
 	SDL_Texture* texture;
 
-	unsigned int srcWidth;
-	unsigned int srcHeight;
-
+	forge::Vector2 sourceSize;
 	forge::Vector2 imageSize;
 
 	SDL_Renderer* renderer;
@@ -49,6 +47,16 @@ public:
 	/// </summary>	
 	/// <param name = "size">Nuevo tamano</param>
 	void setSize(forge::Vector2 size);
+
+	/// <summary>
+	/// Devuelve el tamaño de la imagen
+	/// </summary>	
+	forge::Vector2 getSize();
+
+	/// <summary>
+	/// Devuelve el tamaño original de la imagen
+	/// </summary>	
+	forge::Vector2 getSourceSize();
 
 	/// <summary>
 	/// Devuelve la textura de SDL

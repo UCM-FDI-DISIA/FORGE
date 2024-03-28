@@ -16,8 +16,7 @@ Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* render
 		throw "Couldn't convert surface to texture for image: " + fileName;
 	}
 
-	srcWidth = surface->w;
-	srcHeight = surface->h;
+	sourceSize.set(surface->w, surface->h);
 	renderer = renderer_;
 
 	// Esto da error y no debería, hay que revisarlo porque probablemente deja basura
@@ -29,9 +28,9 @@ Image::~Image() {}
 bool Image::update() {
 	// Tamano y posicion de la ventana
 	if (imageSize == forge::Vector2::ZERO) {
-		imageSize = forge::Vector2(srcWidth, srcHeight);
+		imageSize = sourceSize + forge::Vector2(6, 6);
 	}
-	ImGui::SetNextWindowSize(imageSize);
+	ImGui::SetNextWindowSize(imageSize + forge::Vector2(6, 6));
 	ImGui::SetNextWindowPos(pos);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -48,12 +47,20 @@ void Image::setSize(forge::Vector2 size) {
 	imageSize = size;
 }
 
+forge::Vector2 Image::getSize() {
+	return imageSize;
+}
+
+forge::Vector2 Image::getSourceSize() {
+	return sourceSize;
+}
+
 SDL_Texture* Image::getTexture() {
 	return texture;
 }
 
 unsigned int Image::getSourceWidth() {
-	return srcWidth;
+	return sourceSize.getX();
 }
 
 unsigned int Image::getWidth() {
@@ -61,7 +68,7 @@ unsigned int Image::getWidth() {
 }
 
 unsigned int Image::getSourceHeight() {
-	return srcHeight;
+	return sourceSize.getY();
 }
 
 unsigned int Image::getHeight() {

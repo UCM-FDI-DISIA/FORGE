@@ -27,10 +27,10 @@ Vector2 Vector2::operator-(const Vector2& v) const {
 	return Vector2(x - v.x, y - v.y);
 }
 Vector2 Vector2::operator*(float e) const {
-	return Vector2(x * e, y * e );
+	return Vector2(x * e, y * e);
 }
 Vector2 Vector2::operator/(float e) const {
-	return Vector2(x / e, y / e );
+	return Vector2(x / e, y / e);
 }
 float Vector2::operator *(const Vector2& v) const {
 	return (x * v.x + y * v.y);

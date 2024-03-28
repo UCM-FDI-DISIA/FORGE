@@ -5,11 +5,19 @@
 
 #include "Image.h"
 
-class ImageButton : public Image {
+class ImageButton : public UIComponent {
 private:
+	enum ButtonState {
+		IDLE, HOVER, PRESSED
+	};
+
 	static const std::string id;
+	const char* imgButtonId;
+	std::vector<Image*> images;
 
 	bool pressed;
+
+	forge::Vector2 imageButtonSize;
 	forge::Vector2 realPos;
 
 public:
@@ -21,7 +29,8 @@ public:
 	/// <param name = "renderer_">Renderer de SDL</param>
 	/// <param name = "size_">Tamaño de la imagen por pantalla</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
-	ImageButton(const char* imgButId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 size_,
+	ImageButton(const char* imgButId, const std::string idleFile, const std::string hoverFile,
+		const std::string pressedFile, SDL_Renderer* renderer_, forge::Vector2 size_, 
 		forge::Vector2 pos_ = forge::Vector2::ZERO);
 
 	/// <summary>
@@ -32,7 +41,7 @@ public:
 	/// <summary>
 	/// Actualizacion del boton con imagen
 	/// </summary>
-	bool update() override;
+	bool update();
 
 	// <summary>
 	/// Devuelve true si el boton esta pulsado

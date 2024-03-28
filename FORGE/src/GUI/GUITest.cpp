@@ -98,9 +98,9 @@ int main(int, char**) {
     img->setPosition(forge::Vector2(250, 250));
     img->setSize(forge::Vector2(200, 200));
     // --- IMAGE BUTTON ---
-    ImageButton* imgb = new ImageButton("butImg", "panko.png", renderer, forge::Vector2(300, 300));
+    ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, forge::Vector2(632, 144));
     imgb->setPosition(forge::Vector2(550, 250));
-    imgb->setSize(forge::Vector2(300, 300));
+    //imgb->setSize(forge::Vector2(300, 300));
 
     // Main loop
     bool done = false;

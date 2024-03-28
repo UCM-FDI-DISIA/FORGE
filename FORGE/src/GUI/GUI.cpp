@@ -70,7 +70,7 @@ void GUI::loadFont(std::string name, const char* fontFile, float size) {
 void GUI::showLoadedFonts() {
     std::cout << "Fuentes cargadas:\n";
     for (auto f : fonts) {
-        std::cout << f.first << "\n";
+        std::cout << "- " << f.first << "\n";
     }
 }
 
