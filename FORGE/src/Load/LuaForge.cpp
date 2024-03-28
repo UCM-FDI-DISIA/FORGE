@@ -35,6 +35,10 @@ LuaForge::LuaForge() :
 	importUserClassesToLua();
 }
 
+LuaForge::~LuaForge() {
+	lua_close(lua);
+}
+
 lua_State* LuaForge::getState() const {
 	return lua;
 }

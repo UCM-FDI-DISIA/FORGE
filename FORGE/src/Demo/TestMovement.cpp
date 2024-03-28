@@ -9,7 +9,9 @@ const std::string TestMovement::id = "TestMovement";
 
 TestMovement::TestMovement() :
 	input(*Input::getInstance()),
-	movement(10.0f) {
+	movement(10.0f),
+	transform(nullptr),
+	audio(nullptr) {
 }
 
 void TestMovement::initComponent(ComponentData* data) {
@@ -19,7 +21,7 @@ void TestMovement::initComponent(ComponentData* data) {
 
 void TestMovement::update() {
 	if (input.keyDown(K_P)) {
-		audio->play();
+		audio->restart();
 	}
 	if (input.keyDown(K_W)) {
 		transform->setPositionZ(transform->getPosition().getZ() + movement);

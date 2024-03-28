@@ -21,6 +21,12 @@
     <ClCompile Include="..\..\src\Load\LuaForge.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Load\AudioLoad.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Load\LoadManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Load\EcsLoad.h">
@@ -29,5 +35,19 @@
     <ClInclude Include="..\..\src\Load\LuaForge.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Load\AudioLoad.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Load\LoadManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\bin\Assets\assets.forge.lua">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\bin\Assets\scenes\scenetest.lua">
+      <Filter>Archivos de recursos</Filter>
+    </None>
   </ItemGroup>
 </Project>
