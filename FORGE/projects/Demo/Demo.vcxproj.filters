@@ -27,4 +27,12 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\bin\Assets\assets.forge.lua">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\bin\Assets\scenes\scenetest.lua">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+  </ItemGroup>
 </Project>

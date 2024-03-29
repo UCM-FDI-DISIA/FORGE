@@ -118,6 +118,10 @@
       <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\bin\Assets\assets.forge.lua" />
+    <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
