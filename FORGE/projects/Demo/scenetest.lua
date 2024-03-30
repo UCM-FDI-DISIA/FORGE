@@ -38,7 +38,7 @@ local scenes = {
                     name = "maincam"
                 },
                 RigidBody = {
-                    scale = {10, 10, 10},
+                    scale = {30, 30, 30},
                     mass = 0.1,
                     friction = 0.5,
                     restitution = 0.6,

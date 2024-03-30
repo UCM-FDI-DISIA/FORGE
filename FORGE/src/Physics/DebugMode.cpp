@@ -13,10 +13,10 @@ DebugMode::DebugMode(SceneManager* scm) {
     //mLines->estimateVertexCount( 100000 );
     //mLines->estimateIndexCount( 0 );
 
-    scm->getRootSceneNode()->attachObject(mLines);
+    scm->getRootSceneNode()->attachObject(mLines); // Crea objetos visuales de ogre en los que dibujar las lineas
     scm->getRootSceneNode()->attachObject(mTriangles);
 
-    static const char* matName = "OgreBulletCollisionsDebugDefault";
+    static const char* matName = "OgreBulletCollisionsDebugDefault"; // Esto da igual porque no lo tenemos en nuestros materiales
     MaterialPtr mtl = MaterialManager::getSingleton().getDefaultSettings()->clone(matName);
     mtl->setReceiveShadows(false);
     mtl->setSceneBlending(SBT_TRANSPARENT_ALPHA);

@@ -21,7 +21,7 @@ PhysicsManager::PhysicsManager() {
     solver = nullptr;
     world = nullptr;
     debugger = nullptr;
-    debugMode = false;
+    debugMode = true;
 }
 
 void PhysicsManager::initPhysics() {
@@ -32,7 +32,7 @@ void PhysicsManager::initPhysics() {
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
     debugger = new DebugMode(RenderManager::getInstance()->getSceneManager());
-    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
     world->setDebugDrawer(debugger);
 
     world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
