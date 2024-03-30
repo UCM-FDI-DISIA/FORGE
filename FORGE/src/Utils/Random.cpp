@@ -2,20 +2,17 @@
 
 using namespace forge;
 
-Random::Random() : gen(rd()) {
-}
+#pragma region Constructores
+Random::Random() : gen(rd()) {}
 
 Random::~Random() {
 
 }
+#pragma endregion
 
-// Random* Random::getInstance() {
-// 	if (instance.get() != nullptr) return instance.get();
-// 	return (instance = std::unique_ptr<Random>(new Random())).get();
-// }
-
-float Random::generate(float t) {
-	std::uniform_real_distribution<float> uni(0,t);
+#pragma region Numeros aleatorios
+float Random::generate(double t) {
+	std::uniform_real_distribution<float> uni(0, t);
 	return uni(gen);
 }
 
@@ -24,18 +21,20 @@ int forge::Random::generate(int t) {
 	return uni(gen);
 }
 
-float forge::Random::generateRange(float inicio, float fin) {
-	std::uniform_real_distribution<float> uni(inicio, fin);
+float forge::Random::generateRange(float a, float b) {
+	std::uniform_real_distribution<float> uni(a, b);
 	return uni(gen);
 }
 
-int forge::Random::generateRange(int inicio, int fin) {
-	std::uniform_int_distribution<int> uni(inicio, fin);
+int forge::Random::generateRange(int a, int b) {
+	std::uniform_int_distribution<int> uni(a, b);
 	return uni(gen);
 }
+#pragma endregion
 
+#pragma region Estructuras de FORGE aleatorias
 Vector3 Random::getRandomVector() {
-	std::uniform_real_distribution<float> uni(-1,1);
+	std::uniform_real_distribution<float> uni(-1, 1);
 	return Vector3(uni(gen), uni(gen), uni(gen));
 }
 
@@ -43,3 +42,4 @@ Quaternion forge::Random::getRandomQuaternion() {
 	std::uniform_real_distribution<float> uni(-1, 1);
 	return Quaternion(uni(gen), uni(gen), uni(gen), generateRange(0.0f, 360.0f));
 }
+#pragma endregion

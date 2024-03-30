@@ -12,7 +12,7 @@ Billboard::Billboard() :
 	billboardDimensions(1,1),
 	totalDimensions(),
 	material(""),
-	bSet(nullptr), 
+	billboardSet(nullptr), 
 	renderManager(nullptr) {
 	serializer(size, "size");
 	serializer(material, "material");
@@ -21,22 +21,22 @@ Billboard::Billboard() :
 }
 
 Billboard::~Billboard() {
-	renderManager->removeNode(bSet);
+	renderManager->removeNode(billboardSet);
 }
 
 void Billboard::onEnabled() {
-	bSet = renderManager->addBillboardNode(this);
+	billboardSet = renderManager->addBillboardNode(this);
 }
 
 void Billboard::onDisabled() {
-	renderManager->removeNode(bSet);
-	bSet = nullptr;
+	renderManager->removeNode(billboardSet);
+	billboardSet = nullptr;
 }
 
 void Billboard::initComponent(ComponentData* data) {
 	if (entity->hasComponent("Transform")) {
 		renderManager = RenderManager::getInstance();
-		bSet = renderManager->addBillboardNode(this);
+		billboardSet = renderManager->addBillboardNode(this);
 		addBillboards();
 	}
 }
@@ -50,7 +50,7 @@ void Billboard::addBillboards() {
 		forge::Vector3 pos = forge::Vector3(rn->generateRange(-width / 2.0f, width / 2.0f), 
 			rn->generateRange(-height / 2.0f, height / 2.0f),
 			rn->generateRange(-depth / 2.0f, depth / 2.0f));
-		bSet->createBillboard(pos);
+		billboardSet->createBillboard(pos);
 	}
 	delete rn;
 }
@@ -73,10 +73,10 @@ std::string Billboard::getMaterial() {
 
 void Billboard::setMaterial(std::string newMaterial) {
 	material = newMaterial;
-	bSet->setMaterialName(newMaterial);
+	billboardSet->setMaterialName(newMaterial);
 }
 
 void Billboard::setSize(int newSize) {
 	size = newSize;
-	bSet->setPoolSize(newSize);
+	billboardSet->setPoolSize(newSize);
 }
