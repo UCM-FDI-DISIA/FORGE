@@ -102,5 +102,7 @@ public:
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
 	virtual void fixedUpdate();
+
+	void setEnabled(bool enabled);
 };
 #endif

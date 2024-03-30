@@ -24,9 +24,6 @@ bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
-        if (ogreEntity != nullptr && entity->hasComponent("Animator")) {
-            entity->getComponent<Animator>()->init(renderManager,ogreEntity->getAllAnimationStates());
-        }
     }
     return ogreEntity != nullptr;
 }

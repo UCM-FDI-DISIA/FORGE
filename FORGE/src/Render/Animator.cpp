@@ -1,42 +1,46 @@
 #include "Animator.h"
-#include "OgreAnimation.h"
 #include "Serializer.h"
 #include "Entity.h"
+#include "OgreAnimation.h"
+#include "OgreEntity.h"
 
 const std::string Animator::id = "Animator";
 
 Animator::Animator() : 
 	activeAnimations(),
-	ogreAnimations(nullptr),
-	renderManager(nullptr) {
+	ogreAnimations(nullptr) {
+	serializer(mesh, "mesh");
+	serializer(material, "material");
 	serializer(activeAnimations, "activeAnimations");
 }
 
 Animator::~Animator() {}
 
-void Animator::init(RenderManager* manager, Ogre::AnimationStateSet* animationSet) {
-	renderManager = manager;
-	ogreAnimations = animationSet;
-	for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
-		if (ogreAnimations->hasAnimationState(*it)) {
-			ogreAnimations->getAnimationState(*it)->setEnabled(true);
-			++it;
+bool Animator::initComponent(ComponentData* data) {
+	Mesh::initComponent(data);
+	ogreAnimations = ogreEntity->getAllAnimationStates();
+	if (ogreAnimations != nullptr) {
+		for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
+			if (ogreAnimations->hasAnimationState(*it)) {
+				ogreAnimations->getAnimationState(*it)->setEnabled(true);
+				++it;
+			}
+			else {
+				it = activeAnimations.erase(it);
+			}
 		}
-		else { 
-			it = activeAnimations.erase(it);
-		}
+		return true;
+	}
+	else {
+		activeAnimations.clear();
+		std::cerr<<"ERROR: El componente Animator no pudo ser inicializado correctamente\n";
+		return false;
 	}
 }
 
 void Animator::update() {
-	if(ogreAnimations == nullptr){
-		entity->removeComponent("Animator");
-	}
-	else {
-		//auto map = ogreAnimations->getAnimationStates();
-		for (std::string animation : activeAnimations) {
-			ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
-		}
+	for (std::string animation : activeAnimations) {
+		ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
 	}
 }
 
@@ -72,8 +76,9 @@ void Animator::setActive(std::vector<std::string> animations, bool active) {
 
 void Animator::changeActive(std::string newAnimation) {
 	for (std::string animation : activeAnimations) {
-		setActive(animation, false);
+		ogreAnimations->getAnimationState(animation)->setEnabled(false);
 	}
+	activeAnimations.clear();
 	setActive(newAnimation, true);
 }
 
@@ -84,8 +89,14 @@ void Animator::changeActive(std::vector<std::string> newAnimations) {
 	setActive(newAnimations, true);
 }
 
-Ogre::AnimationStateSet* Animator::getAnimations() {
-	return ogreAnimations;
+std::vector<std::string> Animator::getAnimations() {
+	std::vector<std::string> animations;
+	auto iterator = ogreAnimations->getAnimationStateIterator();
+	while (iterator.hasMoreElements()) {
+		animations.push_back(iterator.peekNextKey());
+		iterator.moveNext();
+	}
+	return animations;
 }
 
 std::unordered_set<std::string> Animator::getActiveAnimations() {

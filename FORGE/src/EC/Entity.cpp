@@ -108,3 +108,10 @@ void Entity::fixedUpdate() {
 		}
 	}
 }
+
+void Entity::setEnabled(bool enabled) {
+    for (auto& componentPair : components) {
+        Component* component = componentPair.second;
+        component->setEnabled(enabled);
+    }
+}

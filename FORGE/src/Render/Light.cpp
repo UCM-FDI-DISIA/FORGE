@@ -27,10 +27,11 @@ bool Light::initComponent(ComponentData* data) {
 void Light::setEnabled(bool newActive) {
     Component::setEnabled(newActive);
     if (newActive) {
-        renderManager->addLightNode(this);
+        ogreLight = renderManager->addLightNode(this);
     }
     else {
         renderManager->removeNode(ogreLight);
+        ogreLight = nullptr;
     }
 }
 

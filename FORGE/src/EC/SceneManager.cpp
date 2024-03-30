@@ -82,19 +82,30 @@ lua_State* SceneManager::getLuaState() {
 }
 
 void SceneManager::changeScene(std::string scene, bool renewScene) {
+	Scene* newScene;
 	auto iter = loadedScenes.find(scene);
+	if (activeScene != nullptr) {
+		activeScene->setEnabled(false);
+	}
 	if (iter == loadedScenes.end()) {
-		activeScene = createScene(scene);
+		newScene = createScene(scene);
 	}
 	else {
 		if (renewScene) {
 			delete iter->second;
 			loadedScenes.erase(iter);
-			activeScene = createScene(scene);
+			newScene = createScene(scene);
 		}
 		else {
-			activeScene = iter->second;
+			newScene = iter->second;
+			newScene->setEnabled(true);
 		}
+	}
+	if (newScene != nullptr) {
+		activeScene = newScene;
+	}
+	else if (activeScene != nullptr) {
+		activeScene->setEnabled(true);
 	}
 	if (activeScene == nullptr || activeScene->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
 }

@@ -62,5 +62,7 @@ public:
     /// Devuelve el booleano sceneEnd, para comprobar si la escena debe terminar
     /// </summary>
     bool getEndScene();
+
+    void setEnabled(bool enabled);
 };
 #endif // !COMPONENT_H_

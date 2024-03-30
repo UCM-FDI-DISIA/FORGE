@@ -1,8 +1,9 @@
 #pragma once
 #ifndef ANIMATOR_H_
 #define ANIMATOR_H_
-#include <Component.h>
+#include "Mesh.h"
 #include <string>
+#include <vector>
 #include <unordered_set>
 
 class RenderManager;
@@ -10,10 +11,9 @@ namespace Ogre {
     class AnimationStateSet;
 }
 
-class Animator : public Component {
+class Animator : public Mesh {
     std::unordered_set<std::string> activeAnimations;
     Ogre::AnimationStateSet* ogreAnimations;
-    RenderManager* renderManager;
 
 public:
     static const std::string id;
@@ -22,7 +22,7 @@ public:
 
     ~Animator();
 
-    void init(RenderManager* manager, Ogre::AnimationStateSet* animationSet);
+    bool initComponent(ComponentData* data) override;
 
     void update() override;
 
@@ -36,7 +36,7 @@ public:
     #pragma endregion
 
     #pragma region getters
-    Ogre::AnimationStateSet* getAnimations();
+    std::vector<std::string> getAnimations();
     std::unordered_set<std::string> getActiveAnimations();
     #pragma endregion
 };

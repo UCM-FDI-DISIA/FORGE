@@ -13,7 +13,6 @@ namespace Ogre {
 
 class Camera : public Component {
 private:
-    std::string name;
     float nearClipDistance;
     bool autoAspectRatio;
     forge::Vector3 backgroundColor;
@@ -38,7 +37,6 @@ public:
 	#pragma endregion
 
 	#pragma region getters
-    const std::string& getName() const;
     const float& getNearClipDistance() const;
     const bool& getAutoAspectRatio() const;
     const forge::Vector3& getBackgroundColor() const;

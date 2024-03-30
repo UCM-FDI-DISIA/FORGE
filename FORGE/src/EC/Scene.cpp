@@ -88,3 +88,10 @@ void Scene::endScene() {
 bool Scene::getEndScene() {
     return sceneEnd;
 }
+void Scene::setEnabled(bool enabled) {
+    for (auto& group : entitiesByGroup) {
+        for (auto& entity : group) {
+            entity->setEnabled(enabled);
+        }
+    }
+}

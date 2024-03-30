@@ -1,10 +1,12 @@
 #include "RenderManager.h"
 #include "RenderForge.h"
+#include "Entity.h"
+#include "Transform.h"
 #include "Mesh.h"
 #include "Camera.h"
 #include "Light.h"
-#include "Entity.h"
-#include "Transform.h"
+#include "ParticleSystem.h"
+#include "Billboard.h"
 #include <OgreRoot.h>
 #include <SDL.h>
 #include <OgreFileSystemLayer.h>
@@ -20,7 +22,10 @@
 #include <OgreRenderWindow.h>
 #include <OgreEntity.h>
 #include <iostream>
+#include <OgreParticleSystem.h>
+#include <OgreBillboardSet.h>
 #include <OgreViewport.h>
+#include "OgreNameGenerator.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 
@@ -29,11 +34,29 @@ RenderManager::RenderManager() :
 	forge(nullptr),
 	root(nullptr),
 	sceneManager(nullptr),
-	transforms() {
+	transforms(),
+	cameraNames(new Ogre::NameGenerator("Camera")),
+	particleSystemsNames(new Ogre::NameGenerator("ParticleSystem")) {
 
 }
 
+void RenderManager::updateNodePositions() {
+	for (auto&& pair : transforms) {
+		if (pair.second->getNeedsUpdate()) {
+			const forge::Vector3& position = pair.second->getGlobalPosition();
+			pair.first->setPosition(position);
+			const forge::Quaternion& rotation = pair.second->getGlobalRotation();
+			pair.first->setOrientation(rotation);
+			const forge::Vector3& scale = pair.second->getGlobalScale();
+			pair.first->setScale(scale);
+			pair.second->setNeedsUpdate(false);
+		}
+	}
+}
+
 RenderManager::~RenderManager() {
+	delete cameraNames;
+	delete particleSystemsNames;
 	delete forge;
 }
 
@@ -53,20 +76,9 @@ void RenderManager::setup(std::string appName) {
 
 bool RenderManager::render() {
 	if(root == nullptr) return false;
-	for (auto&& pair : transforms) {
-		if (pair.second->getNeedsUpdate()) {
-			const forge::Vector3& position = pair.second->getGlobalPosition();
-			pair.first->setPosition(position);
-			const forge::Quaternion& rotation = pair.second->getGlobalRotation();
-			pair.first->setOrientation(rotation);
-			const forge::Vector3& scale = pair.second->getGlobalScale();
-			pair.first->setScale(scale);
-			pair.second->setNeedsUpdate(false);
-		}
-	}
+	updateNodePositions();
 	return root->renderOneFrame();
 }
-
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 	if(root == nullptr) return nullptr;
@@ -99,10 +111,21 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 	return newEntity;
 }
 
-Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
-	if(root == nullptr) return nullptr;
+Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
+	Ogre::BillboardSet* set = sceneManager->createBillboardSet(bs->getSize());
+	set->setDefaultDimensions(bs->getBillboardWidth(), bs->getBillboardHeight());
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Camera* ogreCamera = sceneManager->createCamera(camera->getName());
+	if (bs->getMaterial() != "") {
+		set->setMaterialName(bs->getMaterial());
+	}
+	node->attachObject(set);
+	transforms.insert({ node, bs->getEntity()->getComponent<Transform>()});
+	return set;
+}
+
+Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
 	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
 	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
 	node->attachObject(ogreCamera);
@@ -125,6 +148,28 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 	return ogreLight;
 }
 
+Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	std::string name = particleSystemsNames->generate();
+	Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
+	node->attachObject(ogreParticleSystem);
+	ogreParticleSystem->setEmitting(particleSystem->getEmitting());
+	transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>()});
+	return ogreParticleSystem;
+}
+
+
+Ogre::ParticleSystem* RenderManager::updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem) {
+	Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
+	node->detachObject(ogreParticleSystem);
+	sceneManager->destroyEntity(ogreParticleSystem);
+	Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+	newParticleSystem->setEmitting(particleSystem->getEmitting());
+	node->attachObject(newParticleSystem);
+	return newParticleSystem;
+}
+
+
 void RenderManager::removeNode(Ogre::MovableObject* object) {
 	if(root == nullptr || object == nullptr) return;
 	Ogre::SceneNode* node = object->getParentSceneNode();
@@ -134,4 +179,11 @@ void RenderManager::removeNode(Ogre::MovableObject* object) {
 	transforms.erase(node);
 }
 
-
+void RenderManager::removeCamera(Ogre::Camera* camera) {
+	Ogre::SceneNode* node = camera->getParentSceneNode();
+	node->detachObject(camera);
+	forge->getWindow().render->removeViewport(camera->getViewport()->getZOrder());
+	sceneManager->destroyCamera(camera);
+	sceneManager->destroySceneNode(node);
+	transforms.erase(node);
+}

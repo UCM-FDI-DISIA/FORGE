@@ -11,7 +11,6 @@ const std::string Camera::id = "Camera";
 Camera::Camera() :
     ogreCamera(nullptr),
     renderManager(nullptr) {
-    serializer(name, "name");
     serializer(nearClipDistance, "nearClipDistance");
     serializer(autoAspectRatio, "autoAspectRatio");
     serializer(backgroundColor, "backgroundColor");
@@ -37,10 +36,11 @@ bool Camera::initComponent(ComponentData* data) {
 void Camera::setEnabled(bool newActive) {
     Component::setEnabled(newActive);
     if (newActive) {
-        renderManager->addCameraNode(this);
+        ogreCamera = renderManager->addCameraNode(this);
     }
     else {
-        renderManager->removeNode(ogreCamera);
+        renderManager->removeCamera(ogreCamera);
+        ogreCamera = nullptr;
     }
 }
 
@@ -60,10 +60,6 @@ void Camera::setBackgroundColor(forge::Vector3 newbackgroundColor) {
     backgroundColor = newbackgroundColor;
     Ogre::ColourValue value = Ogre::ColourValue(backgroundColor.getX(), backgroundColor.getY(), backgroundColor.getZ());
     ogreCamera->getViewport()->setBackgroundColour(value);
-}
-
-const std::string& Camera::getName() const {
-    return name;
 }
 
 const float& Camera::getNearClipDistance() const {
