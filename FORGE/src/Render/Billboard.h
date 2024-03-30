@@ -27,7 +27,9 @@ public:
 
     ~Billboard();
 
-    void setEnabled(bool newActive) override;
+    void onEnabled() override;
+
+    void onDisabled() override;
 
     void initComponent(ComponentData* data) override;
 

@@ -27,17 +27,14 @@ void Camera::initComponent(ComponentData* data) {
     }
 }
 
-void Camera::setEnabled(bool newActive) {
-    Component::setEnabled(newActive);
-    if (newActive) {
-        ogreCamera = renderManager->addCameraNode(this);
-    }
-    else {
-        renderManager->removeCamera(ogreCamera);
-        ogreCamera = nullptr;
-    }
+void Camera::onEnabled() {
+    ogreCamera = renderManager->addCameraNode(this);
 }
 
+void Camera::onDisabled() {
+    renderManager->removeCamera(ogreCamera);
+    ogreCamera = nullptr;
+}
 
 void Camera::setNearClipDistance(float newNearClipDistance) {
     nearClipDistance = newNearClipDistance;

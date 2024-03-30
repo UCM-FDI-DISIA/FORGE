@@ -18,7 +18,7 @@ namespace forge {
 		Random();
 		~Random();
 		//static Random* getInstance();
-		float generate(double t);
+		float generate(float t);
 		int generate(int t);
 		float generateRange(float inicio, float final);
 		int generateRange(int inicio, int final);

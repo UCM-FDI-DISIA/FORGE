@@ -14,7 +14,7 @@ Random::~Random() {
 // 	return (instance = std::unique_ptr<Random>(new Random())).get();
 // }
 
-float Random::generate(double t) {
+float Random::generate(float t) {
 	std::uniform_real_distribution<float> uni(0,t);
 	return uni(gen);
 }

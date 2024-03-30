@@ -24,15 +24,13 @@ Billboard::~Billboard() {
 	renderManager->removeNode(bSet);
 }
 
-void Billboard::setEnabled(bool newActive) {
-	Component::setEnabled(newActive);
-	if (newActive) {
-		bSet = renderManager->addBillboardNode(this);
-	}
-	else {
-		renderManager->removeNode(bSet);
-		bSet = nullptr;
-	}
+void Billboard::onEnabled() {
+	bSet = renderManager->addBillboardNode(this);
+}
+
+void Billboard::onDisabled() {
+	renderManager->removeNode(bSet);
+	bSet = nullptr;
 }
 
 void Billboard::initComponent(ComponentData* data) {
@@ -45,9 +43,9 @@ void Billboard::initComponent(ComponentData* data) {
 
 void Billboard::addBillboards() {
 	forge::Random* rn = new forge::Random();
-	int width = totalDimensions.getX();
-	int height = totalDimensions.getY();
-	int depth = totalDimensions.getZ();
+	float width = totalDimensions.getX();
+	float height = totalDimensions.getY();
+	float depth = totalDimensions.getZ();
 	for (int i = 0; i < size; i++) {
 		forge::Vector3 pos = forge::Vector3(rn->generateRange(-width / 2.0f, width / 2.0f), 
 			rn->generateRange(-height / 2.0f, height / 2.0f),

@@ -26,9 +26,11 @@ public:
     
     ~Camera();
 
-    void setEnabled(bool newActive) override;
-
     void initComponent(ComponentData* data) override;
+
+    void onEnabled() override;
+
+    void onDisabled() override;
 
 	#pragma region setters
     void setNearClipDistance(float newNearClipDistance);

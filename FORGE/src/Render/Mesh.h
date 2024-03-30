@@ -25,7 +25,9 @@ public:
 
     void initComponent(ComponentData* data) override;
 
-    void setEnabled(bool newActive) override;
+    void onEnabled() override;
+
+    void onDisabled() override;
 
 	#pragma region setters
     void setMesh(std::string newMesh);
