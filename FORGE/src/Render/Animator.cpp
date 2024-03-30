@@ -14,8 +14,6 @@ Animator::Animator() :
 	serializer(activeAnimations, "activeAnimations");
 }
 
-Animator::~Animator() {}
-
 void Animator::initComponent(ComponentData* data) {
 	Mesh::initComponent(data);
 	ogreAnimations = ogreEntity->getAllAnimationStates();
@@ -86,7 +84,7 @@ void Animator::changeActive(std::vector<std::string> newAnimations) {
 	setActive(newAnimations, true);
 }
 
-std::vector<std::string> Animator::getAnimations() {
+std::vector<std::string> Animator::getAnimations() const {
 	std::vector<std::string> animations;
 	auto iterator = ogreAnimations->getAnimationStateIterator();
 	while (iterator.hasMoreElements()) {
@@ -96,6 +94,6 @@ std::vector<std::string> Animator::getAnimations() {
 	return animations;
 }
 
-std::unordered_set<std::string> Animator::getActiveAnimations() {
+const std::unordered_set<std::string>& Animator::getActiveAnimations() const {
 	return activeAnimations;
 }

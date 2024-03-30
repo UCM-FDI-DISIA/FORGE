@@ -89,6 +89,11 @@ public:
         return getter<T>()(*data, param);
     } 
 
+    /// <summary>
+    /// Get especifico para el tipo Vector2 de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector2</returns>
     template <>
     forge::Vector2 get<forge::Vector2>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
@@ -98,7 +103,11 @@ public:
         }
         return vector;
     }
-
+    /// <summary>
+    /// Get especifico para el tipo Vector3 de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector3</returns>
     template <>
     forge::Vector3 get<forge::Vector3>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data,param);
@@ -108,7 +117,11 @@ public:
         }
         return vector;
     }
-
+    /// <summary>
+    /// Get especifico para el tipo Quaternion de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Quaternion</returns>
     template <>
     forge::Quaternion get<forge::Quaternion>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);

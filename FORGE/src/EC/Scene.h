@@ -52,7 +52,10 @@ public:
     /// <param name="ent">Entidad que se asocia al Handler</param>
     /// <returns>Si se ha podido agregar el Handler</returns>
     bool setHandler(std::string handler, Entity* entity);
-
+    /// <summary>
+    ///	Establece si todos los Entity de la Scene estan activados
+    /// </summary>
+    /// <param name="_enabled">Nuevo estado de activacion de los Entities</param>
     void setEnabled(bool enabled);
 };
 #endif // !COMPONENT_H_
