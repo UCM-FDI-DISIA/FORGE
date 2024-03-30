@@ -17,25 +17,26 @@ Animator::Animator() :
 Animator::~Animator() {}
 
 bool Animator::initComponent(ComponentData* data) {
-	Mesh::initComponent(data);
-	ogreAnimations = ogreEntity->getAllAnimationStates();
-	if (ogreAnimations != nullptr) {
-		for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
-			if (ogreAnimations->hasAnimationState(*it)) {
-				ogreAnimations->getAnimationState(*it)->setEnabled(true);
-				++it;
+	if(Mesh::initComponent(data)){
+		ogreAnimations = ogreEntity->getAllAnimationStates();
+		if (ogreAnimations != nullptr) {
+			for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
+				if (ogreAnimations->hasAnimationState(*it)) {
+					ogreAnimations->getAnimationState(*it)->setEnabled(true);
+					++it;
+				}
+				else {
+					it = activeAnimations.erase(it);
+				}
 			}
-			else {
-				it = activeAnimations.erase(it);
-			}
+			return true;
 		}
-		return true;
-	}
-	else {
 		activeAnimations.clear();
-		std::cerr<<"ERROR: El componente Animator no pudo ser inicializado correctamente\n";
+		std::cerr << "ERROR: No se ha podido inicializar el componente Animator\n";
 		return false;
 	}
+	std::cerr << "ERROR: No se ha podido inicializar el componente Mesh\n";
+	return false;
 }
 
 void Animator::update() {

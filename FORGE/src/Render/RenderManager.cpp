@@ -112,6 +112,7 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 }
 
 Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
+	if (root == nullptr) return nullptr;
 	Ogre::BillboardSet* set = sceneManager->createBillboardSet(bs->getSize());
 	set->setDefaultDimensions(bs->getBillboardWidth(), bs->getBillboardHeight());
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
@@ -124,6 +125,7 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
+	if (root == nullptr) return nullptr;
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
 	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
@@ -149,13 +151,20 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 }
 
 Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	std::string name = particleSystemsNames->generate();
-	Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
-	node->attachObject(ogreParticleSystem);
-	ogreParticleSystem->setEmitting(particleSystem->getEmitting());
-	transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>()});
-	return ogreParticleSystem;
+	if (root == nullptr) return nullptr;
+	try {
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		std::string name = particleSystemsNames->generate();
+		Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
+		node->attachObject(ogreParticleSystem);
+		ogreParticleSystem->setEmitting(particleSystem->getEmitting());
+		transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>() });
+		return ogreParticleSystem;	
+	}
+	catch (std::exception e) {
+		std::cerr << "ERROR: No se ha podido cargar un sistema de particulas " << particleSystem->getParticle() << "\n";	
+		return nullptr;
+	}
 }
 
 

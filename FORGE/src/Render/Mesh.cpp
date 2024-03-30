@@ -25,6 +25,10 @@ bool Mesh::initComponent(ComponentData* data) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
     }
+    else 
+    {
+        std::cerr << "ERROR: Se requiere un componente Transform para generar un Mesh\n";
+    }
     return ogreEntity != nullptr;
 }
 

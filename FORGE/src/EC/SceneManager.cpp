@@ -148,9 +148,11 @@ int SceneManager::getMaxGroupId() {
 }
 
 bool SceneManager::update() {
-	if (activeScene != nullptr) activeScene->update();
-	// Devuelve false en caso de que endScene sea true o la escena sea nula
-	return (activeScene != nullptr) ? !activeScene->getEndScene() : false;
+	if (activeScene != nullptr && !activeScene->getEndScene()) {
+		activeScene->update();
+		return true;
+	}
+	return false;
 }
 
 void SceneManager::refresh() {
