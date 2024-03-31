@@ -38,15 +38,15 @@ local scenes = {
                 TestMovement = {
                     name = "maincam"
                 },
-                Move = {
-                    speed = 10
-                },
                 RigidBody = {
                     scale = {1, 1, 1},
                     mass = 0.1,
                     friction = 0.5,
                     restitution = 0.6,
                     shapeType = "Box"
+                },
+                Move = {
+                    speed = 1
                 }
             }
         },

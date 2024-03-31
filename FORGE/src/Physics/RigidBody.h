@@ -28,6 +28,7 @@ private:
     float restitution;
     bool kinematic;
     bool staticBody;
+    bool trigger;
     btRigidBody* myBody;
     btCollisionShape* myShape;
     collisionShape shapeType;
@@ -86,6 +87,10 @@ public:
     float getRestitution();
 
     bool isStatic();
+
+    bool isTrigger();
+
+    void setTrigger(bool isTrigger);
 
     btCollisionShape* getShape();
 

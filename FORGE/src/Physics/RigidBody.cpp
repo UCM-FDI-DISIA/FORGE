@@ -141,6 +141,19 @@ bool RigidBody::isStatic() {
     return staticBody;
 }
 
+bool RigidBody::isTrigger() {
+    return trigger;
+}
+
+void RigidBody::setTrigger(bool isTrigger) {
+    trigger = isTrigger;
+    if (trigger)
+		myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	else
+        myBody->setCollisionFlags(myBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    
+}
+
 btCollisionShape* RigidBody::getShape() {
     return myShape;
 }
