@@ -113,41 +113,59 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 
 Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 	if (root == nullptr) return nullptr;
-	Ogre::BillboardSet* set = sceneManager->createBillboardSet(bs->getSize());
-	set->setDefaultDimensions(bs->getBillboardWidth(), bs->getBillboardHeight());
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	if (bs->getMaterial() != "") {
-		set->setMaterialName(bs->getMaterial());
+	try {
+		Ogre::BillboardSet* set = sceneManager->createBillboardSet(bs->getSize());
+		set->setDefaultDimensions(bs->getBillboardWidth(), bs->getBillboardHeight());
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		if (bs->getMaterial() != "") {
+			set->setMaterialName(bs->getMaterial());
+		}
+		node->attachObject(set);
+		transforms.insert({ node, bs->getEntity()->getComponent<Transform>() });
+		return set;
 	}
-	node->attachObject(set);
-	transforms.insert({ node, bs->getEntity()->getComponent<Transform>()});
-	return set;
+	catch (std::exception e) {
+		std::cerr << "ERROR: No se ha podido cargar un billboard " << bs->getMaterial() << "\n";
+		return nullptr;
+	}
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 	if (root == nullptr) return nullptr;
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
-	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
-	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
-	node->attachObject(ogreCamera);
-	Ogre::Viewport* viewport = forge->getWindow().render->addViewport(ogreCamera);
-	Ogre::ColourValue value = Ogre::ColourValue(
-		camera->getBackgroundColor().getX(),
-		camera->getBackgroundColor().getY(),
-		camera->getBackgroundColor().getZ());
-	viewport->setBackgroundColour(value);
-	transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
-	return ogreCamera;
+	try {
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
+		ogreCamera->setNearClipDistance(camera->getNearClipDistance());
+		ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
+		node->attachObject(ogreCamera);
+		Ogre::Viewport* viewport = forge->getWindow().render->addViewport(ogreCamera);
+		Ogre::ColourValue value = Ogre::ColourValue(
+			camera->getBackgroundColor().getX(),
+			camera->getBackgroundColor().getY(),
+			camera->getBackgroundColor().getZ());
+		viewport->setBackgroundColour(value);
+		transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
+		return ogreCamera;
+	}
+	catch (std::exception e) {
+		std::cerr << "ERROR: No se ha podido cargar una camara " << cameraNames->generate() << "\n";	
+		return nullptr;
+	}
 }
 
 Ogre::Light* RenderManager::addLightNode(Light* light) {
 	if (root == nullptr) return nullptr;
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
-	node->attachObject(ogreLight);
-	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
-	return ogreLight;
+	try {
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
+		node->attachObject(ogreLight);
+		transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
+		return ogreLight;
+	}
+	catch (std::exception e) {
+		std::cerr << "ERROR: No se ha podido cargar una luz " << light->getType() << "\n";
+		return nullptr;
+	}
 }
 
 Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {

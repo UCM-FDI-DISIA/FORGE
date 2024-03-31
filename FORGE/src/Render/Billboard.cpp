@@ -21,7 +21,10 @@ Billboard::Billboard() :
 }
 
 Billboard::~Billboard() {
-	renderManager->removeNode(bSet);
+	if(bSet != nullptr && renderManager != nullptr) 
+	{
+		renderManager->removeNode(bSet);
+	}
 }
 
 void Billboard::setEnabled(bool newActive) {
@@ -39,10 +42,14 @@ bool Billboard::initComponent(ComponentData* data) {
 	if (entity->hasComponent("Transform")) {
 		renderManager = RenderManager::getInstance();
 		bSet = renderManager->addBillboardNode(this);
-		addBillboards();
-		return true;
+		if (bSet != nullptr) {
+			addBillboards();	
+		}
 	}
-	return false;
+	else {
+		std::cerr << "ERROR: Se requiere un componente Transform para generar un Billboard\n";
+	}
+	return bSet != nullptr;
 }
 
 void Billboard::addBillboards() {

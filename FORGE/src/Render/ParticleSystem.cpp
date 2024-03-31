@@ -17,7 +17,10 @@ ParticleSystem::ParticleSystem() :
 }
 
 ParticleSystem::~ParticleSystem() {
-    renderManager->removeNode(ogreParticleSystem);
+    if(ogreParticleSystem != nullptr && renderManager != nullptr)
+    {
+        renderManager->removeNode(ogreParticleSystem);
+    }
 }
 
 bool ParticleSystem::initComponent(ComponentData* data) {

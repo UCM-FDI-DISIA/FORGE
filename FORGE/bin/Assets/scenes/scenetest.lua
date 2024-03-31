@@ -37,6 +37,10 @@ local scenes = {
         cartel = {
             group = "obstacle",
             components = {
+                Transform = {
+                    position = {-100, 0, -100},
+                    scale = {10,10,10}
+                },
                 Billboard = {
                     material = "practica1/points",
                     billboardDimensions = {10,10}

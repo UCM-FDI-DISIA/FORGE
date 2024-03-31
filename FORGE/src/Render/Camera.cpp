@@ -17,20 +17,21 @@ Camera::Camera() :
 }
 
 Camera::~Camera() {
-   renderManager->removeNode(ogreCamera);
+   if(ogreCamera != nullptr && renderManager != nullptr)
+   {
+       renderManager->removeNode(ogreCamera);
+   }
 }
 
 bool Camera::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
-        try {
-			ogreCamera = renderManager->addCameraNode(this);
-            return ogreCamera != nullptr;
-        } catch (std::exception e) {
-			std::cerr << "ERROR: No se ha podido cargar la camara \n";  
-            return false;
-		}
+		ogreCamera = renderManager->addCameraNode(this);
     }
+    else {
+        std::cerr << "ERROR: Se requiere un componente Transform para generar una Camera\n";
+    }
+    return ogreCamera != nullptr;
 }
 
 void Camera::setEnabled(bool newActive) {
