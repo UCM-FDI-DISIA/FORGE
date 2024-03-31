@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\SDL2\build\x64\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\x64\include-config-$(Configuration)\SDL2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\SDL2\build\x64\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\x64\include-config-$(Configuration)\SDL2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
