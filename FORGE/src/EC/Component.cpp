@@ -37,7 +37,21 @@ void Component::update() {}
 void Component::fixedUpdate() {}
 
 void Component::setEnabled(bool _enabled) {
+    if (!enabled && _enabled) {
+        onEnabled();
+    }
+    else if (enabled && !_enabled) {
+        onDisabled();
+    }
     enabled = _enabled;
+}
+
+void Component::onEnabled() {
+
+}
+
+void Component::onDisabled() {
+
 }
 
 bool Component::isEnabled() const {

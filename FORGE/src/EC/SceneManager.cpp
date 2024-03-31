@@ -23,7 +23,7 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& componentData : data->components) {
 		Component* component = entity->addComponent(componentData.first);
-		initData.insert({ component,componentData.second });
+		initData.insert({ component, componentData.second });
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
