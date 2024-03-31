@@ -10,6 +10,7 @@
 namespace forge {
 	class Random {
 		private:
+		static std::unique_ptr<Random> instance;
 		std::random_device rd;
 		std::mt19937 gen;
 
@@ -17,7 +18,7 @@ namespace forge {
 		#pragma region Constructores
 		Random();
 		~Random();
-
+		static Random* getInstance();
 		#pragma region Numeros aleatorios
 		/// <summary>
 		/// Genera un numero aleatorio en el intervalo: (0,t)

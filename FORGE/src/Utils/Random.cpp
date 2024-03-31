@@ -3,10 +3,17 @@
 using namespace forge;
 
 #pragma region Constructores
+std::unique_ptr<Random> Random::instance = nullptr;
+
 Random::Random() : gen(rd()) {}
 
 Random::~Random() {
 
+}
+
+Random* Random::getInstance() {
+	if (instance != nullptr) return instance.get();
+	return (instance = std::unique_ptr<Random>(new Random())).get();
 }
 #pragma endregion
 

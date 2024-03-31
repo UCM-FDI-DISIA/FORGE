@@ -42,17 +42,17 @@ void Billboard::initComponent(ComponentData* data) {
 }
 
 void Billboard::addBillboards() {
-	forge::Random* rn = new forge::Random();
+	forge::Random* rnd = forge::Random::getInstance();
 	float width = totalDimensions.getX();
 	float height = totalDimensions.getY();
 	float depth = totalDimensions.getZ();
 	for (int i = 0; i < size; i++) {
-		forge::Vector3 pos = forge::Vector3(rn->generateRange(-width / 2.0f, width / 2.0f), 
-			rn->generateRange(-height / 2.0f, height / 2.0f),
-			rn->generateRange(-depth / 2.0f, depth / 2.0f));
+		forge::Vector3 pos = forge::Vector3(rnd->generateRange(-width / 2.0f, width / 2.0f),
+			rnd->generateRange(-height / 2.0f, height / 2.0f),
+			rnd->generateRange(-depth / 2.0f, depth / 2.0f));
 		billboardSet->createBillboard(pos);
 	}
-	delete rn;
+	delete rnd;
 }
 
 int Billboard::getSize() {
