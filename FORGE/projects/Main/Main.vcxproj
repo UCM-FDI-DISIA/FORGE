@@ -84,9 +84,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Main\ForgeMain.h" />
+    <ClInclude Include="..\..\src\Main\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Main\ForgeMain.cpp" />
+    <ClCompile Include="..\..\src\Main\Time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

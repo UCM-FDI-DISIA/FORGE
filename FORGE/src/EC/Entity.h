@@ -121,10 +121,10 @@ public:
 	/// <summary>
 	/// Actualiza la logica de la Entity
 	/// </summary>
-	virtual void update();
+	void update();
 	/// <summary>
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
-	virtual void fixedUpdate();
+	void fixedUpdate();
 };
 #endif

@@ -23,11 +23,11 @@ public:
     /// <summary>
     /// Actualiza las Entity de la escena
 	/// </summary>
-    virtual void update();
+    void update();
     /// <summary>
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
-    virtual void fixedUpdate();
+    void fixedUpdate();
     /// <summary>
     /// Borra todas las Entity no vivas
     /// </summary>

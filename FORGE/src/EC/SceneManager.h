@@ -85,6 +85,10 @@ public:
 	/// Actualiza las entidades de la escena activa
 	/// </returns>
 	void update();
+	/// <summary>
+	///	Actualiza las entidades de la escena activa en periodos de tiempo fijos
+	/// </summary>
+	void fixedUpdate();
 	/// <returns>
 	/// Borra todas las Entity no vivas de la escena activa
 	/// </returns>
