@@ -15,9 +15,12 @@ enum collisionShape
 };
 namespace forge {
     class Vector3;
+    
 };
 
 class RigidBody : public Component {
+
+    using CollisionCallback = void(*)(RigidBody* self, RigidBody* other);
 private:
     PhysicsManager* physicsManager;
     float mass;
@@ -29,8 +32,11 @@ private:
     btCollisionShape* myShape;
     collisionShape shapeType;
     forge::Vector3 myScale;
+    std::vector<CollisionCallback> collisionCallbacks;
 
     btRigidBody* getBody();
+
+    
 public:
     static const std::string id;
 
@@ -49,6 +55,17 @@ public:
     void clearForces();
 
     bool hasCollidedWith(RigidBody* other);
+
+    /// <summary>
+    /// Registra un nuevo callback de colision
+    /// </summary>
+    void registerCallback(CollisionCallback callback);
+
+    /// <summary>
+    /// Maneja las colisiones con otros cuerpos rigidos
+    /// </summary>
+    /// <param name="other"></param>
+    void onCollision(Entity* other);
     #pragma region setters
     void setFriction(float newFriction);
 

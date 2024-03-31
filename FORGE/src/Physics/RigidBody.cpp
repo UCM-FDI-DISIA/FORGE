@@ -87,6 +87,10 @@ bool RigidBody::hasCollidedWith(RigidBody* other) {
     return myBody->checkCollideWith(other->getBody());
 }
 
+void RigidBody::registerCallback(CollisionCallback callback) {
+    collisionCallbacks.push_back(callback);
+}
+
 void RigidBody::setFriction(float newFriction) {
     
     friction = newFriction;
@@ -147,6 +151,12 @@ forge::Vector3 RigidBody::getRigidScale() {
 
 btRigidBody* RigidBody::getBody(){
     return myBody;
+}
+
+void RigidBody::onCollision(Entity* other) {
+    for (auto cb : collisionCallbacks) {
+        cb(this, other->getComponent<RigidBody>());
+    }
 }
 
 

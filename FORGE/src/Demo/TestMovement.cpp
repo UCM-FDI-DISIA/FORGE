@@ -1,6 +1,7 @@
 ﻿#include "TestMovement.h"
 #include "Input.h"
 #include "Transform.h"
+#include "Rigidbody.h"
 #include "ComponentData.h"
 #include "Entity.h"
 
@@ -13,6 +14,12 @@ TestMovement::TestMovement() :
 
 void TestMovement::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
+
+	//aprovecho para probar callbacks tmb uwu
+	entity->getComponent<RigidBody>()->registerCallback([] (RigidBody* self, RigidBody* other) {
+		std::cout << "Colisiono con algo\n";
+	});
+
 }
 
 void TestMovement::update() {

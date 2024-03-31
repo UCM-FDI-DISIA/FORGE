@@ -38,6 +38,11 @@ public:
     /// </summary>
     void updatePhysics();
     
+    /// <summary>
+    /// Comprueba las colisiones ocurridas en la ultima simulacion y las resuelve segun los callbacks definidos.
+    /// </summary>
+    void handleCollisions();
+
     void changeGravity(forge::Vector3 newGravity);
 
     /// <returns>Devuelve una instancia al PhysicsManager</returns>

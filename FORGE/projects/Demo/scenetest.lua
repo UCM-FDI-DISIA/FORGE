@@ -30,13 +30,16 @@ local scenes = {
             handler = "menace",
             components = {
                 Transform = {
-                    position = {0, -10, 0}
+                    position = {0, 10, 0}
                 },
                 Mesh = {
                     mesh = "ogrehead.mesh"
                 },
                 TestMovement = {
                     name = "maincam"
+                },
+                Move = {
+                    speed = 10
                 },
                 RigidBody = {
                     scale = {1, 1, 1},
@@ -51,11 +54,18 @@ local scenes = {
             group = "obstacle",
             components = {
                 Transform = {
-                    position = {10, 0, -10},
+                    position = {0, 0, 0},
                     scale = {5, 5, 5}
                 },
                 Mesh = {
                     mesh = "Barrel.mesh"
+                },
+                RigidBody = {
+                    scale = {1, 1, 1},
+                    mass = 0.1,
+                    friction = 0.5,
+                    restitution = 0.6,
+                    shapeType = "Box"
                 }
             }
         },

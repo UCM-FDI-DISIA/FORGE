@@ -118,10 +118,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Demo\Move.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\src\Demo\prueba.cpp" />
     <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Demo\Move.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="..\..\src\Demo\prueba.h" />
     <ClInclude Include="..\..\src\Demo\TestMovement.h" />
   </ItemGroup>

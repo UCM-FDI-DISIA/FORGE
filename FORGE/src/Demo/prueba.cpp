@@ -19,6 +19,7 @@
 #include "test.h"
 #include "PhysicsManager.h"
 #include "RigidBody.h"
+#include "Move.h"
 
 #define FIXED_UPDATE_RATE 20
 
@@ -30,6 +31,7 @@ void factory() {
 	f.registerComponent<Camera>();
 	f.registerComponent<TestMovement>();
 	f.registerComponent<RigidBody>();
+	f.registerComponent<Move>();
 }
 
 
