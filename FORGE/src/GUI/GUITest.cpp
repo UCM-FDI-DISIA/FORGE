@@ -101,6 +101,9 @@ int main(int, char**) {
     ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, forge::Vector2(632, 144));
     imgb->setPosition(forge::Vector2(550, 250));
     //imgb->setSize(forge::Vector2(300, 300));
+    ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, forge::Vector2(632, 144));
+    imgb2->setPosition(forge::Vector2(550, 450));
+    //imgb2->setSize(forge::Vector2(300, 300));
 
     // Main loop
     bool done = false;
@@ -131,6 +134,7 @@ int main(int, char**) {
         button->update();
         img->update();
         imgb->update();
+        imgb2->update();
         //if (imgb->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
         //    cont++;
         //    //ImGui::SameLine();

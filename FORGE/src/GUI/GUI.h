@@ -28,19 +28,6 @@ public:
 	GUI();
 	~GUI();
 
-	/// <summary>
-	/// Crea un texto fijo
-	/// </summary>	
-	/// <param name = "text">Texto a mostrar</param>
-	/// <param name = "pos">Posicion de renderizado</param>
-	/// <param name = "color">Color del texto</param>
-	/// <param name = "fontName">Nombre de la fuente en el mapa</param>
-	void createText(const char* textId, const char* text, forge::Vector2 pos = forge::Vector2::ZERO,
-		Vector4 color = Vector4({ 1.0, 1.0, 1.0, 1.0 }), std::string fontName = "");
-	void createTextWithBackground(const char* textId, const char* text, forge::Vector2 pos = forge::Vector2::ZERO,
-		Vector4 color = Vector4({ 1.0, 1.0, 1.0, 1.0 }), forge::Vector2 bgSize = forge::Vector2::ZERO, 
-		Vector4 bgColor = Vector4(), std::string fontName = "");
-
 	void loadFont(std::string name, const char* fontFile, float size);
 	
 	void showLoadedFonts();
