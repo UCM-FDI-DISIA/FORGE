@@ -32,17 +32,17 @@ void Transform::setRotation(forge::Vector3 const& newRot) {
 }
 
 void Transform::rotateX(float xRot) {
-	float rad = xRot * PI / 180;
+	float rad = xRot * (float)PI / 180;
 	rotateXRad(rad);
 }
 
 void Transform::rotateY(float yRot) {
-	float rad = yRot * PI / 180;
+	float rad = yRot * (float)PI / 180;
 	rotateYRad(rad);
 }
 
 void Transform::rotateZ(float zRot) {
-	float rad = zRot * PI / 180;
+	float rad = zRot * (float)PI / 180;
 	rotateZRad(rad);
 }
 

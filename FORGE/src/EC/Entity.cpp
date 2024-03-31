@@ -14,13 +14,13 @@ Entity::Entity() :
     alive(false) {
 }
 
-Entity::~Entity() { 
+Entity::~Entity() {
     for (auto& component : components) {
         delete component.second;
     }
-    //for (auto& child : children) {
-    //    delete child;
-    //}
+    for (auto& child : children) {
+        child->setAlive(false);
+    }
     //parent->removeChild(this);
 }
 
