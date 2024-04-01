@@ -43,7 +43,9 @@ bool Text::update() {
 void Text::setColor(forge::Vector4 color_) {
     color = color_;
 }
-
+void Text::setSize(forge::Vector2 size_) {
+    size = size_;
+}
 void Text::setBackground(forge::Vector4 color_, forge::Vector2 size_) {
     window_flags -= ImGuiWindowFlags_NoBackground;
     bgColor = color_;
@@ -73,4 +75,8 @@ void Text::changeBackgroundOpacity(float op) {
 
 void Text::changeText(const char* text_) {
     text = text_;
+}
+
+const char* Text::getText() {
+    return text;
 }

@@ -15,6 +15,7 @@
 #include "Button.h"
 #include "Image.h"
 #include "ImageButton.h"
+#include "InputText.h"
 
 #if !SDL_VERSION_ATLEAST(2,0,17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
@@ -104,7 +105,13 @@ int main(int, char**) {
     ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, forge::Vector2(632, 144));
     imgb2->setPosition(forge::Vector2(550, 450));
     //imgb2->setSize(forge::Vector2(300, 300));
-
+    // --- INPUTTEXT ---
+    InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 200));
+    // --- TEXT ---
+    InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 300));
+    //itext2->setBackground();
+    //itext2->removeBackground();
+    itext2->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
     // Main loop
     bool done = false;
     while (!done) {
@@ -127,14 +134,16 @@ int main(int, char**) {
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        /*if (show_demo_window)
+       /*if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);*/
         
         text->update();
-        button->update();
+       /*button->update();
         img->update();
         imgb->update();
-        imgb2->update();
+        imgb2->update();*/
+        itext->update();
+        itext2->update();
         //if (imgb->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
         //    cont++;
         //    //ImGui::SameLine();

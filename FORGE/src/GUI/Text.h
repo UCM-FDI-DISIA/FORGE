@@ -9,6 +9,7 @@ class Text  : public UIComponent {
 private:
 	static const std::string id;
 
+protected:
 	const char* text;
 
 	forge::Vector4 color;
@@ -21,7 +22,7 @@ private:
 
 public:
 	/// <summary>
-	/// Crea un texto fijo. Por defecto se crea el texto en color
+	/// Crea un texto fijo. Se crea el texto en color
 	///  blanco y con la primera fuente cargada por defecto. Para cambiar las
 	/// caracteristicas del texto utilizar metodos set.
 	/// </summary>	
@@ -38,19 +39,27 @@ public:
 	/// <summary>
 	/// Actualizacion del texto
 	/// </summary>	
-	bool update();
+	virtual bool update();
 
 	/// <summary>
 	/// Cambia el color del texto
 	/// </summary>	
 	/// <param name = "color_">Color del texto</param>
 	void setColor(forge::Vector4 color_);
+
+	/// <summary>
+	/// Cambia el tamano del "fondo" del texto
+	/// </summary>	
+	/// <param name = "size_">Tamano del fondo</param>
+	void setSize(forge::Vector2 size_);
+
 	/// <summary>
 	/// Anade un fondo al texto del color y tamano dados
 	/// </summary>	
 	/// <param name = "color_">Color del fondo</param>
 	/// <param name = "size_">Tamano del fondo</param>
 	void setBackground(forge::Vector4 color_ = forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }), forge::Vector2 size_ = forge::Vector2::ZERO);
+
 	/// <summary>
 	/// Quita el fondo
 	/// </summary>	
@@ -78,5 +87,10 @@ public:
 	/// </summary>	
 	/// <param name = "text_">Posicion</param>
 	void changeText(const char* text_);
+
+	/// <summary>
+	/// Devuelve el texto
+	/// </summary>	
+	const char* getText();
 };
 #endif // !TEXT_H_
