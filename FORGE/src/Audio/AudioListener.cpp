@@ -19,7 +19,7 @@ AudioListener::~AudioListener() {
 void AudioListener::initComponent(ComponentData* data) {
     transform = entity->getComponent<Transform>();
     if (manager.getListenerOnScene()) {
-        delete this;
+        entity->removeComponent(this->id);
     }
     else {
         manager.registerListenerOnScene();

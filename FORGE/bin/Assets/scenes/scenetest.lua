@@ -47,9 +47,7 @@ local scenes = {
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
                 },
-                AudioListener = {
-                    jej = ""
-                }
+                AudioListener = 0
             }
         },
         luz = {
@@ -59,7 +57,8 @@ local scenes = {
                 },
                 Light = {
                     type = 0 
-                }
+                },
+                AudioListener = 0
             }
         }
     }
