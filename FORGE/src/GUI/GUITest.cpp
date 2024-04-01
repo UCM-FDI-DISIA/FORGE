@@ -21,6 +21,14 @@
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
 #endif
 
+void funcion() {
+    std::cout << "funcion" << std::endl;
+}
+
+void funcionImg() {
+    std::cout << "funcionImg " << std::endl;
+}
+
 // Main code
 int main(int, char**) {
     // Setup SDL
@@ -88,7 +96,7 @@ int main(int, char**) {
     text->changeText("Texto");
     text->setPosition(forge::Vector2(600, 100));
     // --- BUTTON ---
-    Button* button = new Button("prueba2", "hola");
+    Button* button = new Button("prueba2", "hola", funcion);
     button->setColor(forge::Vector4(0.0, 0.0, 1.0, 1.0));
     button->changeText("Boton");
     button->changeFont("Saeda");
@@ -99,16 +107,15 @@ int main(int, char**) {
     img->setPosition(forge::Vector2(250, 250));
     img->setSize(forge::Vector2(200, 200));
     // --- IMAGE BUTTON ---
-    ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, forge::Vector2(632, 144));
+    ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, funcionImg, forge::Vector2(632, 144));
     imgb->setPosition(forge::Vector2(550, 250));
     //imgb->setSize(forge::Vector2(300, 300));
-    ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, forge::Vector2(632, 144));
+    ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, funcionImg, forge::Vector2(632, 144));
     imgb2->setPosition(forge::Vector2(550, 450));
     //imgb2->setSize(forge::Vector2(300, 300));
     // --- INPUTTEXT ---
-    InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 200));
-    // --- TEXT ---
-    InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 300));
+    InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 600));
+    InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 660));
     //itext2->setBackground();
     //itext2->removeBackground();
     itext2->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
@@ -136,18 +143,19 @@ int main(int, char**) {
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
        /*if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);*/
-        
+
+        // Textos
         text->update();
-       /*button->update();
-        img->update();
-        imgb->update();
-        imgb2->update();*/
         itext->update();
         itext2->update();
-        //if (imgb->isPressed())                            // Buttons return true when clicked (most widgets return true when edited/activated)
-        //    cont++;
-        //    //ImGui::SameLine();
-        //    ImGui::Text("counter = %d", cont);
+
+        // Botones
+        BaseButton::resetFunction();
+        button->update();
+        img->update();
+        imgb->update();
+        imgb2->update();
+        BaseButton::mainFunctionCall();
 
         // Rendering
         ImGui::Render();

@@ -3,9 +3,9 @@
 
 const std::string Button::id = "Button";
 
-Button::Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_) : UIComponent(buttonId, pos_),
-    text(buttonText), textColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), fontName(""), font(nullptr),
-    buttonSize(forge::Vector2::ZERO),  buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), pressed(false) { }
+Button::Button(const char* buttonId, const char* buttonText, std::function<void(void)> funct, forge::Vector2 pos_) 
+    : BaseButton(buttonId, funct, forge::Vector2::ZERO, pos_), text(buttonText), textColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
+    fontName(""), font(nullptr), buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) { }
 
 Button::~Button() { }
 
@@ -33,14 +33,14 @@ bool Button::update() {
         ImGui::Button(text);
     }
 
+    if (pressed) {
+        mainFunc = function;
+    }
+
     ImGui::PopStyleVar();
     ImGui::PopStyleColor(3);
     ImGui::End();
     return true;
-}
-
-void Button::setSize(forge::Vector2 size) {
-    buttonSize = size;
 }
 
 void Button::setColor(forge::Vector4 color_) {
@@ -49,16 +49,16 @@ void Button::setColor(forge::Vector4 color_) {
     forge::Vector4 sumHover;
     forge::Vector4 sumActive;
     if (color_.getX() >= color_.getY() && color_.getX() >= color_.getZ()) {
-        sumHover = forge::Vector4(0, 0.3, 0.3, 0);
-        sumActive = forge::Vector4(0, 0.5, 0.5, 0);
+        sumHover = forge::Vector4(0, 0.3f, 0.3f, 0);
+        sumActive = forge::Vector4(0, 0.5f, 0.5f, 0);
     }
     else if (color_.getY() >= color_.getX() && color_.getY() >= color_.getZ()) {
-        sumHover = forge::Vector4(0.3, 0, 0.3, 0);
-        sumActive = forge::Vector4(0.5, 0, 0.5, 0);
+        sumHover = forge::Vector4(0.3f, 0, 0.3f, 0);
+        sumActive = forge::Vector4(0.5f, 0, 0.5f, 0);
     }
     else {
-        sumHover = forge::Vector4(0.3, 0.3, 0, 0);
-        sumActive = forge::Vector4(0.5, 0.5, 0, 0);
+        sumHover = forge::Vector4(0.3f, 0.3f, 0, 0);
+        sumActive = forge::Vector4(0.5f, 0.5f, 0, 0);
     }
 
     buttonHoverColor = color_ + sumHover;
@@ -92,8 +92,4 @@ void Button::changeButtonOpacity(float op) {
 
 void Button::changeText(const char* text_) {
     text = text_;
-}
-
-bool Button::isPressed() {
-    return pressed;
 }

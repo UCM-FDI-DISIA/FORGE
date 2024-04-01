@@ -3,11 +3,12 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 
-#include "UIComponent.h"
+#include "BaseButton.h"
 
-class Button : public UIComponent {
+class Button : public BaseButton {
 private:
- 	static const std::string id;
+	// Id de componente
+	static const std::string id;
 
 	const char* text;
 
@@ -19,10 +20,6 @@ private:
 	std::string fontName;
 	ImFont* font = nullptr;
 
-	forge::Vector2 buttonSize;
-
-	bool pressed;
-
 public:
 	#pragma region Constructora y destructora
 	/// <summary>
@@ -33,20 +30,14 @@ public:
 	/// <param name = "buttonId">Identificador del boton (los identificadores de componetes UI NO PUEDEN COINCIDIR)</param>
 	/// <param name = "buttonext">Texto del boton</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
-	Button(const char* buttonId, const char* buttonText, forge::Vector2 pos_ = forge::Vector2::ZERO);
+	Button(const char* buttonId, const char* buttonText, std::function<void(void)> funct, forge::Vector2 pos_ = forge::Vector2::ZERO);
 	~Button();
 	#pragma endregion
 
 	/// <summary>
 	/// Actualizacion del boton
 	/// </summary>
-	bool update();
-
-	/// <summary>
-	/// Cambia el tamaño del boton  
-	/// </summary>	
-	/// <param name = "size">Nuevo tamaño</param>
-	void setSize(forge::Vector2 size);
+	virtual bool update();
 
 	/// <summary>
 	/// Cambia el color del boton en los tres estados (idle, hover y active)
@@ -83,11 +74,6 @@ public:
 	/// Cambia el texto
 	/// </summary>	
 	/// <param name = "text_">Posicion</param>
-	void changeText(const char* text_);
-
-	/// <summary>
-	/// Devuelve true si el boton esta pulsado
-	/// </summary>	
-	bool isPressed();
+	void changeText(const char* text_);	
 };
 #endif // !BUTTON_H_

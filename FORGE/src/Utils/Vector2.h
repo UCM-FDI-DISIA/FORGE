@@ -1,9 +1,12 @@
 #pragma once
+
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
+
 //#ifdef GUI
 #include "imgui.h"
 //#endif
+
 namespace forge {
 	class Vector2 {
 	private:
@@ -75,10 +78,12 @@ namespace forge {
 		/// <summary>
 		/// Devuelve el valor de la coordenada X
 		/// </summary>	
+		/// <returns>La coordenada X</returns> 
 		float getX() const;
 		/// <summary>
 		/// Devuelve el valor de la coordenada y
 		/// </summary>	
+		/// <returns>La coordenada Y</returns> 
 		float getY() const;
 		#pragma endregion
 
@@ -121,4 +126,3 @@ namespace forge {
 	};
 }
 #endif
-

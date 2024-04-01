@@ -16,7 +16,7 @@ Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* render
 		throw "Couldn't convert surface to texture for image: " + fileName;
 	}
 
-	sourceSize.set(surface->w, surface->h);
+	sourceSize.set((float) surface->w, (float) surface->h);
 	renderer = renderer_;
 
 	// Esto da error y no debería, hay que revisarlo porque probablemente deja basura
@@ -60,17 +60,17 @@ SDL_Texture* Image::getTexture() {
 }
 
 unsigned int Image::getSourceWidth() {
-	return sourceSize.getX();
+	return (int) sourceSize.getX();
 }
 
 unsigned int Image::getWidth() {
-	return imageSize.getX();
+	return (int) imageSize.getX();
 }
 
 unsigned int Image::getSourceHeight() {
-	return sourceSize.getY();
+	return (int) sourceSize.getY();
 }
 
 unsigned int Image::getHeight() {
-	return imageSize.getY();
+	return (int) imageSize.getY();
 }

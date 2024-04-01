@@ -1,5 +1,6 @@
 #include "Vector2.h"
 #include <cmath>
+
 using namespace forge;
 
 #pragma region Constructoras

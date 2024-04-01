@@ -3,21 +3,20 @@
 #ifndef IMAGEBUTTON_H_
 #define IMAGEBUTTON_H_
 
+#include "BaseButton.h"
 #include "Image.h"
 
-class ImageButton : public UIComponent {
+class ImageButton : public BaseButton {
 private:
+	// Id de componente
+	static const std::string id;
+
 	enum ButtonState {
-		IDLE, HOVER, PRESSED
+		IDLE, HOVER //PRESSED
 	};
 
-	static const std::string id;
-	const char* imgButtonId;
 	std::vector<Image*> images;
 
-	bool pressed;
-
-	forge::Vector2 imageButtonSize;
 	forge::Vector2 realPos;
 
 	bool imagesBool;
@@ -32,7 +31,7 @@ public:
 	/// <param name = "size_">Tamaño de la imagen por pantalla</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
 	ImageButton(const char* imgButId, const std::string idleFile, const std::string hoverFile,
-		const std::string pressedFile, SDL_Renderer* renderer_, forge::Vector2 size_, 
+		const std::string pressedFile, SDL_Renderer* renderer_, std::function<void(void)> funct, forge::Vector2 size_, 
 		forge::Vector2 pos_ = forge::Vector2::ZERO);
 
 	/// <summary>
@@ -43,8 +42,8 @@ public:
 	/// <param name = "renderer_">Renderer de SDL</param>
 	/// <param name = "size_">Tamaño de la imagen por pantalla</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
-	ImageButton(const char* imgButId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 size_,
-		forge::Vector2 pos_ = forge::Vector2::ZERO);
+	ImageButton(const char* imgButId, const std::string fileName, SDL_Renderer* renderer_, std::function<void(void)> funct,
+		forge::Vector2 size_, forge::Vector2 pos_ = forge::Vector2::ZERO);
 
 	/// <summary>
 	/// Destructora del componente boton con imagen
@@ -54,23 +53,12 @@ public:
 	/// <summary>
 	/// Actualizacion del boton con imagen
 	/// </summary>
-	bool update();
-
-	// <summary>
-	/// Devuelve true si el boton esta pulsado
-	/// </summary>	
-	bool isPressed();
+	virtual bool update();
 
 	/// <summary>
 	/// Actualiza la posicion
 	/// </summary>	
 	/// <param name = "pos_">Posicion</param>
 	void setPosition(forge::Vector2 pos_) override;
-
-	/// <summary>
-	/// Cambia el tamano de la imagen  
-	/// </summary>	
-	/// <param name = "size">Nuevo tamano</param>
-	void setSize(forge::Vector2 size);
 };
 #endif // !IMAGEBUTTON_H_
