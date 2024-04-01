@@ -19,6 +19,7 @@ protected:
 	forge::Vector2 imageSize;
 
 	SDL_Renderer* renderer;
+	SDL_Surface* surface;
 
 public:
 	/// <summary>

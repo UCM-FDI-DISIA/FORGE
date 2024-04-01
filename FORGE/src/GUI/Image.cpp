@@ -6,7 +6,7 @@ Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* render
 	forge::Vector2 pos_) : UIComponent(imgId, pos_), renderer(renderer_), imageSize(imgSize) {
 	//assert(renderer != nullptr);
 
-	SDL_Surface* surface = IMG_Load(fileName.c_str());
+	surface = IMG_Load(fileName.c_str());
 	if (surface == nullptr)
 		throw "Couldn't load image: " + fileName;
 
@@ -19,11 +19,12 @@ Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* render
 	sourceSize.set((float) surface->w, (float) surface->h);
 	renderer = renderer_;
 
-	// Esto da error y no debería, hay que revisarlo porque probablemente deja basura
-	//SDL_FreeSurface(surface);
 }
 
-Image::~Image() {}
+Image::~Image() {
+	// Esto da error y no debería, hay que revisarlo porque probablemente deja basura
+	SDL_FreeSurface(surface);
+}
 
 bool Image::update() {
 	// Tamano y posicion de la ventana

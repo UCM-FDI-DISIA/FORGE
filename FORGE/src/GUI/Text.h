@@ -91,6 +91,7 @@ public:
 	/// <summary>
 	/// Devuelve el texto
 	/// </summary>	
+	/// <returns>El texto</returns>
 	const char* getText();
 };
 #endif // !TEXT_H_

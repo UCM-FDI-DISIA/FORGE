@@ -52,9 +52,9 @@ bool ImageButton::update() {
 
 	else {
 		if (ImGui::IsWindowHovered() && !pressed) {
-			pressed = ImGui::ImageButton((void*)images[IDLE]->getTexture(), buttonSize * 0.99);
+			pressed = ImGui::ImageButton((void*)images[IDLE]->getTexture(), buttonSize * 0.99f);
 			if (pos == realPos) {
-				pos = pos + ((buttonSize - (buttonSize * 0.99)) / 4);
+				pos = pos + ((buttonSize - (buttonSize * 0.99f)) / 4);
 			}
 		}
 		else {
