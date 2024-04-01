@@ -3,8 +3,11 @@
 #include "Entity.h"
 #include "Component.h"
 #include "EntityData.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
+#include <lua.hpp>
+#pragma warning(push)
+#pragma warning(disable : 26439)
+#include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 
@@ -57,7 +60,6 @@ void SceneManager::cleanUp() {
 	for (auto& entity : entityBlueprints) {
 		delete entity.second;
 	}
-	lua_close(lua);
 }
 
 SceneManager* SceneManager::getInstance() {

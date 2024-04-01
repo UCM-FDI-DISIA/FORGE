@@ -129,9 +129,9 @@ public:
 	/// <returns>Rotacion global.</returns>
 	forge::Quaternion getGlobalRotation() const;
 	/// <returns>Rotacion local en angulos de Euler.</returns>
-	forge::Vector3 const&& getRotationEuler() const;
+	forge::Vector3 getRotationEuler() const;
 	/// <returns>Rotacion global en angulos de Euler.</returns>
-	forge::Vector3 const&& getGlobalRotationEuler() const;
+	forge::Vector3 getGlobalRotationEuler() const;
 	/// <returns>Posicion local.</returns>
 	forge::Vector3 const& getPosition() const;
 	/// <returns>Posicion global.</returns>
@@ -142,6 +142,12 @@ public:
 	forge::Vector3 getGlobalScale() const;
 	///<returns>Se ha actualizado el transform.</returns>
 	bool getNeedsUpdate() const;
+	/// <returns>Vector forward actual.</returns>
+	forge::Vector3 getForward() const;
+	/// <returns>Vector up actual.</returns>
+	forge::Vector3 getUp() const;
+	/// <returns>Vector right actual.</returns>
+	forge::Vector3 getRight() const;
 	#pragma endregion //getters
 };
 

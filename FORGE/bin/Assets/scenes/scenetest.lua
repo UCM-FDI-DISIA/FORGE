@@ -12,10 +12,15 @@ local scenes = {
                     scale = {0.25, 0.25, 0.25}
                 },
                 Animator = {
- 		             mesh = "ninja.mesh",
+ 		            mesh = "ninja.mesh",
                     activeAnimations = {
                        "Walk"
                     }
+                },
+                TestComponent = 0
+                AudioSource = {
+                    sound = "Test",
+                    playOnAwake = true
                 }
             },
             children = {
@@ -67,12 +72,12 @@ local scenes = {
                 Transform = {
                     position = {0, 0, 140}
                 },
-                TestMovement = 0,
                 Camera = {
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
-                }
+                },
+                AudioListener = 0
             }
         },
         luz = {
@@ -111,7 +116,8 @@ local scenes = {
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
-                }
+                },
+                AudioListener = 0
             }
         },
         luz = {
@@ -121,7 +127,8 @@ local scenes = {
                 },
                 Light = {
                     type = 0 
-                }
+                },
+                AudioListener = 0
             }
         }
     }

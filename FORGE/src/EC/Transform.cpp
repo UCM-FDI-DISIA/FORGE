@@ -124,11 +124,11 @@ forge::Quaternion Transform::getGlobalRotation() const {
 	}
 }
 
-forge::Vector3 const&& Transform::getRotationEuler() const {
+forge::Vector3 Transform::getRotationEuler() const {
 	return rotation.toEuler();
 }
 
-forge::Vector3 const&& Transform::getGlobalRotationEuler() const {
+forge::Vector3 Transform::getGlobalRotationEuler() const {
 	return getGlobalRotation().toEuler();
 }
 
@@ -160,4 +160,16 @@ forge::Vector3 Transform::getGlobalScale() const {
 
 bool Transform::getNeedsUpdate() const {
 	return needsUpdate || (parent && parent->getNeedsUpdate());
+}
+
+forge::Vector3 Transform::getForward() const {
+	return getGlobalRotation() * Vector3::FORWARD;
+}
+
+forge::Vector3 Transform::getUp() const {
+	return getGlobalRotation() * Vector3::UP;
+}
+
+forge::Vector3 Transform::getRight() const {
+	return getGlobalRotation() * Vector3::RIGHT;
 }

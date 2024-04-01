@@ -7,8 +7,11 @@
 #include <Vector2.h>
 #include <Vector3.h>
 #include <Quaternion.h>
+#pragma warning(push)
+#pragma warning(disable : 26439)
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 
 class ComponentData {
 private:

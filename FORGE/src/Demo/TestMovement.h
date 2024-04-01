@@ -7,7 +7,8 @@
 class Input;
 class Transform;
 class Animator;
-class TestMovement : public Component {
+class AudioSource;
+class TestComponent : public Component {
 private:
 	Transform* transform;
 	Animator* animator;
@@ -15,10 +16,11 @@ private:
 	float movement;
 	std::vector<std::string> anims;
 	int activeAnim;
+	AudioSource* audio;
 public:
 	static const std::string id;
 
-	TestMovement();
+	TestComponent();
 	void initComponent(ComponentData* data) override;
 	void update() override;
 

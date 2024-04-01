@@ -1,6 +1,9 @@
 ﻿#include "LuaForge.h"
 #include <lua.hpp>
+#pragma warning(push)
+#pragma warning(disable : 26439)
 #include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Quaternion.h"
@@ -30,6 +33,10 @@ LuaForge::LuaForge() :
 	luaL_openlibs(lua);
 	importForgeClassesToLua();
 	importUserClassesToLua();
+}
+
+LuaForge::~LuaForge() {
+	lua_close(lua);
 }
 
 lua_State* LuaForge::getState() const {

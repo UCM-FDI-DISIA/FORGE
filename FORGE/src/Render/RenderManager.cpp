@@ -7,6 +7,11 @@
 #include "Light.h"
 #include "ParticleSystem.h"
 #include "Billboard.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
 #include <OgreRoot.h>
 #include <OgreRenderWindow.h>
 #include <OgreEntity.h>
@@ -14,6 +19,8 @@
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
 #include "OgreNameGenerator.h"
+#pragma warning(pop)
+
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 
@@ -77,13 +84,13 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 	// Se vincula la entidad a un nodo que cuelga del nodo raiz
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	node->attachObject(entity);
-	// Se añade el nodo al mapa de objetos de la escena de OGRE
+	// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
 	transforms.insert({node, mesh->getEntity()->getComponent<Transform>()});
 	return entity;
 }
 
 Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
-	// Se busca el nodo asociado a la entidad y se desvincula la entidad de él
+	// Se busca el nodo asociado a la entidad y se desvincula la entidad de ï¿½l
 	Ogre::SceneNode* node = entity->getParentSceneNode();
 	node->detachObject(entity);
 	sceneManager->destroyEntity(entity);
@@ -106,7 +113,7 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* billboardSet) {
 	// Se vincula el billboardSet a un nodo de OGRE que cuelga del nodo raiz
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	node->attachObject(set);
-	// Se añade el nodo al mapa de objetos de la escena de OGRE
+	// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
 	transforms.insert({ node, billboardSet->getEntity()->getComponent<Transform>()});
 	return set;
 }
@@ -125,7 +132,7 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 		camera->getBackgroundColor().getY(),
 		camera->getBackgroundColor().getZ());
 	viewport->setBackgroundColour(value);
-	// Se añade el nodo al mapa de objetos de la escena de OGRE
+	// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
 	transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
 	return ogreCamera;
 }
@@ -136,7 +143,7 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 	// Se vincula la luz a un nodo de OGRE que cuelga del nodo raiz
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	node->attachObject(ogreLight);
-	// Se añade el nodo al mapa de objetos de la escena de OGRE
+	// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
 	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
 	return ogreLight;
 }
@@ -149,7 +156,7 @@ Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* parti
 	// Se vincula el sistema de particulas a un nodo de OGRE que cuelga del nodo raiz
 	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 	node->attachObject(ogreParticleSystem);
-	// Se añade el nodo al mapa de objetos de la escena de OGRE
+	// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
 	transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>()});
 	return ogreParticleSystem;
 }

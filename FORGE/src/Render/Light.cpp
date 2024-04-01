@@ -2,7 +2,13 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
-#include "OgreLight.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
+#include <OgreLight.h>
+#pragma warning(pop)
 
 const std::string Light::id = "Light";
 
