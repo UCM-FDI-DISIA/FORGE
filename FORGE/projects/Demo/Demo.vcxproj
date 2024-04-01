@@ -90,10 +90,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Demo\prueba.cpp" />
-    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
+    <ClCompile Include="..\..\src\Demo\TestComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
+    <ClInclude Include="..\..\src\Demo\TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Audio\Audio.vcxproj">

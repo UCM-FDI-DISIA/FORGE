@@ -14,11 +14,10 @@ TestComponent::TestComponent() :
 	movement(2.0f),
 	transform(nullptr),
 	animator(nullptr),
+	audio(nullptr),
+	sceneManager(SceneManager::getInstance()),
 	anims(),
-	activeAnim(0),
-	movement(10.0f),
-	transform(nullptr),
-	audio(nullptr) {
+	activeAnim(0) {
 }
 
 void TestComponent::initComponent(ComponentData* data) {
@@ -31,14 +30,14 @@ void TestComponent::initComponent(ComponentData* data) {
 }
 
 void TestComponent::update() {
-	if (input.keyPressed(K_Q)) {
+	if (input.keyPressed(K_Q) && anims.size() > 0) {
 		if (activeAnim <= 0) {
 			activeAnim = anims.size();
 		}
 		activeAnim--;
 		animator->changeActive(anims[activeAnim]);
 	}
-	if (input.keyPressed(K_E)) {
+	if (input.keyPressed(K_E) && anims.size() > 0) {
 		activeAnim++;
 		if (activeAnim >= anims.size()) {
 			activeAnim = 0;
@@ -74,6 +73,9 @@ void TestComponent::update() {
 	}
 
 	if (input.keyDown(K_R)) {
-		SceneManager::getInstance()->changeScene("Play");
+		if (sceneManager->getActiveSceneId() == "Test") {
+			sceneManager->changeScene("Play");
+		}
+		else sceneManager->changeScene("Test");
 	}
 }

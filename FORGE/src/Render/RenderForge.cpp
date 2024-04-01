@@ -1,4 +1,9 @@
 #include "RenderForge.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
 #include <OgreRoot.h>
 #include <SDL.h>
 #include <OgreFileSystemLayer.h>
@@ -16,6 +21,7 @@
 #include <OgreDataStream.h>
 
 #include <SDL_video.h>
+#pragma warning(pop)
 
 
 Ogre::Root* RenderForge::createRoot() {

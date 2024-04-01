@@ -8,7 +8,7 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {0, 0, 0},
+                    position = {0, -20, 0},
                     scale = {0.25, 0.25, 0.25}
                 },
                 Animator = {
@@ -17,7 +17,7 @@ local scenes = {
                        "Walk"
                     }
                 },
-                TestComponent = 0
+                TestComponent = 0,
                 AudioSource = {
                     sound = "Test",
                     playOnAwake = true
@@ -36,34 +36,6 @@ local scenes = {
                             emitting = true
                         }
                     }
-                }
-            }
-        },
-        cartel = {
-            group = "obstacle",
-            components = {
-                Transform = {
-                    position = {-100, 0, -100},
-                    scale = {10,10,10}
-                },
-                Billboard = {
-                    material = "practica1/points",
-                    billboardDimensions = {10,10}
-                }
-            }
-        },
-        cartel2 = {
-            group = "obstacle",
-            components = {
-                Transform = {
-                    position = {100, 0, -100},
-                    scale = {10,10,10}
-                },
-                Billboard = {
-                    size = 5,
-                    material = "practica1/points",
-                    billboardDimensions = {5,5},
-                    totalDimensions = {30,30,30}
                 }
             }
         },
@@ -99,25 +71,51 @@ local scenes = {
                     position = {0, 0, 0},
                     scale = {0.25, 0.25, 0.25}
                 },
-                Animator = {
- 		             mesh = "ogrehead.mesh",
-                    activeAnimations = {
-                       "Walk"
-                    }
+                AudioListener = 0,
+                Mesh = {
+ 		            mesh = "ogrehead.mesh",
+                }
+            }
+        },
+        cartel = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {-100, 0, -100},
+                    scale = {10,10,10}
+                },
+                Billboard = {
+                    material = "practica1/points",
+                    billboardDimensions = {10,10}
+                }
+            }
+        },
+        cartel2 = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {100, 0, -100},
+                    scale = {10,10,10}
+                },
+                Billboard = {
+                    size = 5,
+                    material = "practica1/points",
+                    billboardDimensions = {5,5},
+                    totalDimensions = {30,30,30}
                 }
             }
         },
         cam = {
             components = {
                 Transform = {
-                    position = {0, 0, 140}
+                    position = {0, 0, 70}
                 },
                 Camera = {
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
                 },
-                AudioListener = 0
+                TestComponent = 0
             }
         },
         luz = {
@@ -128,7 +126,6 @@ local scenes = {
                 Light = {
                     type = 0 
                 },
-                AudioListener = 0
             }
         }
     }

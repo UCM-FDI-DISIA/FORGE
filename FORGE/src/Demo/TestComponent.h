@@ -8,6 +8,8 @@ class Input;
 class Transform;
 class Animator;
 class AudioSource;
+class SceneManager;
+
 class TestComponent : public Component {
 private:
 	Transform* transform;
@@ -17,6 +19,7 @@ private:
 	std::vector<std::string> anims;
 	int activeAnim;
 	AudioSource* audio;
+	SceneManager* sceneManager;
 public:
 	static const std::string id;
 

@@ -12,7 +12,7 @@
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() : 
-	activeScene(nullptr),
+	activeScene("",nullptr),
 	lua(nullptr) {
 	groups.insert({"default",0});
 }
@@ -76,10 +76,11 @@ lua_State* SceneManager::getLuaState() {
 }
 
 void SceneManager::changeScene(std::string scene, bool renewScene) {
+	Scene*& activeScenePointer = activeScene.second;
 	Scene* newScene;
 	auto iter = loadedScenes.find(scene);
-	if (activeScene != nullptr) {
-		activeScene->setEnabled(false);
+	if (activeScenePointer != nullptr) {
+		activeScenePointer->setEnabled(false);
 	}
 	if (iter == loadedScenes.end()) {
 		newScene = createScene(scene);
@@ -97,10 +98,10 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 	}
 
 	if (newScene != nullptr) {
-		activeScene = newScene;
+		activeScene = { scene, newScene };
 	}
-	else if (activeScene != nullptr) {
-		activeScene->setEnabled(true);
+	else if (activeScenePointer != nullptr) {
+		activeScenePointer->setEnabled(true);
 	}
 }
 
@@ -134,16 +135,20 @@ Scene* SceneManager::getScene(std::string id) {
 	return nullptr;
 }
 
+const std::string& SceneManager::getActiveSceneId() const{
+	return activeScene.first;
+}
+
 int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
 void SceneManager::update() {
-	activeScene->update();
+	activeScene.second->update();
 }
 
 void SceneManager::refresh() {
-	activeScene->refresh();
+	activeScene.second->refresh();
 }
 
 int SceneManager::getGroupId(std::string group) {
