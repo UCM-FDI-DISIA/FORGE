@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 #include <lua.hpp>
+#pragma warning(push)
+#pragma warning(disable : 26439)
 #include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 #include <Vector3.h>
 #include <Quaternion.h>
 

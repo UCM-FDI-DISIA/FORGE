@@ -5,11 +5,13 @@
 #include <string>
 class Input;
 class Transform;
+class AudioSource;
 class TestMovement : public Component {
 private:
 	Transform* transform;
 	Input& input;
 	float movement;
+	AudioSource* audio;
 public:
 	static const std::string id;
 

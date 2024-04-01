@@ -3,19 +3,26 @@
 #include "Transform.h"
 #include "ComponentData.h"
 #include "Entity.h"
+#include "AudioSource.h"
 
 const std::string TestMovement::id = "TestMovement";
 
 TestMovement::TestMovement() :
 	input(*Input::getInstance()),
-	movement(10.0f) {
+	movement(10.0f),
+	transform(nullptr),
+	audio(nullptr) {
 }
 
 void TestMovement::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
+	audio = entity->getComponent<AudioSource>();
 }
 
 void TestMovement::update() {
+	if (input.keyDown(K_P)) {
+		audio->restart();
+	}
 	if (input.keyDown(K_W)) {
 		transform->setPositionZ(transform->getPosition().getZ() + movement);
 		std::cout << transform->getPosition().getX() << " " << transform->getPosition().getY() << " " << transform->getPosition().getZ() << "\n";
