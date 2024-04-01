@@ -10,8 +10,21 @@ AudioListener::AudioListener() :
     manager(*AudioManager::getInstance()) {
 }
 
+AudioListener::~AudioListener() {
+    if (isListenerActive) {
+        manager.clearListenerOnScene();
+    }
+}
+
 void AudioListener::initComponent(ComponentData* data) {
     transform = entity->getComponent<Transform>();
+    if (manager.getListenerOnScene()) {
+        delete this;
+    }
+    else {
+        manager.registerListenerOnScene();
+        isListenerActive = true;
+    }
 }
 
 void AudioListener::update() {

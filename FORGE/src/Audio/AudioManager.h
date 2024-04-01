@@ -27,6 +27,7 @@ private:
 	/// </summary>
 	AudioManager();
 	static std::unique_ptr<AudioManager> instance;
+	bool isListenerOnScene = false;
 public:
 	static AudioManager* getInstance();
 	AudioManager(AudioManager const&) = delete;
@@ -64,6 +65,19 @@ public:
 	/// <param name="position">Nueva posicion del escuchador</param>
 	/// <param name="lookAt">Direccion a la que mira el escuchador</param>
 	void setListenerPosition(forge::Vector3 position, forge::Vector3 lookAt);
+	/// <summary>
+	/// Devuelve el estado de la flag isListenerOnScene
+	/// </summary>
+	/// <returns>Flag isListenerOnScene</returns>
+	bool getListenerOnScene();
+	/// <summary>
+	/// Pone la flag de isListenerOnScene a true
+	/// </summary>
+	void registerListenerOnScene();
+	/// <summary>
+	/// Pone la flag de isListenerOnScene a false
+	/// </summary>
+	void clearListenerOnScene();
 };
 
 #endif

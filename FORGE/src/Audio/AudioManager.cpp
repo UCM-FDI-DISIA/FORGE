@@ -63,3 +63,15 @@ using namespace forge;
 void AudioManager::setListenerPosition(Vector3 position, Vector3 lookAt) {
 	engine->setListenerPosition(position, lookAt, Vector3::ZERO, Vector3::UP);
 }
+
+bool AudioManager::getListenerOnScene() {
+	return isListenerOnScene;
+}
+
+void AudioManager::registerListenerOnScene() {
+	isListenerOnScene = true;
+}
+
+void AudioManager::clearListenerOnScene() {
+	isListenerOnScene = false;
+}

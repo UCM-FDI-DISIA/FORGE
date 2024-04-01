@@ -8,13 +8,18 @@ class AudioListener : public Component {
 private:
     Transform* transform;
     AudioManager& manager;
-    
+	bool isListenerActive = false;
 public:
     static const std::string id;
     /// <summary>
     /// Crea el escuchador con valores por defecto
     /// </summary>
     AudioListener();
+	/// <summary>
+	/// Destructora de audio listener, si es el listener activo
+	/// hace que el manager cambie la flag de listener activo a falso
+	/// </summary>
+	~AudioListener();
 	/// <summary>
 	/// Se inicializa el escuchador con el transform de la entidad
 	/// </summary>
