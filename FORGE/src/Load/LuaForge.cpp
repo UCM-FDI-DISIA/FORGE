@@ -39,7 +39,7 @@ lua_State* LuaForge::getState() const {
 bool LuaForge::doFile(std::string path) {
 	bool fileFound = luaL_dofile(lua, path.c_str());
 	if (fileFound) {
-		std::cerr << "ERROR: Archivo .lua no encontrado\n";
+		std::cerr << "ERROR: Archivo .lua no encontrado o contiene un error de sintaxis\n";
 	}
 	return fileFound;
 }
