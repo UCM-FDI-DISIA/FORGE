@@ -28,29 +28,19 @@ void RigidBody::initComponent(ComponentData* data) {
     staticBody = data->get<bool>("static");
     if (shapeType == "Box") {
         shapeType = boxShape;
-        forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
-        myScale = forVect;
-        myShape = new btBoxShape(btVector3(forVect.getX(),forVect.getY(),forVect.getZ()));
+        myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
     }
     else if (shapeType == "Ball") {
         shapeType = ballShape;
-        forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
-        myScale = forVect;
-        myShape = new btSphereShape(forVect.getX()/2);
+        myShape = new btSphereShape(myScale.getX()/2);
     }
     else if (shapeType == "Capsule") {
         shapeType = capsuleShape;
-        forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
-        myScale = forVect;
-        myShape = new btCapsuleShape(forVect.getX() / 2, forVect.getY());
+        myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
     }
     else if (shapeType == "Cilinder") {
         shapeType = cilinderShape;
-        forge::Vector3 forVect = entity->getComponent<Transform>()->getGlobalScale();
-        myScale = forVect;
-        //forVect. = forVect/2;
-        btVector3 vect = forVect.operator btVector3();
-        myShape = new btCylinderShape(vect);
+        myShape = new btCylinderShape(myScale);
     }
     
     if (entity->hasComponent("Transform")) {
