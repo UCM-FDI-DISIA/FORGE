@@ -3,13 +3,16 @@
 #include "Entity.h"
 #include "Component.h"
 #include "EntityData.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
+#include <lua.hpp>
+#pragma warning(push)
+#pragma warning(disable : 26439)
+#include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() : 
-	activeScene(nullptr),
+	activeScene("",nullptr),
 	lua(nullptr) {
 	groups.insert({"default",0});
 }
@@ -22,7 +25,7 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& componentData : data->components) {
 		Component* component = entity->addComponent(componentData.first);
-		initData.insert({ component,componentData.second });
+		initData.insert({ component, componentData.second });
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
@@ -32,6 +35,8 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& componentInit : initData) {
 		componentInit.first->initSerialized(componentInit.second);
+	}
+	for (auto& componentInit : initData) {
 		componentInit.first->initComponent(componentInit.second);
 	}
 	return entity;
@@ -55,7 +60,6 @@ void SceneManager::cleanUp() {
 	for (auto& entity : entityBlueprints) {
 		delete entity.second;
 	}
-	lua_close(lua);
 }
 
 SceneManager* SceneManager::getInstance() {
@@ -72,19 +76,32 @@ lua_State* SceneManager::getLuaState() {
 }
 
 void SceneManager::changeScene(std::string scene, bool renewScene) {
+	Scene*& activeScenePointer = activeScene.second;
+	Scene* newScene;
 	auto iter = loadedScenes.find(scene);
+	if (activeScenePointer != nullptr) {
+		activeScenePointer->setEnabled(false);
+	}
 	if (iter == loadedScenes.end()) {
-		activeScene = createScene(scene);
+		newScene = createScene(scene);
 	}
 	else {
 		if (renewScene) {
 			delete iter->second;
 			loadedScenes.erase(iter);
-			activeScene = createScene(scene);
+			newScene = createScene(scene);
 		}
 		else {
-			activeScene = iter->second;
+			newScene = iter->second;
+			newScene->setEnabled(true);
 		}
+	}
+
+	if (newScene != nullptr) {
+		activeScene = { scene, newScene };
+	}
+	else if (activeScenePointer != nullptr) {
+		activeScenePointer->setEnabled(true);
 	}
 }
 
@@ -118,12 +135,16 @@ Scene* SceneManager::getScene(std::string id) {
 	return nullptr;
 }
 
+const std::string& SceneManager::getActiveSceneId() const{
+	return activeScene.first;
+}
+
 int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
 void SceneManager::update() {
-	activeScene->update();
+	activeScene.second->update();
 }
 
 void SceneManager::fixedUpdate() {
@@ -131,7 +152,7 @@ void SceneManager::fixedUpdate() {
 }
 
 void SceneManager::refresh() {
-	activeScene->refresh();
+	activeScene.second->refresh();
 }
 
 int SceneManager::getGroupId(std::string group) {

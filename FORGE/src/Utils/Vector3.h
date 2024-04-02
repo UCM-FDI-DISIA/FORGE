@@ -6,6 +6,10 @@ namespace Ogre {
 	typedef Vector<3, float> Vector3f;
 }
 class btVector3;
+namespace irrklang{
+	template <class T> class vec3d;
+	typedef vec3d<float> vec3df;
+}
 namespace forge {
 	class Vector3 {
 	private:
@@ -154,14 +158,14 @@ namespace forge {
 		Vector3 operator/(float d) const;
 
 		/// <summary>
-		/// Multiplicación por componentes (Hadamard)
+		/// Multiplicaciï¿½n por componentes (Hadamard)
 		/// </summary>
 		/// <param name="w">Vector producto</param>
 		/// <returns>El vector resultante</returns>
 		Vector3 operator*(const Vector3& w) const;
 
 		/// <summary>
-		/// Multiplicación por componentes (Hadamard) y asignacion
+		/// Multiplicaciï¿½n por componentes (Hadamard) y asignacion
 		/// </summary>
 		/// <param name="w">Vector producto</param>
 		/// <returns>El vector actualizado (resultante de la operacion de V y W)</returns>
@@ -213,7 +217,7 @@ namespace forge {
 		Vector3 cross(const Vector3& w) const;
 
 		/// <summary>
-		/// Calcula el producto escalar de V y W: v · w
+		/// Calcula el producto escalar de V y W: v ï¿½ w
 		/// </summary>
 		/// <param name="w">Segundo vector</param>
 		/// <returns>Producto escalar de ambos vectores</returns>
@@ -334,6 +338,9 @@ namespace forge {
 		/// <param name="w">Vector de Ogre a asignar</param>
 		/// <returns>El vector actualizado</returns>
 		Vector3& operator=(const btVector3& w);
+		/// Conversion implicita de forge::Vector3 a irrklang::vec3df
+		/// </summary>
+		operator irrklang::vec3df() const;
 		#pragma endregion
 
 		#pragma region Constantes

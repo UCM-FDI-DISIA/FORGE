@@ -2,16 +2,21 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
-#include "OgreCamera.h"
-#include "OgreColourValue.h"
-#include "OgreViewport.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
+#include <OgreCamera.h>
+#include <OgreColourValue.h>
+#include <OgreViewport.h>
+#pragma warning(pop)
 
 const std::string Camera::id = "Camera";
 
 Camera::Camera() :
     ogreCamera(nullptr),
     renderManager(nullptr) {
-    serializer(name, "name");
     serializer(nearClipDistance, "nearClipDistance");
     serializer(autoAspectRatio, "autoAspectRatio");
     serializer(backgroundColor, "backgroundColor");
@@ -26,6 +31,15 @@ void Camera::initComponent(ComponentData* data) {
         renderManager = RenderManager::getInstance();
         ogreCamera = renderManager->addCameraNode(this);
     }
+}
+
+void Camera::onEnabled() {
+    ogreCamera = renderManager->addCameraNode(this);
+}
+
+void Camera::onDisabled() {
+    renderManager->removeCamera(ogreCamera);
+    ogreCamera = nullptr;
 }
 
 void Camera::setNearClipDistance(float newNearClipDistance) {
@@ -43,10 +57,6 @@ void Camera::setBackgroundColor(forge::Vector3 newbackgroundColor) {
     backgroundColor = newbackgroundColor;
     Ogre::ColourValue value = Ogre::ColourValue(backgroundColor.getX(), backgroundColor.getY(), backgroundColor.getZ());
     ogreCamera->getViewport()->setBackgroundColour(value);
-}
-
-const std::string& Camera::getName() const {
-    return name;
 }
 
 const float& Camera::getNearClipDistance() const {

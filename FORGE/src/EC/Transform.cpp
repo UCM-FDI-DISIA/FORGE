@@ -2,6 +2,8 @@
 #include "Serializer.h"
 using namespace forge;
 
+#define PI 3.14159265358979323846264338327950288
+
 void Transform::setParent(Transform* newParent) {
 	parent = newParent;
 }
@@ -30,16 +32,31 @@ void Transform::setRotation(forge::Vector3 const& newRot) {
 }
 
 void Transform::rotateX(float xRot) {
+	float rad = xRot * PI / 180;
+	rotateXRad(rad);
+}
+
+void Transform::rotateY(float yRot) {
+	float rad = yRot * PI / 180;
+	rotateYRad(rad);
+}
+
+void Transform::rotateZ(float zRot) {
+	float rad = zRot * PI / 180;
+	rotateZRad(rad);
+}
+
+void Transform::rotateXRad(float xRot) {
 	rotation *= Quaternion(1, 0, 0, xRot);
 	needsUpdate = true;
 }
 
-void Transform::rotateY(float yRot) {
+void Transform::rotateYRad(float yRot) {
 	rotation *= Quaternion(0, 1, 0, yRot);
 	needsUpdate = true;
 }
 
-void Transform::rotateZ(float zRot) {
+void Transform::rotateZRad(float zRot) {
 	rotation *= Quaternion(0, 0, 1, zRot);
 	needsUpdate = true;
 }
@@ -107,11 +124,11 @@ forge::Quaternion Transform::getGlobalRotation() const {
 	}
 }
 
-forge::Vector3 const&& Transform::getRotationEuler() const {
+forge::Vector3 Transform::getRotationEuler() const {
 	return rotation.toEuler();
 }
 
-forge::Vector3 const&& Transform::getGlobalRotationEuler() const {
+forge::Vector3 Transform::getGlobalRotationEuler() const {
 	return getGlobalRotation().toEuler();
 }
 
@@ -143,4 +160,16 @@ forge::Vector3 Transform::getGlobalScale() const {
 
 bool Transform::getNeedsUpdate() const {
 	return needsUpdate || (parent && parent->getNeedsUpdate());
+}
+
+forge::Vector3 Transform::getForward() const {
+	return getGlobalRotation() * Vector3::FORWARD;
+}
+
+forge::Vector3 Transform::getUp() const {
+	return getGlobalRotation() * Vector3::UP;
+}
+
+forge::Vector3 Transform::getRight() const {
+	return getGlobalRotation() * Vector3::RIGHT;
 }

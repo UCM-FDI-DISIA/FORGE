@@ -2,11 +2,17 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
-#include "OgreEntity.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
+#include <OgreEntity.h>
+#pragma warning(pop)
 
 const std::string Mesh::id = "Mesh";
 
-Mesh::Mesh() : 
+Mesh::Mesh() :
 	mesh(),
 	material(),
     ogreEntity(nullptr),
@@ -26,6 +32,15 @@ void Mesh::initComponent(ComponentData* data) {
     }
 }
 
+void Mesh::onEnabled() {
+    ogreEntity = renderManager->addMeshNode(this);
+}
+
+void Mesh::onDisabled() {
+    renderManager->removeNode(ogreEntity);
+    ogreEntity = nullptr;
+}
+
 void Mesh::setMesh(std::string newMesh) {
     mesh = newMesh;
     ogreEntity = renderManager->updateMeshNode(ogreEntity, this);
@@ -35,6 +50,7 @@ void Mesh::setMaterial(std::string newMaterial) {
     material = newMaterial;
     ogreEntity->setMaterialName(newMaterial);
 }
+
 
 const std::string& Mesh::getMesh() const {
     return mesh;

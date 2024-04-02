@@ -18,9 +18,6 @@ Entity::~Entity() {
     for (auto& component : components) {
         delete component.second;
     }
-    for (auto& child : children) {
-        delete child;
-    }
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
@@ -106,4 +103,11 @@ void Entity::fixedUpdate() {
 			component->fixedUpdate();
 		}
 	}
+}
+
+void Entity::setEnabled(bool enabled) {
+    for (auto& componentPair : components) {
+        Component* component = componentPair.second;
+        component->setEnabled(enabled);
+    }
 }

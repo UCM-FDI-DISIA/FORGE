@@ -121,6 +121,11 @@ namespace forge {
 		/// <returns>El vector Euleriano constante</returns>
 		Vector3 toEuler() const;
 
+		/// <summary>
+		/// Normaliza el vector del quaternion
+		/// </summary>
+		void normalize();
+
 		#pragma region Setters
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en X del par-rotacion

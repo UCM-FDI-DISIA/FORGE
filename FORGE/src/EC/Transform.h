@@ -40,20 +40,35 @@ public:
 	/// <param name="newRot">Nueva rotacion del Transform.</param>
 	void setRotation(forge::Vector3 const& newRot);
 	/// <summary>
-	/// Rota el transform en el eje x.
+	/// Rota el transform en el eje x (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="xRot">Rotacion a aplicar en el eje x.</param>
 	void rotateX(float xRot);
 	/// <summary>
-	/// Rota el transform en el eje y.
+	/// Rota el transform en el eje y (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="yRot">Rotacion a aplicar en el eje y.</param>
 	void rotateY(float yRot);
 	/// <summary>
-	/// Rota el transform en el eje z.
+	/// Rota el transform en el eje z (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
 	void rotateZ(float zRot);
+	/// <summary>
+	/// Rota el transform en el eje x (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="xRot">Rotacion a aplicar en el eje x.</param>
+	void rotateXRad(float xRot);
+	/// <summary>
+	/// Rota el transform en el eje y (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="yRot">Rotacion a aplicar en el eje y.</param>
+	void rotateYRad(float yRot);
+	/// <summary>
+	/// Rota el transform en el eje z (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
+	void rotateZRad(float zRot);
 
 	/// <summary>
 	/// Establece la posicion del Transform.
@@ -114,9 +129,9 @@ public:
 	/// <returns>Rotacion global.</returns>
 	forge::Quaternion getGlobalRotation() const;
 	/// <returns>Rotacion local en angulos de Euler.</returns>
-	forge::Vector3 const&& getRotationEuler() const;
+	forge::Vector3 getRotationEuler() const;
 	/// <returns>Rotacion global en angulos de Euler.</returns>
-	forge::Vector3 const&& getGlobalRotationEuler() const;
+	forge::Vector3 getGlobalRotationEuler() const;
 	/// <returns>Posicion local.</returns>
 	forge::Vector3 const& getPosition() const;
 	/// <returns>Posicion global.</returns>
@@ -127,6 +142,12 @@ public:
 	forge::Vector3 getGlobalScale() const;
 	///<returns>Se ha actualizado el transform.</returns>
 	bool getNeedsUpdate() const;
+	/// <returns>Vector forward actual.</returns>
+	forge::Vector3 getForward() const;
+	/// <returns>Vector up actual.</returns>
+	forge::Vector3 getUp() const;
+	/// <returns>Vector right actual.</returns>
+	forge::Vector3 getRight() const;
 	#pragma endregion //getters
 };
 
