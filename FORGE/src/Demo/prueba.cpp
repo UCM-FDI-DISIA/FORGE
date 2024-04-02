@@ -14,7 +14,12 @@
 #include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
-#include "TestMovement.h"
+#include "TestComponent.h"
+#include "Animator.h"
+#include "ParticleSystem.h"
+#include "Billboard.h"
+
+
 #include "AudioManager.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
@@ -26,7 +31,10 @@ void factory() {
 	f.registerComponent<Mesh>();
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
-	f.registerComponent<TestMovement>();
+	f.registerComponent<TestComponent>();
+	f.registerComponent<Animator>();
+	f.registerComponent<ParticleSystem>();
+	f.registerComponent<Billboard>();
 	f.registerComponent<AudioSource>();
 	f.registerComponent<AudioListener>();
 }

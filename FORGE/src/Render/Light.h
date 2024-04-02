@@ -22,6 +22,10 @@ public:
 
     void initComponent(ComponentData* data) override;
 
+    void onEnabled() override;
+
+    void onDisabled() override;
+
 	#pragma region setters
 	#pragma endregion
 

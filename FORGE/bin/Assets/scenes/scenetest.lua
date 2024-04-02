@@ -8,14 +8,16 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {0, 0, 0}
+                    position = {0, -20, 0},
+                    scale = {0.25, 0.25, 0.25}
                 },
-                Mesh = {
-                    mesh = "ogrehead.mesh"
+                Animator = {
+ 		            mesh = "ninja.mesh",
+                    activeAnimations = {
+                       "Walk"
+                    }
                 },
-                TestMovement = {
-                    name = "maincam"
-                },
+                TestComponent = 0,
                 AudioSource = {
                     sound = "Test",
                     playOnAwake = true
@@ -27,10 +29,11 @@ local scenes = {
                     components = {
                         Transform = {
                             position = {100, 0, -100},
-                            scale = {5, 5, 5}
+                            scale = {10, 10, 10}
                         },
-                        Mesh = {
-                            mesh = "Barrel.mesh"
+                        ParticleSystem = {
+                            particle = "Examples/Smoke",
+                            emitting = true
                         }
                     }
                 }
@@ -42,7 +45,6 @@ local scenes = {
                     position = {0, 0, 140}
                 },
                 Camera = {
-                    name = "maincam",
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
@@ -57,8 +59,73 @@ local scenes = {
                 },
                 Light = {
                     type = 0 
+                }
+            }
+        }
+    },
+    Play = {
+        jugador = {
+            handler = "player",
+            components = {
+                Transform = {
+                    position = {0, 0, 0},
+                    scale = {0.25, 0.25, 0.25}
                 },
-                AudioListener = 0
+                AudioListener = 0,
+                Mesh = {
+ 		            mesh = "ogrehead.mesh",
+                }
+            }
+        },
+        cartel = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {-100, 0, -100},
+                    scale = {10,10,10}
+                },
+                Billboard = {
+                    material = "practica1/points",
+                    billboardDimensions = {10,10}
+                }
+            }
+        },
+        cartel2 = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {100, 0, -100},
+                    scale = {10,10,10}
+                },
+                Billboard = {
+                    size = 5,
+                    material = "practica1/points",
+                    billboardDimensions = {5,5},
+                    totalDimensions = {30,30,30}
+                }
+            }
+        },
+        cam = {
+            components = {
+                Transform = {
+                    position = {0, 0, 70}
+                },
+                Camera = {
+                    nearClipDistance = 1,
+                    autoAspectRatio = true,
+                    backgroundColor = {0.6, 0.3, 0.3}
+                },
+                TestComponent = 0
+            }
+        },
+        luz = {
+            components = {
+                Transform = {
+                    position = {20, 80, 0}
+                },
+                Light = {
+                    type = 0 
+                },
             }
         }
     }

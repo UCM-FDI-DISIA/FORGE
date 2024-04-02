@@ -126,5 +126,10 @@ public:
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
 	virtual void fixedUpdate();
+	/// <summary>
+	///	Establece si todos los Components de la Entity estan activados
+	/// </summary>
+	/// <param name="_enabled">Nuevo estado de activacion de los Components</param>
+	void setEnabled(bool enabled);
 };
 #endif
