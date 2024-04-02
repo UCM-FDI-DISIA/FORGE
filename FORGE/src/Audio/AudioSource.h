@@ -33,7 +33,7 @@ public:
 	/// Se llama en la creacion del componente AudioSource
 	/// </summary>
 	/// <param name="data">Bloque con la informacion guardada para el componente</param>
-	void initComponent(ComponentData* data) override;
+	bool initComponent(ComponentData* data) override;
 	/// <summary>
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>

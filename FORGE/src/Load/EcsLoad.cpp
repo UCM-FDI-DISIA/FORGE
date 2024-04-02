@@ -14,25 +14,32 @@ EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
 	sceneManager(*SceneManager::getInstance()) {
 
 	std::string realPath = "Assets/scenes/" + path;
-	luaForge.doFile(realPath);
 	lua_State* lua = luaForge.getState();
 	sceneManager.setLuaState(lua);
 
-	LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);
-	LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
-
-	if (!entityBlueprints.isNil()) {
-		for (auto&& entity : pairs(entityBlueprints)) {
-			EntityData* blueprint = parseEntityData(entity.second);
-			blueprint->isBlueprint = true;
-			sceneManager.addEntityBlueprint(entity.first.cast<std::string>(), blueprint);
+	if (!luaForge.doFile(realPath)) {
+		LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);
+		LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
+		try {
+			sceneBlueprints.length();
+			if (!entityBlueprints.isNil()) {
+				for (auto&& entity : pairs(entityBlueprints)) {
+					EntityData* blueprint = parseEntityData(entity.second);
+					blueprint->isBlueprint = true;
+					sceneManager.addEntityBlueprint(entity.first.cast<std::string>(), blueprint);
+				}
+			}
+			if (!sceneBlueprints.isNil()) {
+				for (auto&& scene : pairs(sceneBlueprints)) {
+					sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
+				}
+			}
+		}
+		catch (std::exception e) {
+			std::cerr << "ERROR: No hay escenas\n";
 		}
 	}
-	if (!sceneBlueprints.isNil()) {
-		for (auto&& scene : pairs(sceneBlueprints)) {
-			sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
-		}
-	}
+	
 }
 
 void EcsLoad::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& group, LuaRef& components) {

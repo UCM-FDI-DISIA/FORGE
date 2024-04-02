@@ -22,12 +22,15 @@ public:
     /// Crea el Animator con valores por defecto
     /// </summary>
     Animator();
+
+    ~Animator();
+
     /// <summary>
     /// Obtiene los datos de todas las animaciones asociadas a la malla
     /// y establece como activas las indicadas en el archivo lua
     /// </summary>
     /// <param name="data"></param>
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Actualiza las animaciones activas agregandole el tiempo transcurrido
     /// </summary>

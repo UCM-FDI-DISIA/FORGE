@@ -18,10 +18,11 @@ SceneManager::SceneManager() :
 }
 
 Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
+
 	std::unordered_map<Component*, ComponentData*> initData;
 	Entity* entity = scene->addEntity(getGroupId(data->group));
 	if (data->handler != "") {
-		scene->setHandler(data->handler,entity);
+		scene->setHandler(data->handler, entity);
 	}
 	for (auto& componentData : data->components) {
 		Component* component = entity->addComponent(componentData.first);
@@ -30,16 +31,23 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
 			Entity* child = addEntity(scene, childData);
+			if (!child->isAlive()) entity->setAlive(false);
 			entity->addChild(child);
 		}
 	}
 	for (auto& componentInit : initData) {
-		componentInit.first->initSerialized(componentInit.second);
-	}
-	for (auto& componentInit : initData) {
-		componentInit.first->initComponent(componentInit.second);
+		if (componentInit.first->initSerialized(componentInit.second)) {
+			// Si un componente se inicializa mal no se inicia la escena
+			if (!componentInit.first->initComponent(componentInit.second)) {
+				entity->setAlive(false);
+			}
+		}
+		else {
+			entity->setAlive(false);
+		}
 	}
 	return entity;
+
 }
 
 SceneManager::~SceneManager() {
@@ -96,13 +104,13 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 			newScene->setEnabled(true);
 		}
 	}
-
 	if (newScene != nullptr) {
 		activeScene = { scene, newScene };
 	}
 	else if (activeScenePointer != nullptr) {
 		activeScenePointer->setEnabled(true);
 	}
+	if (activeScene.second == nullptr || activeScene.second->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
 }
 
 void SceneManager::removeScene(std::string id) {
@@ -117,11 +125,14 @@ Scene* SceneManager::createScene(std::string id)
 {
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
+		std::cerr << "ERROR: Si una escena no aparece en los archivos, no existe" << std::endl;
 		return nullptr;
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* entity : iter->second) {
-		addEntity(newScene, entity);
+		if (!addEntity(newScene, entity)->isAlive()) {
+			newScene->endScene();
+		}
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;
@@ -143,8 +154,12 @@ int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
-void SceneManager::update() {
-	activeScene.second->update();
+bool SceneManager::update() {
+	if (activeScene.second != nullptr && !activeScene.second->getEndScene()) {
+		activeScene.second->update();
+		return true;
+	}
+	return false;
 }
 
 void SceneManager::refresh() {

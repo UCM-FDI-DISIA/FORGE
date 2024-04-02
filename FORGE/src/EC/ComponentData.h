@@ -116,6 +116,10 @@ public:
         std::vector<float> input = getter<std::vector<float>>()(*data,param);
         forge::Vector3 vector = forge::Vector3();
         if (input.size() >= 3) {
+            if (std::isinf(input[0]) || std::isinf(input[1]) || std::isinf(input[2])) {
+                input = std::vector<float>(3, 0.0f);
+                std::cerr << "ERROR: Valor infinito. Vector3 seteado a 0\n";
+            }
             vector = forge::Vector3(input[0], input[1], input[2]);
         }
         return vector;
@@ -130,6 +134,10 @@ public:
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
         forge::Quaternion quaternion = forge::Quaternion();
         if (input.size() >= 4) {
+            if (std::isinf(input[0]) || std::isinf(input[1]) || std::isinf(input[2]) || std::isinf(input[3])) {
+                input = std::vector<float>(4, 0.0f);
+                std::cerr << "ERROR: Valor infinito. Quaternion seteada a 0\n";
+            }
             quaternion = forge::Quaternion(input[0], input[1], input[2], input[3]);
         }
         return quaternion;

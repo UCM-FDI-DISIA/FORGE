@@ -37,13 +37,13 @@ public:
 	/// <summary>
 	/// Inicializa los parametros serializados del Component
 	/// </summary>
-	/// <param name="data">Parametros necesarios para la iniciacion del componente</param>
-	void initSerialized(ComponentData* data);
+	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	bool initSerialized(ComponentData* data);
 	/// <summary>
 	/// Inicializa el Component con los parametros adecuados
 	/// </summary>
-	/// <param name="data">Parametros necesarios para la iniciacion del componente</param>
-	virtual void initComponent(ComponentData* data);
+	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	virtual bool initComponent(ComponentData* data);
 	/// <summary>
 	/// Actualiza la logica del Component
 	/// </summary>
@@ -56,7 +56,8 @@ public:
 	///	Establece si el componente esta activado
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion del Component</param>
-	void setEnabled(bool _enabled);
+	virtual void setEnabled(bool _enabled);
+
 	/// <summary>
 	/// Metodo que se llama cada vez que se activa el componente
 	/// </summary>
@@ -65,6 +66,7 @@ public:
 	/// Metodo que se llama cada vez que se desactiva el componente
 	/// </summary>
 	virtual void onDisabled();
+
 	#pragma region Getters
 	/// <returns>
 	///	Si el Component esta activado

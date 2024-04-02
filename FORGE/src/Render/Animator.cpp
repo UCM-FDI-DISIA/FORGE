@@ -14,23 +14,29 @@ Animator::Animator() :
 	serializer(activeAnimations, "activeAnimations");
 }
 
-void Animator::initComponent(ComponentData* data) {
-	Mesh::initComponent(data);
-	ogreAnimations = ogreEntity->getAllAnimationStates();
-	if (ogreAnimations != nullptr) {
-		for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
-			if (ogreAnimations->hasAnimationState(*it)) {
-				ogreAnimations->getAnimationState(*it)->setEnabled(true);
-				++it;
+Animator::~Animator() {}
+
+bool Animator::initComponent(ComponentData* data) {
+	if(Mesh::initComponent(data)){
+		ogreAnimations = ogreEntity->getAllAnimationStates();
+		if (ogreAnimations != nullptr) {
+			for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
+				if (ogreAnimations->hasAnimationState(*it)) {
+					ogreAnimations->getAnimationState(*it)->setEnabled(true);
+					++it;
+				}
+				else {
+					it = activeAnimations.erase(it);
+				}
 			}
-			else {
-				it = activeAnimations.erase(it);
-			}
+			return true;
 		}
-	}
-	else {
 		activeAnimations.clear();
+		std::cerr << "ERROR: No se ha podido inicializar el componente Animator\n";
+		return false;
 	}
+	std::cerr << "ERROR: No se ha podido inicializar el componente Mesh\n";
+	return false;
 }
 
 void Animator::update() {
@@ -86,12 +92,10 @@ void Animator::changeActive(std::vector<std::string> newAnimations) {
 
 std::vector<std::string> Animator::getAnimations() const {
 	std::vector<std::string> animations;
-	if (ogreAnimations != nullptr) {
-		auto iterator = ogreAnimations->getAnimationStateIterator();
-		while (iterator.hasMoreElements()) {
-			animations.push_back(iterator.peekNextKey());
-			iterator.moveNext();
-		}
+	auto iterator = ogreAnimations->getAnimationStateIterator();
+	while (iterator.hasMoreElements()) {
+		animations.push_back(iterator.peekNextKey());
+		iterator.moveNext();
 	}
 	return animations;
 }
@@ -99,3 +103,4 @@ std::vector<std::string> Animator::getAnimations() const {
 const std::unordered_set<std::string>& Animator::getActiveAnimations() const {
 	return activeAnimations;
 }
+

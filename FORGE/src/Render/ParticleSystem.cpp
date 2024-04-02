@@ -16,14 +16,21 @@ ParticleSystem::ParticleSystem() :
 }
 
 ParticleSystem::~ParticleSystem() {
-    renderManager->removeNode(ogreParticleSystem);
+    if(ogreParticleSystem != nullptr && renderManager != nullptr)
+    {
+        renderManager->removeNode(ogreParticleSystem);
+    }
 }
 
-void ParticleSystem::initComponent(ComponentData* data) {
+bool ParticleSystem::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreParticleSystem = renderManager->addParticleSystemNode(this);
     }
+    else {
+       		std::cerr << "ERROR: Se requiere un componente Transform para generar un ParticleSystem\n";
+	}
+    return ogreParticleSystem != nullptr;
 }
 
 void ParticleSystem::onEnabled() {

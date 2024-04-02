@@ -26,7 +26,7 @@ AudioSource::~AudioSource() {
 	manager.removeSound(sound);
 }
 
-void AudioSource::initComponent(ComponentData* data) {
+bool AudioSource::initComponent(ComponentData* data) {
 	sound = manager.getSound(data->get<std::string>("sound"));
 	transform = entity->getComponent<Transform>();
 	if (data->has("volume")) {
@@ -44,6 +44,7 @@ void AudioSource::initComponent(ComponentData* data) {
 	if (playOnAwake) {
 		play();
 	}
+	return true;
 }
 
 void AudioSource::update() {

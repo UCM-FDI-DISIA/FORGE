@@ -33,7 +33,7 @@ public:
     /// crear una entidad de Ogre que guarda en ogreEntity
     /// </summary>
     /// <param name="data"></param>
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Crea una entidad de Ogre que guarda en ogreEntity
     /// </summary>

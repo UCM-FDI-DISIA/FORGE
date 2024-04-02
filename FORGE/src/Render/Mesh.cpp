@@ -22,14 +22,22 @@ Mesh::Mesh() :
 }
 
 Mesh::~Mesh() {
-    renderManager->removeNode(ogreEntity);
+    if(ogreEntity != nullptr && renderManager != nullptr) 
+    {
+        renderManager->removeNode(ogreEntity);
+    }
 }
 
-void Mesh::initComponent(ComponentData* data) {
+bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreEntity = renderManager->addMeshNode(this);
     }
+    else 
+    {
+        std::cerr << "ERROR: Se requiere un componente Transform para generar un Mesh\n";
+    }
+    return ogreEntity != nullptr;
 }
 
 void Mesh::onEnabled() {

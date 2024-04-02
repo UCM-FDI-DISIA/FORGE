@@ -35,7 +35,7 @@ public:
     /// crear una camara de Ogre que guarda en ogreCamera
     /// </summary>
     /// <param name="data"></param>
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Crea una camara de Ogre que guarda en ogreCamera
     /// </summary>

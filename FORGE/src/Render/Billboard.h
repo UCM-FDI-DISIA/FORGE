@@ -36,7 +36,7 @@ public:
     /// </summary>
     void onDisabled() override;
 
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
 
     /// <summary>
     /// Añade un nuevo billboard al conjunto

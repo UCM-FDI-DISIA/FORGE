@@ -20,13 +20,15 @@ TestComponent::TestComponent() :
 	activeAnim(0) {
 }
 
-void TestComponent::initComponent(ComponentData* data) {
+bool TestComponent::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
 	audio = entity->getComponent<AudioSource>();
 	animator = entity->getComponent<Animator>();
-	if (animator != nullptr) {
+	if (animator != nullptr && animator->getEntity()->isAlive()) {
 		anims = animator->getAnimations();
+		return true;
 	}
+	return false;
 }
 
 void TestComponent::update() {

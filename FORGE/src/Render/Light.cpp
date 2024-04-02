@@ -19,14 +19,21 @@ Light::Light() :
 }
 
 Light::~Light() {
-    renderManager->removeNode(ogreLight);
+    if(ogreLight != nullptr && renderManager != nullptr)
+    {
+        renderManager->removeNode(ogreLight);
+    }
 }
 
-void Light::initComponent(ComponentData* data) {
+bool Light::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
         renderManager = RenderManager::getInstance();
         ogreLight = renderManager->addLightNode(this);
     }
+    else {
+		std::cerr << "ERROR: Se requiere un componente Transform para generar un Light\n";
+	}
+    return ogreLight != nullptr;
 }
 
 void Light::onEnabled() {

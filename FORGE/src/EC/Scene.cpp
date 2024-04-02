@@ -20,13 +20,13 @@ Scene::~Scene() {
 }
 
 void Scene::update() {
+    refresh();
     for (auto& group : entitiesByGroup) {
         for (auto& entity : group) {
             entity->update();
         }
     }
-
-    refresh();
+    
 }
 
 void Scene::fixedUpdate() {
@@ -81,6 +81,13 @@ bool Scene::setHandler(std::string handler, Entity* entity) {
     return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
 }
 
+void Scene::endScene() {
+    sceneEnd = true;
+}
+
+bool Scene::getEndScene() {
+    return sceneEnd;
+}
 void Scene::setEnabled(bool enabled) {
     for (auto& group : entitiesByGroup) {
         for (auto& entity : group) {

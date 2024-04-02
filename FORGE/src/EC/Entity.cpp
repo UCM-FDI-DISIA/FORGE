@@ -14,10 +14,16 @@ Entity::Entity() :
     alive(false) {
 }
 
-Entity::~Entity() { 
+Entity::~Entity() {
     for (auto& component : components) {
         delete component.second;
     }
+    for (auto& child : children) {
+        child->setAlive(false);
+    }
+    // if (parent != nullptr) {
+    //     parent->removeChild(this);
+    // }
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {

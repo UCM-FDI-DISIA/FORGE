@@ -41,27 +41,28 @@ void factory() {
 
 
 int main(int argc, char* argv[]) {
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
 	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
 	RenderManager& render = *RenderManager::getInstance();
-    render.setup("Test FORGE");
-    SceneManager& sceneManager = *SceneManager::getInstance();
-    Input& input = *Input::getInstance();
+	render.setup("Test FORGE");
+	SceneManager& sceneManager = *SceneManager::getInstance();
+	Input& input = *Input::getInstance();
 	AudioManager& ad = *AudioManager::getInstance();
-    sceneManager.changeScene("Test");
-    while (!input.keyUp(K_ESC)) {
-        input.refresh();
-        input.update();
-        sceneManager.update();
+	sceneManager.changeScene("Test");
+	while (!input.keyUp(K_ESC)) {
+		input.refresh();
+		input.update();
+		if (!sceneManager.update()) {
+			break;
+		}
 		sceneManager.refresh();
 		ad.update();
-        if(!render.render())
+		if (!render.render())
 			break;
-    }
+	}
 	sceneManager.cleanUp();
 	delete loadManager;
 
-    return 0;
+	return 0;
 }
-
