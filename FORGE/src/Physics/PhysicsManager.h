@@ -41,6 +41,12 @@ public:
     /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
     /// </summary>
     void updatePhysics();
+    
+    /// <summary>
+    /// Comprueba las colisiones ocurridas en la ultima simulacion y las resuelve segun los callbacks definidos.
+    /// </summary>
+    void handleCollisions();
+
     /// <summary>
    /// Cambia la gravedad del mundo fisico
    /// </summary>

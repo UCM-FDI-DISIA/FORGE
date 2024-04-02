@@ -32,7 +32,7 @@ void PhysicsManager::initPhysics() {
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
     debugger = new DebugMode(RenderManager::getInstance()->getSceneManager());
-    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
+    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); // Son flags, se pueden aÃ±adir varios modos (ej. DBG_DrawWireFrame|DBG...)
     world->setDebugDrawer(debugger);
 
     world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
@@ -42,7 +42,40 @@ void PhysicsManager::initPhysics() {
 void PhysicsManager::updatePhysics() {
     world->stepSimulation(1 / 50.f, 20);
     if (debugMode) world->debugDrawWorld();
+    handleCollisions();    
 }
+
+void PhysicsManager::handleCollisions() {
+    //Iteramos en todos los manifolds ocurridos en la ultima simulacion
+    int numManifolds = dispatcher->getNumManifolds();
+
+    for (int i = 0; i < numManifolds; i++) {
+        //Obtenemos el manifold actual
+		btPersistentManifold* contactManifold = dispatcher->getManifoldByIndexInternal(i);
+		const btCollisionObject* obA = contactManifold->getBody0();
+		const btCollisionObject* obB = contactManifold->getBody1();
+        //Iteramos en todos los contactos de cada manifold
+		int numContacts = contactManifold->getNumContacts();
+        for (int j = 0; j < numContacts; j++) {
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+            if (pt.getDistance() < 0.f) {
+				const btVector3& ptA = pt.getPositionWorldOnA();
+				const btVector3& ptB = pt.getPositionWorldOnB();
+				const btVector3& normalOnB = pt.m_normalWorldOnB;
+				//std::cout << "Collision at: " << ptA.getX() << " " << ptA.getY() << " " << ptA.getZ() << std::endl;
+				//std::cout << "Collision at: " << ptB.getX() << " " << ptB.getY() << " " << ptB.getZ() << std::endl;
+				//std::cout << "Collision normal: " << normalOnB.getX() << " " << normalOnB.getY() << " " << normalOnB.getZ() << std::endl;
+            }
+            //Llamamos a los callbacks que tenga guardados el componente Rigidbody de cada objeto
+            auto auxTransformA = transforms.find((btRigidBody*)obA);
+            auto auxTransformB = transforms.find((btRigidBody*)obB);
+            if (auxTransformA != transforms.end() &&  auxTransformB != transforms.end()) {
+				auxTransformA->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformB->second->getEntity());
+			
+				auxTransformB->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformA->second->getEntity());
+			}
+		}
+	}
 
 void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
     world->setGravity(newGravity.operator btVector3());

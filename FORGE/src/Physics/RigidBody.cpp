@@ -77,6 +77,10 @@ bool RigidBody::hasCollidedWith(RigidBody* other) {
     return myBody->checkCollideWith(other->getBody());
 }
 
+void RigidBody::registerCallback(CollisionCallback callback) {
+    collisionCallbacks.push_back(callback);
+}
+
 void RigidBody::setFriction(float newFriction) {
     
     friction = newFriction;
@@ -127,6 +131,19 @@ bool RigidBody::isStatic() {
     return staticBody;
 }
 
+bool RigidBody::isTrigger() {
+    return trigger;
+}
+
+void RigidBody::setTrigger(bool isTrigger) {
+    trigger = isTrigger;
+    if (trigger)
+		myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	else
+        myBody->setCollisionFlags(myBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    
+}
+
 btCollisionShape* RigidBody::getShape() {
     return myShape;
 }
@@ -137,6 +154,12 @@ forge::Vector3 RigidBody::getRigidScale() {
 
 btRigidBody* RigidBody::getBody(){
     return myBody;
+}
+
+void RigidBody::onCollision(Entity* other) {
+    for (auto cb : collisionCallbacks) {
+        cb(this, other->getComponent<RigidBody>());
+    }
 }
 
 
