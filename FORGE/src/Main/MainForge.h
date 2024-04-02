@@ -15,14 +15,14 @@ class PhysicsManager;
 
 class MainForge {
 private:
-	Time& time;
+	forge::Time& time;
 	bool isRunning = true;
 	double fixedUpdateTimer;
 
 	RenderManager& renderManager;
 	SceneManager& sceneManager;
 	AudioManager& audioManager;
-	//LoadManager& loadManager;
+	LoadManager& loadManager;
 	Input& inputManager;
 	//PhysicsManager& physicsManager;
 	//UIManager& uiManager;
@@ -33,10 +33,6 @@ private:
 	/// Constructor de la clase ForgeMain y de todos los modulos. Inicializa el bucle principal.
 	/// </summary>
 	MainForge();
-	/// <summary>
-	/// Destructor de la clase ForgeMain y de todos los modulos.
-	/// </summary>
-	~MainForge();
 	//Al ser un singleton, no se puede copiar ni igualar
 	MainForge(MainForge const&) = delete;
 	void operator=(MainForge const&) = delete;
@@ -47,10 +43,13 @@ private:
 	void manageFixedUpdates();
 
 	void update();
-	void refresh();
 	bool render();
 
 public:
+	/// <summary>
+	/// Destructor de la clase ForgeMain y de todos los modulos.
+	/// </summary>
+	~MainForge();
 	/// <summary>
 	/// </summary>
 	/// <returns>la instancia de ForgeMain</returns>

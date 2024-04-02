@@ -57,8 +57,7 @@ local scenes = {
                 },
                 Light = {
                     type = 0 
-                },
-                AudioListener = 0
+                }
             }
         }
     }

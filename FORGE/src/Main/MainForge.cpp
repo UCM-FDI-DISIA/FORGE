@@ -1,13 +1,13 @@
 #include "MainForge.h"
-#include "Time.h"
+#include "TimeForge.h"
 
 #include "RenderManager.h"
 #include "SceneManager.h"
 #include "Input.h"
 #include "AudioManager.h"
+#include "LoadManager.h"
 /*
 #include "PhysicsManager.h"
-#include "LoadManager.h"
 #include "UIManager.h"
 */
 #include <iostream>
@@ -21,14 +21,15 @@ MainForge::MainForge() :
 	renderManager(*RenderManager::getInstance()), 
 	sceneManager(*SceneManager::getInstance()),
 	inputManager(*Input::getInstance()),
-	audioManager(*AudioManager::getInstance())/*,
-	loadManager(*LoadManager::getInstance()),
+	audioManager(*AudioManager::getInstance()),
+	loadManager(*(new LoadManager()))/*,
 	physicsManager(*PhysicsManager::getInstance()),
 	uiManager(*UIManager::getInstance())*/ {
 }
 
 MainForge::~MainForge() {
 	sceneManager.cleanUp();
+	delete &loadManager;
 }
 
 void MainForge::manageFixedUpdates() {
@@ -44,11 +45,6 @@ void MainForge::update() {
 	inputManager.update();
 	sceneManager.update();
 	audioManager.update();
-}
-
-void MainForge::refresh() {
-	sceneManager.refresh();
-	inputManager.refresh();
 }
 
 bool MainForge::render() {
@@ -81,11 +77,11 @@ void MainForge::mainLoop() {
 		time.updateDT();
 		manageFixedUpdates();
 		update();
-		refresh();
 		if (!render()) {
 			std::cerr << "Could not render." << std::endl;
 			break;
 		}
+		inputManager.refresh();
 	}
 }
 

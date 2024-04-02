@@ -37,7 +37,7 @@ public:
 	/// Llama a lua_dofile para el  lua_State contenido
 	/// </summary>
 	/// <param name="path">Ruta del archivo .lua que se quiere ejecutar</param>
-	void doFile(std::string path);
+	bool doFile(std::string const& path);
 	/// <summary>
 	/// Permite agregar una clase propia al lua_State contenido a traves de LuaBridge.
 	/// </summary>

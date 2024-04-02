@@ -1,14 +1,14 @@
 #pragma once
 #ifndef TIME_H_
 #define TIME_H_
-#include <time.h>
+#include <ctime>
 #include <memory>
 class MainForge;
 namespace forge {
 	class Time {
 	private:
 		friend MainForge;
-
+		
 		static double _deltaTime;
 		time_t previous;
 

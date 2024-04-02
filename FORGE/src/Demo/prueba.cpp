@@ -7,7 +7,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "LoadManager.h"
-#include "EcsLoad.h"
 #include "Input.h"
 #include "Factory.h"
 #include "Transform.h"
@@ -35,7 +34,8 @@ void factory() {
 int main(int argc, char* argv[]) {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
-	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
+	LoadManager* loadManager = new LoadManager();
+	if (!loadManager->init("Assets/assets.forge.lua", "scenetest.lua")) return 0;
 	RenderManager& render = *RenderManager::getInstance();
     render.setup("Test FORGE");
     SceneManager& sceneManager = *SceneManager::getInstance();
