@@ -10,6 +10,28 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Audio\AudioListener.cpp" />
+    <ClCompile Include="..\..\src\Audio\AudioManager.cpp" />
+    <ClCompile Include="..\..\src\Audio\AudioSource.cpp" />
+    <ClCompile Include="..\..\src\Audio\Sound.cpp" />
+    <ClCompile Include="..\..\src\Audio\SoundGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Audio\AudioListener.h" />
+    <ClInclude Include="..\..\src\Audio\AudioManager.h" />
+    <ClInclude Include="..\..\src\Audio\AudioSource.h" />
+    <ClInclude Include="..\..\src\Audio\Sound.h" />
+    <ClInclude Include="..\..\src\Audio\SoundGenerator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -44,13 +66,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin</OutDir>
-    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin</OutDir>
-    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)tmp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -58,11 +80,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\irrKlang\include\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\;$(SolutionDir)src\EC\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\irrKlang\lib\Win$(Platform)-visualStudio\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>irrKlang.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -72,6 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\irrKlang\include\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\;$(SolutionDir)src\EC\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,9 +107,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\irrKlang\lib\Win$(Platform)-visualStudio\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>irrKlang.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
