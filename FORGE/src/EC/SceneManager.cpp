@@ -110,7 +110,7 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 	else if (activeScenePointer != nullptr) {
 		activeScenePointer->setEnabled(true);
 	}
-	if (activeScene == nullptr || activeScene->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
+	if (activeScene.second == nullptr || activeScene.second->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
 }
 
 void SceneManager::removeScene(std::string id) {
@@ -155,7 +155,7 @@ int SceneManager::getMaxGroupId() {
 }
 
 bool SceneManager::update() {
-	if (activeScene != nullptr && !activeScene->getEndScene()) {
+	if (activeScene.second != nullptr && !activeScene.second->getEndScene()) {
 		activeScene.second->update();
 		return true;
 	}

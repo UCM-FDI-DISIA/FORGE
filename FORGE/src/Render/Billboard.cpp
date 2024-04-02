@@ -47,7 +47,7 @@ bool Billboard::initComponent(ComponentData* data) {
 	else {
 		std::cerr << "ERROR: Se requiere un componente Transform para generar un Billboard\n";
 	}
-	return bSet != nullptr;
+	return billboardSet != nullptr;
 }
 
 void Billboard::addBillboards() {

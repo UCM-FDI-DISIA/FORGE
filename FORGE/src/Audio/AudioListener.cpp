@@ -16,7 +16,7 @@ AudioListener::~AudioListener() {
     }
 }
 
-void AudioListener::initComponent(ComponentData* data) {
+bool AudioListener::initComponent(ComponentData* data) {
     transform = entity->getComponent<Transform>();
     if (manager.getListenerOnScene()) {
         entity->removeComponent(this->id);
@@ -25,6 +25,7 @@ void AudioListener::initComponent(ComponentData* data) {
         manager.registerListenerOnScene();
         isListenerActive = true;
     }
+    return true;
 }
 
 void AudioListener::update() {

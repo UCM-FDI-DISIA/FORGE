@@ -138,9 +138,12 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
+	
 	if (root == nullptr) return nullptr;
 	try {
+		// Se crea un nodo para la camara
 		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		// Se crea la camara con las caracteristicas especificadas
 		Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
 		ogreCamera->setNearClipDistance(camera->getNearClipDistance());
 		ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
@@ -151,11 +154,12 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 			camera->getBackgroundColor().getY(),
 			camera->getBackgroundColor().getZ());
 		viewport->setBackgroundColour(value);
+		// Se a�ade el nodo al mapa de objetos de la escena de OGRE
 		transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
 		return ogreCamera;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar una camara " << cameraNames->generate() << "\n";	
+		std::cerr << "ERROR: No se ha podido cargar una camara " << cameraNames->generate() << "\n";
 		return nullptr;
 	}
 }
@@ -163,9 +167,12 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 Ogre::Light* RenderManager::addLightNode(Light* light) {
 	if (root == nullptr) return nullptr;
 	try {
-		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		// Se crea una luz del tipo requerido
 		Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
+		// Se vincula la luz a un nodo de OGRE que cuelga del nodo raiz
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 		node->attachObject(ogreLight);
+		// Se a�ade el nodo al mapa de objetos de la escena de OGRE
 		transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
 		return ogreLight;
 	}
@@ -173,67 +180,6 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 		std::cerr << "ERROR: No se ha podido cargar una luz " << light->getType() << "\n";
 		return nullptr;
 	}
-}
-
-Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
-	if (root == nullptr) return nullptr;
-	try {
-		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-		std::string name = particleSystemsNames->generate();
-		Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
-		node->attachObject(ogreParticleSystem);
-		ogreParticleSystem->setEmitting(particleSystem->getEmitting());
-		transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>() });
-		return ogreParticleSystem;
-	} catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar un sistema de particulas " << particleSystem->getParticle() << "\n";
-		return nullptr;
-	}
-}
-
-Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* billboardSet) {
-	// Se crea un billboardSet de OGRE con las dimensiones especificadas en el componente y el material
-	Ogre::BillboardSet* set = sceneManager->createBillboardSet(billboardSet->getSize());
-	set->setDefaultDimensions(billboardSet->getBillboardWidth(), billboardSet->getBillboardHeight());
-	if (billboardSet->getMaterial() != "") {
-		set->setMaterialName(billboardSet->getMaterial());
-	}
-	// Se vincula el billboardSet a un nodo de OGRE que cuelga del nodo raiz
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	node->attachObject(set);
-	// Se a�ade el nodo al mapa de objetos de la escena de OGRE
-	transforms.insert({ node, billboardSet->getEntity()->getComponent<Transform>()});
-	return set;
-}
-
-Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
-	// Se crea un nodo para la camara
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	// Se crea la camara con las caracteristicas especificadas
-	Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
-	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
-	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
-	node->attachObject(ogreCamera);
-	Ogre::Viewport* viewport = forge->getWindow().render->addViewport(ogreCamera);
-	Ogre::ColourValue value = Ogre::ColourValue(
-		camera->getBackgroundColor().getX(),
-		camera->getBackgroundColor().getY(),
-		camera->getBackgroundColor().getZ());
-	viewport->setBackgroundColour(value);
-	// Se a�ade el nodo al mapa de objetos de la escena de OGRE
-	transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
-	return ogreCamera;
-}
-
-Ogre::Light* RenderManager::addLightNode(Light* light) {
-	// Se crea una luz del tipo requerido
-	Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
-	// Se vincula la luz a un nodo de OGRE que cuelga del nodo raiz
-	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
-	node->attachObject(ogreLight);
-	// Se a�ade el nodo al mapa de objetos de la escena de OGRE
-	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
-	return ogreLight;
 }
 
 Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
@@ -258,19 +204,15 @@ Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* parti
 
 
 Ogre::ParticleSystem* RenderManager::updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem) {
-	if (root == nullptr) return nullptr;
-	try {
-		// Se busca el nodo del que cuelga el sistema de particulas que queremos borrar
-		Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
-		node->detachObject(ogreParticleSystem);
-		sceneManager->destroyEntity(ogreParticleSystem);
-		// Se crea el nuevo sistema y se vincula al nodo ya existente
-		Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
-		newParticleSystem->setEmitting(particleSystem->getEmitting());
-		node->attachObject(newParticleSystem);
-		return newParticleSystem;
-	}
-	
+	// Se busca el nodo del que cuelga el sistema de particulas que queremos borrar
+	Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
+	node->detachObject(ogreParticleSystem);
+	sceneManager->destroyEntity(ogreParticleSystem);
+	// Se crea el nuevo sistema y se vincula al nodo ya existente
+	Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+	newParticleSystem->setEmitting(particleSystem->getEmitting());
+	node->attachObject(newParticleSystem);
+	return newParticleSystem;	
 }
 
 
