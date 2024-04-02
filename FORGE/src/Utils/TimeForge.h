@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TIME_H_
-#define TIME_H_
+#ifndef TIME_FORGE_H_
+#define TIME_FORGE_H_
 #include <ctime>
 #include <memory>
 class MainForge;
@@ -37,4 +37,4 @@ namespace forge {
 		static constexpr double fixedDeltaTime = 0.02;
 	};
 }
-#endif // !TIME_H_
+#endif // !TIME_FORGE_H_

@@ -3,7 +3,7 @@
 std::unique_ptr<forge::Time> forge::Time::instance = nullptr;
 
 forge::Time::Time() :
-	previous(::time(NULL)) {
+	previous(time(NULL)) {
 	_deltaTime = 0.0;
 }
 
@@ -13,11 +13,11 @@ forge::Time* forge::Time::getInstance() {
 }
 
 void forge::Time::initDT() noexcept {
-	::time(&previous);
+	time(&previous);
 }
 
 void forge::Time::updateDT() noexcept {
-	time_t current = ::time(NULL);
-	_deltaTime = ::difftime(current, previous);
+	time_t current = time(NULL);
+	_deltaTime = difftime(current, previous);
 	previous = current;
 }

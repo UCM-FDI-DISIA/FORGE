@@ -10,26 +10,34 @@
 #include "PhysicsManager.h"
 #include "UIManager.h"
 */
+
+#include "Factory.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Light.h"
+#include "Camera.h"
+#include "AudioManager.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+
 #include <iostream>
 
 using namespace forge;
 
-std::unique_ptr<MainForge> MainForge::instance = nullptr;
+bool MainForge::initialized = false;
+std::unique_ptr<MainForge> MainForge::instance = std::unique_ptr<MainForge>(new MainForge());
 
 MainForge::MainForge() :
+	isRunning(false),
+	fixedUpdateTimer(0.0),
 	time(*Time::getInstance()),
-	renderManager(*RenderManager::getInstance()), 
+	renderManager(*RenderManager::getInstance()),
 	sceneManager(*SceneManager::getInstance()),
 	inputManager(*Input::getInstance()),
 	audioManager(*AudioManager::getInstance()),
 	loadManager(*(new LoadManager()))/*,
 	physicsManager(*PhysicsManager::getInstance()),
 	uiManager(*UIManager::getInstance())*/ {
-}
-
-MainForge::~MainForge() {
-	sceneManager.cleanUp();
-	delete &loadManager;
 }
 
 void MainForge::manageFixedUpdates() {
@@ -51,12 +59,19 @@ bool MainForge::render() {
 	return renderManager.render() /*&& uiManager.render()*/;
 }
 
-MainForge* MainForge::getInstance() {
-	if (instance != nullptr) return instance.get();
-	return (instance = std::unique_ptr<MainForge>(new MainForge())).get();
+void MainForge::initFactory() {
+	Factory& f = *Factory::getInstance();
+	f.registerComponent<Transform>();
+	f.registerComponent<Mesh>();
+	f.registerComponent<Light>();
+	f.registerComponent<Camera>();
+	f.registerComponent<AudioSource>();
+	f.registerComponent<AudioListener>();
 }
 
-void MainForge::init(std::string luaConfigPath) {
+void MainForge::init(std::string const& luaConfigPath) {
+	initialized = true;
+	initFactory();
 	/* Config:
 	nombre ventana
 	mapa de audio
@@ -71,7 +86,14 @@ void MainForge::init(std::string luaConfigPath) {
 	//UIManager.init();???
 }
 
+void MainForge::shutDown() {
+	sceneManager.cleanUp();
+	delete& loadManager;
+	initialized = false;
+}
+
 void MainForge::mainLoop() {
+	isRunning = true;
 	time.initDT();
 	while (isRunning) {
 		time.updateDT();
@@ -85,6 +107,26 @@ void MainForge::mainLoop() {
 	}
 }
 
-void MainForge::exit() {
-	isRunning = false;
+void MainForge::Init(std::string const& luaConfigPath) {
+	if (!initialized) {
+		instance->init(luaConfigPath);
+	}
+}
+
+void MainForge::MainLoop() {
+	if (initialized && !instance->isRunning) {
+		instance->mainLoop();
+	}
+}
+
+void MainForge::ShutDown() {
+	if (initialized && !instance->isRunning) {
+		instance->shutDown();
+	}
+}
+
+void MainForge::Exit() {
+	if (initialized) {
+		instance->isRunning = false;
+	}
 }
