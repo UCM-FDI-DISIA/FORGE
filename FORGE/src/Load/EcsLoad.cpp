@@ -17,18 +17,23 @@ EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
 	if (!luaForge.doFile(realPath)) {
 		LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);
 		LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
-
-		if (!entityBlueprints.isNil()) {
-			for (auto&& entity : pairs(entityBlueprints)) {
-				EntityData* blueprint = parseEntityData(entity.second);
-				blueprint->isBlueprint = true;
-				sceneManager.addEntityBlueprint(entity.first.cast<std::string>(), blueprint);
+		try {
+			sceneBlueprints.length();
+			if (!entityBlueprints.isNil()) {
+				for (auto&& entity : pairs(entityBlueprints)) {
+					EntityData* blueprint = parseEntityData(entity.second);
+					blueprint->isBlueprint = true;
+					sceneManager.addEntityBlueprint(entity.first.cast<std::string>(), blueprint);
+				}
+			}
+			if (!sceneBlueprints.isNil()) {
+				for (auto&& scene : pairs(sceneBlueprints)) {
+					sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
+				}
 			}
 		}
-		if (!sceneBlueprints.isNil()) {
-			for (auto&& scene : pairs(sceneBlueprints)) {
-				sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
-			}
+		catch (std::exception e) {
+			std::cerr << "ERROR: No hay escenas\n";
 		}
 	}
 	
