@@ -17,7 +17,7 @@ local scenes = {
                     name = "maincam"
                 },
                 RigidBody = {
-                    scale = {1, 1, 1},
+                    scale = {30, 30, 30},
                     mass = 1,
                     friction = 0.5,
                     restitution = 0.6,
@@ -25,8 +25,7 @@ local scenes = {
                     static = false
                 }
             }
-        },
-        amenaza = {
+        },amenaza = {
             handler = "menace",
             components = {
                 Transform = {
@@ -39,7 +38,7 @@ local scenes = {
                     name = "maincam"
                 },
                 RigidBody = {
-                    scale = {1, 1, 1},
+                    scale = {30, 30, 30},
                     mass = 0.1,
                     friction = 0.5,
                     restitution = 0.6,
@@ -47,6 +46,7 @@ local scenes = {
                 }
             }
         },
+
         obstaculo = {
             group = "obstacle",
             components = {
