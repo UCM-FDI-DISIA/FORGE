@@ -21,7 +21,9 @@ Entity::~Entity() {
     for (auto& child : children) {
         child->setAlive(false);
     }
-    //parent->removeChild(this);
+    if (parent != nullptr) {
+        parent->removeChild(this);
+    }
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
