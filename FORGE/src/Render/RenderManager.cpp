@@ -177,11 +177,13 @@ Ogre::ParticleSystem* RenderManager::updateParticleSystemNode(Ogre::ParticleSyst
 
 void RenderManager::removeNode(Ogre::MovableObject* object) {
 	// Se busca el nodo asociado y se elimina de la escena de OGRE y del mapa de objetos de esta
-	Ogre::SceneNode* node = object->getParentSceneNode();
-	node->detachObject(object);
-	sceneManager->destroyEntity(object);
-	sceneManager->destroySceneNode(node);
-	transforms.erase(node);
+	if (object != nullptr) {
+		Ogre::SceneNode* node = object->getParentSceneNode();
+		node->detachObject(object);
+		sceneManager->destroyEntity(object);
+		sceneManager->destroySceneNode(node);
+		transforms.erase(node);
+	}
 }
 
 void RenderManager::removeCamera(Ogre::Camera* camera) {
