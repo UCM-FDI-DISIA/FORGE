@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils;$(SolutionDir)src\Render;$(SolutionDir)src\Input;$(SolutionDir)src\EC;$(SolutionDir)src\Load;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -73,7 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils;$(SolutionDir)src\Render;$(SolutionDir)src\Input;$(SolutionDir)src\EC;$(SolutionDir)src\Load;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -84,11 +84,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Main\MainForge.h" />
-    <ClInclude Include="..\..\src\Main\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Main\MainForge.cpp" />
-    <ClCompile Include="..\..\src\Main\Time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

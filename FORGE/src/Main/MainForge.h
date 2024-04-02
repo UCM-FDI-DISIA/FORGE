@@ -2,14 +2,15 @@
 #define MAIN_FORGE_H_
 #include <string>
 #include <memory>
-
-class Time;
+namespace forge {
+	class Time;
+}
 class RenderManager;
 class SceneManager;
 class AudioManager;
 class LoadManager;
 class Input;
-//class PhysicsManager;
+class PhysicsManager;
 //class UIManager;
 
 class MainForge {
@@ -20,7 +21,7 @@ private:
 
 	RenderManager& renderManager;
 	SceneManager& sceneManager;
-	//AudioManager& audiomanager;
+	AudioManager& audioManager;
 	//LoadManager& loadManager;
 	Input& inputManager;
 	//PhysicsManager& physicsManager;

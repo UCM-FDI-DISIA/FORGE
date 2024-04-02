@@ -1,4 +1,5 @@
 #include "Time.h"
+using namespace forge;
 
 std::unique_ptr<Time> Time::instance = nullptr;
 

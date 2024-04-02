@@ -18,15 +18,9 @@
     <ClInclude Include="..\..\src\Main\MainForge.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Main\Time.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Main\MainForge.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Main\Time.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

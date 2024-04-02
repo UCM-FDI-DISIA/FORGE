@@ -4,14 +4,15 @@
 #include "RenderManager.h"
 #include "SceneManager.h"
 #include "Input.h"
+#include "AudioManager.h"
 /*
 #include "PhysicsManager.h"
-#include "AudioManager.h"
 #include "LoadManager.h"
 #include "UIManager.h"
 */
 #include <iostream>
 
+using namespace forge;
 
 std::unique_ptr<MainForge> MainForge::instance = nullptr;
 
@@ -19,8 +20,8 @@ MainForge::MainForge() :
 	time(*Time::getInstance()),
 	renderManager(*RenderManager::getInstance()), 
 	sceneManager(*SceneManager::getInstance()),
-	inputManager(*Input::getInstance())/*,
-	audioManager(*AudioManager::getInstance()),
+	inputManager(*Input::getInstance()),
+	audioManager(*AudioManager::getInstance())/*,
 	loadManager(*LoadManager::getInstance()),
 	physicsManager(*PhysicsManager::getInstance()),
 	uiManager(*UIManager::getInstance())*/ {
@@ -33,7 +34,7 @@ MainForge::~MainForge() {
 void MainForge::manageFixedUpdates() {
 	fixedUpdateTimer += Time::deltaTime;
 	while (fixedUpdateTimer >= Time::fixedDeltaTime) {
-		// physicsManager.update();
+		// physicsManager.updatePhysics();
 		sceneManager.fixedUpdate();
 		fixedUpdateTimer -= Time::fixedDeltaTime;
 	}
@@ -42,7 +43,7 @@ void MainForge::manageFixedUpdates() {
 void MainForge::update() {
 	inputManager.update();
 	sceneManager.update();
-	//audioManager.update();
+	audioManager.update();
 }
 
 void MainForge::refresh() {

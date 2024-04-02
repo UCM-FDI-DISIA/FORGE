@@ -94,11 +94,13 @@
     <ClCompile Include="..\..\src\Utils\Quaternion.cpp" />
     <ClCompile Include="..\..\src\Utils\Vector2.cpp" />
     <ClCompile Include="..\..\src\Utils\Vector3.cpp" />
+    <ClCompile Include="C:\hlocal\p3\FORGE\FORGE\src\Utils\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Utils\Quaternion.h" />
     <ClInclude Include="..\..\src\Utils\Vector2.h" />
     <ClInclude Include="..\..\src\Utils\Vector3.h" />
+    <ClInclude Include="C:\hlocal\p3\FORGE\FORGE\src\Utils\Time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

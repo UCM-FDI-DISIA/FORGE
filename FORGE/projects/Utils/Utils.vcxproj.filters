@@ -24,6 +24,9 @@
     <ClCompile Include="..\..\src\Utils\Vector3.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="C:\hlocal\p3\FORGE\FORGE\src\Utils\Time.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Utils\Quaternion.h">
@@ -33,6 +36,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Utils\Vector3.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\hlocal\p3\FORGE\FORGE\src\Utils\Time.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
