@@ -13,9 +13,12 @@ Move::Move() {
 void Move::initComponent(ComponentData* data) {
 	rb = entity->getComponent<RigidBody>();
 	movement = data->get<float>("speed");
-	rb->setTrigger(true);
 }
 
 void Move::update() {
+	if (!rb->isTrigger()) {
+	rb->setTrigger(true);
+	}
 	rb->applyForce(forge::Vector3(0, movement, 0));
+
 }

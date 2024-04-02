@@ -16,14 +16,14 @@ local scenes = {
                 TestMovement = {
                     name = "maincam"
                 },
-                RigidBody = {
-                    scale = {30, 30, 30},
-                    mass = 1,
-                    friction = 0.5,
-                    restitution = 0.6,
-                    shapeType = "Capsule",
-                    static = false
-                }
+                -- RigidBody = {
+                --     scale = {30, 30, 30},
+                --     mass = 1,
+                --     friction = 0.5,
+                --     restitution = 0.6,
+                --     shapeType = "Capsule",
+                --     static = false
+                -- }
             }
         },amenaza = {
             handler = "menace",
@@ -37,16 +37,16 @@ local scenes = {
                 TestMovement = {
                     name = "maincam"
                 },
-                RigidBody = {
-                    scale = {30, 30, 30},
-                    mass = 0.1,
-                    friction = 0.5,
-                    restitution = 0.6,
-                    shapeType = "Box"
-                },
-                Move = {
-                    speed = 1
-                }
+                -- RigidBody = {
+                --     scale = {30, 30, 30},
+                --     mass = 0.1,
+                --     friction = 0.5,
+                --     restitution = 0.6,
+                --     shapeType = "Box"
+                -- },
+                -- Move = {
+                --     speed = 1
+                -- }
             }
         },
 
@@ -60,13 +60,13 @@ local scenes = {
                 Mesh = {
                     mesh = "Barrel.mesh"
                 },
-                RigidBody = {
-                    scale = {1, 1, 1},
-                    mass = 0.1,
-                    friction = 0.5,
-                    restitution = 0.6,
-                    shapeType = "Box"
-                }
+                -- RigidBody = {
+                --     scale = {1, 1, 1},
+                --     mass = 0.1,
+                --     friction = 0.5,
+                --     restitution = 0.6,
+                --     shapeType = "Box"
+                -- }
             }
         },
         cam = {

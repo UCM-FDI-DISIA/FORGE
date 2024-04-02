@@ -49,7 +49,6 @@ int main(int argc, char* argv[]) {
 
     Input& input = *Input::getInstance();
     sceneManager.changeScene("Test");
-	testFisico* myTest = new testFisico();
 
 	double deltaTime = 0;
 	double fixedUpdateTimer = 0;
@@ -76,6 +75,11 @@ int main(int argc, char* argv[]) {
     }
 	delete lf;
 	sceneManager.cleanUp();
+
+	delete phyisicsManager.getInstance();
+	delete render.getInstance();
+	
+
 
     return 0;
 }

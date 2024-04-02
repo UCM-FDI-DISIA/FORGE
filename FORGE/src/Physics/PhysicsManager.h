@@ -30,8 +30,11 @@ private:
     /// </summary>
     PhysicsManager();
 
+
 public:
     
+    ~PhysicsManager();
+
     /// <summary>
     /// Inicializa el mundo de fisicas y pone una gravedad default (9.8)
     /// </summary>

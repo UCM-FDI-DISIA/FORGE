@@ -15,10 +15,10 @@ TestMovement::TestMovement() :
 void TestMovement::initComponent(ComponentData* data) {
 	transform = entity->getComponent<Transform>();
 
-	//aprovecho para probar callbacks tmb uwu
-	entity->getComponent<RigidBody>()->registerCallback([] (RigidBody* self, RigidBody* other) {
-		std::cout << "Colisiono con algo\n";
-	});
+	////aprovecho para probar callbacks tmb uwu
+	//entity->getComponent<RigidBody>()->registerCallback([] (RigidBody* self, RigidBody* other) {
+	//	std::cout << "Colisiono con algo\n";
+	//});
 
 }
 
