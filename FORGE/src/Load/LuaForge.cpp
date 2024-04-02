@@ -44,11 +44,11 @@ lua_State* LuaForge::getState() const {
 }
 
 bool LuaForge::doFile(std::string path) {
-	bool fileFound = luaL_dofile(lua, path.c_str());
-	if (fileFound) {
+	bool fileNotFound = luaL_dofile(lua, path.c_str());
+	if (fileNotFound) {
 		std::cerr << "ERROR: Archivo .lua no encontrado o contiene un error de sintaxis\n";
 	}
-	return fileFound;
+	return fileNotFound;
 }
 
 void LuaForge::importClassToLua(std::function<void(lua_State*)> classCreation) {
