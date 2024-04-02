@@ -1,7 +1,6 @@
 #include "UIComponent.h"
-#include "GUI.h"
 
-UIComponent::UIComponent(const char* id, forge::Vector2 pos_) : windowName(id), pos(pos_), gui(GUI::getInstance()) {
+UIComponent::UIComponent(const char* id, forge::Vector2 pos_) : windowName(id), pos(pos_), gui(GUIManager::getInstance()) {
     if (gui->getIds().count(id)) {
         #ifdef _DEBUG
                 std::cerr << "El id " + (std::string)id + " ya existe\n";

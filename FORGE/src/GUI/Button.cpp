@@ -1,5 +1,4 @@
 #include "Button.h"
-#include "GUI.h"
 
 const std::string Button::id = "Button";
 

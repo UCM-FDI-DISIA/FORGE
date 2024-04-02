@@ -146,7 +146,7 @@ private:
 	bool controllerButtonUpEvent();
 
 	/// <summary>
-	/// Añade un nuevo mando
+	/// AGUIManagerade un nuevo mando
 	/// </summary>
 	void onControllerDeviceAdded();
 
@@ -156,7 +156,7 @@ private:
 	void onControllerDeviceRemoved();
 
 	/// <summary>
-	/// Evento de mando añadido
+	/// Evento de mando anadido
 	/// </summary>
 	/// <returns>El estado del evento</returns>
 	bool controllerDeviceAddedEvent();

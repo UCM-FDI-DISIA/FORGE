@@ -9,13 +9,15 @@
 
 // Important to understand: SDL_Renderer is an _optional_ component of SDL2.
 // For a multi-platform app consider using e.g. SDL+DirectX on Windows and SDL+OpenGL on Linux/OSX.
-
-#include "GUI.h"
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#include "GUIManager.h"
 #include "Text.h"
 #include "Button.h"
 #include "Image.h"
 #include "ImageButton.h"
 #include "InputText.h"
+#include <memory>
 
 #if !SDL_VERSION_ATLEAST(2,0,17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
@@ -31,6 +33,7 @@ void funcionImg() {
 
 // Main code
 int main(int, char**) {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     // Setup SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
         printf("Error: %s\n", SDL_GetError());
@@ -58,30 +61,17 @@ int main(int, char**) {
     //SDL_GetRendererInfo(renderer, &info);
     //SDL_Log("Current SDL_Renderer: %s", info.name);
 
-    // Setup Dear ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+   
 
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight();
-
-    // Setup Platform/Renderer backends
-    ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
-    ImGui_ImplSDLRenderer2_Init(renderer);
-
-    // Our state
+     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // COMPONENTES
     int cont = 0, con1 = 0;
     // --- GUI ---
-    GUI* gui = GUI::getInstance();
+    GUIManager* gui = GUIManager::getInstance();
+    gui->setContext(renderer, window);
     gui->loadFont("Supercharge", "supercharge.ttf", 60);
     gui->loadFont("Saeda", "LTSaeada-Black.otf", 60);
     gui->showLoadedFonts();
@@ -89,7 +79,7 @@ int main(int, char**) {
     Text* text = new Text("prueba", "Saeda", forge::Vector2(100, 200));
     //text->setBackground();
     //text->removeBackground();
-    text->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
+    //text->setColor(forge::Vector4({ .0, 0.0, 0.0, 1.0 }));
     //text->changeTextOpacity(0.3f);
     //text->changeFont("Supercharge");
     //text->changeBackgroundOpacity(0.3f);
@@ -135,11 +125,8 @@ int main(int, char**) {
             if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
                 done = true;
         }
+        gui->update();
 
-        // Start the Dear ImGui frame
-        ImGui_ImplSDLRenderer2_NewFrame();
-        ImGui_ImplSDL2_NewFrame();
-        ImGui::NewFrame();
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
        /*if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);*/
@@ -157,22 +144,17 @@ int main(int, char**) {
         imgb2->update();
         BaseButton::mainFunctionCall();
 
-        // Rendering
-        ImGui::Render();
-        SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-        SDL_SetRenderDrawColor(renderer, (Uint8)(clear_color.x * 255), (Uint8)(clear_color.y * 255), (Uint8)(clear_color.z * 255), (Uint8)(clear_color.w * 255));
-        SDL_RenderClear(renderer);
-        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
-        SDL_RenderPresent(renderer);
-
-        gui->freeIds();
+        gui->render();
+        gui->refresh();
     }
-
-    // Cleanup
-    ImGui_ImplSDLRenderer2_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
-    ImGui::DestroyContext();
-
+    delete(text);
+    delete(button);
+    delete(img);
+    delete(itext); 
+    delete(itext2);
+    delete(imgb);
+    delete(imgb2); // no da error pero no borra el surface y no deja basura
+    //delete(gui); // ya se llama
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

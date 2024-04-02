@@ -5,12 +5,15 @@
 
 #include "Text.h"
 
-class InputText:public Text
-{
+class InputText : public Text {
 private:
+	// Id de componente
 	static const std::string id;
+
+	// Buffer del texto a escribir
 	char textToWrite[64];
-	const char* textID;
+
+	// Texto que se quiere modificar a la vez
 	Text* textToChange;
 
 public:

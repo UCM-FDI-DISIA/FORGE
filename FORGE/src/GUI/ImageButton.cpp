@@ -18,7 +18,13 @@ ImageButton::ImageButton(const char* imgButId, const std::string fileName, SDL_R
 	images.push_back(new Image(imgButId + (char)IDLE, fileName, renderer_, size_, pos_));
 }
 
-ImageButton::~ImageButton() { }
+ImageButton::~ImageButton() 
+{ 
+	for (Image* i : images)  {
+		delete(i);
+	}
+	images.clear();
+}
 
 bool ImageButton::update() {
 	// Tamano y posicion de la ventana

@@ -15,7 +15,7 @@ protected:
 	// Identificador del boton(debe ser único para cada uno)
 	const char* buttonId;
 
-	// Tamaño del boton
+	// Tamano del boton
 	forge::Vector2 buttonSize;
 
 	// Control de pulsado

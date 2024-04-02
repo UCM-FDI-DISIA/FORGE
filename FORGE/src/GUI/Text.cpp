@@ -1,5 +1,4 @@
 #include "Text.h"
-#include "GUI.h"
 
 const std::string Text::id = "Text";
 

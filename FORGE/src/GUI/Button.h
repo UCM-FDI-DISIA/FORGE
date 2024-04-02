@@ -10,14 +10,18 @@ private:
 	// Id de componente
 	static const std::string id;
 
+	// Texto del boton
 	const char* text;
 
+	// Color de los elementos del boton
 	forge::Vector4 textColor;
 	forge::Vector4 buttonColor;
 	forge::Vector4 buttonHoverColor;
 	forge::Vector4 buttonActiveColor;
 
+	// Nombre de la fuente
 	std::string fontName;
+	// Fuente
 	ImFont* font = nullptr;
 
 public:

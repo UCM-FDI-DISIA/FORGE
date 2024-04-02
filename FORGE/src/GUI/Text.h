@@ -5,19 +5,28 @@
 
 #include "UIComponent.h"
 
-class Text  : public UIComponent {
+class Text : public UIComponent {
 private:
+	// Id de componente
 	static const std::string id;
 
 protected:
+	// Texto a mostrar
 	const char* text;
 
+	// Color de texto
 	forge::Vector4 color;
+
+	// Color de fondo
 	forge::Vector4 bgColor;
 
+	// Nombre de la fuente
 	std::string fontName;
+
+	// Fuente
 	ImFont* font = nullptr;
 
+	// Tamano del texto
 	forge::Vector2 size;
 
 public:

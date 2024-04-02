@@ -23,7 +23,7 @@ Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* render
 
 Image::~Image() {
 	// Esto da error y no debería, hay que revisarlo porque probablemente deja basura
-	SDL_FreeSurface(surface);
+	//SDL_FreeSurface(surface);
 }
 
 bool Image::update() {

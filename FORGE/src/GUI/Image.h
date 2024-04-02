@@ -8,17 +8,23 @@
 #include "UIComponent.h"
 
 class Image : public UIComponent {
-
 private:
+	// Id de componente
 	static const std::string id;
 
-protected:
+	// Textura
 	SDL_Texture* texture;
 
+	// Tamano original de la imagen
 	forge::Vector2 sourceSize;
+
+	// Tamano de renderizado
 	forge::Vector2 imageSize;
 
+	// Rendered de SDL
 	SDL_Renderer* renderer;
+
+	// Superficie de SDL
 	SDL_Surface* surface;
 
 public:
@@ -28,7 +34,7 @@ public:
 	/// <param name = "imgId">Identificador de la imagen (los identificadores de componetes UI NO PUEDEN COINCIDIR)</param>
 	/// <param name = "fileName">Direccíon del archivo ("C:/MyAssets/asset.png")</param>
 	/// <param name = "renderer_">Renderer de SDL</param>
-	/// <param name = "imgSize">Tamaño de la imagen por pantalla</param>
+	/// <param name = "imgSize">Tamano de la imagen por pantalla</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
 	Image(const char* imgId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 imgSize,
 		forge::Vector2 pos_ = forge::Vector2::ZERO);
@@ -50,12 +56,12 @@ public:
 	void setSize(forge::Vector2 size);
 
 	/// <summary>
-	/// Devuelve el tamaño de la imagen
+	/// Devuelve el tamano de la imagen
 	/// </summary>	
 	forge::Vector2 getSize();
 
 	/// <summary>
-	/// Devuelve el tamaño original de la imagen
+	/// Devuelve el tamano original de la imagen
 	/// </summary>	
 	forge::Vector2 getSourceSize();
 

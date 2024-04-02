@@ -97,7 +97,7 @@
     <ClInclude Include="..\..\dependencies\ImGUI\imstb_truetype.h" />
     <ClInclude Include="..\..\src\GUI\BaseButton.h" />
     <ClInclude Include="..\..\src\GUI\Button.h" />
-    <ClInclude Include="..\..\src\GUI\GUI.h" />
+    <ClInclude Include="..\..\src\GUI\GUIManager.h" />
     <ClInclude Include="..\..\src\GUI\Image.h" />
     <ClInclude Include="..\..\src\GUI\ImageButton.h" />
     <ClInclude Include="..\..\src\GUI\InputText.h" />
@@ -114,7 +114,7 @@
     <ClCompile Include="..\..\dependencies\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\..\src\GUI\BaseButton.cpp" />
     <ClCompile Include="..\..\src\GUI\Button.cpp" />
-    <ClCompile Include="..\..\src\GUI\GUI.cpp" />
+    <ClCompile Include="..\..\src\GUI\GUIManager.cpp" />
     <ClCompile Include="..\..\src\GUI\GUITest.cpp" />
     <ClCompile Include="..\..\src\GUI\Image.cpp" />
     <ClCompile Include="..\..\src\GUI\ImageButton.cpp" />
