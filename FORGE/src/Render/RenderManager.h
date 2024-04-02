@@ -147,7 +147,7 @@ public:
 	/// Devuelve el sceneManager
 	/// </summary>
 	inline Ogre::SceneManager* getSceneManager() {
-		return mySceneManager;
+		return sceneManager;
 	}
 #pragma endregion
 

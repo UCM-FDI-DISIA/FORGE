@@ -89,10 +89,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Demo\prueba.cpp" />
-    <ClCompile Include="..\..\src\Demo\TestComponent.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\src\Demo\TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +104,8 @@
     <ProjectReference Include="..\Load\Load.vcxproj">
       <Project>{a25433b1-436f-4bff-904a-a7b1de4e99bb}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Main\Main.vcxproj">
-      <Project>{4ef5fd19-2c0e-47a0-b8ff-a921240ff6aa}</Project>
+    <ProjectReference Include="..\Physics\Physics.vcxproj">
+      <Project>{a43f2981-4da2-48c7-b2f0-e4468c4caa51}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Render\Render.vcxproj">
       <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
@@ -124,7 +120,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="..\..\src\Demo\prueba.cpp" />
-    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Demo\Move.h">
@@ -132,7 +127,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="..\..\src\Demo\prueba.h" />
-    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
     <None Include="..\..\bin\Assets\assets.forge.lua" />
     <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
   </ItemGroup>

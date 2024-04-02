@@ -8,35 +8,59 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {0, -20, 0},
-                    scale = {0.25, 0.25, 0.25}
+                    position = {0, 0, 0}
                 },
-                Animator = {
- 		            mesh = "ninja.mesh",
-                    activeAnimations = {
-                       "Walk"
-                    }
+                Mesh = {
+                    mesh = "ogrehead.mesh"
                 },
-                TestComponent = 0,
-                AudioSource = {
-                    sound = "Test",
-                    playOnAwake = true
-                }
-            },
-            children = {
-                obstaculo = {
-                    group = "obstacle",
-                    components = {
-                        Transform = {
-                            position = {100, 0, -100},
-                            scale = {10, 10, 10}
-                        },
-                        ParticleSystem = {
-                            particle = "Examples/Smoke",
-                            emitting = true
-                        }
-                    }
-                }
+                -- RigidBody = {
+                --     scale = {30, 30, 30},
+                --     mass = 1,
+                --     friction = 0.5,
+                --     restitution = 0.6,
+                --     shapeType = "Capsule",
+                --     static = false
+                -- }
+            }
+        },amenaza = {
+            handler = "menace",
+            components = {
+                Transform = {
+                    position = {0, 10, 0}
+                },
+                Mesh = {
+                    mesh = "ogrehead.mesh"
+                },
+                -- RigidBody = {
+                --     scale = {30, 30, 30},
+                --     mass = 0.1,
+                --     friction = 0.5,
+                --     restitution = 0.6,
+                --     shapeType = "Box"
+                -- },
+                -- Move = {
+                --     speed = 1
+                -- }
+            }
+        },
+
+        obstaculo = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {0, 0, 0},
+                    scale = {5, 5, 5}
+                },
+                Mesh = {
+                    mesh = "Barrel.mesh"
+                },
+                -- RigidBody = {
+                --     scale = {1, 1, 1},
+                --     mass = 0.1,
+                --     friction = 0.5,
+                --     restitution = 0.6,
+                --     shapeType = "Box"
+                -- }
             }
         },
         cam = {
@@ -45,11 +69,11 @@ local scenes = {
                     position = {0, 0, 140}
                 },
                 Camera = {
+                    name = "maincam",
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
-                },
-                AudioListener = 0
+                }
             }
         },
         luz = {
@@ -58,74 +82,8 @@ local scenes = {
                     position = {20, 80, 0}
                 },
                 Light = {
-                    type = 0 
+                    type = 0
                 }
-            }
-        }
-    },
-    Play = {
-        jugador = {
-            handler = "player",
-            components = {
-                Transform = {
-                    position = {0, 0, 0},
-                    scale = {0.25, 0.25, 0.25}
-                },
-                AudioListener = 0,
-                Mesh = {
- 		            mesh = "ogrehead.mesh",
-                }
-            }
-        },
-        cartel = {
-            group = "obstacle",
-            components = {
-                Transform = {
-                    position = {-100, 0, -100},
-                    scale = {10,10,10}
-                },
-                Billboard = {
-                    material = "practica1/points",
-                    billboardDimensions = {10,10}
-                }
-            }
-        },
-        cartel2 = {
-            group = "obstacle",
-            components = {
-                Transform = {
-                    position = {100, 0, -100},
-                    scale = {10,10,10}
-                },
-                Billboard = {
-                    size = 5,
-                    material = "practica1/points",
-                    billboardDimensions = {5,5},
-                    totalDimensions = {30,30,30}
-                }
-            }
-        },
-        cam = {
-            components = {
-                Transform = {
-                    position = {0, 0, 70}
-                },
-                Camera = {
-                    nearClipDistance = 1,
-                    autoAspectRatio = true,
-                    backgroundColor = {0.6, 0.3, 0.3}
-                },
-                TestComponent = 0
-            }
-        },
-        luz = {
-            components = {
-                Transform = {
-                    position = {20, 80, 0}
-                },
-                Light = {
-                    type = 0 
-                },
             }
         }
     }

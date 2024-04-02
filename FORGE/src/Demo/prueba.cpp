@@ -14,11 +14,11 @@
 #include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
-#include "TestMovement.h"
 #include "test.h"
 #include "PhysicsManager.h"
 #include "RigidBody.h"
 #include "Move.h"
+#include "Animator.h"
 
 #define FIXED_UPDATE_RATE 20
 
@@ -33,9 +33,11 @@ void factory() {
 	f.registerComponent<Mesh>();
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
-	f.registerComponent<TestMovement>();
 	f.registerComponent<RigidBody>();
 	f.registerComponent<Move>();
+	f.registerComponent<AudioListener>();
+	f.registerComponent<Animator>();
+	f.registerComponent<AudioSource>();
 }
 
 
@@ -82,7 +84,8 @@ int main(int argc, char* argv[]) {
 	delete loadManager;
 
 	delete phyisicsManager.getInstance();
-	delete render.getInstance();
+	
+	//delete render.getInstance();
 	
 
 

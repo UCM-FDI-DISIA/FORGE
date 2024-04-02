@@ -26,7 +26,7 @@ PhysicsManager::PhysicsManager() {
 
 PhysicsManager::~PhysicsManager() {
     
-    delete debugger;
+    if(debugger!=nullptr)delete debugger;
     
     delete world;
 

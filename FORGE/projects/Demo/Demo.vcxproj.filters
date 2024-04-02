@@ -18,9 +18,6 @@
     <ClCompile Include="..\..\src\Demo\prueba.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Demo\TestComponent.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Demo\Move.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>

@@ -265,6 +265,7 @@ Vector3& Vector3::operator=(const btVector3& w) {
 	y = w.getY();
 	z = w.getZ();
 	return *this;
+}
 forge::Vector3::operator irrklang::vec3df() const {
 	return irrklang::vec3df(x, y, z);
 }
