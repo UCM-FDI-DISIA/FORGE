@@ -2,7 +2,6 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
-#include "Animator.h"
 #include <OgreParticleSystem.h>
 
 const std::string ParticleSystem::id = "ParticleSystem";
@@ -34,15 +33,13 @@ bool ParticleSystem::initComponent(ComponentData* data) {
     return ogreParticleSystem != nullptr;
 }
 
-void ParticleSystem::setEnabled(bool newActive) {
-    Component::setEnabled(newActive);
-    if (newActive) {
-        ogreParticleSystem = renderManager->addParticleSystemNode(this);
-    }
-    else {
-        renderManager->removeNode(ogreParticleSystem);
-        ogreParticleSystem = nullptr;
-    }
+void ParticleSystem::onEnabled() {
+    ogreParticleSystem = renderManager->addParticleSystemNode(this);
+}
+
+void ParticleSystem::onDisabled() {
+    renderManager->removeNode(ogreParticleSystem);
+    ogreParticleSystem = nullptr;
 }
 
 void ParticleSystem::setParticle(std::string newParticle) {

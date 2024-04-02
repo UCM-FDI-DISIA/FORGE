@@ -8,14 +8,19 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {0, 0, 0},
+                    position = {0, -20, 0},
                     scale = {0.25, 0.25, 0.25}
                 },
                 Animator = {
- 		             mesh = "ninja.mesh",
+ 		            mesh = "ninja.mesh",
                     activeAnimations = {
                        "Walk"
                     }
+                },
+                TestComponent = 0,
+                AudioSource = {
+                    sound = "Test",
+                    playOnAwake = true
                 }
             },
             children = {
@@ -31,6 +36,44 @@ local scenes = {
                             emitting = true
                         }
                     }
+                }
+            }
+        },
+        cam = {
+            components = {
+                Transform = {
+                    position = {0, 0, 140}
+                },
+                Camera = {
+                    nearClipDistance = 1,
+                    autoAspectRatio = true,
+                    backgroundColor = {0.6, 0.3, 0.3}
+                },
+                AudioListener = 0
+            }
+        },
+        luz = {
+            components = {
+                Transform = {
+                    position = {20, 80, 0}
+                },
+                Light = {
+                    type = 0 
+                }
+            }
+        }
+    },
+    Play = {
+        jugador = {
+            handler = "player",
+            components = {
+                Transform = {
+                    position = {0, 0, 0},
+                    scale = {0.25, 0.25, 0.25}
+                },
+                AudioListener = 0,
+                Mesh = {
+ 		            mesh = "ogrehead.mesh",
                 }
             }
         },
@@ -65,14 +108,14 @@ local scenes = {
         cam = {
             components = {
                 Transform = {
-                    position = {0, 0, 140}
+                    position = {0, 0, 70}
                 },
-                TestMovement = 0,
                 Camera = {
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
-                }
+                },
+                TestComponent = 0
             }
         },
         luz = {
@@ -82,46 +125,7 @@ local scenes = {
                 },
                 Light = {
                     type = 0 
-                }
-            }
-        }
-    },
-    Play = {
-        jugador = {
-            handler = "player",
-            components = {
-                Transform = {
-                    position = {0, 0, 0},
-                    scale = {0.25, 0.25, 0.25}
                 },
-                Animator = {
- 		             mesh = "ogrehead.mesh",
-                    activeAnimations = {
-                       "Walk"
-                    }
-                }
-            }
-        },
-        cam = {
-            components = {
-                Transform = {
-                    position = {0, 0, 140}
-                },
-                Camera = {
-                    nearClipDistance = 1,
-                    autoAspectRatio = true,
-                    backgroundColor = {0.6, 0.3, 0.3}
-                }
-            }
-        },
-        luz = {
-            components = {
-                Transform = {
-                    position = {20, 80, 0}
-                },
-                Light = {
-                    type = 0 
-                }
             }
         }
     }

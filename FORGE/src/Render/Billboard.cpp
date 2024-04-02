@@ -12,7 +12,7 @@ Billboard::Billboard() :
 	billboardDimensions(1,1),
 	totalDimensions(),
 	material(""),
-	bSet(nullptr), 
+	billboardSet(nullptr), 
 	renderManager(nullptr) {
 	serializer(size, "size");
 	serializer(material, "material");
@@ -21,28 +21,26 @@ Billboard::Billboard() :
 }
 
 Billboard::~Billboard() {
-	if(bSet != nullptr && renderManager != nullptr) 
+	if(billboardSet != nullptr && renderManager != nullptr)
 	{
-		renderManager->removeNode(bSet);
+		renderManager->removeNode(billboardSet);
 	}
 }
 
-void Billboard::setEnabled(bool newActive) {
-	Component::setEnabled(newActive);
-	if (newActive) {
-		bSet = renderManager->addBillboardNode(this);
-	}
-	else {
-		renderManager->removeNode(bSet);
-		bSet = nullptr;
-	}
+void Billboard::onEnabled() {
+	billboardSet = renderManager->addBillboardNode(this);
+}
+
+void Billboard::onDisabled() {
+	renderManager->removeNode(billboardSet);
+	billboardSet = nullptr;
 }
 
 bool Billboard::initComponent(ComponentData* data) {
 	if (entity->hasComponent("Transform")) {
 		renderManager = RenderManager::getInstance();
-		bSet = renderManager->addBillboardNode(this);
-		if (bSet != nullptr) {
+		billboardSet = renderManager->addBillboardNode(this);
+		if (billboardSet != nullptr) {
 			addBillboards();	
 		}
 	}
@@ -53,17 +51,17 @@ bool Billboard::initComponent(ComponentData* data) {
 }
 
 void Billboard::addBillboards() {
-	forge::Random* rn = new forge::Random();
-	int width = (int)totalDimensions.getX();
-	int height = (int)totalDimensions.getY();
-	int depth = (int)totalDimensions.getZ();
+	forge::Random* rnd = forge::Random::getInstance();
+	float width = totalDimensions.getX();
+	float height = totalDimensions.getY();
+	float depth = totalDimensions.getZ();
 	for (int i = 0; i < size; i++) {
-		forge::Vector3 pos = forge::Vector3(rn->generateRange(-width / 2.0f, width / 2.0f), 
-			rn->generateRange(-height / 2.0f, height / 2.0f),
-			rn->generateRange(-depth / 2.0f, depth / 2.0f));
-		bSet->createBillboard(pos);
+		forge::Vector3 pos = forge::Vector3(rnd->generateRange(-width / 2.0f, width / 2.0f),
+			rnd->generateRange(-height / 2.0f, height / 2.0f),
+			rnd->generateRange(-depth / 2.0f, depth / 2.0f));
+		billboardSet->createBillboard(pos);
 	}
-	delete rn;
+	delete rnd;
 }
 
 int Billboard::getSize() {
@@ -84,10 +82,10 @@ std::string Billboard::getMaterial() {
 
 void Billboard::setMaterial(std::string newMaterial) {
 	material = newMaterial;
-	bSet->setMaterialName(newMaterial);
+	billboardSet->setMaterialName(newMaterial);
 }
 
 void Billboard::setSize(int newSize) {
 	size = newSize;
-	bSet->setPoolSize(newSize);
+	billboardSet->setPoolSize(newSize);
 }

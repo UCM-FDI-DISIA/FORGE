@@ -3,13 +3,16 @@
 #include "Entity.h"
 #include "Component.h"
 #include "EntityData.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
+#include <lua.hpp>
+#pragma warning(push)
+#pragma warning(disable : 26439)
+#include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() : 
-	activeScene(nullptr),
+	activeScene("",nullptr),
 	lua(nullptr) {
 	groups.insert({"default",0});
 }
@@ -65,7 +68,6 @@ void SceneManager::cleanUp() {
 	for (auto& entity : entityBlueprints) {
 		delete entity.second;
 	}
-	lua_close(lua);
 }
 
 SceneManager* SceneManager::getInstance() {
@@ -82,10 +84,11 @@ lua_State* SceneManager::getLuaState() {
 }
 
 void SceneManager::changeScene(std::string scene, bool renewScene) {
+	Scene*& activeScenePointer = activeScene.second;
 	Scene* newScene;
 	auto iter = loadedScenes.find(scene);
-	if (activeScene != nullptr) {
-		activeScene->setEnabled(false);
+	if (activeScenePointer != nullptr) {
+		activeScenePointer->setEnabled(false);
 	}
 	if (iter == loadedScenes.end()) {
 		newScene = createScene(scene);
@@ -102,10 +105,10 @@ void SceneManager::changeScene(std::string scene, bool renewScene) {
 		}
 	}
 	if (newScene != nullptr) {
-		activeScene = newScene;
+		activeScene = { scene, newScene };
 	}
-	else if (activeScene != nullptr) {
-		activeScene->setEnabled(true);
+	else if (activeScenePointer != nullptr) {
+		activeScenePointer->setEnabled(true);
 	}
 	if (activeScene == nullptr || activeScene->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
 }
@@ -143,20 +146,24 @@ Scene* SceneManager::getScene(std::string id) {
 	return nullptr;
 }
 
+const std::string& SceneManager::getActiveSceneId() const{
+	return activeScene.first;
+}
+
 int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
 bool SceneManager::update() {
 	if (activeScene != nullptr && !activeScene->getEndScene()) {
-		activeScene->update();
+		activeScene.second->update();
 		return true;
 	}
 	return false;
 }
 
 void SceneManager::refresh() {
-	activeScene->refresh();
+	activeScene.second->refresh();
 }
 
 int SceneManager::getGroupId(std::string group) {

@@ -3,7 +3,7 @@
 std::unique_ptr<Input> Input::instance = nullptr;
 
 void Input::onMouseMotion(const SDL_Event& event) {
-	mousePos.set((float)event.motion.x, (float)event.motion.y);
+	mousePos.set(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
 }
 
 void Input::onMouseWheelMotion(const SDL_Event& event) {
@@ -207,11 +207,11 @@ int Input::getControllerAxis(ControllerAxisNames ax) {
 	float max = (axis >= 0) ? CONTROLLER_AXIS_MAX : CONTROLLER_AXIS_MIN;
 
 	if (abs(axis) < abs(deadZone)) return 0;
-	return (int)(axis - (deadZone * ((max - axis) / (max - deadZone))));
+	return static_cast<int>(axis - (deadZone * ((max - axis) / (max - deadZone))));
 }
 
 float Input::getNormalizedControllerAxis(ControllerAxisNames ax) {
-	float axis = (float)getControllerAxis(ax);
+	float axis = static_cast<float>(getControllerAxis(ax));
 	return axis / abs((axis >= 0) ? CONTROLLER_AXIS_MAX : CONTROLLER_AXIS_MIN);
 }
 

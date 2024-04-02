@@ -57,6 +57,7 @@ public:
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion del Component</param>
 	virtual void setEnabled(bool _enabled);
+
 	/// <summary>
 	/// Metodo que se llama cada vez que se activa el componente
 	/// </summary>
@@ -65,7 +66,7 @@ public:
 	/// Metodo que se llama cada vez que se desactiva el componente
 	/// </summary>
 	virtual void onDisabled();
-  
+
 	#pragma region Getters
 	/// <returns>
 	///	Si el Component esta activado

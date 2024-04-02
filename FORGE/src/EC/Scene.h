@@ -63,6 +63,9 @@ public:
     /// </summary>
     bool getEndScene();
 
+    ///	Establece si todos los Entity de la Scene estan activados
+    /// </summary>
+    /// <param name="_enabled">Nuevo estado de activacion de los Entities</param>
     void setEnabled(bool enabled);
 };
 #endif // !COMPONENT_H_

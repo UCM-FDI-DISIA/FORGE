@@ -142,6 +142,12 @@ public:
 	forge::Vector3 getGlobalScale() const;
 	///<returns>Se ha actualizado el transform.</returns>
 	bool getNeedsUpdate() const;
+	/// <returns>Vector forward actual.</returns>
+	forge::Vector3 getForward() const;
+	/// <returns>Vector up actual.</returns>
+	forge::Vector3 getUp() const;
+	/// <returns>Vector right actual.</returns>
+	forge::Vector3 getRight() const;
 	#pragma endregion //getters
 };
 

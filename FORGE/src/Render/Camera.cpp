@@ -2,9 +2,15 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
-#include "OgreCamera.h"
-#include "OgreColourValue.h"
-#include "OgreViewport.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
+#include <OgreCamera.h>
+#include <OgreColourValue.h>
+#include <OgreViewport.h>
+#pragma warning(pop)
 
 const std::string Camera::id = "Camera";
 
@@ -34,17 +40,14 @@ bool Camera::initComponent(ComponentData* data) {
     return ogreCamera != nullptr;
 }
 
-void Camera::setEnabled(bool newActive) {
-    Component::setEnabled(newActive);
-    if (newActive) {
-        ogreCamera = renderManager->addCameraNode(this);
-    }
-    else {
-        renderManager->removeCamera(ogreCamera);
-        ogreCamera = nullptr;
-    }
+void Camera::onEnabled() {
+    ogreCamera = renderManager->addCameraNode(this);
 }
 
+void Camera::onDisabled() {
+    renderManager->removeCamera(ogreCamera);
+    ogreCamera = nullptr;
+}
 
 void Camera::setNearClipDistance(float newNearClipDistance) {
     nearClipDistance = newNearClipDistance;

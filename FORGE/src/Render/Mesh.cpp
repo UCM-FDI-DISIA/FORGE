@@ -2,8 +2,13 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "Serializer.h"
-#include "Animator.h"
-#include "OgreEntity.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
+#include <OgreEntity.h>
+#pragma warning(pop)
 
 const std::string Mesh::id = "Mesh";
 
@@ -35,15 +40,13 @@ bool Mesh::initComponent(ComponentData* data) {
     return ogreEntity != nullptr;
 }
 
-void Mesh::setEnabled(bool newActive) {
-    Component::setEnabled(newActive);
-    if (newActive) {
-        ogreEntity = renderManager->addMeshNode(this);
-    }
-    else {
-        renderManager->removeNode(ogreEntity);
-        ogreEntity = nullptr;
-    }
+void Mesh::onEnabled() {
+    ogreEntity = renderManager->addMeshNode(this);
+}
+
+void Mesh::onDisabled() {
+    renderManager->removeNode(ogreEntity);
+    ogreEntity = nullptr;
 }
 
 void Mesh::setMesh(std::string newMesh) {

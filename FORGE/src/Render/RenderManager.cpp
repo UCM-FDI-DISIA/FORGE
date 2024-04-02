@@ -7,6 +7,11 @@
 #include "Light.h"
 #include "ParticleSystem.h"
 #include "Billboard.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
 #include <OgreRoot.h>
 #include <SDL.h>
 #include <OgreFileSystemLayer.h>
@@ -26,6 +31,8 @@
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
 #include "OgreNameGenerator.h"
+#pragma warning(pop)
+
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 
@@ -81,7 +88,7 @@ bool RenderManager::render() {
 }
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
-	if(root == nullptr) return nullptr;
+	if (root == nullptr) return nullptr;
 	try {
 		Ogre::Entity* entity = sceneManager->createEntity(mesh->getMesh());
 		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
@@ -91,18 +98,18 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 		node->attachObject(entity);
 		transforms.insert({ node, mesh->getEntity()->getComponent<Transform>() });
 		return entity;
-	}
-	catch (std::exception e) {
+	} catch (std::exception e) {
 		std::cerr << "ERROR: No se ha podido cargar un mesh " << mesh->getMesh() << "\n";
 		return nullptr;
 	}
 }
 
-
 Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
+	// Se busca el nodo asociado a la entidad y se desvincula la entidad de �l
 	Ogre::SceneNode* node = entity->getParentSceneNode();
 	node->detachObject(entity);
 	sceneManager->destroyEntity(entity);
+	// Se crea una nueva malla con o sin material y se vincula al nodo ya existente
 	Ogre::Entity* newEntity = sceneManager->createEntity(mesh->getMesh());
 	if (mesh->getMaterial() != "") {
 		newEntity->setMaterialName(mesh->getMaterial());
@@ -177,27 +184,98 @@ Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* parti
 		node->attachObject(ogreParticleSystem);
 		ogreParticleSystem->setEmitting(particleSystem->getEmitting());
 		transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>() });
-		return ogreParticleSystem;	
+		return ogreParticleSystem;
+	} catch (std::exception e) {
+		std::cerr << "ERROR: No se ha podido cargar un sistema de particulas " << particleSystem->getParticle() << "\n";
+		return nullptr;
+	}
+}
+
+Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* billboardSet) {
+	// Se crea un billboardSet de OGRE con las dimensiones especificadas en el componente y el material
+	Ogre::BillboardSet* set = sceneManager->createBillboardSet(billboardSet->getSize());
+	set->setDefaultDimensions(billboardSet->getBillboardWidth(), billboardSet->getBillboardHeight());
+	if (billboardSet->getMaterial() != "") {
+		set->setMaterialName(billboardSet->getMaterial());
+	}
+	// Se vincula el billboardSet a un nodo de OGRE que cuelga del nodo raiz
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	node->attachObject(set);
+	// Se a�ade el nodo al mapa de objetos de la escena de OGRE
+	transforms.insert({ node, billboardSet->getEntity()->getComponent<Transform>()});
+	return set;
+}
+
+Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
+	// Se crea un nodo para la camara
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	// Se crea la camara con las caracteristicas especificadas
+	Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
+	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
+	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
+	node->attachObject(ogreCamera);
+	Ogre::Viewport* viewport = forge->getWindow().render->addViewport(ogreCamera);
+	Ogre::ColourValue value = Ogre::ColourValue(
+		camera->getBackgroundColor().getX(),
+		camera->getBackgroundColor().getY(),
+		camera->getBackgroundColor().getZ());
+	viewport->setBackgroundColour(value);
+	// Se a�ade el nodo al mapa de objetos de la escena de OGRE
+	transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
+	return ogreCamera;
+}
+
+Ogre::Light* RenderManager::addLightNode(Light* light) {
+	// Se crea una luz del tipo requerido
+	Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
+	// Se vincula la luz a un nodo de OGRE que cuelga del nodo raiz
+	Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+	node->attachObject(ogreLight);
+	// Se a�ade el nodo al mapa de objetos de la escena de OGRE
+	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
+	return ogreLight;
+}
+
+Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
+	if (root == nullptr) return nullptr;
+	try {
+		// Se vincula el sistema de particulas a un nodo de OGRE que cuelga del nodo raiz
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		// Se crea el sistema de particulas
+		std::string name = particleSystemsNames->generate();
+		Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
+		ogreParticleSystem->setEmitting(particleSystem->getEmitting());
+		node->attachObject(ogreParticleSystem);
+		// Se a�ade el nodo al mapa de objetos de la escena de OGRE
+		transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>() });
+		return ogreParticleSystem;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar un sistema de particulas " << particleSystem->getParticle() << "\n";	
+		std::cerr << "ERROR: No se ha podido cargar un sistema de particulas " << particleSystem->getParticle() << "\n";
 		return nullptr;
 	}
 }
 
 
 Ogre::ParticleSystem* RenderManager::updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem) {
-	Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
-	node->detachObject(ogreParticleSystem);
-	sceneManager->destroyEntity(ogreParticleSystem);
-	Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
-	newParticleSystem->setEmitting(particleSystem->getEmitting());
-	node->attachObject(newParticleSystem);
-	return newParticleSystem;
+	if (root == nullptr) return nullptr;
+	try {
+		// Se busca el nodo del que cuelga el sistema de particulas que queremos borrar
+		Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
+		node->detachObject(ogreParticleSystem);
+		sceneManager->destroyEntity(ogreParticleSystem);
+		// Se crea el nuevo sistema y se vincula al nodo ya existente
+		Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+		newParticleSystem->setEmitting(particleSystem->getEmitting());
+		node->attachObject(newParticleSystem);
+		return newParticleSystem;
+	}
+	
 }
 
 
 void RenderManager::removeNode(Ogre::MovableObject* object) {
+	// Se busca el nodo asociado y se elimina de la escena de OGRE y del mapa de objetos de esta
 	if(root == nullptr || object == nullptr) return;
 	Ogre::SceneNode* node = object->getParentSceneNode();
 	node->detachObject(object);
@@ -207,9 +285,12 @@ void RenderManager::removeNode(Ogre::MovableObject* object) {
 }
 
 void RenderManager::removeCamera(Ogre::Camera* camera) {
+	// Se busca el nodo asociado a la camara que queremos eliminar
 	Ogre::SceneNode* node = camera->getParentSceneNode();
 	node->detachObject(camera);
+	// MUY IMPORTANTE: se elimina el viewport de la camara
 	forge->getWindow().render->removeViewport(camera->getViewport()->getZOrder());
+	// Se destruyen la camara, el nodo de OGRE y la referencia a el en el mapa de la escena
 	sceneManager->destroyCamera(camera);
 	sceneManager->destroySceneNode(node);
 	transforms.erase(node);
