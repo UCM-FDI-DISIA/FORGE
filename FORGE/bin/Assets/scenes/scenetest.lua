@@ -1,5 +1,16 @@
 local prefabs = {
-
+    obstaculo = {
+        group = "obstacle",
+        components = {
+            Transform = {
+                position = {100, 0, -100},
+                scale = {5, 5, 5}
+            },
+            Mesh = {
+                mesh = "Barrel.mesh"
+            }
+        }
+    }
 }
 
 local scenes = {
@@ -23,16 +34,7 @@ local scenes = {
             },
             children = {
                 obstaculo = {
-                    group = "obstacle",
-                    components = {
-                        Transform = {
-                            position = {100, 0, -100},
-                            scale = {5, 5, 5}
-                        },
-                        Mesh = {
-                            mesh = "Barrel.mesh"
-                        }
-                    }
+                    blueprint = "obstaculo"
                 }
             }
         },
