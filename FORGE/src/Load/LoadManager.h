@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 class LuaForge;
+class GameLoad;
 class SceneManager;
 struct EntityData;
 namespace luabridge {
@@ -12,6 +13,7 @@ namespace luabridge {
 class LoadManager {
 private:
 	LuaForge* luaForge;
+	GameLoad* gameLoad;
 	SceneManager& sceneManager;
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.
@@ -66,6 +68,8 @@ public:
 	/// <param name="assetsFile">Ruta del archivo en el que se indican los assets a cargar</param>
 	/// <param name="scenesFile">Nombre del archivo de escenas dentro de Assets/scenes</param>
 	bool init(std::string const& assetsFile, std::string const& scenesFile);
+	bool cleanUp();
+	GameLoad& getGame();
 	/// <summary>
 	/// Cierra las referencias a los archivos de carga
 	/// </summary>

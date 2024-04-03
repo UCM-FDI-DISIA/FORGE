@@ -5,6 +5,7 @@
 namespace forge {
 	class Time;
 }
+class Factory;
 class RenderManager;
 class SceneManager;
 class AudioManager;
@@ -15,10 +16,13 @@ class PhysicsManager;
 
 class MainForge {
 private:
+	bool initialized;
 	bool isRunning;
+	bool finished;
 	double fixedUpdateTimer;
 
 	forge::Time& time;
+	Factory& factory;
 	RenderManager& renderManager;
 	SceneManager& sceneManager;
 	AudioManager& audioManager;
@@ -27,7 +31,6 @@ private:
 	//PhysicsManager& physicsManager;
 	//UIManager& uiManager;
 
-	static bool initialized;
 	static std::unique_ptr<MainForge> instance;
 	
 	/// <summary>

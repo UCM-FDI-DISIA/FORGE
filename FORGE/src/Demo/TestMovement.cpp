@@ -4,6 +4,7 @@
 #include "ComponentData.h"
 #include "Entity.h"
 #include "AudioSource.h"
+#include "MainForge.h"
 
 const std::string TestMovement::id = "TestMovement";
 
@@ -47,5 +48,8 @@ void TestMovement::update() {
 	if (input.keyDown(K_LEFT)) {
 		transform->rotateY(-10 * movement);
 		std::cout << transform->getRotationEuler().getX() << " " << transform->getRotationEuler().getY() << " " << transform->getRotationEuler().getZ() << "\n";
+	}
+	if (input.keyUp(K_ESC)) {
+		MainForge::Exit();
 	}
 }

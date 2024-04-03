@@ -101,10 +101,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Load\GameLoad.cpp" />
     <ClCompile Include="..\..\src\Load\LoadManager.cpp" />
     <ClCompile Include="..\..\src\Load\LuaForge.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Load\GameLoad.h" />
     <ClInclude Include="..\..\src\Load\LoadManager.h" />
     <ClInclude Include="..\..\src\Load\LuaForge.h" />
   </ItemGroup>

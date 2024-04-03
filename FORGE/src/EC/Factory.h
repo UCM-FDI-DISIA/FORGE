@@ -34,6 +34,8 @@ public:
     /// <param name="compName">Nombre del componente que se quiere agregar</param>
     /// <returns>Un puntero a la instancia de componente creada</returns>
     Component* generateComponent(std::string id);
+
+    void cleanUp();
 };
 
 #endif // !FACTORY_H_

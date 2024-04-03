@@ -21,12 +21,18 @@
     <ClCompile Include="..\..\src\Load\LoadManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Load\GameLoad.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Load\LuaForge.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Load\LoadManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Load\GameLoad.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

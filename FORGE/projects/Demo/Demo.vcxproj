@@ -19,13 +19,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -89,11 +89,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Demo\prueba.cpp" />
+    <ClCompile Include="..\..\src\Demo\ComponentRegistrier.cpp" />
     <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Demo\TestMovement.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\bin\Assets\assets.forge.lua" />
+    <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Audio\Audio.vcxproj">
@@ -117,10 +121,6 @@
     <ProjectReference Include="..\Utils\Utils.vcxproj">
       <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\bin\Assets\assets.forge.lua" />
-    <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

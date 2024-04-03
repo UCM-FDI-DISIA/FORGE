@@ -5,6 +5,7 @@
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 #include "LuaForge.h"
+#include "GameLoad.h"
 #include "AudioManager.h"
 #include "SceneManager.h"
 #include "EntityData.h"
@@ -167,11 +168,13 @@ bool LoadManager::loadAudio() {
 }
 
 LoadManager::LoadManager() :
+	gameLoad(new GameLoad()),
 	luaForge(new LuaForge()),
 	sceneManager(*SceneManager::getInstance()) {
 }
 
 bool LoadManager::init(std::string const& assetsFile, std::string const& scenesFile) {
+	gameLoad->init("Demo_d");
 	if (luaForge->doFile(assetsFile)) {
 		return false;
 	}
@@ -184,6 +187,15 @@ bool LoadManager::init(std::string const& assetsFile, std::string const& scenesF
 	return true;
 }
 
+bool LoadManager::cleanUp() {
+	return gameLoad->free();
+}
+
+GameLoad& LoadManager::getGame() {
+	return *gameLoad;
+}
+
 LoadManager::~LoadManager() {
 	delete luaForge;
+	delete gameLoad;
 }

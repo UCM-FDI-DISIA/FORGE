@@ -75,6 +75,18 @@ void Input::onControllerButtonUp(const SDL_Event& event) {
 void Input::onControllerAxisMotion(const SDL_Event& event) {
 	isControllerAxisMotionEvent = true;
 }
+void Input::onWindowEvent(const SDL_Event& event) {
+	switch (event.window.event) {
+		case SDL_WINDOWEVENT_CLOSE:
+			onWindowClose();
+			break;
+		default:
+			break;
+	}
+}
+void Input::onWindowClose() {
+	isWindowCloseEvent = true;
+}
 
 Input::Input() {
 	keyboardState = SDL_GetKeyboardState(0);
@@ -119,6 +131,9 @@ void Input::update() {
 			case SDL_CONTROLLERAXISMOTION:
 				onControllerAxisMotion(event);
 				break;
+			case SDL_WINDOWEVENT:
+				onWindowEvent(event);
+				break;
 			default: 
 				break;
 		}
@@ -146,6 +161,7 @@ void Input::setDefaultState() {
 	isControllerButtonDownEvent = false;
 	isControllerButtonUpEvent = false;
 	isControllerAxisMotionEvent = false;
+	isWindowCloseEvent = false;
 }
 
 bool Input::keyDown(KeyNames k) {
@@ -217,4 +233,8 @@ float Input::getNormalizedControllerAxis(ControllerAxisNames ax) {
 
 bool Input::isControllerConnected() {
 	return controller != nullptr;
+}
+
+bool Input::isWindowClosed() {
+	return isWindowCloseEvent;
 }

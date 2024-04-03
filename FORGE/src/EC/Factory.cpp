@@ -14,3 +14,7 @@ Component* Factory::generateComponent(std::string id) {
     }
     return nullptr;
 }
+
+void Factory::cleanUp() {
+    for (auto it = begin(); it != end(); it = erase(it));
+}

@@ -90,6 +90,7 @@ private:
 	bool isControllerAxisMotionEvent;
 	bool isControllerDeviceAddedEvent;
 	bool isControllerDeviceRemovedEvent;
+	bool isWindowCloseEvent;
 
 	/// <summary>
 	/// Traduccion de KeyNames a SDL_Scancodes, el numero es la cantidad de teclas mapeadas (constante de KeyNames.h).
@@ -191,6 +192,8 @@ private:
 	/// <returns>El estado del evento</returns>
 	bool controllerAxisMotionEvent();
 	
+	void onWindowEvent(const SDL_Event& event);
+	void onWindowClose();
 public:
 	/// <summary>
 	/// Crea el gestor de entrada
@@ -286,5 +289,7 @@ public:
 	/// Devuelve si hay un mando conectado
 	/// </summary>
 	bool isControllerConnected();
+
+	bool isWindowClosed();
 };
 #endif // !INPUT_H_

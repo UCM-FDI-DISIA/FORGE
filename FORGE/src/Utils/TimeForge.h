@@ -18,11 +18,11 @@ namespace forge {
 		/// <summary>
 		/// Inicializa el deltaTime
 		/// </summary>
-		void initDT() noexcept;
+		void init() noexcept;
 		/// <summary>
 		/// Actualiza deltaTime en funcion al tiempo que pasara desde la ultima llamada al metodo
 		/// </summary>
-		void updateDT() noexcept;
+		void update() noexcept;
 		//Al ser un singleton, no se puede copiar ni igualar
 		Time(Time const&) = delete;
 		void operator=(Time const&) = delete;
