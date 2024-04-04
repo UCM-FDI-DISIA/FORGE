@@ -5,7 +5,7 @@ namespace Ogre {
 }
 namespace forge {
 	/// TO DO: Adaptar para que los set y get de los parametros los pueda tratar el usuario como par rotacion. Habrá que guardar el angulo o el seno.
-	class Quaternion {
+	class __declspec(dllexport) Quaternion {
 	private:
 		float x;
 		float y;

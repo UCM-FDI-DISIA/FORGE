@@ -9,7 +9,7 @@ class Entity;
 class Scene;
 class ComponentData;
 
-class Component {
+class __declspec(dllexport) Component {
 private:
 	class Serializer;
 	bool enabled;

@@ -11,7 +11,7 @@
 #include <Vector3.h>
 #include <Quaternion.h>
 
-class ComponentData {
+__declspec(dllexport) class ComponentData {
 private:
     template <typename T>
     struct getter {

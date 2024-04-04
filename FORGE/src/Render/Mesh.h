@@ -16,8 +16,9 @@ private:
     Ogre::Entity* ogreEntity;
     RenderManager* renderManager; 
 
+    static const std::string id;
 public:
-	static const std::string id;
+    static std::string const& Id();
 
 	Mesh();
     

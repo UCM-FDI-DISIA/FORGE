@@ -5,6 +5,10 @@
 
 const std::string AudioListener::id = "AudioListener";
 
+std::string const& AudioListener::Id() {
+    return id;
+}
+
 AudioListener::AudioListener() :
     transform(nullptr),
     manager(*AudioManager::getInstance()) {

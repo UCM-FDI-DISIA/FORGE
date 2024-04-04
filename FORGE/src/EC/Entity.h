@@ -11,7 +11,7 @@ class Entity;
 class Factory;
 class ComponentData;
 
-class Entity {
+class __declspec(dllexport) Entity {
 private:
 	Factory& fact;
 	Scene* scene;
@@ -86,14 +86,14 @@ public:
 	/// <typeparam name="ComponentType">Tipo del Component a eliminar</typeparam>
 	template<class ComponentType>
 	inline void removeComponent() {
-		removeComponent(ComponentType::id);
+		removeComponent(ComponentType::Id());
 	}
 	/// <returns>
 	/// Un puntero al Component pedido de esta Entity
 	/// </returns>
 	template<class ComponentType>
 	inline ComponentType* getComponent() {
-		auto comp = components.find(ComponentType::id);
+		auto comp = components.find(ComponentType::Id());
 		if (comp == components.end()) {
 			return nullptr;
 		}
@@ -112,7 +112,7 @@ public:
 	/// <returns>Booleano que indica si la Entity tiene el Component</returns>
 	template<class ComponentType>
 	bool hasComponent() {
-		return hasComponent(ComponentType::id);
+		return hasComponent(ComponentType::Id());
 	}
 	/// <returns>
 	/// El grupo al que pertenece la Entity

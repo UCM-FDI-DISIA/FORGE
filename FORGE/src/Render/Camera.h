@@ -18,9 +18,10 @@ private:
     forge::Vector3 backgroundColor;
 
     Ogre::Camera* ogreCamera;
-    RenderManager* renderManager; 
+    RenderManager* renderManager;
+    static const std::string id;
 public:
-	static const std::string id;
+    static std::string const& Id();
 
     Camera();
     

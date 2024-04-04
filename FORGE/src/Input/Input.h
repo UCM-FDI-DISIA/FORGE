@@ -65,7 +65,7 @@ enum ControllerAxisNames {
 	C_AXIS_MAX
 };
 
-class Input {
+class __declspec(dllexport) Input {
 private:
 	static std::unique_ptr<Input> instance;
 

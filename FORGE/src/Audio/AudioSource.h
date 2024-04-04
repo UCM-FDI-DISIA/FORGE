@@ -6,7 +6,7 @@
 class Sound;
 class Transform;
 class AudioManager;
-class AudioSource : public Component {
+class __declspec(dllexport) AudioSource : public Component {
 private:
 	AudioManager& manager;
 	Transform* transform;
@@ -19,8 +19,9 @@ private:
 
 	bool resumeOnEnable;
 
-public:
 	static const std::string id;
+public:
+	static std::string const& Id();
 	/// <summary>
 	/// Constructora por defecto del component AudioSource
 	/// </summary>
@@ -28,7 +29,7 @@ public:
 	/// <summary>
 	/// Elimina su sonido del gestor
 	/// </summary>
-	virtual ~AudioSource();
+	~AudioSource() override;
 	/// <summary>
 	/// Se llama en la creacion del componente AudioSource
 	/// </summary>

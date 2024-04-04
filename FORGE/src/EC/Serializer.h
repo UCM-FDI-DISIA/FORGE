@@ -11,7 +11,7 @@
 /// <summary>
 /// Clase interna que se encarga de almacenar e inicializar todas las variables que se quieran serializar de un Component desde un archivo Lua o un ComponentData.
 /// </summary>
-class Component::Serializer {
+class __declspec(dllexport) Component::Serializer {
 private:
 	/// <summary>
 	/// Interfaz interna que almacena el nombre de una variable que se va a serializar.

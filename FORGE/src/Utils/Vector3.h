@@ -10,7 +10,7 @@ namespace irrklang{
 	typedef vec3d<float> vec3df;
 }
 namespace forge {
-	class Vector3 {
+	class __declspec(dllexport) Vector3 {
 	private:
 		float x;
 		float y;

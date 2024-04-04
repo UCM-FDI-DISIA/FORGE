@@ -21,7 +21,7 @@ public:
     /// <returns>Si se ha registrado correctamnte el Component</returns>
     template <class ComponentType>
     bool registerComponent() {
-        return insert(std::pair<std::string, std::function<Component*()>>(ComponentType::id,
+        return insert(std::pair<std::string, std::function<Component*()>>(ComponentType::Id(),
             [] () -> Component* {
                 return new ComponentType();
             })

@@ -13,8 +13,9 @@ private:
     Ogre::Light* ogreLight;
     RenderManager* renderManager; 
 
+    static const std::string id;
 public:
-	static const std::string id;
+    static std::string const& Id();
 
     Light();
     

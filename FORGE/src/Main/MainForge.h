@@ -14,7 +14,7 @@ class Input;
 class PhysicsManager;
 //class UIManager;
 
-class MainForge {
+class __declspec(dllexport) MainForge {
 private:
 	bool initialized;
 	bool isRunning;

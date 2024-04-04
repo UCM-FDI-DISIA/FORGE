@@ -12,7 +12,11 @@
 
 const std::string Mesh::id = "Mesh";
 
-Mesh::Mesh() : 
+std::string const& Mesh::Id() {
+    return id;
+}
+
+Mesh::Mesh() :
 	mesh(),
 	material(),
     ogreEntity(nullptr),

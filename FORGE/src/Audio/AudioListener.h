@@ -4,13 +4,14 @@
 #include "Component.h"
 class Transform;
 class AudioManager;
-class AudioListener : public Component {
+class __declspec(dllexport) AudioListener : public Component {
 private:
     Transform* transform;
     AudioManager& manager;
 	bool isListenerActive = false;
+	static const std::string id;
 public:
-    static const std::string id;
+	static std::string const& Id();
     /// <summary>
     /// Crea el escuchador con valores por defecto
     /// </summary>
@@ -19,7 +20,7 @@ public:
 	/// Destructora de audio listener, si es el listener activo
 	/// hace que el manager cambie la flag de listener activo a falso
 	/// </summary>
-	~AudioListener();
+	~AudioListener() override;
 	/// <summary>
 	/// Se inicializa el escuchador con el transform de la entidad
 	/// </summary>

@@ -3,7 +3,7 @@
 #define VECTOR2_H_
 
 namespace forge {
-	class Vector2 {
+	class __declspec(dllexport) Vector2 {
 	private:
 		// Primera coordenada
 		float x;

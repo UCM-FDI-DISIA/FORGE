@@ -8,6 +8,10 @@
 
 const std::string TestMovement::id = "TestMovement";
 
+std::string const& TestMovement::Id() {
+	return id;
+}
+
 TestMovement::TestMovement() :
 	input(*Input::getInstance()),
 	movement(10.0f),

@@ -14,6 +14,10 @@
 
 const std::string Camera::id = "Camera";
 
+std::string const& Camera::Id() {
+    return id;
+}
+
 Camera::Camera() :
     ogreCamera(nullptr),
     renderManager(nullptr) {

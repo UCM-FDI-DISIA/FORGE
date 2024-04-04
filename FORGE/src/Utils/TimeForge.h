@@ -5,7 +5,7 @@
 #include <memory>
 class MainForge;
 namespace forge {
-	class Time {
+	class __declspec(dllexport) Time {
 	private:
 		friend MainForge;
 		

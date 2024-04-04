@@ -6,7 +6,7 @@
 #include "Vector3.h"
 #include "Quaternion.h"
 
-class Transform : public Component {
+class __declspec(dllexport) Transform : public Component {
 	friend Entity;
 private:
 
@@ -23,8 +23,9 @@ private:
 	/// </summary>
 	/// <param name="newParent">Puntero al Transform de la nueva Entity padre.</param>
 	void setParent(Transform* newParent);
-public:
 	static const std::string id;
+public:
+	static std::string const& Id();
 
 	Transform();
 

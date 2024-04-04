@@ -8,6 +8,10 @@
 
 const std::string AudioSource::id = "AudioSource";
 
+std::string const& AudioSource::Id() {
+	return id;
+}
+
 AudioSource::AudioSource() :
 	sound(nullptr),
 	transform(nullptr),

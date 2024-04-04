@@ -7,7 +7,7 @@
 
 class Entity;
 
-class Scene {
+class __declspec(dllexport) Scene {
 protected:
     std::vector<std::vector<Entity*>> entitiesByGroup;
     std::unordered_map<std::string, Entity*> handlers;
