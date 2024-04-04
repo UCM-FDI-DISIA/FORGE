@@ -6,6 +6,7 @@
 #include <vector>
 #include "Component.h"
 #include "ComponentData.h"
+#include <type_traits>
 
 
 /// <summary>
@@ -57,6 +58,23 @@ private:
 		void initialize(ComponentData& data) override {
 			if (data.has(name)) {
 				var = data.get<T>(name);
+				handle_initialize<T>(var);
+			}
+		}
+		/// <summary>
+		/// Comprueba posibles errores en la inicializacion de las variables.
+		/// </summary>
+		/// <typeparam name="U">Tipo de la variable</typeparam>
+		/// <param name="var">La variable casteada que se va a comprobar</param>
+		template<typename U>
+		void handle_initialize(U& var) {
+		}
+
+		template<>
+		void handle_initialize(float& var) {
+			if (std::isinf(var)) {
+				std::cerr << "ERROR: Variable " << name << " con valor infinito. Seteado a 0" << std::endl;
+				var = 0.0f;
 			}
 		}
 	};
@@ -123,6 +141,15 @@ public:
 	/// </summary>
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
 	void initialize(ComponentData& data);
+	/// <summary>
+	/// Comprueba posibles errores en la inicializacion de las variables.
+	/// </summary>
+	/// <typeparam name="U">Tipo de la variable</typeparam>
+	/// <param name="var">La variable casteada que se va a comprobar</param>
+	template<typename U>
+	void handle_initialize(U& var);
+	template<>
+	void handle_initialize<float>(float& var);	
 	/// <summary>
 	/// Destructor del Serializer, elimina todos los registros de campos a serializar.
 	/// </summary>

@@ -69,27 +69,51 @@ public:
 	/// <param name="child">Puntero a la Entity hija.</param>
 	/// <returns>Puntero a la Entity hija.</returns>
 	Entity* addChild(Entity* child);
+	/// <summary>
+	/// Elimina de los hijos a la Entity pasada
+	/// </summary>
+	/// <param name="child">Entity que se quiere eliminar de la lista de hijos</param>
+	/// <returns>Puntero a la Entity eliminada</returns>
 	Entity* removeChild(Entity* child);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
 	/// <param name="name">Nombre del Component a eliminar</param>
 	void removeComponent(std::string id);
+	/// <summary>
+	/// Elimina el Component dicho de la Entity
+	/// </summary>
+	/// <typeparam name="ComponentType">Tipo del Component a eliminar</typeparam>
+	template<class ComponentType>
+	inline void removeComponent() {
+		removeComponent(ComponentType::id);
+	}
 	/// <returns>
 	/// Un puntero al Component pedido de esta Entity
 	/// </returns>
-	template<typename T>
-	inline T* getComponent() {
-		auto comp = components.find(T::id);
+	template<class ComponentType>
+	inline ComponentType* getComponent() {
+		auto comp = components.find(ComponentType::id);
 		if (comp == components.end()) {
 			return nullptr;
 		}
-		return static_cast<T*>(comp->second);
+		return static_cast<ComponentType*>(comp->second);
 	}
-	/// <returns>
-	/// Si la Entity tiene el Component pedido
-	/// </returns>
+	/// <summary>
+	/// Comprueba si la Entity tiene el Component indicado
+	/// </summary>
+	/// <param name="name">Nombre del Component a consultar</param>
+	/// <returns>Booleano que indica si la Entity tiene el Component</returns>
 	bool hasComponent(std::string name);
+	/// <summary>
+	/// Comprueba si la Entity tiene el Component indicado
+	/// </summary>
+	/// <typeparam name="ComponentType">Tipo de Component a consultar</typeparam>
+	/// <returns>Booleano que indica si la Entity tiene el Component</returns>
+	template<class ComponentType>
+	bool hasComponent() {
+		return hasComponent(ComponentType::id);
+	}
 	/// <returns>
 	/// El grupo al que pertenece la Entity
 	/// </returns>
@@ -102,5 +126,10 @@ public:
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
 	virtual void fixedUpdate();
+	/// <summary>
+	///	Establece si todos los Components de la Entity estan activados
+	/// </summary>
+	/// <param name="_enabled">Nuevo estado de activacion de los Components</param>
+	void setEnabled(bool enabled);
 };
 #endif

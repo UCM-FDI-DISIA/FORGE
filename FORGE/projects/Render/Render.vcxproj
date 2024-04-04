@@ -63,8 +63,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\dependencies\Ogre\build\$(Platform)\lib\$(Configuration);$(SolutionDir)Dependencies\Ogre\build\$(Platform)\Dependencies\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain_d.lib;OgreRTShaderSystem_d.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
@@ -86,8 +87,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\dependencies\Ogre\build\$(Platform)\lib\$(Configuration);$(SolutionDir)Dependencies\Ogre\build\$(Platform)\Dependencies\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OgreMain.lib;OgreRTShaderSystem.lib;SDL2main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
@@ -95,16 +97,22 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Render\Animator.cpp" />
+    <ClCompile Include="..\..\src\Render\Billboard.cpp" />
     <ClCompile Include="..\..\src\Render\Camera.cpp" />
     <ClCompile Include="..\..\src\Render\Light.cpp" />
     <ClCompile Include="..\..\src\Render\Mesh.cpp" />
+    <ClCompile Include="..\..\src\Render\ParticleSystem.cpp" />
     <ClCompile Include="..\..\src\Render\RenderForge.cpp" />
     <ClCompile Include="..\..\src\Render\RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Render\Animator.h" />
+    <ClInclude Include="..\..\src\Render\Billboard.h" />
     <ClInclude Include="..\..\src\Render\Camera.h" />
     <ClInclude Include="..\..\src\Render\Light.h" />
     <ClInclude Include="..\..\src\Render\Mesh.h" />
+    <ClInclude Include="..\..\src\Render\ParticleSystem.h" />
     <ClInclude Include="..\..\src\Render\RenderForge.h" />
     <ClInclude Include="..\..\src\Render\RenderManager.h" />
   </ItemGroup>

@@ -25,6 +25,10 @@ public:
 	/// </summary>
 	LuaForge();
 	/// <summary>
+	/// Vacia la pila de lua
+	/// </summary>
+	~LuaForge();
+	/// <summary>
 	/// Devuelve el lua_State contenido
 	/// </summary>
 	/// <returns>Un puntero al lua_State contenido en la clase</returns>
@@ -33,7 +37,7 @@ public:
 	/// Llama a lua_dofile para el  lua_State contenido
 	/// </summary>
 	/// <param name="path">Ruta del archivo .lua que se quiere ejecutar</param>
-	void doFile(std::string path);
+	bool doFile(std::string path);
 	/// <summary>
 	/// Permite agregar una clase propia al lua_State contenido a traves de LuaBridge.
 	/// </summary>

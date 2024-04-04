@@ -5,9 +5,9 @@
 Scene::Scene() :
     entitiesByGroup(SceneManager::getInstance()->getMaxGroupId()),
     handlers() {
-    for (auto & group : entitiesByGroup) {
-        group.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
-    }
+    //for (auto & group : entitiesByGroup) {
+    //    group.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
+    //}
 }
 
 Scene::~Scene() {
@@ -20,13 +20,13 @@ Scene::~Scene() {
 }
 
 void Scene::update() {
+    refresh();
     for (auto& group : entitiesByGroup) {
         for (auto& entity : group) {
             entity->update();
         }
     }
-
-    refresh();
+    
 }
 
 void Scene::fixedUpdate() {
@@ -79,4 +79,19 @@ const Entity* Scene::getEntityByHandler(std::string handler) {
 
 bool Scene::setHandler(std::string handler, Entity* entity) {
     return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
+}
+
+void Scene::endScene() {
+    sceneEnd = true;
+}
+
+bool Scene::getEndScene() {
+    return sceneEnd;
+}
+void Scene::setEnabled(bool enabled) {
+    for (auto& group : entitiesByGroup) {
+        for (auto& entity : group) {
+            entity->setEnabled(enabled);
+        }
+    }
 }

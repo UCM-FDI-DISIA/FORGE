@@ -15,7 +15,7 @@ class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
 
-	Scene* activeScene;
+	std::pair<std::string, Scene*> activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
 
 	std::unordered_map<std::string, EntityData*> entityBlueprints;
@@ -77,6 +77,11 @@ public:
 	/// Una escena a partir de su Identificador
 	/// </returns>
 	Scene* getScene(std::string id);
+	/// <summary>
+	/// Devuelve el identificador de la escena activa
+	/// </summary>
+	/// <returns>String con el identificador de la escena activa</returns>
+	const std::string& getActiveSceneId() const;
 	/// <returns>
 	/// Cantidad total de grupos
 	/// </returns>
@@ -84,7 +89,7 @@ public:
 	/// <returns>
 	/// Actualiza las entidades de la escena activa
 	/// </returns>
-	void update();
+	bool update();
 	/// <returns>
 	/// Borra todas las Entity no vivas de la escena activa
 	/// </returns>

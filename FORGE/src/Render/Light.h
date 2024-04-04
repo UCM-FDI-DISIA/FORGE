@@ -2,9 +2,10 @@
 #ifndef LIGHT_H_
 #define LIGHT_H_
 #include <Component.h>
-#include <OgreLight.h>
 class RenderManager;
-
+namespace Ogre {
+    class Light;
+}
 
 class Light : public Component {
 private:
@@ -19,9 +20,11 @@ public:
     
     ~Light();
 
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
 
-    void setEnabled(bool newActive) override;
+    void onEnabled() override;
+
+    void onDisabled() override;
 
 	#pragma region setters
 	#pragma endregion

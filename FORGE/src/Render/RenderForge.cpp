@@ -1,4 +1,9 @@
 #include "RenderForge.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
 #include <OgreRoot.h>
 #include <SDL.h>
 #include <OgreFileSystemLayer.h>
@@ -8,14 +13,14 @@
 #include <OgreFileSystemLayer.h>
 #include <OgreFrameListener.h>
 #include <OgreRTShaderConfig.h>
-#include <OgreRTShaderExports.h>
-
+#include <OgreRTShaderExports.h>	
 #include <OgreGpuProgramManager.h>
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
 #include <OgreDataStream.h>
-
 #include <SDL_video.h>
+#include <iostream>
+#pragma warning(pop)
 
 
 Ogre::Root* RenderForge::createRoot() {
@@ -25,7 +30,8 @@ Ogre::Root* RenderForge::createRoot() {
 	pluginsPath = fileSystemLayer->getConfigFilePath("plugins.cfg");
 
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
-		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "RenderManager::createRoot");
+		std::cerr << "ERROR: No se ha encontrado el archivo de plugins" << std::endl;
+		return nullptr;
 	}
 
 	solutionPath = pluginsPath;
@@ -124,6 +130,8 @@ void RenderForge::locateResources() {
 NativeWindowPair RenderForge::createWindow() {
 	uint32_t w, h;
 	Ogre::NameValuePairList miscParams;
+
+	if (root == nullptr) return { nullptr, nullptr };
 
 	Ogre::ConfigOptionMap ropts = root->getRenderSystem()->getConfigOptions();
 

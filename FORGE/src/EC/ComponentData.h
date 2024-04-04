@@ -3,10 +3,15 @@
 #define COMPONENT_DATA_H_
 #include <string>
 #include <vector>
-#include <lua.hpp>
-#include <LuaBridge/LuaBridge.h>
+#include <unordered_set>
+#include <Vector2.h>
 #include <Vector3.h>
 #include <Quaternion.h>
+#pragma warning(push)
+#pragma warning(disable : 26439)
+#include <lua.hpp>
+#include <LuaBridge/LuaBridge.h>
+#pragma warning(pop)
 
 class ComponentData {
 private:
@@ -31,6 +36,19 @@ private:
                 }
             }
             return vec;
+        }
+    };
+    template <typename U>
+    struct getter<std::unordered_set<U>> {
+        std::unordered_set<U> operator()(luabridge::LuaRef& data, std::string param) {
+            luabridge::LuaRef table = data[param];
+            std::unordered_set<U> set;
+            if (table.isTable()) {
+                for (auto&& pair : pairs(table)) {
+                    set.insert(pair.second.cast<U>());
+                }
+            }
+            return set;
         }
     };
 protected:
@@ -74,21 +92,52 @@ public:
         return getter<T>()(*data, param);
     } 
 
+    /// <summary>
+    /// Get especifico para el tipo Vector2 de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector2</returns>
+    template <>
+    forge::Vector2 get<forge::Vector2>(std::string param) {
+        std::vector<float> input = getter<std::vector<float>>()(*data, param);
+        forge::Vector2 vector = forge::Vector2();
+        if (input.size() >= 2) {
+            vector = forge::Vector2(input[0], input[1]);
+        }
+        return vector;
+    }
+    /// <summary>
+    /// Get especifico para el tipo Vector3 de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector3</returns>
     template <>
     forge::Vector3 get<forge::Vector3>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data,param);
         forge::Vector3 vector = forge::Vector3();
         if (input.size() >= 3) {
+            if (std::isinf(input[0]) || std::isinf(input[1]) || std::isinf(input[2])) {
+                input = std::vector<float>(3, 0.0f);
+                std::cerr << "ERROR: Valor infinito. Vector3 seteado a 0\n";
+            }
             vector = forge::Vector3(input[0], input[1], input[2]);
         }
         return vector;
     }
-
+    /// <summary>
+    /// Get especifico para el tipo Quaternion de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Quaternion</returns>
     template <>
     forge::Quaternion get<forge::Quaternion>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
         forge::Quaternion quaternion = forge::Quaternion();
         if (input.size() >= 4) {
+            if (std::isinf(input[0]) || std::isinf(input[1]) || std::isinf(input[2]) || std::isinf(input[3])) {
+                input = std::vector<float>(4, 0.0f);
+                std::cerr << "ERROR: Valor infinito. Quaternion seteada a 0\n";
+            }
             quaternion = forge::Quaternion(input[0], input[1], input[2], input[3]);
         }
         return quaternion;

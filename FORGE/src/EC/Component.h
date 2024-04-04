@@ -12,13 +12,13 @@ class ComponentData;
 class Component {
 private:
 	class Serializer;
+	bool enabled;
 
 protected:
 	Serializer& serializer;
 	Entity* entity;
 	Scene* scene;
 
-	bool enabled;
 public:
 	/// <summary>
 	/// Constructora por defecto de la clase Component
@@ -38,12 +38,12 @@ public:
 	/// Inicializa los parametros serializados del Component
 	/// </summary>
 	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-	void initSerialized(ComponentData* data);
+	bool initSerialized(ComponentData* data);
 	/// <summary>
 	/// Inicializa el Component con los parametros adecuados
 	/// </summary>
 	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-	virtual void initComponent(ComponentData* data);
+	virtual bool initComponent(ComponentData* data);
 	/// <summary>
 	/// Actualiza la logica del Component
 	/// </summary>
@@ -57,6 +57,15 @@ public:
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion del Component</param>
 	virtual void setEnabled(bool _enabled);
+
+	/// <summary>
+	/// Metodo que se llama cada vez que se activa el componente
+	/// </summary>
+	virtual void onEnabled();
+	/// <summary>
+	/// Metodo que se llama cada vez que se desactiva el componente
+	/// </summary>
+	virtual void onDisabled();
 
 	#pragma region Getters
 	/// <returns>

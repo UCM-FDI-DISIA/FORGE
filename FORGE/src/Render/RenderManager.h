@@ -10,16 +10,21 @@ class RenderForge;
 class Mesh;
 class Camera;
 class Light;
+class ParticleSystem;
 class Transform;
+class Billboard;
 
 namespace Ogre {
 	class Entity;
 	class Camera;
 	class Light;
+	class BillboardSet;
+	class ParticleSystem;
 	class Root;
 	class SceneNode;
 	class SceneManager;
 	class MovableObject;
+	class NameGenerator;
 }
 
 
@@ -32,14 +37,21 @@ private:
 	RenderForge* forge;
 	Ogre::Root* root;        
 	Ogre::SceneManager* sceneManager;
-
 	std::unordered_map<Ogre::SceneNode*, Transform*> transforms;
-	
+
+	//Generadores de nombres aleatorios
+	Ogre::NameGenerator* cameraNames;
+	Ogre::NameGenerator* particleSystemsNames;
+
 	/// <summary>
 	/// Constructora del render manager.
 	/// </summary>
 	RenderManager();
 
+	/// <summary>
+	/// Actualiza las posiciones de los nodos de OGRE que lo necesiten
+	/// </summary>
+	void updateNodePositions();
 
 public:
 	/// <summary>
@@ -51,7 +63,7 @@ public:
 	static RenderManager* getInstance();
 #pragma region Setup
 	/// <summary>
-	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de Ogre sin mas.
+	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de OGRE sin mas.
 	/// </summary>
 	//<param name="name"> Nombre de la aplicacion</param>
 	void setup(std::string appName);
@@ -66,9 +78,9 @@ public:
 
 #pragma region ECS
 	/// <summary>
-	/// Añade un mesh a la escena
+	/// Agrega un mesh a la escena
 	/// </summary>
-	/// <param name="mesh:">El mesh a añadir</param>
+	/// <param name="mesh:">El mesh a agregar</param>
 	/// <returns>Devuelve puntero de la entidad</returns>
 	Ogre::Entity* addMeshNode(Mesh* mesh);
 	
@@ -81,24 +93,53 @@ public:
 	Ogre::Entity* updateMeshNode(Ogre::Entity* entity, Mesh* mesh);
 
 	/// <summary>
-	/// Añade una camara a la escena
+	/// Agrega un BillboardSet a la escena
 	/// </summary>
-	/// <param name="camera:">La camara a añadir</param>
+	/// <param name="billboardSet">El conjunto de billboards a agregar</param>
+	/// <returns>Devuelve el puntero del BillboardSet</returns>
+	Ogre::BillboardSet* addBillboardNode(Billboard* billboardSet);
+
+	/// <summary>
+	/// Agrega una camara a la escena
+	/// </summary>
+	/// <param name="camera:">La camara a agregar</param>
 	/// <returns>Devuelve puntero de la camara</returns>
 	Ogre::Camera* addCameraNode(Camera* camera);
 
 	/// <summary>
-	/// Añade una luz a la escena
+	/// Agrega una luz a la escena
 	/// </summary>
-	/// <param name="luz:">La luz a añadir</param>
+	/// <param name="luz:">La luz a agragar</param>
 	/// <returns>Devuelve puntero de la luz</returns>
 	Ogre::Light* addLightNode(Light* light);
 
 	/// <summary>
-	/// Quita un nodo de la escena
+	/// Agrega un sistema de particulas a la escena
 	/// </summary>
+	/// <param name="particleSystem:">El sistema de particulas a agregar</param>
+	/// <returns>Devuelve puntero del sistema de particulas</returns>
+	Ogre::ParticleSystem* addParticleSystemNode(ParticleSystem* particleSystem);
+
+	/// <summary>
+	/// Actualiza el ParticleSystem de una escena, cambiandolo por otro distinto
+	/// </summary>
+	/// <param name="entity:">El ParticleSystem de OGRE a cambiar</param>
+	/// <param name="mesh:">El ParticleSystem con la informacion</param>
+	/// <returns>Devuelve puntero del ParticleSystem de OGRE</returns>
+	Ogre::ParticleSystem* updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem);
+
+
+	/// <summary>
+	/// Elimina un nodo de OGRE de la escena
+	/// </summary>
+	/// <param name="entity">Entidad asociada al nodo que deseeamos eliminar</param>
 	void removeNode(Ogre::MovableObject* entity);
 
+	/// <summary>
+	/// Quita un nodo de OGRE asociado a una CAMARA de la escena
+	/// </summary>
+	/// <param name="camera">Camara que queremos eliminar</param>
+	void removeCamera(Ogre::Camera* camera);
 #pragma endregion
 };
 
