@@ -81,10 +81,6 @@ public:
 	/// </returns>
 	Scene* getScene() const;
 	#pragma endregion
-
-
-
-
 };
 
 #endif // !COMPONENT_H_

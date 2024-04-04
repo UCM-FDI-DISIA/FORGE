@@ -1,24 +1,12 @@
 #include "Image.h"
+#include "Serializer.h"
 
 const std::string Image::id = "Image";
 
-Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 imgSize,
-	forge::Vector2 pos_) : UIComponent(imgId, pos_), renderer(renderer_), imageSize(imgSize) {
-	//assert(renderer != nullptr);
-
-	surface = IMG_Load(fileName.c_str());
-	if (surface == nullptr)
-		throw "Couldn't load image: " + fileName;
-
-	texture = SDL_CreateTextureFromSurface(renderer_, surface);
-	if (texture == nullptr) {
-		SDL_FreeSurface(surface);
-		throw "Couldn't convert surface to texture for image: " + fileName;
-	}
-
-	sourceSize.set((float) surface->w, (float) surface->h);
-	renderer = renderer_;
-
+Image::Image() : UIComponent(),
+	renderer(GUIManager::getInstance()->getRenderer()) {
+	serializer(fileName, "fileName");
+	serializer(size, "size");
 }
 
 Image::~Image() {
@@ -26,30 +14,53 @@ Image::~Image() {
 	//SDL_FreeSurface(surface);
 }
 
-bool Image::update() {
-	// Tamano y posicion de la ventana
-	if (imageSize == forge::Vector2::ZERO) {
-		imageSize = sourceSize + forge::Vector2(6, 6);
+bool Image::initComponent(ComponentData* data) {
+	if (UIComponent::initComponent(data)) {
+		if (renderer != nullptr) {
+			surface = IMG_Load(fileName.c_str());
+			if (surface == nullptr) {
+				std::cerr << "No se pudo cargar la imagen de " + fileName + " \n";
+			}
+			else {
+				texture = SDL_CreateTextureFromSurface(renderer, surface);
+				if (texture == nullptr) {
+					SDL_FreeSurface(surface);
+					std::cerr << "No se pudo cargar la imagen de " + fileName + " \n";
+				}
+				else {
+					sourceSize.set((float)surface->w, (float)surface->h);
+
+					if (size == forge::Vector2::ZERO) {
+						size = sourceSize + forge::Vector2(6, 6);
+					}
+
+					return true;
+				}
+			}
+		}
+		else {
+			std::cerr << "Debe existir un renderer para crear una imagen\n";
+		}
 	}
-	ImGui::SetNextWindowSize(imageSize + forge::Vector2(6, 6));
-	ImGui::SetNextWindowPos(pos);
+	return false;
+}
+
+void Image::update() {
+	// Tamano y posicion de la ventana
+	ImGui::SetNextWindowSize(size * transform->getScale() + forge::Vector2(6, 6));
+	ImGui::SetNextWindowPos(transform->getPosition());
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(windowName, NULL, window_flags);
 
-	ImGui::Image((void*) texture,imageSize);
+	ImGui::Image((void*) texture, size);
 	
 	ImGui::PopStyleVar();
 	ImGui::End();
-	return true;
 }
 
-void Image::setSize(forge::Vector2 size) {
-	imageSize = size;
-}
-
-forge::Vector2 Image::getSize() {
-	return imageSize;
+void Image::setSize(forge::Vector2 size_) {
+	size = size_;
 }
 
 forge::Vector2 Image::getSourceSize() {
@@ -65,7 +76,7 @@ unsigned int Image::getSourceWidth() {
 }
 
 unsigned int Image::getWidth() {
-	return (int) imageSize.getX();
+	return (int) size.getX();
 }
 
 unsigned int Image::getSourceHeight() {
@@ -73,5 +84,5 @@ unsigned int Image::getSourceHeight() {
 }
 
 unsigned int Image::getHeight() {
-	return (int) imageSize.getY();
+	return (int) size.getY();
 }

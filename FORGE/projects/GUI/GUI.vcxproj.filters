@@ -74,9 +74,6 @@
     <ClCompile Include="..\..\src\GUI\GUIManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GUI\GUITest.cpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dependencies\ImGUI\imgui.cpp">
       <Filter>Archivos de origen\ImGUI</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GUI\BaseButton.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\GUITest.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

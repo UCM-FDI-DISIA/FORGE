@@ -1,19 +1,22 @@
 #include "BaseButton.h"
+#include "Serializer.h"
 
 const std::string BaseButton::id = "BaseButton";
 std::function<void(void)> BaseButton::mainFunc = nullptr;
 
-BaseButton::BaseButton(const char* bId, std::function<void(void)> funct, forge::Vector2 bSize, forge::Vector2 bPos)
-    : UIComponent(bId, bPos), buttonId(bId), buttonSize(bSize), pressed(false), function(funct) {}
+BaseButton::BaseButton() : UIComponent(),
+    pressed(false) {
+    serializer(buttonId, "buttonId");
+    serializer(function, "function");
+}
 
 BaseButton::~BaseButton() { }
 
-void BaseButton::setSize(forge::Vector2 size) {
-    buttonSize = size;
-}
-
-bool BaseButton::isPressed() {
-	return pressed;
+bool BaseButton::initComponent(ComponentData* data) {
+    if (UIComponent::initComponent(data)) {
+        return true;
+    }
+    return false;
 }
 
 void BaseButton::resetFunction() {
@@ -24,4 +27,8 @@ bool BaseButton::mainFunctionCall() {
     if (mainFunc == nullptr) return false;
     mainFunc();
     return true;
+}
+
+bool BaseButton::isPressed() {
+    return pressed;
 }

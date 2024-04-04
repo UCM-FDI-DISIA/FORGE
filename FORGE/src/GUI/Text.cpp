@@ -1,22 +1,40 @@
 #include "Text.h"
+#include "Serializer.h"
 
 const std::string Text::id = "Text";
 
-Text::Text(const char* textId, const char* text_, forge::Vector2 pos_) : UIComponent(textId, pos_), text(text_), color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })), 
-fontName(""), font(nullptr), size(forge::Vector2::ZERO), bgColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) { }
+Text::Text() : UIComponent(),
+    fontName(""),
+    font(nullptr),
+    color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
+    bgColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) {
+    serializer(text, "text");
+    serializer(color, "color");
+    serializer(bgColor, "bgColor");
+}
 
 Text::~Text(){}
 
-bool Text::update() {
+bool Text::initComponent(ComponentData* data) {
+    if (UIComponent::initComponent(data)) {
+        if (fontName != "") {
+            changeFont(fontName);
+        }
+
+        if (size == forge::Vector2::ZERO) {
+            ImVec2 textSize = ImGui::CalcTextSize(text);
+            size = forge::Vector2(textSize.x * 1.07f, textSize.y);
+        }
+
+        return true;
+    }
+    return false;
+}
+
+void Text::update() {
     // Tamano y posicion de la ventana
-    if (size == forge::Vector2::ZERO) {
-        ImVec2 textSize = ImGui::CalcTextSize(text);
-        ImGui::SetNextWindowSize(ImVec2(textSize.x * 1.07f, textSize.y));
-    }
-    else {
-        ImGui::SetNextWindowSize(size);
-    }
-    ImGui::SetNextWindowPos(pos);
+    ImGui::SetNextWindowSize(size);
+    ImGui::SetNextWindowPos(transform->getPosition());
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, bgColor);
@@ -36,15 +54,12 @@ bool Text::update() {
     ImGui::PopStyleVar();
     ImGui::PopStyleColor();
     ImGui::End();
-    return true;
 }
 
 void Text::setColor(forge::Vector4 color_) {
     color = color_;
 }
-void Text::setSize(forge::Vector2 size_) {
-    size = size_;
-}
+
 void Text::setBackground(forge::Vector4 color_, forge::Vector2 size_) {
     window_flags -= ImGuiWindowFlags_NoBackground;
     bgColor = color_;
@@ -74,6 +89,9 @@ void Text::changeBackgroundOpacity(float op) {
 
 void Text::changeText(const char* text_) {
     text = text_;
+
+    ImVec2 textSize = ImGui::CalcTextSize(text);
+    size = forge::Vector2(textSize.x * 1.07f, textSize.y);
 }
 
 const char* Text::getText() {

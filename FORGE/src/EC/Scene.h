@@ -47,7 +47,7 @@ public:
     /// <returns>
     /// Una entidad en escena a partir de su handler
     /// </returns>
-    const Entity* getEntityByHandler(std::string handler);
+    Entity* getEntityByHandler(std::string handler);
     /// <summary>
     /// </summary>
     /// <param name="handler">Nombre que se le va a dar al Handler</param>

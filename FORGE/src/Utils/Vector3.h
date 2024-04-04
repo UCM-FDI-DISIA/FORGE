@@ -35,7 +35,7 @@ namespace forge {
 		/// <summary>
 		/// Constructor de vector uniforme: Vector3(v,v,v)
 		/// </summary>
-		/// <param name="v"></param>
+		/// <param name="v">Componente X, Y y Z</param>
 		Vector3(float v);
 
 		/// <summary>

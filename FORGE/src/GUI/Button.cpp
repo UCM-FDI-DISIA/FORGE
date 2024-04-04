@@ -1,21 +1,39 @@
 #include "Button.h"
+#include "Serializer.h"
 
 const std::string Button::id = "Button";
 
-Button::Button(const char* buttonId, const char* buttonText, std::function<void(void)> funct, forge::Vector2 pos_) 
-    : BaseButton(buttonId, funct, forge::Vector2::ZERO, pos_), text(buttonText), textColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
-    fontName(""), font(nullptr), buttonColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) { }
+Button::Button() : BaseButton(),
+    fontName(""),
+    font(nullptr) {
+    serializer(text, "text");
+    serializer(textColor, "textColor");
+    serializer(buttonColor, "buttonColor");
+    serializer(fontName, "fontName");
+}
 
 Button::~Button() { }
 
-bool Button::update() {
-    // Tamano y posicion de la ventana
-    if (buttonSize == forge::Vector2::ZERO) {
-        ImVec2 textSize = ImGui::CalcTextSize(text);
-        buttonSize = forge::Vector2(textSize.x * 1.1f, textSize.y * 1.3f);
+bool Button::initComponent(ComponentData* data) {
+    if (BaseButton::initComponent(data)) {
+        if (fontName != "") {
+            changeFont(fontName);
+        }
+
+        if (size == forge::Vector2::ZERO) {
+            ImVec2 textSize = ImGui::CalcTextSize(text);
+            size = forge::Vector2(textSize.x * 1.1f, textSize.y * 1.3f);
+        }
+
+        return true;
     }
-    ImGui::SetNextWindowSize(buttonSize);
-    ImGui::SetNextWindowPos(pos);
+    return false;
+}
+
+void Button::update() {
+    // Tamano y posicion de la ventana
+    ImGui::SetNextWindowSize(size);
+    ImGui::SetNextWindowPos(transform->getPosition());
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::Begin(windowName, NULL, window_flags);
@@ -25,7 +43,7 @@ bool Button::update() {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
     if (font != nullptr) {
         ImGui::PushFont(font);
-        pressed = ImGui::Button(text, buttonSize);
+        pressed = ImGui::Button(text, size);
         ImGui::PopFont();
     }
     else {
@@ -39,7 +57,6 @@ bool Button::update() {
     ImGui::PopStyleVar();
     ImGui::PopStyleColor(3);
     ImGui::End();
-    return true;
 }
 
 void Button::setColor(forge::Vector4 color_) {

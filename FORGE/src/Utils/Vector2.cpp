@@ -6,16 +6,19 @@ using namespace forge;
 #pragma region Constructoras
 Vector2::Vector2() :
 	x(0.0f),
-	y(0.0f) {
-}
+	y(0.0f) {}
+
 Vector2::Vector2(float _x, float _y) :
 	x(_x),
-	y(_y) {
-}
+	y(_y) {}
+
 Vector2::Vector2(const Vector2& v) :
 	x(v.x),
-	y(v.y) {
-}
+	y(v.y) {}
+
+Vector2::Vector2(float e) :
+	x(e),
+	y(e) {}
 
 Vector2::~Vector2(){}
 #pragma endregion
@@ -33,14 +36,32 @@ Vector2 Vector2::operator*(float e) const {
 Vector2 Vector2::operator/(float e) const {
 	return Vector2(x / e, y / e);
 }
-float Vector2::operator *(const Vector2& v) const {
-	return (x * v.x + y * v.y);
+//float Vector2::operator *(const Vector2& v) const {
+//	return (x * v.x + y * v.y);
+//}
+Vector2 Vector2::operator*(const Vector2& v) const {
+	return (x * v.x, y * v.y);
 }
 bool Vector2::operator==(const Vector2& v) const {
 	return (x == v.x && y == v.y);
 }
 bool Vector2::operator!=(const Vector2& v) const {
 	return (x != v.x || y != v.y);
+}
+Vector2 Vector2::operator+=(const Vector2& v) {
+	x += v.x;
+	y += v.y;
+	return *this;
+}
+Vector2 Vector2::operator*=(const Vector2& v) {
+	x *= v.x;
+	y *= v.y;
+	return *this;
+}
+Vector2 Vector2::operator*=(float e) {
+	x *= e;
+	y *= e;
+	return *this;
 }
 #pragma endregion
 
@@ -73,11 +94,9 @@ void Vector2::set(float _x, float _y) {
 #pragma endregion
 
 #pragma region Conversiones
-//#ifdef GUI
 Vector2::operator ImVec2() const {
 	return ImVec2(x, y);
 }
-//#endif
 #pragma endregion
 
 #pragma region Constantes

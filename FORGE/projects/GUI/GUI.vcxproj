@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\SDL2\build\x64\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\x64\include-config-$(Configuration)\SDL2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\SDL2\build\x64\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\x64\include-config-$(Configuration)\SDL2;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +123,9 @@
     <ClCompile Include="..\..\src\GUI\UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.vcxproj">
       <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
     </ProjectReference>

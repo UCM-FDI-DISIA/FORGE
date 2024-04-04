@@ -36,6 +36,7 @@ GUIManager* GUIManager::getInstance() {
     return (instance = std::unique_ptr<GUIManager>(new GUIManager())).get();
 }
 
+// HABLAR SOBRE COMO SE CARGARÍAN DESDE LUA
 void GUIManager::loadFont(std::string name, const char* fontFile, float size) {
     if (!fonts.count(name)) {
         ImFont* font = io->Fonts->AddFontFromFileTTF(fontFile, size);

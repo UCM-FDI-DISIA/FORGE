@@ -1,39 +1,58 @@
 #pragma once
+
+#ifndef UI_COMPONENT_H_
+#define UI_COMPONENT_H_
+
 #include <Component.h>
-#include "Vector2.h"
-#include "Vector4.h"
-#include "imgui.h"
+#include <Vector2.h>
+#include <Vector4.h>
+#include "RectTransform.h"
 #include "GUIManager.h"
-class UIComponent /*: public Component*/ {
+
+class UIComponent : public Component {
 protected:
 	// Identificador de ventana
 	const char* windowName;
 
-	// Posicion de renderizado
-	forge::Vector2 pos;
-
 	// Propiedades de la ventana (Flags)
-	ImGuiWindowFlags window_flags = 0;
+	ImGuiWindowFlags window_flags;
 
 	// Referencia al GuiManager
 	GUIManager* gui;
 
+	// Referencia al transform
+	RectTransform* transform;
+
+	// Tamano del objeto
+	forge::Vector2 size;
+
 public:
+	// Id de componente
+	static const std::string id;
+
+	#pragma region Constructores
 	/// <summary>
-	/// Contruye un componente de interfaz
+	/// Contructora de un componente de interfaz
 	/// </summary>	
-	/// <param name = "id">Nombre (identificador)</param>
-	/// <param name = "pos_">Posicion</param>
-	UIComponent(const char* id, forge::Vector2 pos_ = forge::Vector2::ZERO);
+	UIComponent();
 	/// <summary>
 	/// Destructora
 	/// </summary>	
-	~UIComponent();
+	virtual ~UIComponent();
+	#pragma endregion
 
 	/// <summary>
-	/// Actualiza la posicion
+	/// Inicializa el UIComponent con los parametros adecuados
+	/// </summary>
+	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	bool initComponent(ComponentData* data) override;
+
+	#pragma region Getters
+	/// <summary>
+	/// Devuelve el tamano de la imagen
 	/// </summary>	
-	/// <param name = "pos_">Posicion</param>
-	virtual void setPosition(forge::Vector2 pos_);
+	forge::Vector2 getSize();
+	#pragma endregion
 };
 
+#endif // !UI_COMPONENT_H_

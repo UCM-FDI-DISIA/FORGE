@@ -76,39 +76,39 @@ int main(int, char**) {
     gui->loadFont("Saeda", "LTSaeada-Black.otf", 60);
     gui->showLoadedFonts();
     // --- TEXT ---
-    Text* text = new Text("prueba", "Saeda", forge::Vector2(100, 200));
+    //Text* text = new Text("prueba", "Saeda", forge::Vector2(100, 200));
     //text->setBackground();
     //text->removeBackground();
     //text->setColor(forge::Vector4({ .0, 0.0, 0.0, 1.0 }));
     //text->changeTextOpacity(0.3f);
     //text->changeFont("Supercharge");
     //text->changeBackgroundOpacity(0.3f);
-    text->changeText("Texto");
-    text->setPosition(forge::Vector2(600, 100));
+    //text->changeText("Texto");
+    //text->setPosition(forge::Vector2(600, 100));
     // --- BUTTON ---
-    Button* button = new Button("prueba2", "hola", funcion);
-    button->setColor(forge::Vector4(0.0, 0.0, 1.0, 1.0));
-    button->changeText("Boton");
-    button->changeFont("Saeda");
-    button->changeButtonOpacity(0.5);
-    button->setPosition(forge::Vector2(100, 100));
-    // --- IMAGE ---
-    Image* img = new Image("panko", "panko.png", renderer, forge::Vector2(300, 300));
-    img->setPosition(forge::Vector2(250, 250));
-    img->setSize(forge::Vector2(200, 200));
-    // --- IMAGE BUTTON ---
-    ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, funcionImg, forge::Vector2(632, 144));
-    imgb->setPosition(forge::Vector2(550, 250));
-    //imgb->setSize(forge::Vector2(300, 300));
-    ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, funcionImg, forge::Vector2(632, 144));
-    imgb2->setPosition(forge::Vector2(550, 450));
-    //imgb2->setSize(forge::Vector2(300, 300));
-    // --- INPUTTEXT ---
-    InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 600));
-    InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 660));
-    //itext2->setBackground();
-    //itext2->removeBackground();
-    itext2->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
+    //Button* button = new Button("prueba2", "hola", funcion);
+    //button->setColor(forge::Vector4(0.0, 0.0, 1.0, 1.0));
+    //button->changeText("Boton");
+    //button->changeFont("Saeda");
+    //button->changeButtonOpacity(0.5);
+    //button->setPosition(forge::Vector2(100, 100));
+    //// --- IMAGE ---
+    //Image* img = new Image("panko", "panko.png", renderer, forge::Vector2(300, 300));
+    //img->setPosition(forge::Vector2(250, 250));
+    //img->setSize(forge::Vector2(200, 200));
+    //// --- IMAGE BUTTON ---
+    //ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, funcionImg, forge::Vector2(632, 144));
+    //imgb->setPosition(forge::Vector2(550, 250));
+    ////imgb->setSize(forge::Vector2(300, 300));
+    //ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, funcionImg, forge::Vector2(632, 144));
+    //imgb2->setPosition(forge::Vector2(550, 450));
+    ////imgb2->setSize(forge::Vector2(300, 300));
+    //// --- INPUTTEXT ---
+    //InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 600));
+    //InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 660));
+    ////itext2->setBackground();
+    ////itext2->removeBackground();
+    //itext2->setColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }));
     // Main loop
     bool done = false;
     while (!done) {
@@ -132,28 +132,28 @@ int main(int, char**) {
             ImGui::ShowDemoWindow(&show_demo_window);*/
 
         // Textos
-        text->update();
+        /*text->update();
         itext->update();
-        itext2->update();
+        itext2->update();*/
 
         // Botones
-        BaseButton::resetFunction();
+        /*BaseButton::resetFunction();
         button->update();
         img->update();
         imgb->update();
         imgb2->update();
-        BaseButton::mainFunctionCall();
+        BaseButton::mainFunctionCall();*/
 
         gui->render();
         gui->refresh();
     }
-    delete(text);
-    delete(button);
-    delete(img);
-    delete(itext); 
-    delete(itext2);
-    delete(imgb);
-    delete(imgb2); // no da error pero no borra el surface y no deja basura
+    //delete(text);
+    //delete(button);
+    //delete(img);
+    //delete(itext); 
+    //delete(itext2);
+    //delete(imgb);
+    //delete(imgb2); // no da error pero no borra el surface y no deja basura
     //delete(gui); // ya se llama
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

@@ -11,6 +11,7 @@
 #include "Input.h"
 #include "Factory.h"
 #include "Transform.h"
+#include "RectTransform.h"
 #include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
@@ -19,15 +20,21 @@
 #include "ParticleSystem.h"
 #include "Billboard.h"
 
-
 #include "AudioManager.h"
 #include "AudioListener.h"
 #include "AudioSource.h"
 #include "Sound.h"
 
+#include "Image.h"
+#include "Button.h"
+#include "ImageButton.h"
+#include "Text.h"
+#include "InputText.h"
+
 void factory() {
 	Factory& f = *Factory::getInstance();
 	f.registerComponent<Transform>();
+	f.registerComponent<RectTransform>();
 	f.registerComponent<Mesh>();
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
@@ -37,6 +44,11 @@ void factory() {
 	f.registerComponent<Billboard>();
 	f.registerComponent<AudioSource>();
 	f.registerComponent<AudioListener>();
+	f.registerComponent<Image>();
+	f.registerComponent<Button>();
+	f.registerComponent<ImageButton>();
+	f.registerComponent<Text>();
+	f.registerComponent<InputText>();
 }
 
 

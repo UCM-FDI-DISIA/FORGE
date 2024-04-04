@@ -1,31 +1,36 @@
 #include "InputText.h"
+#include "Serializer.h"
+#include "Scene.h"
+#include "Entity.h"
 
 const std::string InputText::id = "InputText";
 
-InputText::InputText(const char* textId, const char* text_, forge::Vector2 pos_) : 
-    Text(textId, text_, pos_), textToChange(nullptr), textToWrite("") {
-
-}
-
-InputText::InputText(const char* textId, const char* text_, Text* textToChange_, forge::Vector2 pos_): 
-    Text(textId, text_, pos_), textToChange(textToChange_), textToWrite("") {
-
+InputText::InputText() : Text(),
+    textToChange(nullptr),
+    textToWrite("") {
+    text = "Introduce tu nombre";
+    serializer(text, "text");
 }
 
 InputText::~InputText() {
 	
 }
 
-bool InputText::update() {
+bool InputText::initComponent(ComponentData* data) {
+    if (Text::initComponent(data)) {
+        if (data->has("textToChange")) {
+            std::string handler = data->get<std::string>("textToChange");
+            textToChange = scene->getEntityByHandler(handler)->getComponent<Text>();
+        }
+        return true;
+    }
+    return false;
+}
+
+void InputText::update() {
     // Tamano y posicion de la ventana
-    if (size == forge::Vector2::ZERO) {
-        ImVec2 textSize = ImGui::CalcTextSize(text);
-        ImGui::SetNextWindowSize(ImVec2(textSize.x * 3.0f, textSize.y));
-    }
-    else {
-        ImGui::SetNextWindowSize(size);
-    }
-    ImGui::SetNextWindowPos(pos);
+    ImGui::SetNextWindowSize(size);
+    ImGui::SetNextWindowPos(transform->getPosition());
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, bgColor);
@@ -47,5 +52,4 @@ bool InputText::update() {
     ImGui::PopStyleVar();
     ImGui::PopStyleColor();
     ImGui::End();
-    return true;
 }

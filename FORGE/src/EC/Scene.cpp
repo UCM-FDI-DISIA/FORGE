@@ -69,7 +69,7 @@ const std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
     return entitiesByGroup[groupId];
 }
 
-const Entity* Scene::getEntityByHandler(std::string handler) {
+Entity* Scene::getEntityByHandler(std::string handler) {
     auto iter = handlers.find(handler);
     if (iter == handlers.end()) {
         return nullptr;

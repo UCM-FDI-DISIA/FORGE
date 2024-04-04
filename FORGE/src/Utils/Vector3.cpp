@@ -18,9 +18,10 @@ Vector3::Vector3() :
 	y(0),
 	z(0) {}
 
-Vector3::Vector3(float _x, float _y, float _z) {
-	set(_x, _y, _z);
-}
+Vector3::Vector3(float _x, float _y, float _z) :
+	x(_x),
+	y(_y), 
+	z(_z) {}
 
 Vector3::Vector3(float v) :
 	x(v),

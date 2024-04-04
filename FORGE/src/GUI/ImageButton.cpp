@@ -1,42 +1,73 @@
 #include "ImageButton.h"
+#include "Serializer.h"
 #include <iostream>
 
 const std::string ImageButton::id = "ImageButton";
 
-ImageButton::ImageButton(const char* imgButId, const std::string idleFile, const std::string hoverFile,
-	const std::string pressedFile, SDL_Renderer* renderer_, std::function<void(void)> funct, forge::Vector2 size_, forge::Vector2 pos_)
-	: BaseButton(imgButId, funct, size_, pos_), realPos(pos), imagesBool(true) {
-
-	images.push_back(new Image(imgButId + (char) IDLE, idleFile, renderer_, size_, pos_));
-	images.push_back(new Image(imgButId + (char) HOVER, hoverFile, renderer_, size_, pos_));
-	//images.push_back(new Image(imgButId + (char) PRESSED, pressedFile, renderer_, size_, pos_));
+ImageButton::ImageButton() : BaseButton(),
+	idleFile(""),
+	hoverFile(""),
+	imagesBool(false) {
+	serializer(idleFile, "idleFile");
+	serializer(hoverFile, "hoverFile");
+	serializer(size, "size");
 }
 
-ImageButton::ImageButton(const char* imgButId, const std::string fileName, SDL_Renderer* renderer_, std::function<void(void)> funct,
-	forge::Vector2 size_, forge::Vector2 pos_) : BaseButton(imgButId, funct, size_, pos_), realPos(pos), imagesBool(false) {
-	
-	images.push_back(new Image(imgButId + (char)IDLE, fileName, renderer_, size_, pos_));
-}
-
-ImageButton::~ImageButton() 
-{ 
-	for (Image* i : images)  {
+ImageButton::~ImageButton() { 
+	for (SDL_Texture* i : images)  {
 		delete(i);
 	}
 	images.clear();
 }
 
-bool ImageButton::update() {
-	// Tamano y posicion de la ventana
-	if (buttonSize == forge::Vector2::ZERO) {
-		for (Image* i : images) {
-			i->setSize(i->getSourceSize());
+bool ImageButton::initComponent(ComponentData* data) {
+	if (BaseButton::initComponent(data)) {
+		imagesBool = (hoverFile != "");
+		if (createImage(idleFile, IDLE)) {
+			if (imagesBool) {
+				return createImage(hoverFile, HOVER);
+			}
+			return true;
 		}
-		buttonSize = images[0]->getSize() + forge::Vector2(6, 6);
 	}
+	return false;
 
-	ImGui::SetNextWindowSize(buttonSize + forge::Vector2(6, 6));
-	ImGui::SetNextWindowPos(pos);
+}
+
+bool ImageButton::createImage(std::string file, ButtonState state) {
+	SDL_Renderer* renderer = GUIManager::getInstance()->getRenderer();
+	if (renderer != nullptr) {
+		SDL_Surface* surface = IMG_Load(file.c_str());
+		if (surface == nullptr) {
+			std::cerr << "No se pudo cargar la imagen de " + file + " \n";
+		}
+		else {
+			SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+			if (texture == nullptr) {
+				SDL_FreeSurface(surface);
+				std::cerr << "No se pudo cargar la imagen de " + file + " \n";
+			}
+			else {
+				if (size == forge::Vector2::ZERO) {
+					size = forge::Vector2((float)surface->w, (float)surface->h)+forge::Vector2(6, 6);
+				}
+
+				images.push_back(texture);
+
+				return true;
+			}
+		}
+	}
+	else {
+		std::cerr << "Debe existir un renderer para crear una imagen\n";
+	}
+	return false;
+}
+
+void ImageButton::update() {
+	// Tamano y posicion de la ventana
+	ImGui::SetNextWindowSize(size + forge::Vector2(6, 6));
+	ImGui::SetNextWindowPos(transform->getPosition());
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(windowName, NULL, window_flags);
@@ -46,26 +77,27 @@ bool ImageButton::update() {
 
 	if (imagesBool) {
 		if (ImGui::IsWindowHovered() && !pressed) {
-			pressed = ImGui::ImageButton(buttonId, (void*)images[HOVER]->getTexture(), buttonSize);
+			pressed = ImGui::ImageButton(buttonId, (void*) images[HOVER], size);
 		}
-		/*else if (pressed) {
-			pressed = ImGui::ImageButton(buttonId, (void*)images[PRESSED]->getTexture(), buttonSize);
-		}*/
 		else {
-			pressed = ImGui::ImageButton(buttonId, (void*)images[IDLE]->getTexture(), buttonSize);
+			pressed = ImGui::ImageButton(buttonId, (void*)images[IDLE], size);
 		}
 	}
 
 	else {
+		if (realPos != transform->getPosition() && realPos != (realPos + ((size - (size * 0.99f)) / 4))) {
+			realPos = transform->getPosition();
+		}
+
 		if (ImGui::IsWindowHovered() && !pressed) {
-			pressed = ImGui::ImageButton((void*)images[IDLE]->getTexture(), buttonSize * 0.99f);
-			if (pos == realPos) {
-				pos = pos + ((buttonSize - (buttonSize * 0.99f)) / 4);
+			pressed = ImGui::ImageButton((void*) images[IDLE], size * 0.99f);
+			if (transform->getPosition() == realPos) {
+				transform->setPosition(transform->getPosition() + ((size - (size * 0.99f)) / 4));
 			}
 		}
 		else {
-			pressed = ImGui::ImageButton((void*)images[IDLE]->getTexture(), buttonSize);
-			pos = realPos;
+			pressed = ImGui::ImageButton((void*) images[IDLE], size);
+			transform->setPosition(realPos);
 		}
 	}
 
@@ -76,9 +108,4 @@ bool ImageButton::update() {
 	ImGui::PopStyleColor(3);
 	ImGui::PopStyleVar();
 	ImGui::End();
-	return true;
-}
-
-void ImageButton::setPosition(forge::Vector2 pos_) {
-	pos = realPos = pos_;
 }

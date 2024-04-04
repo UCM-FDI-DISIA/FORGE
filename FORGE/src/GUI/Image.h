@@ -9,8 +9,8 @@
 
 class Image : public UIComponent {
 private:
-	// Id de componente
-	static const std::string id;
+	// Archivo
+	std::string fileName;
 
 	// Textura
 	SDL_Texture* texture;
@@ -18,26 +18,20 @@ private:
 	// Tamano original de la imagen
 	forge::Vector2 sourceSize;
 
-	// Tamano de renderizado
-	forge::Vector2 imageSize;
-
-	// Rendered de SDL
+	// Renderer de SDL
 	SDL_Renderer* renderer;
 
 	// Superficie de SDL
 	SDL_Surface* surface;
 
 public:
+	// Id de componente
+	static const std::string id;
+
 	/// <summary>
 	/// Crea una imagen a partir de un archivo. Se aceptan varios tipos de imagen, entre ellos: PNG, JPG y SVG  
 	/// </summary>	
-	/// <param name = "imgId">Identificador de la imagen (los identificadores de componetes UI NO PUEDEN COINCIDIR)</param>
-	/// <param name = "fileName">Direccíon del archivo ("C:/MyAssets/asset.png")</param>
-	/// <param name = "renderer_">Renderer de SDL</param>
-	/// <param name = "imgSize">Tamano de la imagen por pantalla</param>
-	/// <param name = "pos_">Posicion de renderizado</param>
-	Image(const char* imgId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 imgSize,
-		forge::Vector2 pos_ = forge::Vector2::ZERO);
+	Image();
 
 	/// <summary>
 	/// Destructora del componente imagen
@@ -45,20 +39,21 @@ public:
 	virtual ~Image();
 
 	/// <summary>
+	/// Inicializa el Image con los parametros adecuados
+	/// </summary>
+	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	bool initComponent(ComponentData* data) override;
+
+	/// <summary>
 	/// Actualizacion de la imagen
 	/// </summary>
-	virtual bool update();
+	virtual void update();
 
 	/// <summary>
 	/// Cambia el tamano de la imagen  
 	/// </summary>	
 	/// <param name = "size">Nuevo tamano</param>
 	void setSize(forge::Vector2 size);
-
-	/// <summary>
-	/// Devuelve el tamano de la imagen
-	/// </summary>	
-	forge::Vector2 getSize();
 
 	/// <summary>
 	/// Devuelve el tamano original de la imagen
