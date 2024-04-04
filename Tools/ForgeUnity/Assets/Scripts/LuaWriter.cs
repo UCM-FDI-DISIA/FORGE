@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 
+[Generator]
 public class LuaWriter : MonoBehaviour, ICodeGenerator
 {
     Dictionary<string, GameObject> savedObjects = new Dictionary<string, GameObject> ();
@@ -18,6 +19,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     {
 
         //Aqui se escribe "local scenes = {" en el archivo de lua
+        data += "local scenes = {\n";
         i++;
         foreach (Scene scene in SceneManager.GetAllScenes())
         {
@@ -36,16 +38,17 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
            }
             i--;
             Tabulate();
-           data += "}, \n";
+           data += "},\n";
            
         }
         //Se quita la ultima coma
-        data=data.Remove(data.Length-4);
-        data+= "\n";
-        //Aqui se cierra con una llave "}"
+        data = data.Remove(data.Length-2);
         Tabulate();
+        data += "\n";
+        //Aqui se cierra con una llave "}"
         data += "}";
         i--;
+        data += "\nreturn prefabs, scenes";
         //y se escribe al final del archivo "return prefabs, scenes"
     }
 
@@ -54,12 +57,19 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     {
         data += "\n";
         i++;
+        data += obj.name + "= {\n";
+        Tabulate();
+        data += "components = {\n";
         foreach (Component component in obj.GetComponents(typeof(Component)))
         {
             Tabulate();
-            data += component.name + "{";
+            data += component.GetType() + "= {";
             data += "\n";
+            Tabulate();
+            data += "},\n";
         }
+        data = data.Remove(data.Length-2);
+        data += "\n}\n";
         for (int i = 0; i < obj.transform.childCount; i++)
         {
             Tabulate();
@@ -67,7 +77,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         }
         i--;
         savedObjects.Add(obj.name, obj);
-        
+        data += "}\n";
     }
 
     public void Tabulate()
@@ -81,6 +91,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     public void Execute(GeneratorContext context)
     {
         SaveAll();
-        //context.
+        data = data.Replace("UnityEngine.", "");
+        context.AddCode("luatest.lua", data);
     }
 }
