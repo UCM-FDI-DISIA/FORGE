@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+
 //using Unity.VisualScripting;
 using UnityCodeGen;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -71,12 +74,46 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         i++; // = x + 1
         Tabulate();
         data += "components = {\n";
+        //Transform
         i++;// = x + 2
-        foreach (Component component in obj.GetComponents(typeof(Component)))
+
+        var tf = obj.GetComponent<Transform>();
+        Tabulate();
+        data += tf.GetType() + "= {";
+        i++;// = x + 3
+        data += "\n";
+        Tabulate();
+        data += "position = " + "{" + tf.localPosition.x.ToString(new CultureInfo("en-US")) + 
+            "," + tf.localPosition.y.ToString(new CultureInfo("en-US")) +
+            "," + tf.localPosition.z.ToString(new CultureInfo("en-US")) + "}" + ",\n";
+        Tabulate();
+        data += "rotation = " + "{" + tf.localRotation.x.ToString(new CultureInfo("en-US")) + 
+            "," + tf.localRotation.y.ToString(new CultureInfo("en-US")) + 
+            "," + tf.localRotation.z.ToString(new CultureInfo("en-US")) + 
+            "," + tf.localRotation.w.ToString(new CultureInfo("en-US")) + "}" + ",\n";
+        Tabulate();
+        data += "scale = " + "{" + tf.localScale.x.ToString(new CultureInfo("en-US")) + 
+            "," + tf.localScale.y.ToString(new CultureInfo("en-US")) + 
+            "," + tf.localScale.z.ToString(new CultureInfo("en-US")) + "}" + "\n";
+
+        i--;// = x + 2
+        Tabulate();
+        data += "},\n";
+
+
+        //eotransform
+
+        foreach (FORGEComponent component in obj.GetComponents(typeof(FORGEComponent)))
         {
             Tabulate();
-            data += component.GetType() + "= {";
+            data += component.componentName + "= {\n";
             i++;// = x + 3
+            foreach(KeyValuePair<string, string> value in component.values)
+            {
+                Tabulate();
+                data += value.Key + " = " + value.Value + ",\n";
+            }
+            data = data.Remove(data.Length-2);
             Tabulate();
             data += "\n";
             i--;// = x + 2
@@ -125,6 +162,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     {
         SaveAll();
         data = data.Replace("UnityEngine.", "");
+        context.OverrideFolderPath("Assets/FORGE Data");
         context.AddCode("luatest.lua", data);
     }
 }
