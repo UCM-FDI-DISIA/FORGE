@@ -7,7 +7,8 @@ using namespace irrklang;
 std::unique_ptr<AudioManager> AudioManager::instance = nullptr;
 
 AudioManager::AudioManager() :
-	engine(createIrrKlangDevice()) {
+	engine(createIrrKlangDevice()),
+	isListenerOnScene(false) {
 }
 
 AudioManager* AudioManager::getInstance() {

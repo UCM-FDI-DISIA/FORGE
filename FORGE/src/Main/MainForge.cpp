@@ -26,10 +26,11 @@
 
 using namespace forge;
 
-std::unique_ptr<MainForge> MainForge::instance = std::unique_ptr<MainForge>(new MainForge());
+
+bool MainForge::initialized = false;
+std::unique_ptr<MainForge> MainForge::instance = nullptr;
 
 MainForge::MainForge() :
-	initialized(false),
 	isRunning(false),
 	finished(false),
 	fixedUpdateTimer(0.0),
@@ -124,25 +125,26 @@ void MainForge::mainLoop() {
 }
 
 void MainForge::Init(std::string const& luaConfigPath) {
-	if (!instance->initialized) {
+	if (!initialized) {
+		if (instance == nullptr) instance = std::unique_ptr<MainForge>(new MainForge());
 		instance->init(luaConfigPath);
 	}
 }
 
 void MainForge::MainLoop() {
-	if (instance->initialized && !instance->isRunning) {
+	if (initialized && !instance->isRunning) {
 		instance->mainLoop();
 	}
 }
 
 void MainForge::ShutDown() {
-	if (instance->initialized && instance->finished) {
+	if (initialized && instance->finished) {
 		instance->shutDown();
 	}
 }
 
 void MainForge::Exit() {
-	if (instance->isRunning) {
+	if (initialized && instance->isRunning) {
 		instance->isRunning = false;
 	}
 }

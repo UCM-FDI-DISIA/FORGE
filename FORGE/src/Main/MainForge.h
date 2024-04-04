@@ -16,7 +16,7 @@ class PhysicsManager;
 
 class __declspec(dllexport) MainForge {
 private:
-	bool initialized;
+	static bool initialized;
 	bool isRunning;
 	bool finished;
 	double fixedUpdateTimer;
