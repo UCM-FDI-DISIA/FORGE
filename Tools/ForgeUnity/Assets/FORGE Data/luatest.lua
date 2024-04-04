@@ -4,7 +4,7 @@ local scenes = {
 		Main Camera= {
 			components = {
 				Transform= {
-					position = {0,1,-10},
+					position = {10.46,1,3.44},
 					rotation = {0,0,0,1},
 					scale = {1,1,1}
 				}
@@ -14,7 +14,7 @@ local scenes = {
 		Directional Light= {
 			components = {
 				Transform= {
-					position = {0,3,0},
+					position = {15.49,3,-1.25},
 					rotation = {0.4082179,-0.2345697,0.1093816,0.8754261},
 					scale = {1,1,1}
 				}

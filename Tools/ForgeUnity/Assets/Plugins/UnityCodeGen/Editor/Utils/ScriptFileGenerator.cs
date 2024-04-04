@@ -44,7 +44,6 @@ namespace UnityCodeGen
 
         internal static void Generate()
         {
-            if (isGenerating) return;
             isGenerating = true;
 
             // fileNames.Clear();
