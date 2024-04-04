@@ -47,13 +47,13 @@ public:
     /// <returns>
     /// Una entidad en escena a partir de su handler
     /// </returns>
-    const Entity* getEntityByHandler(std::string handler);
+    const Entity* getEntityByHandler(std::string const& handler);
     /// <summary>
     /// </summary>
     /// <param name="handler">Nombre que se le va a dar al Handler</param>
     /// <param name="ent">Entidad que se asocia al Handler</param>
     /// <returns>Si se ha podido agregar el Handler</returns>
-    bool setHandler(std::string handler, Entity* entity);
+    bool setHandler(std::string const& handler, Entity* entity);
     /// <summary>
     /// Cambia el booleano sceneEnd a true
     /// </summary>

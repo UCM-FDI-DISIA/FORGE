@@ -45,13 +45,13 @@ void Animator::update() {
 	}
 }
 
-void Animator::setLoop(std::string animation, bool looped) {
+void Animator::setLoop(std::string const& animation, bool looped) {
 	if (ogreAnimations->hasAnimationState(animation)) {
 		ogreAnimations->getAnimationState(animation)->setLoop(looped);
 	}
 }
 
-void Animator::setActive(std::string animation, bool active) {
+void Animator::setActive(std::string const& animation, bool active) {
 	if (ogreAnimations->hasAnimationState(animation)) {
 		if (active) {
 			activeAnimations.insert(animation);
@@ -63,28 +63,28 @@ void Animator::setActive(std::string animation, bool active) {
 	}
 }
 
-void Animator::setLoop(std::vector<std::string> animations, bool looped) {
-	for (std::string animation : animations) {
+void Animator::setLoop(std::vector<std::string> const& animations, bool looped) {
+	for (std::string const& animation : animations) {
 		setLoop(animation, looped);
 	}
 }
 
-void Animator::setActive(std::vector<std::string> animations, bool active) {
-	for (std::string animation : animations) {
+void Animator::setActive(std::vector<std::string> const& animations, bool active) {
+	for (std::string const& animation : animations) {
 		setActive(animation, active);
 	}
 }
 
-void Animator::changeActive(std::string newAnimation) {
-	for (std::string animation : activeAnimations) {
+void Animator::changeActive(std::string const& newAnimation) {
+	for (std::string const& animation : activeAnimations) {
 		ogreAnimations->getAnimationState(animation)->setEnabled(false);
 	}
 	activeAnimations.clear();
 	setActive(newAnimation, true);
 }
 
-void Animator::changeActive(std::vector<std::string> newAnimations) {
-	for (std::string animation : activeAnimations) {
+void Animator::changeActive(std::vector<std::string> const& newAnimations) {
+	for (std::string const& animation : activeAnimations) {
 		setActive(animation, false);
 	}
 	setActive(newAnimations, true);

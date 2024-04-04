@@ -46,13 +46,13 @@ public:
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="route">Archivo de sonido</param>
 	/// <returns>Booleano que indica si se ha podido agregar el sonido</returns>
-	SoundGenerator* addSound(std::string name, std::string file);
+	SoundGenerator* addSound(std::string const& name, std::string const& file);
 	/// <summary>
 	/// Accede al sonido con el identificador solicitado
 	/// </summary>
 	/// <param name="name">Identificador del sonido al que se quiere acceder</param>
 	/// <returns>Puntero al sonido solicitado. nullptr si no existe</returns>
-	Sound* getSound(std::string name);
+	Sound* getSound(std::string const& name);
 	/// <summary>
 	/// Elimina el sonido de los sonidos actuales y lo borra de memoria
 	/// </summary>
@@ -64,7 +64,7 @@ public:
 	/// </summary>
 	/// <param name="position">Nueva posicion del escuchador</param>
 	/// <param name="lookAt">Direccion a la que mira el escuchador</param>
-	void setListenerPosition(forge::Vector3 position, forge::Vector3 lookAt);
+	void setListenerPosition(forge::Vector3 const& position, forge::Vector3 const& lookAt);
 	/// <summary>
 	/// Devuelve el estado de la flag isListenerOnScene
 	/// </summary>

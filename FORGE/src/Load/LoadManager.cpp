@@ -8,7 +8,7 @@
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 
-LoadManager::LoadManager(std::string assetsFile, std::string scenesFile) : 
+LoadManager::LoadManager(std::string const& assetsFile, std::string const& scenesFile) : 
 	luaForge(new LuaForge()) {
 	luaForge->doFile(assetsFile);
 	luabridge::LuaRef audioRef = luabridge::getGlobal(luaForge->getState(), "Audio");

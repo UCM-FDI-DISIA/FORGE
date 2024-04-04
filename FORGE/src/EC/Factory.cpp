@@ -7,7 +7,7 @@ Factory* Factory::getInstance() {
     return (instance = std::unique_ptr<Factory>(new Factory())).get();
 }
 
-Component* Factory::generateComponent(std::string id) {
+Component* Factory::generateComponent(std::string const& id) {
     auto iter = find(id);
     if (iter != end()) {
         return iter->second();

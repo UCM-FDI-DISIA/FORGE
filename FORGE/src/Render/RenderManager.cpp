@@ -1,12 +1,6 @@
 #include "RenderManager.h"
 #include "RenderForge.h"
-#include "Entity.h"
-#include "Transform.h"
-#include "Mesh.h"
-#include "Camera.h"
-#include "Light.h"
-#include "ParticleSystem.h"
-#include "Billboard.h"
+#include <iostream>
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
@@ -26,16 +20,20 @@
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
 #include <OgreEntity.h>
-#include <iostream>
 #include <OgreParticleSystem.h>
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
 #include "OgreNameGenerator.h"
 #pragma warning(pop)
-
+#include "Entity.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Camera.h"
+#include "Light.h"
+#include "ParticleSystem.h"
+#include "Billboard.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
-
 
 RenderManager::RenderManager() : 
 	forge(nullptr),
@@ -72,7 +70,7 @@ RenderManager* RenderManager::getInstance() {
 	return (instance = std::unique_ptr<RenderManager>(new RenderManager())).get();
 }
 
-void RenderManager::setup(std::string appName) {
+void RenderManager::setup(std::string const& appName) {
 	forge = new RenderForge(appName);
 	root = forge->getRoot();
 	if (root == nullptr) return;

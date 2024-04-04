@@ -1,4 +1,5 @@
 #include "RenderForge.h"
+#include <iostream>
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
@@ -18,8 +19,9 @@
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
 #include <OgreDataStream.h>
+#include <OgreString.h>
 #include <SDL_video.h>
-#include <iostream>
+#include <SDL_syswm.h>
 #pragma warning(pop)
 
 
@@ -37,7 +39,6 @@ Ogre::Root* RenderForge::createRoot() {
 	solutionPath = pluginsPath;
 	solutionPath.erase(solutionPath.find_last_of("\\") + 1, solutionPath.size() - 1);
 	fileSystemLayer->setHomePath(solutionPath);
-	//mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
 
 	// Creamos la raíz de OGRE 
 	return new Ogre::Root(pluginsPath, fileSystemLayer->getWritablePath("ogre.cfg"), fileSystemLayer->getWritablePath("ogre.log"));
@@ -64,18 +65,18 @@ void RenderForge::locateResources() {
 		// Esto sirve para dividir los recursos en secciones. Al comentarlo se van todos a "General"
 		// sec = seci->first;
 		const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
-		Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
-
+		
 		// iterar por todas las rutas de configuracion
-		for (i = settings.begin(); i != settings.end(); i++) {
-			type = i->first;
-			arch = i->second;
-			if (arch[0] == '.' && (arch[1] == '/' || arch[1] == '\\')) {
-				arch = arch.substr(2);
+		for (auto& i : settings) {
+			type = i.first;
+			arch = i.second;
+			if (arch[0] == '.' && (arch[1] == '/' || arch[1] == '\\' ||
+					(arch[1] == '.' && (arch[2] == '/' || arch[2] == '\\')))) {
 				arch = fileSystemLayer->getWritablePath(arch);
 			}
 			arch = Ogre::FileSystemLayer::resolveBundlePath(arch);
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parámetro sería "sec" si dividieramos en secciones
+		
 		}
 	}
 
@@ -164,7 +165,7 @@ NativeWindowPair RenderForge::createWindow() {
 	return window;
 }
 
-RenderForge::RenderForge(std::string _appName) :
+RenderForge::RenderForge(std::string const& _appName) :
 	root(nullptr),
 	window({nullptr, nullptr}),
 	fileSystemLayer(nullptr),
@@ -182,8 +183,6 @@ RenderForge::RenderForge(std::string _appName) :
 
 	// Creamos la ventana
 	window = createWindow();
-	//SDL_SetWindowGrab(myWindow.native, SDL_bool(false));
-	//SDL_ShowCursor(SDL_bool(false));
 
 	// Inicializamos los recursos
 	locateResources();

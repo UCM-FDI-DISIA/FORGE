@@ -61,22 +61,22 @@ public:
 	/// <param name="renewScene">
 	/// Elimina la escena cargada en memoria y la crea de nuevo desde el blueprint
 	/// </param>
-	void changeScene(std::string scene, bool renewScene = false);
+	void changeScene(std::string const& scene, bool renewScene = false);
 	/// <summary>
 	/// Elimina una escena cargada en memoria
 	/// </summary>
 	/// <param name="id">Identificador de la escena</param>
-	void removeScene(std::string id);
+	void removeScene(std::string const& id);
 	/// <summary>
 	/// Crea una escena a partir de un blueprint
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <returns>La escena creada</returns>
-	Scene* createScene(std::string id);
+	Scene* createScene(std::string const& id);
 	/// <returns>
 	/// Una escena a partir de su Identificador
 	/// </returns>
-	Scene* getScene(std::string id);
+	Scene* getScene(std::string const& id);
 	/// <summary>
 	/// Devuelve el identificador de la escena activa
 	/// </summary>
@@ -99,27 +99,27 @@ public:
 	/// </summary>
 	/// <param name="group">Nombre del grupo</param>
 	/// <returns>Id del grupo</returns>
-	int getGroupId(std::string group);
+	int getGroupId(std::string const& group);
 	/// <summary>
 	/// Agrega un blueprint de escena y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="scene">Blueprint de la escena</param>
-	void addSceneBlueprint(std::string id, std::vector<EntityData*> scene);
+	void addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene);
 	/// <summary>
 	/// Agrega un blueprint de entidad y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="entity">Blueprint de la entidad</param>
-	void addEntityBlueprint(std::string id, EntityData* entity);
+	void addEntityBlueprint(std::string const& id, EntityData* entity);
 	/// <param name="id">Identificador del Blueprint de entidad </param>
 	/// <returns>Puntero al Blueprint de la entidad</returns>
-	EntityData* getEntityBlueprint(std::string id);
+	EntityData* getEntityBlueprint(std::string const& id);
 	/// <summary>
 	/// Guarda un nuevo grupo de entidades que no se haya guardado
 	/// </summary>
 	/// <param name="group">Identificador del grupo nuevo</param>
-	void addGroup(std::string group);
+	void addGroup(std::string const& group);
 
 };
 #endif // !SCENE_MANAGER_H_

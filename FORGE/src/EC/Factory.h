@@ -33,21 +33,7 @@ public:
     /// </summary>
     /// <param name="compName">Nombre del componente que se quiere agregar</param>
     /// <returns>Un puntero a la instancia de componente creada</returns>
-    Component* generateComponent(std::string id);
+    Component* generateComponent(std::string const& id);
 };
 
 #endif // !FACTORY_H_
-
-/*
- * @TODO:
- * (importante)
- * Para poder llamar a la función de inicialización de componentes desde la inicialización del motor
- * habría que tener una función callback por defecto vacía (nullptr) en el motor que se asigna en el 
- * archivo en el que se crea la función nueva chula de registerComponents
- * Ejemplo:
- * void registerComponents() {
- *  Factory::getInstance()->registerComponent<Transform>();
- * }
- * 
- * forge->setComponentRegistrier(registerComponents);
-*/

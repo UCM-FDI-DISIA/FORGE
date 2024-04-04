@@ -40,7 +40,7 @@ void Entity::setAlive(bool _alive) {
     alive = _alive;
 }
 
-Component* Entity::addComponent(std::string id) {
+Component* Entity::addComponent(std::string const& id) {
     Component* component = fact.generateComponent(id);
     removeComponent(id);
     components.insert(std::pair<std::string, Component*>(id, component));
@@ -77,7 +77,7 @@ Entity* Entity::setParent(Entity* newParent) {
     return parent;
 }
 
-void Entity::removeComponent(std::string id) {
+void Entity::removeComponent(std::string const& id) {
     auto iter = components.find(id);
     if (iter != components.end()) {
         delete iter->second;
@@ -85,7 +85,7 @@ void Entity::removeComponent(std::string id) {
     }
 }
 
-bool Entity::hasComponent(std::string id) {
+bool Entity::hasComponent(std::string const& id) {
     return components.count(id);
 }
 

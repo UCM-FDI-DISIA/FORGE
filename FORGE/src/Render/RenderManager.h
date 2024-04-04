@@ -28,8 +28,7 @@ namespace Ogre {
 }
 
 
-class RenderManager
-{
+class RenderManager {
 
 private:
 	static std::unique_ptr<RenderManager> instance;
@@ -37,6 +36,7 @@ private:
 	RenderForge* forge;
 	Ogre::Root* root;        
 	Ogre::SceneManager* sceneManager;
+
 	std::unordered_map<Ogre::SceneNode*, Transform*> transforms;
 
 	//Generadores de nombres aleatorios
@@ -66,7 +66,7 @@ public:
 	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de OGRE sin mas.
 	/// </summary>
 	//<param name="name"> Nombre de la aplicacion</param>
-	void setup(std::string appName);
+	void setup(std::string const& appName);
 
 	/// <summary>
 	/// Renderiza un frame

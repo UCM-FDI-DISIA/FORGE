@@ -16,8 +16,7 @@ ParticleSystem::ParticleSystem() :
 }
 
 ParticleSystem::~ParticleSystem() {
-    if(ogreParticleSystem != nullptr && renderManager != nullptr)
-    {
+    if(ogreParticleSystem != nullptr && renderManager != nullptr) {
         renderManager->removeNode(ogreParticleSystem);
     }
 }
@@ -42,7 +41,7 @@ void ParticleSystem::onDisabled() {
     ogreParticleSystem = nullptr;
 }
 
-void ParticleSystem::setParticle(std::string newParticle) {
+void ParticleSystem::setParticle(std::string const& newParticle) {
     particle = newParticle;
     renderManager->updateParticleSystemNode(ogreParticleSystem,this);
 }

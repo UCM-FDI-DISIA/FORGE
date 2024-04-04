@@ -60,7 +60,7 @@ public:
     /// Establece el color de fondo
     /// </summary>
     /// <param name="newbackgroundColor">Nuevos valores RGB del fondo</param>
-    void setBackgroundColor(forge::Vector3 newbackgroundColor);
+    void setBackgroundColor(forge::Vector3 const& newbackgroundColor);
 	#pragma endregion
 
 	#pragma region getters

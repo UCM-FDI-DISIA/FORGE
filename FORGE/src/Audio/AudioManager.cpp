@@ -31,7 +31,7 @@ void AudioManager::update() {
 	}
 }
 
-SoundGenerator* AudioManager::addSound(std::string name, std::string file) {
+SoundGenerator* AudioManager::addSound(std::string const& name, std::string const& file) {
 	ISoundSource* newSound = engine->addSoundSourceFromFile(file.c_str(), ESM_AUTO_DETECT , true);
 	if (newSound != NULL) {
 		SoundGenerator* s = new SoundGenerator(*engine, newSound);
@@ -41,7 +41,7 @@ SoundGenerator* AudioManager::addSound(std::string name, std::string file) {
 	return nullptr;
 }
 
-Sound* AudioManager::getSound(std::string name) {
+Sound* AudioManager::getSound(std::string const& name) {
 	auto s = soundLibrary.find(name);
 	if (s != soundLibrary.end()) {
 		Sound* snd = s->second->instanciate();
@@ -60,7 +60,7 @@ bool AudioManager::removeSound(Sound* sound) {
 }
 
 using namespace forge;
-void AudioManager::setListenerPosition(Vector3 position, Vector3 lookAt) {
+void AudioManager::setListenerPosition(Vector3 const& position, Vector3 const& lookAt) {
 	engine->setListenerPosition(position, lookAt, Vector3::ZERO, Vector3::UP);
 }
 

@@ -80,7 +80,7 @@ std::string Billboard::getMaterial() {
 	return material;
 }
 
-void Billboard::setMaterial(std::string newMaterial) {
+void Billboard::setMaterial(std::string const& newMaterial) {
 	material = newMaterial;
 	billboardSet->setMaterialName(newMaterial);
 }

@@ -19,8 +19,7 @@ Light::Light() :
 }
 
 Light::~Light() {
-    if(ogreLight != nullptr && renderManager != nullptr)
-    {
+    if(ogreLight != nullptr && renderManager != nullptr) {
         renderManager->removeNode(ogreLight);
     }
 }

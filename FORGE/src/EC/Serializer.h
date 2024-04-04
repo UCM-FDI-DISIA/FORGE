@@ -25,7 +25,7 @@ private:
 		/// Constructor de BaseSerialized, almacena el nombre dentro de Lua o ComponentData de la variable que inicializara.
 		/// </summary>
 		/// <param name="myName">Nombre que se le dara a la variable dentro de Lua o ComponentData.</param>
-		BaseSerialized(std::string myName);
+		BaseSerialized(std::string const& myName);
 		/// <summary>
 		/// Asigna a la variable serializada el valor que tenga dentro del ComponentData.
 		/// </summary>
@@ -47,7 +47,7 @@ private:
 		/// </summary>
 		/// <param name="myVar">Variable que se va a inicializar.</param>
 		/// <param name="myName">Nombre de la variable dentro del archivo Lua o del ComponentData.</param>
-		inline Serialized(T& myVar, std::string myName) :
+		inline Serialized(T& myVar, std::string const& myName) :
 			BaseSerialized(myName),
 			var(myVar) {
 		}
@@ -67,11 +67,11 @@ private:
 		/// <typeparam name="U">Tipo de la variable</typeparam>
 		/// <param name="var">La variable casteada que se va a comprobar</param>
 		template<typename U>
-		void handle_initialize(U& var) {
+		inline void handle_initialize(U& var) {
 		}
 
 		template<>
-		void handle_initialize(float& var) {
+		inline void handle_initialize(float& var) {
 			if (std::isinf(var)) {
 				std::cerr << "ERROR: Variable " << name << " con valor infinito. Seteado a 0" << std::endl;
 				var = 0.0f;
@@ -105,7 +105,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	inline void addField(T& var, std::string name) {
+	inline void addField(T& var, std::string const& name) {
 		serializations.push_back(new Serialized<T>(var, name));
 	}
 	/// <summary>
@@ -132,7 +132,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	inline void operator()(T& var, std::string name) {
+	inline void operator()(T& var, std::string const& name) {
 		addField<T>(var, name);
 	}
 	/// <summary>
@@ -141,15 +141,6 @@ public:
 	/// </summary>
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
 	void initialize(ComponentData& data);
-	/// <summary>
-	/// Comprueba posibles errores en la inicializacion de las variables.
-	/// </summary>
-	/// <typeparam name="U">Tipo de la variable</typeparam>
-	/// <param name="var">La variable casteada que se va a comprobar</param>
-	template<typename U>
-	void handle_initialize(U& var);
-	template<>
-	void handle_initialize<float>(float& var);	
 	/// <summary>
 	/// Destructor del Serializer, elimina todos los registros de campos a serializar.
 	/// </summary>

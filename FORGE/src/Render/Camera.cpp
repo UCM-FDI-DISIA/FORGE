@@ -60,7 +60,7 @@ void Camera::setAutoAspectRatio(bool newAutoAspectRatio) {
     ogreCamera->setAutoAspectRatio(newAutoAspectRatio);
 }
 
-void Camera::setBackgroundColor(forge::Vector3 newbackgroundColor) {
+void Camera::setBackgroundColor(forge::Vector3 const& newbackgroundColor) {
     backgroundColor = newbackgroundColor;
     Ogre::ColourValue value = Ogre::ColourValue(backgroundColor.getX(), backgroundColor.getY(), backgroundColor.getZ());
     ogreCamera->getViewport()->setBackgroundColour(value);
