@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityCodeGen;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +12,8 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
 {
     Dictionary<string, GameObject> savedObjects = new Dictionary<string, GameObject> ();
     string data = "";
+
+    // Contador para las tabulaciones
     int i=0;
 
     //Saves relevant data from all scenes except for bootscene using playerprefs
@@ -20,24 +22,26 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
 
         //Aqui se escribe "local scenes = {" en el archivo de lua
         data += "local scenes = {\n";
-        i++;
+
+        //Se suma uno al contador de tabulaciones
+        i++;// = 1
         foreach (Scene scene in SceneManager.GetAllScenes())
         {
             Tabulate();
-            // "mystring" + var + ""
-            // string.format("{0}", var), 
+            
+           //Escribimos el nombre de la escena
            data += scene.name+" = {\n";
-           i++;
+
+           //Incrementamos el contador de tabulacion
+           i++; // = 2
            foreach (GameObject obj in scene.GetRootGameObjects())
            {
-                Tabulate();
-                //"{*obj} = {"
-                //Sacar componentes del padre components = 
+                //Sacar componentes del padre components
                 SaveGameObjectAndChildren(obj);
-                //"}"
            }
-            i--;
-            Tabulate();
+           //Decrementamos
+           i--; // = 1
+           Tabulate();
            data += "},\n";
            
         }
@@ -47,39 +51,64 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         data += "\n";
         //Aqui se cierra con una llave "}"
         data += "}";
-        i--;
-        data += "\nreturn prefabs, scenes";
-        //y se escribe al final del archivo "return prefabs, scenes"
-    }
+        i--; // = 0
 
-    //Adds the game object and its children to be saved recursively
+        //y se escribe al final del archivo "return prefabs, scenes"
+        data += "\nreturn prefabs, scenes";
+    }
+    /// <summary>
+    ///  Añade los componentes del padre y luego los objetos que tiene como hijo recursivamente
+    /// </summary>
+    /// <param name="obj">Objeto a escribir en el archivo de Lua</param>
     private void SaveGameObjectAndChildren(GameObject obj)
     {
+        //Nombre del GameObject
         data += "\n";
-        i++;
+        Tabulate();
         data += obj.name + "= {\n";
+
+        //Componentes
+        i++; // = x + 1
         Tabulate();
         data += "components = {\n";
+        i++;// = x + 2
         foreach (Component component in obj.GetComponents(typeof(Component)))
         {
             Tabulate();
             data += component.GetType() + "= {";
+            i++;// = x + 3
+            Tabulate();
             data += "\n";
+            i--;// = x + 2
             Tabulate();
             data += "},\n";
         }
+        i--; // = x + 1
         data = data.Remove(data.Length-2);
-        data += "\n}\n";
+        data += "\n";
+        Tabulate();
+        data += "}\n";
+
+        //Objetos hijos
+        // = x + 1
         for (int i = 0; i < obj.transform.childCount; i++)
         {
             Tabulate();
             SaveGameObjectAndChildren(obj.transform.GetChild(i).gameObject);
         }
-        i--;
+        i--; // = x + 1
         savedObjects.Add(obj.name, obj);
+        Tabulate();
         data += "}\n";
+        i--;// = x
+
+        i++;
+
     }
 
+    /// <summary>
+    /// Metodo para tabular correctamente en el archivo de Lua
+    /// </summary>
     public void Tabulate()
     {
         for (int n = 0; n < i; n++)
@@ -88,6 +117,10 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         }
     }
 
+    /// <summary>
+    /// Metodo heredado que al darle a tools->UnityCodeGen->Generate genera el codigo en Lua
+    /// </summary>
+    /// <param name="context"></param>
     public void Execute(GeneratorContext context)
     {
         SaveAll();
