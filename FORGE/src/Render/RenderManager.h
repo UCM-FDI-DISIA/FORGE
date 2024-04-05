@@ -25,7 +25,6 @@ namespace Ogre {
 	class SceneManager;
 	class MovableObject;
 	class NameGenerator;
-	class ManualObject;
 }
 
 
@@ -150,12 +149,6 @@ public:
 	inline Ogre::SceneManager* getSceneManager() {
 		return sceneManager;
 	}
-#pragma endregion
-
-#pragma region Utils
-
-	Ogre::ManualObject* createManualObject(std::string name);
-
 #pragma endregion
 
 };

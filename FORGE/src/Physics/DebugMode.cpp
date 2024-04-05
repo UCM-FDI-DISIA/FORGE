@@ -1,18 +1,20 @@
 #include "DebugMode.h"
-#include "RenderManager.h"
 
 using namespace Ogre;
 
 DebugMode::DebugMode(SceneManager* scm) {
     mContactPoints = &mContactPoints1;
-    mLines = RenderManager::getInstance()->createManualObject("physics lines");
+    mLines = new ManualObject("physics lines");
     assert(mLines);
-    mTriangles = RenderManager::getInstance()->createManualObject("physics triangles");
+    mTriangles = new ManualObject("physics triangles");
     assert(mTriangles);
     mLines->setDynamic(true);
     mTriangles->setDynamic(true);
     //mLines->estimateVertexCount( 100000 );
     //mLines->estimateIndexCount( 0 );
+
+    scm->getRootSceneNode()->attachObject(mLines); // Crea objetos visuales de ogre en los que dibujar las lineas
+    scm->getRootSceneNode()->attachObject(mTriangles);
 
     static const char* matName = "OgreBulletCollisionsDebugDefault"; // Esto da igual porque no lo tenemos en nuestros materiales
     MaterialPtr mtl = MaterialManager::getSingleton().getDefaultSettings()->clone(matName);
@@ -40,9 +42,13 @@ DebugMode::DebugMode(SceneManager* scm) {
     mTriangles->colour(ColourValue::Blue);
 
     mDebugModes = (DebugDrawModes)DBG_DrawWireframe;
+    Root::getSingleton().addFrameListener(this);
 }
 
 DebugMode::~DebugMode() {
+    Root::getSingleton().removeFrameListener(this);
+    delete mLines;
+    delete mTriangles;
 }
 
 void DebugMode::drawLine(const btVector3& from, const btVector3& to, const btVector3& color) {
