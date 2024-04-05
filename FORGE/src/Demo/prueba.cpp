@@ -82,8 +82,6 @@ int main(int argc, char* argv[]) {
     }
 	sceneManager.cleanUp();
 	delete loadManager;
-
-	delete phyisicsManager.getInstance();
 	
 	//delete render.getInstance();
 	

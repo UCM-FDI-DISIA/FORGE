@@ -60,7 +60,7 @@ void PhysicsManager::initPhysics() {
 
 void PhysicsManager::updatePhysics() {
     world->stepSimulation(1 / 50.f, 20);
-   // if (debugMode) world->debugDrawWorld();
+    if (debugMode) world->debugDrawWorld();
     handleCollisions();    
 }
 
@@ -119,10 +119,6 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     
     btRigidBody::btRigidBodyConstructionInfo bodyCI = 
         btRigidBody::btRigidBodyConstructionInfo(body->getMass(), motionState, body->getShape(), bodyInertia);
-    /*/bodyCI.m_startWorldTransform = btTransform(
-        btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle()),
-        btVector3(forVect.getX(), forVect.getY(), forVect.getZ()
-        ));*/
 
     
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
@@ -131,11 +127,6 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     }
     transforms.insert({rigidBody, body->getEntity()->getComponent<Transform>() });
 
-    
-    /*rigidBody->setWorldTransform(btTransform(
-        btQuaternion(forQuat.getX(), forQuat.getY(), forQuat.getZ(), forQuat.getAngle()),
-        btVector3(forVect.getX(), forVect.getY(), forVect.getZ())
-    ));*/
     body->setRigidBody(rigidBody);
     world->addRigidBody(rigidBody);
     return rigidBody;
@@ -149,6 +140,8 @@ btRigidBody* PhysicsManager::createImportantBody(RigidBody* body, std::string na
 void  PhysicsManager::deleteBody(btRigidBody* body) {
     auto auxTransform = transforms.find(body);
     world->removeRigidBody((*auxTransform).first);
+    delete(*auxTransform).first->getMotionState();
+    delete(*auxTransform).first->getCollisionShape();
     delete (*auxTransform).first;
     transforms.erase(auxTransform);
 }

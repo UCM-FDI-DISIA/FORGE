@@ -13,14 +13,14 @@ local scenes = {
                 Mesh = {
                     mesh = "ogrehead.mesh"
                 },
-                -- RigidBody = {
-                --     scale = {30, 30, 30},
-                --     mass = 1,
-                --     friction = 0.5,
-                --     restitution = 0.6,
-                --     shapeType = "Capsule",
-                --     static = false
-                -- }
+                RigidBody = {
+                    scale = {30, 30, 30},
+                    mass = 1,
+                    friction = 0.5,
+                    restitution = 0.6,
+                    shapeType = "Capsule",
+                    static = false
+                }
             }
         },amenaza = {
             handler = "menace",
@@ -31,16 +31,16 @@ local scenes = {
                 Mesh = {
                     mesh = "ogrehead.mesh"
                 },
-                -- RigidBody = {
-                --     scale = {30, 30, 30},
-                --     mass = 0.1,
-                --     friction = 0.5,
-                --     restitution = 0.6,
-                --     shapeType = "Box"
-                -- },
-                -- Move = {
-                --     speed = 1
-                -- }
+                RigidBody = {
+                    scale = {30, 30, 30},
+                    mass = 0.1,
+                    friction = 0.5,
+                    restitution = 0.6,
+                    shapeType = "Box"
+                },
+                Move = {
+                    speed = 1
+                }
             }
         },
 
