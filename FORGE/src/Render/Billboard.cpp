@@ -38,7 +38,7 @@ void Billboard::onDisabled() {
 
 bool Billboard::initComponent(ComponentData* data) {
 	if (entity->hasComponent("Transform")) {
-		renderManager = RenderManager::getInstance();
+		renderManager = RenderManager::GetInstance();
 		billboardSet = renderManager->addBillboardNode(this);
 		if (billboardSet != nullptr) {
 			addBillboards();	
@@ -51,7 +51,7 @@ bool Billboard::initComponent(ComponentData* data) {
 }
 
 void Billboard::addBillboards() {
-	forge::Random* rnd = forge::Random::getInstance();
+	forge::Random* rnd = forge::Random::GetInstance();
 	float width = totalDimensions.getX();
 	float height = totalDimensions.getY();
 	float depth = totalDimensions.getZ();

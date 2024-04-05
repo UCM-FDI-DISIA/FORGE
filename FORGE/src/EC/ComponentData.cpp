@@ -4,7 +4,7 @@
 
 ComponentData::ComponentData(std::string const& _id) :
     id(_id),
-    data(new luabridge::LuaRef(luabridge::newTable(SceneManager::getInstance()->getLuaState()))) {        
+    data(new luabridge::LuaRef(luabridge::newTable(SceneManager::GetInstance()->getLuaState()))) {        
 }
 
 ComponentData::ComponentData(std::string const& _id, luabridge::LuaRef* _data) :

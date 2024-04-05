@@ -26,7 +26,7 @@ Light::~Light() {
 
 bool Light::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreLight = renderManager->addLightNode(this);
     }
     else {

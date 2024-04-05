@@ -2,7 +2,7 @@
 
 std::unique_ptr<Factory> Factory::instance = nullptr;
 
-Factory* Factory::getInstance() {
+Factory* Factory::GetInstance() {
     if (instance.get() != nullptr) return instance.get();
     return (instance = std::unique_ptr<Factory>(new Factory())).get();
 }

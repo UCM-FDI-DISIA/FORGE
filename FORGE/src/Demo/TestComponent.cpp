@@ -10,12 +10,12 @@
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
-	input(*Input::getInstance()),
+	input(*Input::GetInstance()),
 	movement(2.0f),
 	transform(nullptr),
 	animator(nullptr),
 	audio(nullptr),
-	sceneManager(SceneManager::getInstance()),
+	sceneManager(SceneManager::GetInstance()),
 	anims(),
 	activeAnim(0) {
 }

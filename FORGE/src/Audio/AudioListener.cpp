@@ -7,7 +7,7 @@ const std::string AudioListener::id = "AudioListener";
 
 AudioListener::AudioListener() :
     transform(nullptr),
-    manager(*AudioManager::getInstance()) {
+    manager(*AudioManager::GetInstance()) {
 }
 
 AudioListener::~AudioListener() {

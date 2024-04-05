@@ -2,6 +2,7 @@
 #include <SDL.h>
 
 std::unique_ptr<Input> Input::instance = nullptr;
+bool Input::initialised = false;
 
 void Input::onMouseMotion(const SDL_Event& event) {
 	mousePos.set(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
@@ -100,9 +101,21 @@ Input::Input() :
 	SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 }
 
-Input* Input::getInstance() {
-	if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<Input>(new Input())).get();
+bool Input::Init() {
+	try {
+		instance = std::unique_ptr<Input>(new Input());
+		initialised = true;
+		return true;
+	}
+	catch (std::exception e) {
+
+		return false;
+	}
+}
+
+Input* Input::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
 }
 
 void Input::update() {	

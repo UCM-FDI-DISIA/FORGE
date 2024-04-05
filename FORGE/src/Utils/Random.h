@@ -18,7 +18,7 @@ namespace forge {
 		#pragma region Constructores
 		Random();
 		~Random();
-		static Random* getInstance();
+		static Random* GetInstance();
 		#pragma region Numeros aleatorios
 		/// <summary>
 		/// Genera un numero aleatorio en el intervalo: (0,t)

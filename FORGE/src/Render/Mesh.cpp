@@ -30,7 +30,7 @@ Mesh::~Mesh() {
 
 bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreEntity = renderManager->addMeshNode(this);
     }
     else 

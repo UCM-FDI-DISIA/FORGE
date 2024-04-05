@@ -31,7 +31,7 @@ Camera::~Camera() {
 
 bool Camera::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
 		ogreCamera = renderManager->addCameraNode(this);
     }
     else {

@@ -23,7 +23,7 @@ ParticleSystem::~ParticleSystem() {
 
 bool ParticleSystem::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreParticleSystem = renderManager->addParticleSystemNode(this);
     }
     else {

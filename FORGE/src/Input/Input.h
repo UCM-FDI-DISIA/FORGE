@@ -75,7 +75,7 @@ enum ControllerAxisNames {
 class Input {
 private:
 	static std::unique_ptr<Input> instance;
-
+	static bool initialised;
 	/// <summary>
 	/// Array dinamico que proporciona SDL con el estado de cada tecla. Si kS[key] es 1 entonces esta siendo pulsada,
 	/// de lo contrario sera 0
@@ -190,10 +190,16 @@ public:
 	Input();
 
 	/// <summary>
+	/// Crea una instancia del input
+	/// </summary>
+	/// <returns></returns>
+	static bool Init();
+
+	/// <summary>
 	/// Devuelve la instancia del input y, si no existe, la crea
 	/// </summary>
 	/// <returns>Instancia singleton del Input</returns>
-	static Input* getInstance();
+	static Input* GetInstance();
 
 	/// <summary>
 	/// Lee los eventos y llama a los metodos correspondientes de cada uno de ellos

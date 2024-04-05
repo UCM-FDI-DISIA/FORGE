@@ -26,7 +26,7 @@
 #include "Sound.h"
 
 void factory() {
-	Factory& f = *Factory::getInstance();
+	Factory& f = *Factory::GetInstance();
 	f.registerComponent<Transform>();
 	f.registerComponent<Mesh>();
 	f.registerComponent<Light>();
@@ -44,11 +44,11 @@ int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
 	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
-	RenderManager& render = *RenderManager::getInstance();
+	RenderManager& render = *RenderManager::GetInstance();
 	render.setup("Test FORGE");
-	SceneManager& sceneManager = *SceneManager::getInstance();
-	Input& input = *Input::getInstance();
-	AudioManager& ad = *AudioManager::getInstance();
+	SceneManager& sceneManager = *SceneManager::GetInstance();
+	Input& input = *Input::GetInstance();
+	AudioManager& ad = *AudioManager::GetInstance();
 	sceneManager.changeScene("Test");
 	while (!input.keyUp(K_ESC)) {
 		input.refresh();

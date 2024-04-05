@@ -16,7 +16,7 @@ public:
 	/// <summary>
 	/// </summary>
 	/// <returns>la instancia de ForgeMain</returns>
-	static ForgeMain* getInstance();
+	static ForgeMain* GetInstance();
 	
 	/// <summary>
 	/// Inicializador de todos los modulos, a partir de un archivo de configuracion Lua.

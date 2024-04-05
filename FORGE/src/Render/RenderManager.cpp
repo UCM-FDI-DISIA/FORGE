@@ -34,6 +34,7 @@
 #include "Billboard.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
+bool RenderManager::initialised = false;
 
 RenderManager::RenderManager() : 
 	forge(nullptr),
@@ -65,18 +66,33 @@ RenderManager::~RenderManager() {
 	delete forge;
 }
 
-RenderManager* RenderManager::getInstance() {
-	if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<RenderManager>(new RenderManager())).get();
+bool RenderManager::Init(std::string const& appName) {
+	instance = std::unique_ptr<RenderManager>(new RenderManager());
+	if (instance->setup(appName)) {
+		initialised = true;
+		return true;
+	}
+	return false;
 }
 
-void RenderManager::setup(std::string const& appName) {
+RenderManager* RenderManager::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
+}
+
+bool RenderManager::setup(std::string const& appName) {
 	forge = new RenderForge(appName);
 	root = forge->getRoot();
-	if (root == nullptr) return;
+	if (root == nullptr) return false;
 	// Creamos la escena
-	sceneManager = root->createSceneManager();
-	sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	try {
+		sceneManager = root->createSceneManager();
+		sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	}
+	catch (std::exception e) {
+		return false;
+	}
+	return true;
 }
 
 bool RenderManager::render() {

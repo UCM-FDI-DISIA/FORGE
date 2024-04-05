@@ -10,6 +10,7 @@
 #pragma warning(pop)
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
+bool SceneManager::initialised = false;
 
 SceneManager::SceneManager() : 
 	activeScene("",nullptr),
@@ -50,6 +51,17 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 
 }
 
+bool SceneManager::Init() {
+	instance = std::unique_ptr<SceneManager>(new SceneManager());
+	initialised = true;
+	return true;
+}
+
+SceneManager* SceneManager::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
+}
+
 SceneManager::~SceneManager() {
 
 }
@@ -68,11 +80,6 @@ void SceneManager::cleanUp() {
 	for (auto& entity : entityBlueprints) {
 		delete entity.second;
 	}
-}
-
-SceneManager* SceneManager::getInstance() {
-    if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<SceneManager>(new SceneManager())).get();
 }
 
 void SceneManager::setLuaState(lua_State* L) {

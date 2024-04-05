@@ -22,14 +22,24 @@ private:
 	irrklang::ISoundEngine* engine;
 	std::unordered_map<std::string, SoundGenerator*> soundLibrary;
 	std::unordered_set<Sound*> currentSounds;
+	bool isListenerOnScene = false;
+	static std::unique_ptr<AudioManager> instance;
+	static bool initialised;
 	/// <summary>
 	/// Inicializa el sistema de audio
 	/// </summary>
 	AudioManager();
-	static std::unique_ptr<AudioManager> instance;
-	bool isListenerOnScene = false;
 public:
-	static AudioManager* getInstance();
+	/// <summary>
+	/// Crea una instancia del AudioManager
+	/// </summary>
+	/// <returns>Si la inicializacion se completo o no</returns>
+	static bool Init();
+	/// <summary>
+	/// Devuelve la instancia de AudioManager y si no existe devuelve un puntero a nulo
+	/// </summary>
+	/// <returns></returns>
+	static AudioManager* GetInstance();
 	AudioManager(AudioManager const&) = delete;
 	void operator=(AudioManager const&) = delete;
 	/// <summary>

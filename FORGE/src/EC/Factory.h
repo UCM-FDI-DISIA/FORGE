@@ -13,7 +13,7 @@ private:
     static std::unique_ptr<Factory> instance;
 public:
     /// <returns>Devuelve un puntero a la unica instancia de la clase</returns>
-    static Factory* getInstance();
+    static Factory* GetInstance();
     /// <summary>
     /// Almacena el nombre de un Component y una funcion que genera una instancia de ese Component para que se pueda crear desde el motor
     /// </summary>

@@ -11,7 +11,7 @@ const std::string AudioSource::id = "AudioSource";
 AudioSource::AudioSource() :
 	sound(nullptr),
 	transform(nullptr),
-	manager(*AudioManager::getInstance()),
+	manager(*AudioManager::GetInstance()),
 	playOnAwake(false),
 	offset(),
 	fullVolumeRadious(5.0f),

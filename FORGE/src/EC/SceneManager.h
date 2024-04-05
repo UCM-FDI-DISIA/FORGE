@@ -14,6 +14,7 @@ struct lua_State;
 class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
+	static bool initialised;
 
 	std::pair<std::string, Scene*> activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
@@ -31,6 +32,16 @@ private:
 
 public:
 	/// <summary>
+	/// Crea una instancia del SceneManager
+	/// </summary>
+	/// <returns>Si la inicializacion fue correcta</returns>
+	static bool Init();
+	/// <summary>
+	/// Devuelve la instancia de SceneManager y si no existe devuelve un puntero a nulo
+	/// </summary>
+	/// <returns>Instancia singleton a SceneManager</returns>
+	static SceneManager* GetInstance();
+	/// <summary>
 	/// Destruye la instancia
 	/// </summary>
 	~SceneManager();
@@ -38,11 +49,6 @@ public:
 	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas
 	/// </summary>
 	void cleanUp();
-	/// <summary>
-	/// Devuelve la instancia de SceneManager y si no existe la crea
-	/// </summary>
-	/// <returns>Instancia singleton a SceneManager</returns>
-	static SceneManager* getInstance();
 	/// <summary>
 	/// Establece el lua_State usado para la carga de EC
 	/// </summary>

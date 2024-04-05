@@ -28,7 +28,7 @@ ForgeMain::ForgeMain() {
 	//GUIModule = new Forge::GUI();
 }
 
-ForgeMain* ForgeMain::getInstance() {
+ForgeMain* ForgeMain::GetInstance() {
 	if (instance == nullptr)
 	{
 		instance = new ForgeMain();

@@ -5,7 +5,7 @@
 #include "Transform.h"
 
 Entity::Entity() : 
-    fact(*Factory::getInstance()),
+    fact(*Factory::GetInstance()),
     scene(nullptr),
     components(),
     parent(nullptr),

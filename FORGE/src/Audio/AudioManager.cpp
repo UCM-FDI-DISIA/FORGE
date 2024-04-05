@@ -1,4 +1,5 @@
 #include "AudioManager.h"
+#include <iostream>
 #include <irrKlang.h>
 #include "Sound.h"
 #include "SoundGenerator.h"
@@ -6,13 +7,25 @@ using namespace irrklang;
 
 std::unique_ptr<AudioManager> AudioManager::instance = nullptr;
 
+bool AudioManager::initialised = false;
+
 AudioManager::AudioManager() :
 	engine(createIrrKlangDevice()) {
 }
 
-AudioManager* AudioManager::getInstance() {
-	if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<AudioManager>(new AudioManager())).get();
+bool AudioManager::Init() {
+	instance = std::unique_ptr<AudioManager>(new AudioManager());
+	if (instance.get()->engine != NULL) {
+		initialised = true;
+		return true;
+	}
+	std::cerr << "ERROR: no se pudo crear el dispositivo de irrKlang \n";
+	return false;
+}
+
+AudioManager* AudioManager::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
 }
 
 AudioManager::~AudioManager() {
