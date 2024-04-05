@@ -11,7 +11,7 @@ namespace Ogre {
     class Camera;
 }
 
-class FORGE_API Camera : public Component {
+class Camera : public Component {
 private:
     std::string name;
     float nearClipDistance;
@@ -20,27 +20,26 @@ private:
 
     Ogre::Camera* ogreCamera;
     RenderManager* renderManager;
-    static const std::string id;
 public:
-    static std::string const& Id();
+    static const FORGE_API_VAR std::string id;
 
-    Camera();
+    FORGE_API Camera();
     
-    ~Camera();
+    FORGE_API ~Camera();
 
-    void initComponent(ComponentData* data) override;
+    FORGE_API void initComponent(ComponentData* data) override;
 
 	#pragma region setters
-    void setNearClipDistance(float newNearClipDistance);
-    void setAutoAspectRatio(bool newAutoAspectRatio);
-    void setBackgroundColor(forge::Vector3 newbackgroundColor);
+    FORGE_API void setNearClipDistance(float newNearClipDistance);
+    FORGE_API void setAutoAspectRatio(bool newAutoAspectRatio);
+    FORGE_API void setBackgroundColor(forge::Vector3 newbackgroundColor);
 	#pragma endregion
 
 	#pragma region getters
-    const std::string& getName() const;
-    const float& getNearClipDistance() const;
-    const bool& getAutoAspectRatio() const;
-    const forge::Vector3& getBackgroundColor() const;
+    const FORGE_API std::string& getName() const;
+    const FORGE_API float& getNearClipDistance() const;
+    const FORGE_API bool& getAutoAspectRatio() const;
+    const FORGE_API forge::Vector3& getBackgroundColor() const;
 	#pragma endregion
 };
 

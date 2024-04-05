@@ -176,7 +176,7 @@ LoadManager::LoadManager() :
 bool LoadManager::init(std::string const& assetsFile, std::string const& scenesFile) {
 #ifdef _DEBUG
 	gameLoad->init("Demo_d");
-#elif defined(_RELEASE)
+#else
 	gameLoad->init("Demo");
 #endif
 	if (luaForge->doFile(assetsFile)) {

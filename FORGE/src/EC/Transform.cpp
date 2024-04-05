@@ -8,10 +8,6 @@ void Transform::setParent(Transform* newParent) {
 
 const std::string Transform::id = "Transform";
 
-std::string const& Transform::Id() {
-	return id;
-}
-
 Transform::Transform() :
 	position(),
 	rotation(),

@@ -1,9 +1,8 @@
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
 #endif
 #define SDL_MAIN_HANDLED
-#include <stdlib.h>
-#include <crtdbg.h>
 
 #include "MainForge.h"
 

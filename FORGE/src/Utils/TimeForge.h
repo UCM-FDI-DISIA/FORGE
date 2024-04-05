@@ -7,7 +7,7 @@
 
 class MainForge;
 namespace forge {
-	class FORGE_API Time {
+	class Time {
 	private:
 		friend MainForge;
 		
@@ -32,11 +32,11 @@ namespace forge {
 		/// <summary>
 		/// Tiempo en segundos que ha pasado desde la anterior actualizacion
 		/// </summary>
-		static constexpr double const& deltaTime = _deltaTime;
+		static constexpr FORGE_API_VAR double const& deltaTime = _deltaTime;
 		/// <summary>
 		/// Tiempo en segundos cada el que se evaluan las operaciones fisicas
 		/// </summary>
-		static constexpr double fixedDeltaTime = 0.02;
+		static constexpr FORGE_API_VAR double fixedDeltaTime = 0.02;
 	};
 }
 #endif // !TIME_FORGE_H_

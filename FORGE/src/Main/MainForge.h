@@ -15,7 +15,7 @@ class Input;
 class PhysicsManager;
 //class UIManager;
 
-class FORGE_API MainForge {
+class MainForge {
 private:
 	static bool initialized;
 	bool isRunning;
@@ -78,19 +78,19 @@ public:
 	/// Inicializa el motor a partir de un archivo de configuracion
 	/// </summary>
 	/// <param name="luaConfigPath">La ruta al archivo de configuracion</param>
-	static void Init(std::string const& luaConfigPath);
+	static void FORGE_API Init(std::string const& luaConfigPath);
 	/// <summary>
 	/// Arranca el bucle principal del juego
 	/// </summary>
-	static void MainLoop();
+	static void FORGE_API MainLoop();
 	/// <summary>
 	/// Detiene la ejecucion del bucle principal, saliendo del programa
 	/// </summary>
-	static void Exit();
+	static void FORGE_API Exit();
 	/// <summary>
 	/// Vacia el objeto de MainForge
 	/// </summary>
-	static void ShutDown();
+	static void FORGE_API ShutDown();
 };
 
 #endif // !MAIN_FORGE_H_

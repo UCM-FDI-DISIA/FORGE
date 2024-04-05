@@ -10,8 +10,9 @@
 #pragma warning(pop)
 #include <Vector3.h>
 #include <Quaternion.h>
+#include "ForgeExport.h"
 
-__declspec(dllexport) class ComponentData {
+class ComponentData {
 private:
     template <typename T>
     struct getter {
@@ -44,24 +45,24 @@ public:
     /// Constructora por defecto de la clase ComponentData
     /// </summary>
     /// <param name="compId"> Identificador del componente </param>
-    ComponentData(std::string _id);
+    FORGE_API ComponentData(std::string _id);
 	/// <summary>
 	/// Constructora a partir de datos leidos de lua
 	/// </summary>
 	/// <param name="compId"> Identificador del componente </param>
 	/// <param name="lrData"> Referencia a una LuaTable</param>
-	ComponentData(std::string _id, luabridge::LuaRef* _data);
+    FORGE_API ComponentData(std::string _id, luabridge::LuaRef* _data);
     /// <summary>
     /// Destruye la instancia de LuaRef apuntada
     /// </summary>
-	~ComponentData();
+    FORGE_API ~ComponentData();
 
     /// <returns>
     /// Identificador del componente
     /// </returns>
-    std::string getId();
+    FORGE_API std::string getId();
 
-    bool has(std::string param);
+    FORGE_API bool has(std::string param);
 
     /// <summary>
     /// Devuelve el parametro pedido dentro del ComponentData
@@ -73,12 +74,12 @@ public:
     /// Si no existe o no se puede castear devuelve el valor por defecto del tipo pedido.
     /// </returns>
     template <typename T>
-    T get(std::string param) {
+    FORGE_API inline T get(std::string param) {
         return getter<T>()(*data, param);
     } 
 
     template <>
-    forge::Vector3 get<forge::Vector3>(std::string param) {
+    FORGE_API inline forge::Vector3 get<forge::Vector3>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data,param);
         forge::Vector3 vector = forge::Vector3();
         if (input.size() >= 3) {
@@ -88,7 +89,7 @@ public:
     }
 
     template <>
-    forge::Quaternion get<forge::Quaternion>(std::string param) {
+    FORGE_API inline forge::Quaternion get<forge::Quaternion>(std::string param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
         forge::Quaternion quaternion = forge::Quaternion();
         if (input.size() >= 4) {
@@ -105,7 +106,7 @@ public:
     /// <param name="paramName"> Nombre del parametro </param>
     /// <param name="param"> Valor del parametro </param>
     template <typename T>
-    void add(std::string paramName, T param) {
+    FORGE_API inline void add(std::string paramName, T param) {
         (*data)[paramName] = param;
     }
 };

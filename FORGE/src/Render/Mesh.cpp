@@ -12,10 +12,6 @@
 
 const std::string Mesh::id = "Mesh";
 
-std::string const& Mesh::Id() {
-    return id;
-}
-
 Mesh::Mesh() :
 	mesh(),
 	material(),

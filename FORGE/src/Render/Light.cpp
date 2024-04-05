@@ -12,10 +12,6 @@
 
 const std::string Light::id = "Light";
 
-std::string const& Light::Id() {
-    return id;
-}
-
 Light::Light() :
     ogreLight(nullptr),
     renderManager(nullptr) {

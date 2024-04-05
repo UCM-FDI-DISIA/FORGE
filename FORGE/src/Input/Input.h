@@ -66,7 +66,7 @@ enum ControllerAxisNames {
 	C_AXIS_MAX
 };
 
-class FORGE_API Input {
+class Input {
 private:
 	static std::unique_ptr<Input> instance;
 
@@ -205,92 +205,92 @@ public:
 	/// Devuelve la instancia del input y, si no existe, la crea
 	/// </summary>
 	/// <returns>Instancia singleton del Input</returns>
-	static Input* getInstance();
+	static FORGE_API Input* getInstance();
 
 	/// <summary>
 	/// Lee los eventos y llama a los metodos correspondientes de cada uno de ellos
 	/// </summary>
-	void update();
+	FORGE_API void update();
 
 	/// <summary>
 	/// Hace las operaciones necesarias tras un update para estar preparado para el siguiente
 	/// </summary>
-	void refresh();
+	FORGE_API void refresh();
 
 	/// <summary>
 	/// Devuelve al estado inicial (el estado por defecto) la estructura del gestor de input
 	/// </summary>
-	void setDefaultState();
+	FORGE_API void setDefaultState();
 
 	/// <summary>
 	/// Devuelve si se ha pulsado la tecla correspondiente
 	/// </summary>
 	/// <param name="k">Tecla a comprobar</param>
-	bool keyDown(KeyNames k);
+	FORGE_API bool keyDown(KeyNames k);
 
 	/// <summary>
 	/// Devuelve si se esta manteniendo la tecla correspondiente
 	/// </summary>
 	/// <param name="k">Tecla a comprobar</param>
-	bool keyPressed(KeyNames k);
+	FORGE_API bool keyPressed(KeyNames k);
 
 	/// <summary>
 	/// Devuelve si se ha soltado la tecla correspondiente
 	/// </summary>
 	/// <param name="k">Tecla a comprobar</param>
-	bool keyUp(KeyNames k);
+	FORGE_API bool keyUp(KeyNames k);
 
 	/// <summary>
 	/// Obtiene la posicion actual del raton
 	/// </summary>
 	/// <returns>first = x, second = y</returns>
-	forge::Vector2 getMousePosition();
+	FORGE_API forge::Vector2 getMousePosition();
 
 	/// <summary>
 	/// Devuelve si la rueda del raton se ha movido hacia arriba
 	/// </summary>
-	bool wheelUp();
+	FORGE_API bool wheelUp();
 
 	/// <summary>
 	/// Devuelve si la rueda del raton se ha movido hacia abajo
 	/// </summary>
-	bool wheelDown();
+	FORGE_API bool wheelDown();
 
 	/// <summary>
 	/// Devuelve si el boton del raton indicado se esta pulsando
 	/// </summary>
 	/// <param name="button">- indice del boton del raton</param>
-	bool isMouseButtonPressed(MouseNames button);
+	FORGE_API bool isMouseButtonPressed(MouseNames button);
 
 	/// <summary>
 	/// Devuelve si se ha pulsado el boton del mando
 	/// </summary>
 	/// <param name="button">Indice del boton del mando</param>
-	bool isControllerButtonDown(ControllerButtonNames button);
+	FORGE_API bool isControllerButtonDown(ControllerButtonNames button);
 
 	/// <summary>
 	/// Devuelve si se ha soltado el boton del mando
 	/// </summary>
 	/// <param name="button">Indice del boton del mando</param>
-	bool isControllerButtonUp(ControllerButtonNames button);
+	FORGE_API bool isControllerButtonUp(ControllerButtonNames button);
 
 	/// <summary>
 	/// Devuelve el valor del eje del joystick del mando
 	/// </summary>
 	/// <param name="ax">Eje del mando</param>
-	int getControllerAxis(ControllerAxisNames ax);
+	FORGE_API int getControllerAxis(ControllerAxisNames ax);
 
 	/// <summary>
 	/// Devuelve el valor normalizado del eje del joystick del mando
 	/// </summary>
 	/// <param name="ax">Eje del mando</param>
-	float getNormalizedControllerAxis(ControllerAxisNames ax);
+	FORGE_API float getNormalizedControllerAxis(ControllerAxisNames ax);
 
 	/// <summary>
 	/// Devuelve si hay un mando conectado
 	/// </summary>
-	bool isControllerConnected();
+	FORGE_API bool isControllerConnected();
 
-	bool isWindowClosed();
+	FORGE_API bool isWindowClosed();
 };
 #endif // !INPUT_H_

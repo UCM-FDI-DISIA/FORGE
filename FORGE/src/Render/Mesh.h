@@ -10,31 +10,30 @@ namespace Ogre {
     class Entity;
 }
 
-class FORGE_API Mesh : public Component {
+class Mesh : public Component {
 private:
     std::string mesh;
     std::string material;
     Ogre::Entity* ogreEntity;
     RenderManager* renderManager; 
 
-    static const std::string id;
 public:
-    static std::string const& Id();
+    static const FORGE_API_VAR std::string id;
 
-	Mesh();
+    FORGE_API Mesh();
     
-    ~Mesh();
+    FORGE_API ~Mesh();
 
-    void initComponent(ComponentData* data) override;
+    FORGE_API void initComponent(ComponentData* data) override;
 
 	#pragma region setters
-    void setMesh(std::string newMesh);
-    void setMaterial(std::string newMaterial);
+    FORGE_API void setMesh(std::string newMesh);
+    FORGE_API void setMaterial(std::string newMaterial);
 	#pragma endregion
 
 	#pragma region getters
-    const std::string& getMesh() const;
-    const std::string& getMaterial() const;
+    const FORGE_API std::string& getMesh() const;
+    const FORGE_API std::string& getMaterial() const;
 	#pragma endregion
 };
 

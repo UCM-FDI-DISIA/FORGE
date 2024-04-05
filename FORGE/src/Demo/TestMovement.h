@@ -12,9 +12,8 @@ private:
 	Input& input;
 	float movement;
 	AudioSource* audio;
-	static const std::string id;
 public:
-	static std::string const& Id();
+	static const std::string id;
 
 	TestMovement();
 	void initComponent(ComponentData* data) override;

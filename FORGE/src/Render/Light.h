@@ -8,27 +8,26 @@ namespace Ogre {
     class Light;
 }
 
-class FORGE_API Light : public Component {
+class Light : public Component {
 private:
     int type;
     Ogre::Light* ogreLight;
     RenderManager* renderManager; 
 
-    static const std::string id;
 public:
-    static std::string const& Id();
+    static const FORGE_API_VAR std::string id;
 
-    Light();
+    FORGE_API Light();
     
-    ~Light();
+    FORGE_API ~Light();
 
-    void initComponent(ComponentData* data) override;
+    FORGE_API void initComponent(ComponentData* data) override;
 
 	#pragma region setters
 	#pragma endregion
 
 	#pragma region getters
-    const int& getType() const;
+    FORGE_API const int& getType() const;
 	#pragma endregion
 };
 

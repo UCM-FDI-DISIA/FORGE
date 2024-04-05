@@ -4,32 +4,31 @@
 #include "Component.h"
 class Transform;
 class AudioManager;
-class __declspec(dllexport) AudioListener : public Component {
+class AudioListener : public Component {
 private:
     Transform* transform;
     AudioManager& manager;
 	bool isListenerActive = false;
-	static const std::string id;
 public:
-	static std::string const& Id();
+	static const FORGE_API_VAR std::string id;
     /// <summary>
     /// Crea el escuchador con valores por defecto
     /// </summary>
-    AudioListener();
+	FORGE_API AudioListener();
 	/// <summary>
 	/// Destructora de audio listener, si es el listener activo
 	/// hace que el manager cambie la flag de listener activo a falso
 	/// </summary>
-	~AudioListener() override;
+	FORGE_API ~AudioListener() override;
 	/// <summary>
 	/// Se inicializa el escuchador con el transform de la entidad
 	/// </summary>
 	/// <param name="data"></param>
-	void initComponent(ComponentData* data) override;
+	FORGE_API void initComponent(ComponentData* data) override;
 	/// <summary>
 	/// Comprueba si hay que actualizar la posicion del escuchador y si es asi
 	/// la actualiza
 	/// </summary>
-	void update() override;
+	FORGE_API void update() override;
 };
 #endif // AUDIO_LISTENER_H_

@@ -11,7 +11,7 @@
 /// <summary>
 /// Clase interna que se encarga de almacenar e inicializar todas las variables que se quieran serializar de un Component desde un archivo Lua o un ComponentData.
 /// </summary>
-class FORGE_API Component::Serializer {
+class Component::Serializer {
 private:
 	/// <summary>
 	/// Interfaz interna que almacena el nombre de una variable que se va a serializar.
@@ -87,7 +87,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	inline void addField(T& var, std::string name) {
+	FORGE_API inline void addField(T& var, std::string name) {
 		serializations.push_back(new Serialized<T>(var, name));
 	}
 	/// <summary>
@@ -114,7 +114,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	inline void operator()(T& var, std::string name) {
+	FORGE_API inline void operator()(T& var, std::string name) {
 		addField<T>(var, name);
 	}
 	/// <summary>
@@ -122,11 +122,11 @@ public:
 	/// a traves de un archivo Lua o un ComponentData.
 	/// </summary>
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
-	void initialize(ComponentData& data);
+	FORGE_API void initialize(ComponentData& data);
 	/// <summary>
 	/// Destructor del Serializer, elimina todos los registros de campos a serializar.
 	/// </summary>
-	~Serializer();
+	FORGE_API ~Serializer();
 
 };
 
