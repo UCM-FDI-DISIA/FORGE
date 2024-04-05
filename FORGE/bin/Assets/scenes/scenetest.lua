@@ -10,36 +10,30 @@ local scenes = {
                 Transform = {
                     position = {0, 0, 0}
                 },
-                Mesh = {
-                    mesh = "ogrehead.mesh"
-                },
                 RigidBody = {
                     scale = {30, 30, 30},
                     mass = 1,
                     friction = 0.5,
                     restitution = 0.6,
-                    shapeType = "Capsule",
+                    shapeType = "Sphere",
                     static = false
                 }
             }
-        },amenaza = {
-            handler = "menace",
+        },
+        rampa = {
+            handler = "rampa",
             components = {
                 Transform = {
-                    position = {0, 10, 0}
-                },
-                Mesh = {
-                    mesh = "ogrehead.mesh"
+                    position = {0, -50, 0},
+                    rotation = {0, 0, 1, 3.14/6 }
                 },
                 RigidBody = {
-                    scale = {30, 30, 30},
-                    mass = 0.1,
+                    scale = {30, 10, 30},
+                    mass = 1,
                     friction = 0.5,
                     restitution = 0.6,
-                    shapeType = "Box"
-                },
-                Move = {
-                    speed = 1
+                    shapeType = "Cube",
+                    static = true
                 }
             }
         },

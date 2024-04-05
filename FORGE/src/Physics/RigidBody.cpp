@@ -26,11 +26,11 @@ void RigidBody::initComponent(ComponentData* data) {
     std::string shapeType;
     shapeType = data->get<std::string>("shapeType");
     staticBody = data->get<bool>("static");
-    if (shapeType == "Box") {
+    if (shapeType == "Cube") {
         shapeType = boxShape;
         myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
     }
-    else if (shapeType == "Ball") {
+    else if (shapeType == "Sphere") {
         shapeType = ballShape;
         myShape = new btSphereShape(myScale.getX()/2);
     }
