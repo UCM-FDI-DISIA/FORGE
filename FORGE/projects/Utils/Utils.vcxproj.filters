@@ -41,5 +41,8 @@
     <ClInclude Include="..\..\src\Utils\TimeForge.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Utils\ForgeExport.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
