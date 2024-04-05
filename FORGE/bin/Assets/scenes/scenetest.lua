@@ -13,8 +13,8 @@ local scenes = {
                 RigidBody = {
                     scale = {30, 30, 30},
                     mass = 1,
-                    friction = 0.5,
-                    restitution = 0.6,
+                    friction = 5,
+                    restitution = 1,
                     shapeType = "Sphere",
                     static = false
                 }
@@ -30,8 +30,8 @@ local scenes = {
                 RigidBody = {
                     scale = {30, 10, 30},
                     mass = 1,
-                    friction = 0.5,
-                    restitution = 0.6,
+                    friction = 5,
+                    restitution = 1,
                     shapeType = "Cube",
                     static = true
                 }

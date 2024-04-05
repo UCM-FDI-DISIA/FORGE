@@ -26,6 +26,7 @@ void RigidBody::initComponent(ComponentData* data) {
     std::string shapeType;
     shapeType = data->get<std::string>("shapeType");
     staticBody = data->get<bool>("static");
+    if (staticBody) mass = 0;
     if (shapeType == "Cube") {
         shapeType = boxShape;
         myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
@@ -47,6 +48,8 @@ void RigidBody::initComponent(ComponentData* data) {
         physicsManager = PhysicsManager::getInstance();
         myBody = physicsManager->createBody(this);
     }
+    myBody->setRestitution((btScalar)restitution);
+    myBody->setFriction((btScalar)friction);
 }
 
 void RigidBody::fixedUpdate() {
