@@ -33,6 +33,7 @@ Ogre::Root* RenderForge::createRoot() {
 
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
 		std::cerr << "ERROR: No se ha encontrado el archivo de plugins" << std::endl;
+		correctInitialitation = false;
 		return nullptr;
 	}
 
@@ -53,9 +54,9 @@ void RenderForge::locateResources() {
 		cf.load(resourcesPath);
 	}
 	else {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-			Ogre::FileSystemLayer::resolveBundlePath(solutionPath + "\\media"),
-			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		correctInitialitation = false;
+		std::cerr << "ERROR: No se localizaron los recursos\n";
+		return;
 	}
 
 	Ogre::String sec, type, arch;
@@ -171,21 +172,46 @@ RenderForge::RenderForge(std::string const& _appName) :
 	fileSystemLayer(nullptr),
 	appName(_appName),
 	solutionPath() {
-
+	correctInitialitation = true;
+	
 	root = createRoot();
 
-	// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
-	Ogre::RenderSystem* rs = root->getRenderSystemByName("OpenGL Rendering Subsystem");
-	root->setRenderSystem(rs);
+	if (correctInitialitation) {
+		// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
+		try {
+			Ogre::RenderSystem* rs = root->getRenderSystemByName("OpenGL Rendering Subsystem");
+			root->setRenderSystem(rs);
+		}
+		catch (std::exception e) {
+			correctInitialitation = false;
+			std::cerr << "ERROR: Fallo al asignar el Render System\n";
+		}
 
-	// Inicializamos el sistema de renderizado
-	root->initialise(false);
+		if (correctInitialitation) {
+			// Inicializamos el sistema de renderizado
+			try {
+				root->initialise(false);
+			} 
+			catch (std::exception e) {
+				correctInitialitation = false;
+				std::cerr << "ERROR: Fallo al inicializar root\n";
+			}
+			
+			if (correctInitialitation) {
+				// Creamos la ventana
+				window = createWindow();
+				if (window.render == nullptr || window.native == nullptr) {
+					correctInitialitation = false;
+					std::cerr << "ERROR: Fallo en la creacion de la ventana\n";
+				}
 
-	// Creamos la ventana
-	window = createWindow();
-
-	// Inicializamos los recursos
-	locateResources();
+				if (correctInitialitation) {
+					// Inicializamos los recursos
+					locateResources();
+				}
+			}
+		}
+	}
 }
 
 RenderForge::~RenderForge() {
@@ -199,4 +225,8 @@ Ogre::Root* RenderForge::getRoot() {
 
 NativeWindowPair& RenderForge::getWindow() {
 	return window;
+}
+
+bool RenderForge::getInitialitation() { 
+	return correctInitialitation;
 }

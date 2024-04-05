@@ -81,9 +81,16 @@ RenderManager* RenderManager::GetInstance() {
 }
 
 bool RenderManager::setup(std::string const& appName) {
+	// Verificacion de nombre de ventana valido	
+	for (char c : appName) {
+		if (c == '?') {
+			std::cerr << "ERROR: Nombre de ventana no valido\n";
+			return false;
+		}
+	}
 	forge = new RenderForge(appName);
+	if (!forge->getInitialitation()) return false;
 	root = forge->getRoot();
-	if (root == nullptr) return false;
 	// Creamos la escena
 	try {
 		sceneManager = root->createSceneManager();

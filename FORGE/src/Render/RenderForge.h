@@ -35,6 +35,7 @@ private:
 
 	std::string appName;
 	std::string solutionPath;
+	bool correctInitialitation;
 	
 	#pragma region Setup
 	/// <summary>
@@ -73,6 +74,8 @@ public:
 
 	/// <returns> Devuelve el par de ventanas: La ventana nativa de SDL y la de ventana render de OGRE</returns>
 	NativeWindowPair& getWindow();
+
+	bool getInitialitation();
 	#pragma endregion
 };
 

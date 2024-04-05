@@ -128,8 +128,7 @@ void SceneManager::removeScene(std::string const& id) {
 	}
 }
 
-Scene* SceneManager::createScene(std::string const& id)
-{
+Scene* SceneManager::createScene(std::string const& id) {
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
 		std::cerr << "ERROR: Si una escena no aparece en los archivos, no existe" << std::endl;
