@@ -6,9 +6,10 @@
 #include <memory>
 #include <functional>
 #include <unordered_map>
+#include "ForgeExport.h"
 class Component;
 
-class Factory : private std::unordered_map<std::string, std::function<Component*()>> {
+class FORGE_API Factory : private std::unordered_map<std::string, std::function<Component*()>> {
 private:
     static std::unique_ptr<Factory> instance;
 public:

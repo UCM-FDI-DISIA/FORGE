@@ -1,9 +1,10 @@
 #pragma once
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
+#include "ForgeExport.h"
 
 namespace forge {
-	class __declspec(dllexport) Vector2 {
+	class FORGE_API Vector2 {
 	private:
 		// Primera coordenada
 		float x;

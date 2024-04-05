@@ -5,8 +5,9 @@
 #include "Component.h"
 #include "Vector3.h"
 #include "Quaternion.h"
+#include "ForgeExport.h"
 
-class __declspec(dllexport) Transform : public Component {
+class FORGE_API Transform : public Component {
 	friend Entity;
 private:
 

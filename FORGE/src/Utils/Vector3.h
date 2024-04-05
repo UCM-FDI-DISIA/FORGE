@@ -1,6 +1,7 @@
 #pragma once
 #ifndef VECTOR3_H_
 #define VECTOR3_H_
+#include "ForgeExport.h"
 namespace Ogre {
 	template <int dims, typename T> class Vector;
 	typedef Vector<3, float> Vector3f;
@@ -10,7 +11,7 @@ namespace irrklang{
 	typedef vec3d<float> vec3df;
 }
 namespace forge {
-	class __declspec(dllexport) Vector3 {
+	class FORGE_API Vector3 {
 	private:
 		float x;
 		float y;

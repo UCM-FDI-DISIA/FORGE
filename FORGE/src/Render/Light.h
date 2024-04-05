@@ -2,12 +2,13 @@
 #ifndef LIGHT_H_
 #define LIGHT_H_
 #include <Component.h>
+#include "ForgeExport.h"
 class RenderManager;
 namespace Ogre {
     class Light;
 }
 
-class Light : public Component {
+class FORGE_API Light : public Component {
 private:
     int type;
     Ogre::Light* ogreLight;

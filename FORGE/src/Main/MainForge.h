@@ -2,6 +2,7 @@
 #define MAIN_FORGE_H_
 #include <string>
 #include <memory>
+#include "ForgeExport.h"
 namespace forge {
 	class Time;
 }
@@ -14,7 +15,7 @@ class Input;
 class PhysicsManager;
 //class UIManager;
 
-class __declspec(dllexport) MainForge {
+class FORGE_API MainForge {
 private:
 	static bool initialized;
 	bool isRunning;

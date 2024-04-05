@@ -3,13 +3,14 @@
 #define MESH_H_
 #include <Component.h>
 #include <string>
+#include "ForgeExport.h"
 
 class RenderManager;
 namespace Ogre {
     class Entity;
 }
 
-class Mesh : public Component {
+class FORGE_API Mesh : public Component {
 private:
     std::string mesh;
     std::string material;

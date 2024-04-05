@@ -3,9 +3,11 @@
 #define TIME_FORGE_H_
 #include <ctime>
 #include <memory>
+#include"ForgeExport.h"
+
 class MainForge;
 namespace forge {
-	class __declspec(dllexport) Time {
+	class FORGE_API Time {
 	private:
 		friend MainForge;
 		

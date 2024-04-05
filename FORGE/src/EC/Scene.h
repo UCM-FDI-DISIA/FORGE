@@ -4,10 +4,11 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include "ForgeExport.h"
 
 class Entity;
 
-class __declspec(dllexport) Scene {
+class FORGE_API Scene {
 protected:
     std::vector<std::vector<Entity*>> entitiesByGroup;
     std::unordered_map<std::string, Entity*> handlers;

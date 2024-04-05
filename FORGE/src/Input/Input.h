@@ -7,6 +7,7 @@
 #include <array>
 #include "SDL.h"
 #include "Vector2.h"
+#include "ForgeExport.h"
 
 #define CONTROLLER_AXIS_MAX 32767.0f
 #define CONTROLLER_AXIS_MIN -32768.0f
@@ -65,7 +66,7 @@ enum ControllerAxisNames {
 	C_AXIS_MAX
 };
 
-class __declspec(dllexport) Input {
+class FORGE_API Input {
 private:
 	static std::unique_ptr<Input> instance;
 

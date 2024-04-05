@@ -4,12 +4,13 @@
 
 #include <string>
 #include <vector>
+#include "ForgeExport.h"
 
 class Entity;
 class Scene;
 class ComponentData;
 
-class __declspec(dllexport) Component {
+class FORGE_API Component {
 private:
 	class Serializer;
 	bool enabled;

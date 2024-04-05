@@ -5,13 +5,14 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include "ForgeExport.h"
 
 struct EntityData;
 class Scene;
 class Entity;
 struct lua_State;
 
-class SceneManager {
+class FORGE_API SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
 

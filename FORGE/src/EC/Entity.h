@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <unordered_set>
+#include "ForgeExport.h"
 
 class Scene;
 class Component;
@@ -11,7 +12,7 @@ class Entity;
 class Factory;
 class ComponentData;
 
-class __declspec(dllexport) Entity {
+class FORGE_API Entity {
 private:
 	Factory& fact;
 	Scene* scene;

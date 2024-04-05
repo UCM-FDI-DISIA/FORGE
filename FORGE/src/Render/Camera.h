@@ -4,13 +4,14 @@
 #include "Component.h"
 #include <string>
 #include "Vector3.h"
+#include "ForgeExport.h"
 
 class RenderManager;
 namespace Ogre {
     class Camera;
 }
 
-class Camera : public Component {
+class FORGE_API Camera : public Component {
 private:
     std::string name;
     float nearClipDistance;
