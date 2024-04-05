@@ -26,6 +26,7 @@ bool Animator::initComponent(ComponentData* data) {
 					++it;
 				}
 				else {
+					std::cout << "ERROR: No se ha encontrado la animacion " << *it << " en el modelo " << mesh << std::endl;
 					it = activeAnimations.erase(it);
 				}
 			}

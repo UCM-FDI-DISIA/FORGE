@@ -101,9 +101,20 @@ public:
     forge::Vector2 get<forge::Vector2>(std::string const& param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
         forge::Vector2 vector = forge::Vector2();
-        if (input.size() >= 2) {
-            vector = forge::Vector2(input[0], input[1]);
+        if (input.size() <= 2) {
+            if (std::isinf(input[0]) || input.size() == 0) {
+                input[0] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 0 del Vector2 infinito o inexistente. Seteado a 0\n";
+            }
+            if (std::isinf(input[1]) || input.size() < 2) {
+                input[1] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 1 del Vector2 infinito o inexistente. Seteado a 0\n";
+            }
         }
+        else {
+            std::cerr << "ERROR: Vector2 con mas de 2 parametros. Devolviendo los 2 primeros parametros\n";
+        }
+        vector = forge::Vector2(input[0], input[1]);    
         return vector;
     }
     /// <summary>
@@ -115,13 +126,38 @@ public:
     forge::Vector3 get<forge::Vector3>(std::string const& param) {
         std::vector<float> input = getter<std::vector<float>>()(*data,param);
         forge::Vector3 vector = forge::Vector3();
-        if (input.size() >= 3) {
-            if (std::isinf(input[0]) || std::isinf(input[1]) || std::isinf(input[2])) {
-                input = std::vector<float>(3, 0.0f);
-                std::cerr << "ERROR: Valor infinito. Vector3 seteado a 0\n";
+        if (input.size() <= 3) {
+            if (std::isinf(input[0]) || input.size() == 0) {
+                input[0] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 0 del Vector3 infinito o inexistente. Seteado a 0\n";
             }
-            vector = forge::Vector3(input[0], input[1], input[2]);
+            if (std::isinf(input[1]) || input.size() < 2) {
+				input[1] = 0.0f;
+				std::cerr << "ERROR: Valor del parametro 1 del Vector3 infinito o inexistente. Seteado a 0\n";
+			}
+            if (std::isinf(input[2]) || input.size() < 3) {
+                input[2] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 2 del Vector3 infinito o inexistente. Seteado a 0\n";
+            }
         }
+        else {
+            std::cerr << "ERROR: Vector3 con mas de 3 parametros. Devolviendo los 3 primeros parametros\n";
+        }
+        if (param == "scale") {
+            if (input[0] == 0.0f) {
+                input[0] = 1.0f;
+                std::cerr << "ERROR: El valor en la X de la escala no puede ser 0. Seteado a 1\n";
+            }
+            if (input[1] == 0.0f) {
+                input[1] = 1.0f;
+                std::cerr << "ERROR: El valor en la Y de la escala no puede ser 0. Seteado a 1\n";
+            }
+            if (input[2] == 0.0f) {
+                input[2] = 1.0f;
+                std::cerr << "ERROR: El valor en la Z de la escala no puede ser 0. Seteado a 1\n";
+            }
+        }
+        vector = forge::Vector3(input[0], input[1], input[2]);  
         return vector;
     }
     /// <summary>
@@ -133,13 +169,28 @@ public:
     forge::Quaternion get<forge::Quaternion>(std::string const& param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
         forge::Quaternion quaternion = forge::Quaternion();
-        if (input.size() >= 4) {
-            if (std::isinf(input[0]) || std::isinf(input[1]) || std::isinf(input[2]) || std::isinf(input[3])) {
-                input = std::vector<float>(4, 0.0f);
-                std::cerr << "ERROR: Valor infinito. Quaternion seteada a 0\n";
+        if (input.size() <= 3) {
+            if (std::isinf(input[0]) || input.size() == 0) {    
+                input[0] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 0 del Quaternion infinito o inexistente. Seteado a 0\n";  
             }
-            quaternion = forge::Quaternion(input[0], input[1], input[2], input[3]);
+            if (std::isinf(input[1]) || input.size() < 2) { 
+                input[1] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 1 del Quaternion infinito o inexistente. Seteado a 0\n";  
+            }
+            if (std::isinf(input[2]) || input.size() < 3) { 
+                input[2] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 2 del Quaternion infinito o inexistente. Seteado a 0\n";  
+            }
+            if (std::isinf(input[2]) || input.size() < 4) {
+                input[2] = 0.0f;
+                std::cerr << "ERROR: Valor del parametro 2 del Quaternion infinito o inexistente. Seteado a 0\n";
+            }
         }
+        else {
+            std::cerr << "ERROR: Quaternion con mas de 3 parametros. Devolviendo los 4 primeros parametros\n";
+        }
+        quaternion = forge::Quaternion(input[0], input[1], input[2], input[3]); 
         return quaternion;
     }
 
