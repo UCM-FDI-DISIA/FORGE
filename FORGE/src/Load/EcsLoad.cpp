@@ -36,7 +36,7 @@ EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
 			}
 		}
 		catch (std::exception e) {
-			std::cerr << "ERROR: No hay escenas\n";
+			std::cerr << "ERROR: No hay escenas cargables en el archivo de Lua\n";
 		}
 	}
 	

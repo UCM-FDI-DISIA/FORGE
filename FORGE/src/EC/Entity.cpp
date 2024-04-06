@@ -42,7 +42,12 @@ void Entity::setAlive(bool _alive) {
 
 Component* Entity::addComponent(std::string const& id) {
     Component* component = fact.generateComponent(id);
-    removeComponent(id);
+    if (component == nullptr) {
+        std::cerr<<"ERROR: No existe un componente " << id <<std::endl;
+        removeComponent(id);   
+        return nullptr;
+    }
+    removeComponent(id);    
     components.insert(std::pair<std::string, Component*>(id, component));
     component->setContext(this, scene);
     return component;
