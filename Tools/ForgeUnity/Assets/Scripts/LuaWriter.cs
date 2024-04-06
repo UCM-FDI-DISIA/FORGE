@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 [Generator]
 public class LuaWriter : MonoBehaviour, ICodeGenerator
 {
+    private string fileName = "luaTest.lua";
+    private string folderPath = "Assets/FORGE Data";
+
     Dictionary<string, int> prefabData = new Dictionary<string, int> ();
     HashSet<string> hashData = new HashSet<string> ();
     string data = "";
@@ -236,7 +239,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     {
         SaveAll();
         data = data.Replace("UnityEngine.", "");
-        context.OverrideFolderPath("Assets/FORGE Data");
-        context.AddCode("luatest.lua", data);
+        context.OverrideFolderPath(folderPath);
+        context.AddCode(fileName, data);
     }
 }
