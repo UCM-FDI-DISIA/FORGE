@@ -61,7 +61,6 @@ void Billboard::addBillboards() {
 			rnd->generateRange(-depth / 2.0f, depth / 2.0f));
 		billboardSet->createBillboard(pos);
 	}
-	delete rnd;
 }
 
 int Billboard::getSize() {
