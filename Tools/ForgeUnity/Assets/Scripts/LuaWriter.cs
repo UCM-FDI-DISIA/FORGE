@@ -146,21 +146,21 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
 
         //Componentes
         i++; // = x + 1
-        Tabulate();
         if (obj.tag != "Untagged")
         {
             if (!hashData.Contains(obj.tag))
                 hashData.Add(obj.tag);
             else
                 Debug.LogWarning("Handler with the same name already exists!! Change the tag on " + obj);
-            data += "handler = " + "\"" + obj.tag + "\",\n";
             Tabulate();
+            data += "handler = " + "\"" + obj.tag + "\",\n";
         }
 
         if (LayerMask.LayerToName(obj.layer) != "Default")
-            data += "group = " + "\"" + LayerMask.LayerToName(obj.layer)+"\",\n";
-        data = data.Remove(data.Length - 2);
-        data += "\n"; 
+        {
+            Tabulate();
+            data += "group = " + "\"" + LayerMask.LayerToName(obj.layer) + "\",\n";
+        }
         Tabulate();
         data += "components = {\n";
         //Transform
@@ -172,18 +172,19 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         i++;// = x + 3
         data += "\n";
         Tabulate();
-        data += "position = " + "{" + tf.localPosition.x.ToString(new CultureInfo("en-US")) +
-            "," + tf.localPosition.y.ToString(new CultureInfo("en-US")) +
-            "," + tf.localPosition.z.ToString(new CultureInfo("en-US")) + "}" + ",\n";
+        CultureInfo rightFormat = new CultureInfo("en-US");
+        data += "position = " + "{" + tf.localPosition.x.ToString(rightFormat) +
+            "," + tf.localPosition.y.ToString(rightFormat) +
+            "," + tf.localPosition.z.ToString(rightFormat) + "}" + ",\n";
         Tabulate();
-        data += "rotation = " + "{" + tf.localRotation.x.ToString(new CultureInfo("en-US")) +
-            "," + tf.localRotation.y.ToString(new CultureInfo("en-US")) +
-            "," + tf.localRotation.z.ToString(new CultureInfo("en-US")) +
-            "," + tf.localRotation.w.ToString(new CultureInfo("en-US")) + "}" + ",\n";
+        data += "rotation = " + "{" + tf.localRotation.x.ToString(rightFormat) +
+            "," + tf.localRotation.y.ToString(rightFormat) +
+            "," + tf.localRotation.z.ToString(rightFormat) +
+            "," + tf.localRotation.w.ToString(rightFormat) + "}" + ",\n";
         Tabulate();
-        data += "scale = " + "{" + tf.localScale.x.ToString(new CultureInfo("en-US")) +
-            "," + tf.localScale.y.ToString(new CultureInfo("en-US")) +
-            "," + tf.localScale.z.ToString(new CultureInfo("en-US")) + "}" + "\n";
+        data += "scale = " + "{" + tf.localScale.x.ToString(rightFormat) +
+            "," + tf.localScale.y.ToString(rightFormat) +
+            "," + tf.localScale.z.ToString(rightFormat) + "}" + "\n";
 
         i--;// = x + 2
         Tabulate();

@@ -1,7 +1,6 @@
 local prefabs = {
 
 	hola1= {
-
 		components = {
 			Transform= {
 				position = {29.1627,5.643834,5.288186},
@@ -23,7 +22,6 @@ local scenes = {
 
 		Main Camera= {
 			handler = "MainCamera",
-	
 			components = {
 				Transform= {
 					position = {10.46,1,3.44},
@@ -37,7 +35,6 @@ local scenes = {
 		}
 
 		Directional Light= {
-	
 			components = {
 				Transform= {
 					position = {15.49,3,-1.25},
@@ -60,7 +57,6 @@ local scenes = {
 		}
 
 		GameObject= {
-	
 			components = {
 				Transform= {
 					position = {-9.390345,-9.869844,2.388827},
@@ -71,7 +67,7 @@ local scenes = {
 		}
 
 		Cube= {
-			group = "TransparentFX"
+			group = "TransparentFX",
 			components = {
 				Transform= {
 					position = {-2.2,-9.869844,2.388827},
@@ -83,7 +79,6 @@ local scenes = {
 
 		Cube_1= {
 			handler = "MainCamera",
-	
 			components = {
 				Transform= {
 					position = {-9.390345,-9.869844,2.388827},
