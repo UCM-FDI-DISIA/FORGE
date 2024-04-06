@@ -28,7 +28,13 @@ AudioSource::~AudioSource() {
 
 bool AudioSource::initComponent(ComponentData* data) {
 	sound = manager.getSound(data->get<std::string>("sound"));
-	transform = entity->getComponent<Transform>();
+	if(entity->hasComponent<Transform>()) {	
+		transform = entity->getComponent<Transform>();	
+	}
+	else {
+		std::cerr << "ERROR: Se necesita un componente Transform para inicializar AudioSource\n";
+		return false;
+	}
 	if (data->has("volume")) {
 		sound->setVolume(data->get<float>("volume"));
 	}
