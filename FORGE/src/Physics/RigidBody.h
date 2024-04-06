@@ -20,7 +20,7 @@ namespace forge {
 
 class RigidBody : public Component {
 
-    using CollisionCallback = void(*)(RigidBody* self, RigidBody* other);
+    using CollisionCallback = void(*)(RigidBody* self, RigidBody* other); // Cualquier función que implique dos cuerpos
 private:
     PhysicsManager* physicsManager;
     float mass;
@@ -68,29 +68,69 @@ public:
     /// <param name="other"></param>
     void onCollision(Entity* other);
     #pragma region setters
+    /// <summary>
+   /// Cambia la friccion del objeto
+   /// </summary>
     void setFriction(float newFriction);
 
+    /// <summary>
+   /// Cambia la constante de restitucion
+   /// </summary>
     void setRestitution(float newRestitution);
 
     void setRigidBody(btRigidBody* body);
 
+    /// <summary>
+    /// Actualiza el tamaño del cuerpo para cubos y cilindros
+    /// </summary>
+    /// <param name="scale">Tamaño nuevo en x,y,z para el cuerpo</param>
     void setRigidScale(forge::Vector3 scale);
 
+    /// <summary>
+    /// Actualiza el tamaño del cuerpo para esferas
+    /// </summary>
+    /// <param name="radius">Radio nuevo para la bola</param>
     void setRigidScale(float radius);
+
+    /// <summary>
+   /// Actualiza el tamaño del cuerpo para capsulas
+   /// </summary>
+   /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
+   /// <param name="height">Altura nueva par ala capsula</param>
+    void setRigidScale(float radius, float height);
+
+    /// <summary>
+   /// Activa y desactiva la funcion de trigger
+   /// </summary>
+   /// <param name="isTrigger">True si el cuerpo pasara a ser un trigger</param>
+    void setTrigger(bool isTrigger);
     #pragma endregion
 
     #pragma region setters
+    /// <summary>
+  /// Devuelve la masa del objeto
+  /// </summary>
     float getMass();
 
+    /// <summary>
+  /// Devuelve la friccion del objeto
+  /// </summary>
     float getFriction();
 
+    /// <summary>
+  /// Devuelve la constante de restitución del objeto
+  /// </summary>
     float getRestitution();
 
+    /// <summary>
+  /// Devuelve true si es un objeto estatico
+  /// </summary>
     bool isStatic();
 
+    /// <summary>
+  /// Devuelve true si es un objeto que detecta colisiones pero no choca
+  /// </summary>
     bool isTrigger();
-
-    void setTrigger(bool isTrigger);
 
     btCollisionShape* getShape();
 

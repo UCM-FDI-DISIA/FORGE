@@ -23,31 +23,32 @@ RigidBody::~RigidBody() {
 }
 
 void RigidBody::initComponent(ComponentData* data) {
-    std::string shapeType;
-    shapeType = data->get<std::string>("shapeType");
+    std::string myShapeType;
+    // En caso de que la masa sea negativa, se pone a 0
+    if (mass < 0) mass = 0; 
+    myShapeType = data->get<std::string>("shapeType");
     staticBody = data->get<bool>("static");
     if (staticBody) mass = 0;
-    if (shapeType == "Cube") {
-        shapeType = boxShape;
-        myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
-    }
-    else if (shapeType == "Sphere") {
+
+    // De forma predeterminada, el rigid es una caja
+     shapeType = boxShape; 
+     myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
+
+    if (myShapeType == "Sphere") {
         shapeType = ballShape;
         myShape = new btSphereShape(myScale.getX()/2);
     }
-    else if (shapeType == "Capsule") {
+    else if (myShapeType == "Capsule") {
         shapeType = capsuleShape;
         myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
     }
-    else if (shapeType == "Cilinder") {
+    else if (myShapeType == "Cilinder") {
         shapeType = cilinderShape;
-        myShape = new btCylinderShape(myScale);
+        myShape = new btCylinderShape(myScale.operator btVector3());
     }
-    
-    if (entity->hasComponent("Transform")) {
-        physicsManager = PhysicsManager::getInstance();
-        myBody = physicsManager->createBody(this);
-    }
+    physicsManager = PhysicsManager::getInstance();
+
+    myBody = physicsManager->createBody(this);
     myBody->setRestitution((btScalar)restitution);
     myBody->setFriction((btScalar)friction);
 }
@@ -101,21 +102,36 @@ void RigidBody::setRigidBody(btRigidBody* body) {
 }
 
 void RigidBody::setRigidScale(forge::Vector3 scale) {
-    if (shapeType == boxShape) {
+    // Ninguna escala puede ser 0
+    if (scale.getX() > 0 && scale.getY() > 0 && scale.getZ() > 0 
+        && (shapeType==boxShape||shapeType==cilinderShape)) { 
         delete myShape;
-        myShape= myShape = new btBoxShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
+        if (shapeType == boxShape) {
+            myShape= myShape = new btBoxShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
+        }
+        else if (shapeType == cilinderShape)         {
+            myShape = myShape = new btCylinderShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
+        }
         myBody->setCollisionShape(myShape);
     }
-    // Maybe devolver un error si es esfera
 }
 
 void RigidBody::setRigidScale(float radius) {
-    if (shapeType == ballShape) {
+    // Ninguna escala puede ser 0
+    if (shapeType == ballShape && radius > 0) {
         delete myShape;
         myShape = new btSphereShape(radius);
         myBody->setCollisionShape(myShape);
     }
-    // Maybe devolver un error si es cubo
+}
+
+void RigidBody::setRigidScale(float radius, float height) {
+    // Ninguna escala puede ser 0
+    if (shapeType == capsuleShape && radius > 0 && height > 0) {
+        delete myShape;
+        myShape = new btCapsuleShape(radius,height);
+        myBody->setCollisionShape(myShape);
+    }
 }
 
 float RigidBody::getMass() {

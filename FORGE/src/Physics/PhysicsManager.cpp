@@ -51,7 +51,8 @@ void PhysicsManager::initPhysics() {
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
     debugger = new DebugMode(RenderManager::getInstance()->getSceneManager());
-    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
+    // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
+    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); 
     world->setDebugDrawer(debugger);
 
     world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
@@ -109,12 +110,18 @@ PhysicsManager* PhysicsManager::getInstance() {
 }
 btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     btVector3 bodyInertia;
-    
-    body->getShape()->calculateLocalInertia(body->getMass(), bodyInertia);
-    forge::Quaternion forQuat = body->getEntity()->getComponent<Transform>()->getRotation();
-    forge::Vector3 forVect = body->getEntity()->getComponent<Transform>()->getGlobalPosition();
+    Transform* aux = body->getEntity()->getComponent<Transform>();
+    forge::Quaternion forQuat = forge::Quaternion (0, 0, 0, 0);
+    forge::Vector3 forVect = forge::Vector3(0,0,0);
+    // En caso de que no se pueda acceder al transform, se usa un default
+    if (aux != nullptr) { 
+        forQuat = aux->getRotation();
+        forVect = aux->getGlobalPosition();
+    }
+
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
+    body->getShape()->calculateLocalInertia(body->getMass(), bodyInertia);
     btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat,vect));
     
     btRigidBody::btRigidBodyConstructionInfo bodyCI = 
@@ -125,7 +132,15 @@ btRigidBody* PhysicsManager::createBody(RigidBody* body) {
     if (body->isStatic()) {
         rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
     }
-    transforms.insert({rigidBody, body->getEntity()->getComponent<Transform>() });
+
+    Transform* bodyTransform= body->getEntity()->getComponent<Transform>(); 
+    if (bodyTransform == nullptr) {
+        // Si no existe transform, se coloca uno vacio
+        body->getEntity()->addComponent("Transform");
+        bodyTransform = body->getEntity()->getComponent<Transform>();
+    }
+    
+    transforms.insert({rigidBody, bodyTransform });
 
     body->setRigidBody(rigidBody);
     world->addRigidBody(rigidBody);
