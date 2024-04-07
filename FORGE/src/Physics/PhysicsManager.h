@@ -57,14 +57,17 @@ public:
 
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* getInstance();
+    
     /// <summary>
-   /// Crea una instancia de rigidBody
-   /// </summary>
-    btRigidBody* createBody(RigidBody* body);
+    /// Registra un btRigidbody y su transform asociado para busquedas y tratamiento de colisiones
+    /// </summary>
+    /// <param name="body">El btRigidbody a registrar</param>
+    /// <param name="transform">El transform asociado al btRigidbody</param>
+    void registerBody(btRigidBody* body, Transform* transform);
     /// <summary>
-  /// Crea una instancia de rigidBody y la guarda en un mapa por nombre
+  /// Registra una instancia de rigidBody y la guarda en un mapa por nombre
   /// </summary>
-    btRigidBody* createImportantBody(RigidBody* body, std::string name);
+    void createImportantBody(RigidBody* body, std::string name);
     /// <summary>
    /// Borra un rigidBody
    /// </summary>

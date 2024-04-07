@@ -78,8 +78,6 @@ public:
    /// </summary>
     void setRestitution(float newRestitution);
 
-    void setRigidBody(btRigidBody* body);
-
     /// <summary>
     /// Actualiza el tamaño del cuerpo para cubos y cilindros
     /// </summary>
@@ -123,6 +121,12 @@ public:
     float getRestitution();
 
     /// <summary>
+    /// Devuelve el cuerpo rigido de Bullet del objeto
+    /// </summary>
+    /// <returns>El btRigidbody asociado al objeto</returns>
+    btRigidBody* getRigidBody();
+
+    /// <summary>
   /// Devuelve true si es un objeto estatico
   /// </summary>
     bool isStatic();
@@ -132,8 +136,16 @@ public:
   /// </summary>
     bool isTrigger();
 
+    /// <summary>
+    /// Devuelve el shape del objeto
+    /// </summary>
+    /// <returns>la figura de colision del objeto</returns>
     btCollisionShape* getShape();
 
+    /// <summary>
+    /// Devuelve la escala del cuerpo rigido
+    /// </summary>
+    /// <returns>un Vector3 de FORGE con la escala del rigidbody</returns>
     forge::Vector3 getRigidScale();
 
     #pragma endregion

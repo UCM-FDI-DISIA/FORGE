@@ -11,11 +11,13 @@ RigidBody::RigidBody() :
     physicsManager(nullptr), mass(0)
     , kinematic(false), myBody(nullptr) 
     , myShape(nullptr), friction(0), restitution(0)
-    , shapeType(boxShape) {
+    , shapeType(boxShape), staticBody(false), trigger(false) {
     serializer(myScale, "scale");
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");
+    serializer(staticBody, "static");
+    serializer(trigger, "trigger");
 }
 
 RigidBody::~RigidBody() {
@@ -27,7 +29,6 @@ void RigidBody::initComponent(ComponentData* data) {
     // En caso de que la masa sea negativa, se pone a 0
     if (mass < 0) mass = 0; 
     myShapeType = data->get<std::string>("shapeType");
-    staticBody = data->get<bool>("static");
     if (staticBody) mass = 0;
 
     // De forma predeterminada, el rigid es una caja
@@ -35,20 +36,58 @@ void RigidBody::initComponent(ComponentData* data) {
      myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
 
     if (myShapeType == "Sphere") {
+        delete myShape;
         shapeType = ballShape;
         myShape = new btSphereShape(myScale.getX()/2);
     }
     else if (myShapeType == "Capsule") {
+        delete myShape;
         shapeType = capsuleShape;
         myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
     }
     else if (myShapeType == "Cilinder") {
+        delete myShape;
         shapeType = cilinderShape;
         myShape = new btCylinderShape(myScale.operator btVector3());
     }
     physicsManager = PhysicsManager::getInstance();
 
-    myBody = physicsManager->createBody(this);
+    //Inicializamos el rigid body
+
+    btVector3 bodyInertia;
+    Transform* aux = entity->getComponent<Transform>();
+    forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
+    forge::Vector3 forVect = forge::Vector3(0, 0, 0);
+    // En caso de que no se pueda acceder al transform, se usa un default
+    if (aux != nullptr) {
+        forQuat = aux->getRotation();
+        forVect = aux->getGlobalPosition();
+    }
+
+    btQuaternion quat = forQuat.operator btQuaternion();
+    btVector3 vect = forVect.operator btVector3();
+    getShape()->calculateLocalInertia(getMass(), bodyInertia);
+    btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
+
+    btRigidBody::btRigidBodyConstructionInfo bodyCI =
+        btRigidBody::btRigidBodyConstructionInfo(getMass(), motionState, getShape(), bodyInertia);
+
+
+    btRigidBody* rigidBody = new btRigidBody(bodyCI);
+    if (isStatic()) {
+        rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+    }
+
+    Transform* bodyTransform = entity->getComponent<Transform>();
+    if (bodyTransform == nullptr) {
+        // Si no existe transform, se coloca uno vacio
+        entity->addComponent("Transform");
+        bodyTransform = entity->getComponent<Transform>();
+    }
+
+    myBody = rigidBody;
+
+    physicsManager->registerBody(rigidBody, entity->getComponent<Transform>());
     myBody->setRestitution((btScalar)restitution);
     myBody->setFriction((btScalar)friction);
 }
@@ -96,11 +135,6 @@ void RigidBody::setRestitution(float newRestitution) {
     myBody->setRestitution(restitution);
 }
 
-void RigidBody::setRigidBody(btRigidBody* body) {
-    myBody = body;
-    myShape = body->getCollisionShape();
-}
-
 void RigidBody::setRigidScale(forge::Vector3 scale) {
     // Ninguna escala puede ser 0
     if (scale.getX() > 0 && scale.getY() > 0 && scale.getZ() > 0 
@@ -144,6 +178,10 @@ float RigidBody::getFriction() {
 
 float RigidBody::getRestitution() {
     return restitution;
+}
+
+btRigidBody* RigidBody::getRigidBody() {
+    return myBody;
 }
 
 bool RigidBody::isStatic() {

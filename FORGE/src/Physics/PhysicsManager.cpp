@@ -108,48 +108,17 @@ PhysicsManager* PhysicsManager::getInstance() {
     }
 	return (instance = std::unique_ptr<PhysicsManager>(new PhysicsManager())).get();
 }
-btRigidBody* PhysicsManager::createBody(RigidBody* body) {
-    btVector3 bodyInertia;
-    Transform* aux = body->getEntity()->getComponent<Transform>();
-    forge::Quaternion forQuat = forge::Quaternion (0, 0, 0, 0);
-    forge::Vector3 forVect = forge::Vector3(0,0,0);
-    // En caso de que no se pueda acceder al transform, se usa un default
-    if (aux != nullptr) { 
-        forQuat = aux->getRotation();
-        forVect = aux->getGlobalPosition();
-    }
 
-    btQuaternion quat = forQuat.operator btQuaternion();
-    btVector3 vect = forVect.operator btVector3();
-    body->getShape()->calculateLocalInertia(body->getMass(), bodyInertia);
-    btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat,vect));
-    
-    btRigidBody::btRigidBodyConstructionInfo bodyCI = 
-        btRigidBody::btRigidBodyConstructionInfo(body->getMass(), motionState, body->getShape(), bodyInertia);
-
-    
-    btRigidBody* rigidBody = new btRigidBody(bodyCI);
-    if (body->isStatic()) {
-        rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
-    }
-
-    Transform* bodyTransform= body->getEntity()->getComponent<Transform>(); 
-    if (bodyTransform == nullptr) {
-        // Si no existe transform, se coloca uno vacio
-        body->getEntity()->addComponent("Transform");
-        bodyTransform = body->getEntity()->getComponent<Transform>();
-    }
-    
-    transforms.insert({rigidBody, bodyTransform });
-
-    body->setRigidBody(rigidBody);
-    world->addRigidBody(rigidBody);
-    return rigidBody;
+void PhysicsManager::registerBody(btRigidBody* body, Transform* transform) {
+    transforms.insert({ body,transform });
+    world->addRigidBody(body);
 }
-btRigidBody* PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
-    btRigidBody* auxBody = createBody(body);
-    importantObjects.insert({ name,auxBody });
-    return auxBody;
+
+
+void PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
+    registerBody(body->getRigidBody(), body->getEntity()->getComponent<Transform>());
+    importantObjects.insert({ name,body->getRigidBody()});
+    
 }
 
 void  PhysicsManager::deleteBody(btRigidBody* body) {
