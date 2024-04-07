@@ -1,7 +1,7 @@
 #pragma once
 #ifndef VECTOR4_H_
 #define VECTOR4_H_
-#include "imgui.h"
+
 namespace forge {
 	class Vector4 {
 	private:
@@ -84,13 +84,6 @@ namespace forge {
 		/// Setea un vector a través de floats
 		/// </summary>	
 		void set(float _x, float _y, float _z, float _w);
-		#pragma endregion
-
-		#pragma region Conversiones
-		/// <summary>
-		/// Sobrecarga del operador de conversión a ImVec4
-		/// </summary>	
-		operator ImVec4() const;
 		#pragma endregion
 
 		#pragma region Operadores

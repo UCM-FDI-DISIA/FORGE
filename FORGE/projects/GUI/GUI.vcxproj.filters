@@ -13,40 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Archivos de encabezado\ImGUI">
-      <UniqueIdentifier>{cbe6da65-7cf6-4528-9127-6d390dcfd84c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\ImGUI">
-      <UniqueIdentifier>{6e396ccc-098d-406b-a241-92150df51aae}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GUI\GUIManager.h">
       <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\imconfig.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\imgui.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdl2.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdlrenderer2.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\imgui_internal.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\imstb_rectpack.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\imstb_textedit.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dependencies\ImGUI\imstb_truetype.h">
-      <Filter>Archivos de encabezado\ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GUI\Text.h">
       <Filter>Archivos de encabezado</Filter>
@@ -74,27 +44,6 @@
     <ClCompile Include="..\..\src\GUI\GUIManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_demo.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_draw.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdl2.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdlrenderer2.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_tables.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_widgets.cpp">
-      <Filter>Archivos de origen\ImGUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GUI\Text.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -114,9 +63,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GUI\BaseButton.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GUI\GUITest.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

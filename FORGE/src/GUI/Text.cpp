@@ -1,5 +1,8 @@
 #include "Text.h"
 #include "Serializer.h"
+#include <imgui.h>
+#include "GUIManager.h"
+#include "RectTransform.h"
 
 const std::string Text::id = "Text";
 
@@ -33,21 +36,21 @@ bool Text::initComponent(ComponentData* data) {
 
 void Text::update() {
     // Tamano y posicion de la ventana
-    ImGui::SetNextWindowSize(size);
-    ImGui::SetNextWindowPos(transform->getPosition());
+    ImGui::SetNextWindowSize(gui->Vector2ToGUI(size));
+    ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, bgColor);
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, gui->Vector4ToGUI(bgColor));
     ImGui::Begin(windowName, NULL, window_flags);
 
     // Texto con fuente cargada
     if(font != nullptr){
         ImGui::PushFont(font);
-        ImGui::TextColored(color, text);
+        ImGui::TextColored(gui->Vector4ToGUI(color), text);
         ImGui::PopFont();
     }
     else {
-        ImGui::TextColored(color, text);
+        ImGui::TextColored(gui->Vector4ToGUI(color), text);
         ImGui::SetWindowFontScale(1);
     }
 

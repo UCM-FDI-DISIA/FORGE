@@ -3,8 +3,11 @@
 #ifndef IMAGEBUTTON_H_
 #define IMAGEBUTTON_H_
 
-#include "SDL_image.h"
 #include "BaseButton.h"
+#include <iostream>
+#include "Vector2.h"
+
+struct SDL_Texture;
 
 class ImageButton : public BaseButton {
 private:

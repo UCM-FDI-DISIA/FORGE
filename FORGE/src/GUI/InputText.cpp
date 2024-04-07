@@ -2,6 +2,9 @@
 #include "Serializer.h"
 #include "Scene.h"
 #include "Entity.h"
+#include <imgui.h>
+#include "GUIManager.h"
+#include "RectTransform.h"
 
 const std::string InputText::id = "InputText";
 
@@ -29,11 +32,11 @@ bool InputText::initComponent(ComponentData* data) {
 
 void InputText::update() {
     // Tamano y posicion de la ventana
-    ImGui::SetNextWindowSize(size);
-    ImGui::SetNextWindowPos(transform->getPosition());
+    ImGui::SetNextWindowSize(gui->Vector2ToGUI(size));
+    ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, bgColor);
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, gui->Vector4ToGUI(bgColor));
     ImGui::Begin(windowName, NULL, window_flags);
     // Texto con fuente cargada
     if (font != nullptr) {

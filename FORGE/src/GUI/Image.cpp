@@ -1,10 +1,16 @@
 #include "Image.h"
 #include "Serializer.h"
+#include "SDL_image.h"
+#include <imgui.h>
+#include "GUIManager.h"
+#include "RectTransform.h"
 
 const std::string Image::id = "Image";
 
 Image::Image() : UIComponent(),
-	renderer(GUIManager::getInstance()->getRenderer()) {
+	surface(nullptr),
+	texture(nullptr),
+	renderer(GUIManager::GetInstance()->getRenderer()) {
 	serializer(fileName, "fileName");
 	serializer(size, "size");
 }
@@ -19,13 +25,13 @@ bool Image::initComponent(ComponentData* data) {
 		if (renderer != nullptr) {
 			surface = IMG_Load(fileName.c_str());
 			if (surface == nullptr) {
-				std::cerr << "No se pudo cargar la imagen de " + fileName + " \n";
+				std::cerr << "ERROR: No se pudo cargar la imagen de " + fileName + " \n";
 			}
 			else {
 				texture = SDL_CreateTextureFromSurface(renderer, surface);
 				if (texture == nullptr) {
 					SDL_FreeSurface(surface);
-					std::cerr << "No se pudo cargar la imagen de " + fileName + " \n";
+					std::cerr << "ERROR: No se pudo cargar la imagen de " + fileName + " \n";
 				}
 				else {
 					sourceSize.set((float)surface->w, (float)surface->h);
@@ -39,7 +45,7 @@ bool Image::initComponent(ComponentData* data) {
 			}
 		}
 		else {
-			std::cerr << "Debe existir un renderer para crear una imagen\n";
+			std::cerr << "ERROR: Debe existir un renderer para crear una imagen\n";
 		}
 	}
 	return false;
@@ -47,13 +53,13 @@ bool Image::initComponent(ComponentData* data) {
 
 void Image::update() {
 	// Tamano y posicion de la ventana
-	ImGui::SetNextWindowSize(size * transform->getScale() + forge::Vector2(6, 6));
-	ImGui::SetNextWindowPos(transform->getPosition());
+	ImGui::SetNextWindowSize(gui->Vector2ToGUI(size * transform->getScale() + forge::Vector2(6, 6)));
+	ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(windowName, NULL, window_flags);
 
-	ImGui::Image((void*) texture, size);
+	ImGui::Image((void*) texture, gui->Vector2ToGUI(size));
 	
 	ImGui::PopStyleVar();
 	ImGui::End();

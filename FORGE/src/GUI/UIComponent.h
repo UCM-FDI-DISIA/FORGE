@@ -6,8 +6,10 @@
 #include <Component.h>
 #include <Vector2.h>
 #include <Vector4.h>
-#include "RectTransform.h"
-#include "GUIManager.h"
+
+class RectTransform;
+class GUIManager;
+typedef int ImGuiWindowFlags;
 
 class UIComponent : public Component {
 protected:
@@ -51,7 +53,7 @@ public:
 	/// <summary>
 	/// Devuelve el tamano de la imagen
 	/// </summary>	
-	forge::Vector2 getSize();
+	const forge::Vector2& getSize() const;
 	#pragma endregion
 };
 

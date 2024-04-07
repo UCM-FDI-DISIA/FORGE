@@ -1,17 +1,25 @@
 #pragma once
 
-#include "backends/imgui_impl_sdl2.h"
-#include "backends/imgui_impl_sdlrenderer2.h"
-#include <imgui.h>
-#include <SDL.h> 
 #include <iostream>
 #include <unordered_map>
 #include <unordered_set>
+#include "Vector2.h"
+#include "Vector4.h"
+
+struct ImGuiIO;
+struct SDL_Renderer;
+struct SDL_Window;
+struct ImVec2;
+struct ImVec4;
+struct ImFont;
 
 class GUIManager {
 private:
 	// Instancia Singleton
 	static std::unique_ptr<GUIManager> instance;
+
+	// Marcador de inicializacion
+	static bool initialised;
 
 	// Input/Output (Input: controles, fuentes Output: graficos)
 	ImGuiIO* io;
@@ -29,7 +37,8 @@ private:
 	SDL_Window* window;
 
 public:
-	static GUIManager* getInstance();
+	static bool Init();
+	static GUIManager* GetInstance();
 
 	/// <summary>
 	/// Constructora de la clase GUI
@@ -44,9 +53,7 @@ public:
 	/// <summary>
 	/// Asigna las variables de render
 	/// </summary>	
-	/// <param name = "rend">Renderer de SDL</param>
-	/// <param name = "win">Ventana de SDL</param>
-	void setContext(SDL_Renderer* rend, SDL_Window* win);
+	bool setContext();
 
 	/// <summary>
 	/// Carga una fuente
@@ -110,4 +117,18 @@ public:
 	/// Preparacion para el siguiente update
 	/// </summary>	
 	void refresh();
+
+	/// <summary>
+	/// Conversor de Vector2 a ImVec2
+	/// </summary>
+	/// <param name = "v">Vector2 a convertir</param>
+	/// <returns>ImVec2 con la informacion del Vector2</returns>
+	const ImVec2& Vector2ToGUI(const forge::Vector2& v) const;
+
+	/// <summary>
+	/// Conversor de Vector4 a ImVec4
+	/// </summary>
+	/// <param name = "v">Vector4 a convertir</param>
+	/// <returns>ImVec4 con la informacion del Vector4</returns>
+	const ImVec4& Vector4ToGUI(const forge::Vector4& v) const;
 };

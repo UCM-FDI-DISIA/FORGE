@@ -1,6 +1,9 @@
 #include "ImageButton.h"
 #include "Serializer.h"
-#include <iostream>
+#include "SDL_image.h"
+#include <imgui.h>
+#include "GUIManager.h"
+#include "RectTransform.h"
 
 const std::string ImageButton::id = "ImageButton";
 
@@ -35,7 +38,7 @@ bool ImageButton::initComponent(ComponentData* data) {
 }
 
 bool ImageButton::createImage(std::string file, ButtonState state) {
-	SDL_Renderer* renderer = GUIManager::getInstance()->getRenderer();
+	SDL_Renderer* renderer = GUIManager::GetInstance()->getRenderer();
 	if (renderer != nullptr) {
 		SDL_Surface* surface = IMG_Load(file.c_str());
 		if (surface == nullptr) {
@@ -66,8 +69,8 @@ bool ImageButton::createImage(std::string file, ButtonState state) {
 
 void ImageButton::update() {
 	// Tamano y posicion de la ventana
-	ImGui::SetNextWindowSize(size + forge::Vector2(6, 6));
-	ImGui::SetNextWindowPos(transform->getPosition());
+	ImGui::SetNextWindowSize(gui->Vector2ToGUI(size + forge::Vector2(6, 6)));
+	ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(windowName, NULL, window_flags);
@@ -77,10 +80,10 @@ void ImageButton::update() {
 
 	if (imagesBool) {
 		if (ImGui::IsWindowHovered() && !pressed) {
-			pressed = ImGui::ImageButton(buttonId, (void*) images[HOVER], size);
+			pressed = ImGui::ImageButton(buttonId, (void*) images[HOVER], gui->Vector2ToGUI(size));
 		}
 		else {
-			pressed = ImGui::ImageButton(buttonId, (void*)images[IDLE], size);
+			pressed = ImGui::ImageButton(buttonId, (void*)images[IDLE], gui->Vector2ToGUI(size));
 		}
 	}
 
@@ -90,13 +93,13 @@ void ImageButton::update() {
 		}
 
 		if (ImGui::IsWindowHovered() && !pressed) {
-			pressed = ImGui::ImageButton((void*) images[IDLE], size * 0.99f);
+			pressed = ImGui::ImageButton((void*) images[IDLE], gui->Vector2ToGUI(size * 0.99f));
 			if (transform->getPosition() == realPos) {
 				transform->setPosition(transform->getPosition() + ((size - (size * 0.99f)) / 4));
 			}
 		}
 		else {
-			pressed = ImGui::ImageButton((void*) images[IDLE], size);
+			pressed = ImGui::ImageButton((void*) images[IDLE], gui->Vector2ToGUI(size));
 			transform->setPosition(realPos);
 		}
 	}

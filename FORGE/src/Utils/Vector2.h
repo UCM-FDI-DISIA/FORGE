@@ -3,8 +3,6 @@
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
 
-#include "imgui.h"
-
 namespace forge {
 	class Vector2 {
 	private:
@@ -155,14 +153,6 @@ namespace forge {
 		/// <param name="_x">Nuevo valor de X</param>
 		/// <param name="_y">Nuevo valor de Y</param>
 		void set(float _x, float _y);
-		#pragma endregion
-
-		#pragma region Conversiones
-		/// <summary>
-		/// Sobrecarga del operador de conversión a ImVec2
-		/// </summary>
-		/// <returns>ImVec2 convertido</returns>
-		operator ImVec2() const;
 		#pragma endregion
 
 		#pragma region Constantes

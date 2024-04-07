@@ -1,6 +1,9 @@
-#include "UIComponent.h"
 #include "Entity.h"
 #include "Serializer.h"
+#include <imgui.h>
+#include "UIComponent.h"
+#include "GUIManager.h"
+#include "RectTransform.h"
 
 const std::string UIComponent::id = "UIComponent";
 
@@ -13,14 +16,14 @@ UIComponent::UIComponent() :
 }
 
 UIComponent::~UIComponent() {
-
+    delete& window_flags;
 }
 
 bool UIComponent::initComponent(ComponentData* data) {
     if (entity->hasComponent("RectTransform")) {
         transform = entity->getComponent<RectTransform>();
 
-        gui = GUIManager::getInstance();
+        gui = GUIManager::GetInstance();
         if (gui->getIds().count(windowName) == 0) {
             gui->getIds().insert(windowName);
 
@@ -35,7 +38,7 @@ bool UIComponent::initComponent(ComponentData* data) {
             return true;
         }
         else {
-            std::cerr << "El id " + (std::string)windowName + " ya existe\n";
+            std::cerr << "ERROR: El id " + (std::string)windowName + " ya existe\n";
         }
     }
     else {
@@ -45,6 +48,6 @@ bool UIComponent::initComponent(ComponentData* data) {
     return false;
 }
 
-forge::Vector2 UIComponent::getSize() {
+const forge::Vector2& UIComponent::getSize() const {
     return size;
 }

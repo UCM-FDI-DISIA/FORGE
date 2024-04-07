@@ -5,6 +5,8 @@
 
 #include "UIComponent.h"
 
+struct ImFont;
+
 class Text : public UIComponent {
 protected:
 	// Texto a mostrar

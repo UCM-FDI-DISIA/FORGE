@@ -25,6 +25,7 @@
 #include "AudioSource.h"
 #include "Sound.h"
 
+#include "GUIManager.h"
 #include "Image.h"
 #include "Button.h"
 #include "ImageButton.h"
@@ -61,14 +62,17 @@ int main(int argc, char* argv[]) {
 	SceneManager& sceneManager = *SceneManager::getInstance();
 	Input& input = *Input::getInstance();
 	AudioManager& ad = *AudioManager::getInstance();
+	GUIManager& gui = *GUIManager::GetInstance();
 	sceneManager.changeScene("Test");
 	while (!input.keyUp(K_ESC)) {
 		input.refresh();
 		input.update();
+		gui.update();
 		if (!sceneManager.update()) {
 			break;
 		}
 		sceneManager.refresh();
+		gui.refresh();
 		ad.update();
 		if (!render.render())
 			break;

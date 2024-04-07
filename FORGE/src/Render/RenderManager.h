@@ -140,6 +140,8 @@ public:
 	/// </summary>
 	/// <param name="camera">Camara que queremos eliminar</param>
 	void removeCamera(Ogre::Camera* camera);
+
+	RenderForge* getRenderForge();
 #pragma endregion
 };
 

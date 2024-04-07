@@ -70,8 +70,7 @@ int main(int, char**) {
     // COMPONENTES
     int cont = 0, con1 = 0;
     // --- GUI ---
-    GUIManager* gui = GUIManager::getInstance();
-    gui->setContext(renderer, window);
+    GUIManager* gui = GUIManager::GetInstance();
     gui->loadFont("Supercharge", "supercharge.ttf", 60);
     gui->loadFont("Saeda", "LTSaeada-Black.otf", 60);
     gui->showLoadedFonts();

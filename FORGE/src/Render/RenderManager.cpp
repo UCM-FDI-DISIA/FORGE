@@ -237,3 +237,7 @@ void RenderManager::removeCamera(Ogre::Camera* camera) {
 	sceneManager->destroySceneNode(node);
 	transforms.erase(node);
 }
+
+RenderForge* RenderManager::getRenderForge() {
+	return forge;
+}

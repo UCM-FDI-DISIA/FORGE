@@ -5,6 +5,8 @@
 
 #include "BaseButton.h"
 
+struct ImFont;
+
 class Button : public BaseButton {
 private:
 	// Texto del boton

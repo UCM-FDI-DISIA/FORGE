@@ -93,12 +93,6 @@ void Vector2::set(float _x, float _y) {
 }
 #pragma endregion
 
-#pragma region Conversiones
-Vector2::operator ImVec2() const {
-	return ImVec2(x, y);
-}
-#pragma endregion
-
 #pragma region Constantes
 const Vector2 Vector2::ZERO(0.0f, 0.0f);
 const Vector2 Vector2::RIGHT(1.0f, 0.0f);

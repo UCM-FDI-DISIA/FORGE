@@ -1,5 +1,8 @@
 #include "Button.h"
 #include "Serializer.h"
+#include <imgui.h>
+#include "GUIManager.h"
+#include "RectTransform.h"
 
 const std::string Button::id = "Button";
 
@@ -32,18 +35,18 @@ bool Button::initComponent(ComponentData* data) {
 
 void Button::update() {
     // Tamano y posicion de la ventana
-    ImGui::SetNextWindowSize(size);
-    ImGui::SetNextWindowPos(transform->getPosition());
+    ImGui::SetNextWindowSize(gui->Vector2ToGUI(size));
+    ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::Begin(windowName, NULL, window_flags);
 
-    ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, buttonHoverColor);
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
+    ImGui::PushStyleColor(ImGuiCol_Button, gui->Vector4ToGUI(buttonColor));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, gui->Vector4ToGUI(buttonHoverColor));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, gui->Vector4ToGUI(buttonActiveColor));
     if (font != nullptr) {
         ImGui::PushFont(font);
-        pressed = ImGui::Button(text, size);
+        pressed = ImGui::Button(text, gui->Vector2ToGUI(size));
         ImGui::PopFont();
     }
     else {

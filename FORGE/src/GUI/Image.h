@@ -4,8 +4,15 @@
 #define IMAGE_H_
 
 #include <string>
-#include "SDL_image.h"
 #include "UIComponent.h"
+#include <Vector2.h>
+#include <Vector4.h>
+
+struct ImVec2;
+struct ImVec4;
+struct SDL_Texture;
+struct SDL_Renderer;
+struct SDL_Surface;
 
 class Image : public UIComponent {
 private:

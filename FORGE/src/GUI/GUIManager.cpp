@@ -1,8 +1,21 @@
 #include "GUIManager.h"
+#include <imgui.h>
+#include "imgui_impl_sdl2.h"
+#include "imgui_impl_sdlrenderer2.h"
+#include <SDL.h>
+#include "RenderForge.h"
+#include "RenderManager.h"
 
 std::unique_ptr<GUIManager> GUIManager::instance = nullptr;
+bool GUIManager::initialised = false;
 
-GUIManager::GUIManager() :  io(nullptr), renderer(nullptr), window(nullptr) {
+bool GUIManager::Init() {
+    instance = std::unique_ptr<GUIManager>(new GUIManager());
+    initialised = instance->setContext();
+    return initialised;
+}
+
+GUIManager::GUIManager() : io(nullptr), renderer(nullptr), window(nullptr) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -22,18 +35,25 @@ GUIManager::~GUIManager(){
     ImGui::DestroyContext();
 }
 
-void GUIManager::setContext(SDL_Renderer* rend, SDL_Window* win) {
-    renderer = rend;
-    window = win;
+bool GUIManager::setContext() {
+    window = RenderManager::getInstance()->getRenderForge()->getWindow().native;
+    renderer = (SDL_Renderer*) RenderManager::getInstance()->getRenderForge()->getWindow().render;
 
-    // Setup Platform/Renderer backends
-    ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
-    ImGui_ImplSDLRenderer2_Init(renderer);
+    if (window != nullptr && renderer != nullptr) {
+        // Setup Platform/Renderer backends
+        ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
+        ImGui_ImplSDLRenderer2_Init(renderer);
+        return true;
+    }
+    else {
+        std::cerr << "ERROR: La ventana y el renderer deben existir para poder crear la interfaz";
+        return false;
+    }
 }
 
-GUIManager* GUIManager::getInstance() {
-    if (instance.get() != nullptr) return instance.get();
-    return (instance = std::unique_ptr<GUIManager>(new GUIManager())).get();
+GUIManager* GUIManager::GetInstance() {
+    if (initialised) return instance.get();
+    return nullptr;
 }
 
 // HABLAR SOBRE COMO SE CARGARÍAN DESDE LUA
@@ -103,4 +123,12 @@ bool GUIManager::render() {
 
 void GUIManager::refresh() {
     freeIds();
+}
+
+const ImVec2& GUIManager::Vector2ToGUI(const forge::Vector2& v) const {
+    return ImVec2(v.getX(), v.getY());
+}
+
+const ImVec4& GUIManager::Vector4ToGUI(const forge::Vector4& v) const {
+    return ImVec4(v.getX(), v.getY(), v.getZ(), v.getW());
 }
