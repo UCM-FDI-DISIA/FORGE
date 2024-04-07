@@ -8,6 +8,8 @@
 class Entity;
 
 class Scene {
+private:
+    bool sceneEnd = false;
 protected:
     std::vector<std::vector<Entity*>> entitiesByGroup;
     std::unordered_map<std::string, Entity*> handlers;
@@ -45,14 +47,22 @@ public:
     /// <returns>
     /// Una entidad en escena a partir de su handler
     /// </returns>
-    const Entity* getEntityByHandler(std::string handler);
+    const Entity* getEntityByHandler(std::string const& handler);
     /// <summary>
     /// </summary>
     /// <param name="handler">Nombre que se le va a dar al Handler</param>
     /// <param name="ent">Entidad que se asocia al Handler</param>
     /// <returns>Si se ha podido agregar el Handler</returns>
-    bool setHandler(std::string handler, Entity* entity);
+    bool setHandler(std::string const& handler, Entity* entity);
     /// <summary>
+    /// Cambia el booleano sceneEnd a true
+    /// </summary>
+    void endScene();
+    /// <summary>
+    /// Devuelve el booleano sceneEnd, para comprobar si la escena debe terminar
+    /// </summary>
+    bool getEndScene();
+
     ///	Establece si todos los Entity de la Scene estan activados
     /// </summary>
     /// <param name="_enabled">Nuevo estado de activacion de los Entities</param>

@@ -24,7 +24,7 @@ public:
 	static const std::string id;
 
 	TestComponent();
-	void initComponent(ComponentData* data) override;
+	bool initComponent(ComponentData* data) override;
 	void update() override;
 
 };

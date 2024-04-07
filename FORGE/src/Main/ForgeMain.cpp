@@ -18,7 +18,7 @@ ForgeMain* ForgeMain::instance = nullptr;
 double ForgeMain::deltaTime = 0;
 
 ForgeMain::ForgeMain() {
-
+	fixedUpdateTimer = 0.0f;
 	//renderModule = new Forge::Render();
 	//inputModule = new Forge::Input();
 	
@@ -28,7 +28,7 @@ ForgeMain::ForgeMain() {
 	//GUIModule = new Forge::GUI();
 }
 
-ForgeMain* ForgeMain::getInstance() {
+ForgeMain* ForgeMain::GetInstance() {
 	if (instance == nullptr)
 	{
 		instance = new ForgeMain();

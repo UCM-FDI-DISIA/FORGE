@@ -22,14 +22,22 @@ Mesh::Mesh() :
 }
 
 Mesh::~Mesh() {
-    renderManager->removeNode(ogreEntity);
+    if(ogreEntity != nullptr && renderManager != nullptr) 
+    {
+        renderManager->removeNode(ogreEntity);
+    }
 }
 
-void Mesh::initComponent(ComponentData* data) {
+bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreEntity = renderManager->addMeshNode(this);
     }
+    else 
+    {
+        std::cerr << "ERROR: Se requiere un componente Transform para generar un Mesh\n";
+    }
+    return ogreEntity != nullptr;
 }
 
 void Mesh::onEnabled() {
@@ -41,12 +49,12 @@ void Mesh::onDisabled() {
     ogreEntity = nullptr;
 }
 
-void Mesh::setMesh(std::string newMesh) {
+void Mesh::setMesh(std::string const& newMesh) {
     mesh = newMesh;
     ogreEntity = renderManager->updateMeshNode(ogreEntity, this);
 }
 
-void Mesh::setMaterial(std::string newMaterial) {
+void Mesh::setMaterial(std::string const& newMaterial) {
     material = newMaterial;
     ogreEntity->setMaterialName(newMaterial);
 }

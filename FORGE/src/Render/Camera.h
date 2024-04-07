@@ -35,7 +35,7 @@ public:
     /// crear una camara de Ogre que guarda en ogreCamera
     /// </summary>
     /// <param name="data"></param>
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Crea una camara de Ogre que guarda en ogreCamera
     /// </summary>
@@ -60,7 +60,7 @@ public:
     /// Establece el color de fondo
     /// </summary>
     /// <param name="newbackgroundColor">Nuevos valores RGB del fondo</param>
-    void setBackgroundColor(forge::Vector3 newbackgroundColor);
+    void setBackgroundColor(forge::Vector3 const& newbackgroundColor);
 	#pragma endregion
 
 	#pragma region getters

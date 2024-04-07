@@ -23,14 +23,21 @@ Camera::Camera() :
 }
 
 Camera::~Camera() {
-   renderManager->removeNode(ogreCamera);
+   if(ogreCamera != nullptr && renderManager != nullptr)
+   {
+       renderManager->removeNode(ogreCamera);
+   }
 }
 
-void Camera::initComponent(ComponentData* data) {
+bool Camera::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
-        ogreCamera = renderManager->addCameraNode(this);
+        renderManager = RenderManager::GetInstance();
+		ogreCamera = renderManager->addCameraNode(this);
     }
+    else {
+        std::cerr << "ERROR: Se requiere un componente Transform para generar una Camera\n";
+    }
+    return ogreCamera != nullptr;
 }
 
 void Camera::onEnabled() {
@@ -53,7 +60,7 @@ void Camera::setAutoAspectRatio(bool newAutoAspectRatio) {
     ogreCamera->setAutoAspectRatio(newAutoAspectRatio);
 }
 
-void Camera::setBackgroundColor(forge::Vector3 newbackgroundColor) {
+void Camera::setBackgroundColor(forge::Vector3 const& newbackgroundColor) {
     backgroundColor = newbackgroundColor;
     Ogre::ColourValue value = Ogre::ColourValue(backgroundColor.getX(), backgroundColor.getY(), backgroundColor.getZ());
     ogreCamera->getViewport()->setBackgroundColour(value);

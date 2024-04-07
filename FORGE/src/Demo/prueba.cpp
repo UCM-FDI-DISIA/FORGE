@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+﻿#define _CRTDBG_MAP_ALLOC
 #define SDL_MAIN_HANDLED
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -28,7 +28,7 @@
 #include "Sound.h"
 
 void factory() {
-	Factory& f = *Factory::getInstance();
+	Factory& f = *Factory::GetInstance();
 	f.registerComponent<Transform>();
 	f.registerComponent<Mesh>();
 	f.registerComponent<Light>();
@@ -42,8 +42,11 @@ void factory() {
 
 
 int main(int argc, char* argv[]) {
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
+if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init())
+{
+
 	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
 	RenderManager& render = *RenderManager::getInstance();
     render.setup("Test FORGE");
@@ -63,7 +66,9 @@ int main(int argc, char* argv[]) {
 		double start = SDL_GetTicks();
         input.refresh();
         input.update();
-        sceneManager.update();
+        if (!sceneManager.update()) {
+				break;
+			}
 		sceneManager.refresh();
 		ad.update();
         if(!render.render())
@@ -82,11 +87,11 @@ int main(int argc, char* argv[]) {
     }
 	sceneManager.cleanUp();
 	delete loadManager;
-	
-	//delete render.getInstance();
-	
-
-
-    return 0;
 }
 
+	//delete render.getInstance();
+
+
+
+	return 0;
+}

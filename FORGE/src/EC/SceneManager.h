@@ -14,6 +14,7 @@ struct lua_State;
 class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
+	static bool initialised;
 
 	std::pair<std::string, Scene*> activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
@@ -31,6 +32,16 @@ private:
 
 public:
 	/// <summary>
+	/// Crea una instancia del SceneManager
+	/// </summary>
+	/// <returns>Si la inicializacion fue correcta</returns>
+	static bool Init();
+	/// <summary>
+	/// Devuelve la instancia de SceneManager y si no existe devuelve un puntero a nulo
+	/// </summary>
+	/// <returns>Instancia singleton a SceneManager</returns>
+	static SceneManager* GetInstance();
+	/// <summary>
 	/// Destruye la instancia
 	/// </summary>
 	~SceneManager();
@@ -38,11 +49,6 @@ public:
 	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas
 	/// </summary>
 	void cleanUp();
-	/// <summary>
-	/// Devuelve la instancia de SceneManager y si no existe la crea
-	/// </summary>
-	/// <returns>Instancia singleton a SceneManager</returns>
-	static SceneManager* getInstance();
 	/// <summary>
 	/// Establece el lua_State usado para la carga de EC
 	/// </summary>
@@ -61,22 +67,22 @@ public:
 	/// <param name="renewScene">
 	/// Elimina la escena cargada en memoria y la crea de nuevo desde el blueprint
 	/// </param>
-	void changeScene(std::string scene, bool renewScene = false);
+	void changeScene(std::string const& scene, bool renewScene = false);
 	/// <summary>
 	/// Elimina una escena cargada en memoria
 	/// </summary>
 	/// <param name="id">Identificador de la escena</param>
-	void removeScene(std::string id);
+	void removeScene(std::string const& id);
 	/// <summary>
 	/// Crea una escena a partir de un blueprint
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <returns>La escena creada</returns>
-	Scene* createScene(std::string id);
+	Scene* createScene(std::string const& id);
 	/// <returns>
 	/// Una escena a partir de su Identificador
 	/// </returns>
-	Scene* getScene(std::string id);
+	Scene* getScene(std::string const& id);
 	/// <summary>
 	/// Devuelve el identificador de la escena activa
 	/// </summary>
@@ -89,7 +95,7 @@ public:
 	/// <returns>
 	/// Actualiza las entidades de la escena activa
 	/// </returns>
-	void update();
+	bool update();
 	/// <returns>
 	/// Actualiza las entidades de la escena activa en intervalos constantes
 	/// </returns>
@@ -103,27 +109,27 @@ public:
 	/// </summary>
 	/// <param name="group">Nombre del grupo</param>
 	/// <returns>Id del grupo</returns>
-	int getGroupId(std::string group);
+	int getGroupId(std::string const& group);
 	/// <summary>
 	/// Agrega un blueprint de escena y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="scene">Blueprint de la escena</param>
-	void addSceneBlueprint(std::string id, std::vector<EntityData*> scene);
+	void addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene);
 	/// <summary>
 	/// Agrega un blueprint de entidad y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="entity">Blueprint de la entidad</param>
-	void addEntityBlueprint(std::string id, EntityData* entity);
+	void addEntityBlueprint(std::string const& id, EntityData* entity);
 	/// <param name="id">Identificador del Blueprint de entidad </param>
 	/// <returns>Puntero al Blueprint de la entidad</returns>
-	EntityData* getEntityBlueprint(std::string id);
+	EntityData* getEntityBlueprint(std::string const& id);
 	/// <summary>
 	/// Guarda un nuevo grupo de entidades que no se haya guardado
 	/// </summary>
 	/// <param name="group">Identificador del grupo nuevo</param>
-	void addGroup(std::string group);
+	void addGroup(std::string const& group);
 
 };
 #endif // !SCENE_MANAGER_H_

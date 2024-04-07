@@ -24,7 +24,7 @@ public:
 	/// Se inicializa el escuchador con el transform de la entidad
 	/// </summary>
 	/// <param name="data"></param>
-	void initComponent(ComponentData* data) override;
+	bool initComponent(ComponentData* data) override;
 	/// <summary>
 	/// Comprueba si hay que actualizar la posicion del escuchador y si es asi
 	/// la actualiza

@@ -33,7 +33,7 @@ public:
     /// crear una entidad de Ogre que guarda en ogreEntity
     /// </summary>
     /// <param name="data"></param>
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Crea una entidad de Ogre que guarda en ogreEntity
     /// </summary>
@@ -49,12 +49,12 @@ public:
     /// destruyendola y volviendola a crear
     /// </summary>
     /// <param name="newMesh">Nombre de la nueva malla</param>
-    void setMesh(std::string newMesh);
+    void setMesh(std::string const& newMesh);
     /// <summary>
     /// Cambia el material utilizado para la entidad de Ogre
     /// </summary>
     /// <param name="newMaterial">Nombre del nuevo material</param>
-    void setMaterial(std::string newMaterial);
+    void setMaterial(std::string const& newMaterial);
 	#pragma endregion
 
 	#pragma region getters
