@@ -50,7 +50,6 @@ if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::I
 
 	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
 	RenderManager& render = *RenderManager::GetInstance();
-    render.setup("Test FORGE");
     SceneManager& sceneManager = *SceneManager::GetInstance();
 	PhysicsManager& phyisicsManager = *PhysicsManager::GetInstance();
 	phyisicsManager.initPhysics();
