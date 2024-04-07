@@ -5,9 +5,9 @@ using namespace Ogre;
 
 DebugMode::DebugMode(SceneManager* scm) {
     mContactPoints = &mContactPoints1;
-    mLines = RenderManager::getInstance()->createManualObject("physics lines");
+    mLines = RenderManager::GetInstance()->createManualObject("physics lines");
     assert(mLines);
-    mTriangles = RenderManager::getInstance()->createManualObject("physics triangles");
+    mTriangles = RenderManager::GetInstance()->createManualObject("physics triangles");
     assert(mTriangles);
     mLines->setDynamic(true);
     mTriangles->setDynamic(true);

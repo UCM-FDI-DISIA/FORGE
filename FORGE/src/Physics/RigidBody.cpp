@@ -24,7 +24,7 @@ RigidBody::~RigidBody() {
     physicsManager->deleteBody(myBody);
 }
 
-void RigidBody::initComponent(ComponentData* data) {
+bool RigidBody::initComponent(ComponentData* data) {
     std::string myShapeType;
     // En caso de que la masa sea negativa, se pone a 0
     if (mass < 0) mass = 0; 
@@ -50,7 +50,7 @@ void RigidBody::initComponent(ComponentData* data) {
         shapeType = cilinderShape;
         myShape = new btCylinderShape(myScale.operator btVector3());
     }
-    physicsManager = PhysicsManager::getInstance();
+    physicsManager = PhysicsManager::GetInstance();
 
     //Inicializamos el rigid body
 
@@ -90,6 +90,8 @@ void RigidBody::initComponent(ComponentData* data) {
     physicsManager->registerBody(rigidBody, entity->getComponent<Transform>());
     myBody->setRestitution((btScalar)restitution);
     myBody->setFriction((btScalar)friction);
+
+    return true;
 }
 
 void RigidBody::fixedUpdate() {

@@ -45,7 +45,7 @@ public:
 
     ~RigidBody();
 
-    void initComponent(ComponentData* data) override;
+    bool initComponent(ComponentData* data) override;
 
     virtual void fixedUpdate();
 

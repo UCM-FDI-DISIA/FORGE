@@ -50,7 +50,7 @@ void PhysicsManager::initPhysics() {
     solver = new btSequentialImpulseConstraintSolver();
     world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-    debugger = new DebugMode(RenderManager::getInstance()->getSceneManager());
+    debugger = new DebugMode(RenderManager::GetInstance()->getSceneManager());
     // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
     debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); 
     world->setDebugDrawer(debugger);
@@ -102,7 +102,7 @@ void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
     world->setGravity(newGravity.operator btVector3());
 }
 
-PhysicsManager* PhysicsManager::getInstance() {
+PhysicsManager* PhysicsManager::GetInstance() {
     if (instance.get() != nullptr) {
         return instance.get();
     }

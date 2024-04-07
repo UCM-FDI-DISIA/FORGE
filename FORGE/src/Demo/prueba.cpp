@@ -26,6 +26,7 @@
 #include "AudioListener.h"
 #include "AudioSource.h"
 #include "Sound.h"
+#include <SDL_timer.h>
 
 void factory() {
 	Factory& f = *Factory::GetInstance();
@@ -48,15 +49,15 @@ if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::I
 {
 
 	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
-	RenderManager& render = *RenderManager::getInstance();
+	RenderManager& render = *RenderManager::GetInstance();
     render.setup("Test FORGE");
-    SceneManager& sceneManager = *SceneManager::getInstance();
-	PhysicsManager& phyisicsManager = *PhysicsManager::getInstance();
+    SceneManager& sceneManager = *SceneManager::GetInstance();
+	PhysicsManager& phyisicsManager = *PhysicsManager::GetInstance();
 	phyisicsManager.initPhysics();
 
 
-    Input& input = *Input::getInstance();
-	AudioManager& ad = *AudioManager::getInstance();
+    Input& input = *Input::GetInstance();
+	AudioManager& ad = *AudioManager::GetInstance();
     sceneManager.changeScene("Test");
 
 	double deltaTime = 0;

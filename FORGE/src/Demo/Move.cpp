@@ -10,9 +10,12 @@ Move::Move() {
 
 }
 
-void Move::initComponent(ComponentData* data) {
-	rb = entity->getComponent<RigidBody>();
+bool Move::initComponent(ComponentData* data) {
+	if (rb = entity->getComponent<RigidBody>()) {
 	movement = data->get<float>("speed");
+	return true;
+	}
+	return false;
 }
 
 void Move::update() {

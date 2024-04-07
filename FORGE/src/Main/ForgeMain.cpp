@@ -8,8 +8,8 @@ a cambiar cuando se enlacen los modulos
 #include "Load.h"
 #include "EC.h"
 #include "GUI.h"
-*/
 #include "PhysicsManager.h"
+*/
 
 #include "EcsLoad.h"
 #include <iostream>

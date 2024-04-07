@@ -1,7 +1,7 @@
 #pragma once
-#include <btBulletDynamicsCommon.h>
 #include <memory>
 #include <unordered_map>
+#include <btBulletDynamicsCommon.h>
 
 
 class Transform;
@@ -56,7 +56,7 @@ public:
     void changeGravity(forge::Vector3 newGravity);
 
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
-    static PhysicsManager* getInstance();
+    static PhysicsManager* GetInstance();
     
     /// <summary>
     /// Registra un btRigidbody y su transform asociado para busquedas y tratamiento de colisiones
