@@ -44,7 +44,7 @@ lua_State* LuaForge::getState() const {
 }
 
 bool LuaForge::doFile(std::string const& path) {
-	return luaL_dofile(lua, path.c_str());
+	return !luaL_dofile(lua, path.c_str());
 }
 
 void LuaForge::importClassToLua(std::function<void(lua_State*)> classCreation) {

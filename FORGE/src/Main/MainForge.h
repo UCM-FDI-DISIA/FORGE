@@ -50,7 +50,7 @@ private:
 	/// Inicializador de todos los modulos, a partir de un archivo de configuracion
 	/// </summary>
 	/// <param name="luaConfigPath">El camino al archivo de configuracion</param>
-	void init(std::string const& luaConfigPath);
+	bool init(std::string const& configPath);
 	/// <summary>
 	/// Controla el tiempo entre updates, y si ha pasado el tiempo suficiente, llama a fixedUpdate cuantas veces sea necesario
 	/// </summary>
@@ -78,7 +78,7 @@ public:
 	/// Inicializa el motor a partir de un archivo de configuracion
 	/// </summary>
 	/// <param name="luaConfigPath">La ruta al archivo de configuracion</param>
-	static void FORGE_API Init(std::string const& luaConfigPath);
+	static bool FORGE_API Init(std::string const& configPath);
 	/// <summary>
 	/// Arranca el bucle principal del juego
 	/// </summary>

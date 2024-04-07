@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 class LuaForge;
-class GameLoad;
+class GameLoader;
 class SceneManager;
+class RenderManager;
 struct EntityData;
 namespace luabridge {
 	class LuaRef;
@@ -13,8 +14,11 @@ namespace luabridge {
 class LoadManager {
 private:
 	LuaForge* luaForge;
-	GameLoad* gameLoad;
+	GameLoader* gameLoader;
 	SceneManager& sceneManager;
+	RenderManager& renderManager;
+	std::string gameName;
+	std::string initialScene;
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.
 	/// </summary>
@@ -54,12 +58,15 @@ private:
 	/// <param name="path"> 
 	/// Ruta del archivo lua desde el que se va a cargar toda la informacion para SceneManager.
 	/// </param>
-	void loadScenes(std::string const& path);
+	bool loadScenes(luabridge::LuaRef const& path);
 	/// <summary>
 	/// 
 	/// </summary>
 	/// <returns></returns>
 	bool loadAudio();
+	bool loadGame(luabridge::LuaRef const& config);
+	bool loadAssets(luabridge::LuaRef const& config);
+	bool loadInitialScene(luabridge::LuaRef const& config);
 public:
 	LoadManager();
 	/// <summary>
@@ -67,9 +74,12 @@ public:
 	/// </summary>
 	/// <param name="assetsFile">Ruta del archivo en el que se indican los assets a cargar</param>
 	/// <param name="scenesFile">Nombre del archivo de escenas dentro de Assets/scenes</param>
+	bool init(std::string const& configFile);
 	bool init(std::string const& assetsFile, std::string const& scenesFile);
 	bool cleanUp();
-	GameLoad& getGame();
+	GameLoader& getGame();
+	std::string const& getGameName() const;
+	std::string const& getInitialScene() const;
 	/// <summary>
 	/// Cierra las referencias a los archivos de carga
 	/// </summary>

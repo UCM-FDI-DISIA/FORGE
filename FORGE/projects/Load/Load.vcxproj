@@ -101,12 +101,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Load\GameLoad.cpp" />
+    <ClCompile Include="..\..\src\Load\GameLoader.cpp" />
     <ClCompile Include="..\..\src\Load\LoadManager.cpp" />
     <ClCompile Include="..\..\src\Load\LuaForge.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Load\GameLoad.h" />
+    <ClInclude Include="..\..\src\Load\GameLoader.h" />
     <ClInclude Include="..\..\src\Load\LoadManager.h" />
     <ClInclude Include="..\..\src\Load\LuaForge.h" />
   </ItemGroup>
@@ -116,6 +116,9 @@
     </ProjectReference>
     <ProjectReference Include="..\EC\EC.vcxproj">
       <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Render\Render.vcxproj">
+      <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.vcxproj">
       <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>

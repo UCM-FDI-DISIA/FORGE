@@ -21,7 +21,7 @@
     <ClCompile Include="..\..\src\Load\LoadManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Load\GameLoad.cpp">
+    <ClCompile Include="..\..\src\Load\GameLoader.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClInclude Include="..\..\src\Load\LoadManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Load\GameLoad.h">
+    <ClInclude Include="..\..\src\Load\GameLoader.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

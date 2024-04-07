@@ -1,18 +1,18 @@
-#ifndef GAME_LOAD_H_
-#define GAME_LOAD_H_
+#ifndef GAME_LOADER_H_
+#define GAME_LOADER_H_
 #include <string>
 #include <Windows.h>
 class Factory;
 
-class GameLoad {
+class GameLoader {
 private:
 	// Handle to DLL
 	HINSTANCE hDLL;
 public:
-	GameLoad();
+	GameLoader();
 	bool init(std::string const& gameDll);
 	bool registerComponents(Factory& f);
 	bool free();
 };
 
-#endif // !GAME_LOAD_H_
+#endif // !GAME_LOADER_H_

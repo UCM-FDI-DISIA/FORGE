@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "AudioManager.h"
 #include "LoadManager.h"
-#include "GameLoad.h"
+#include "GameLoader.h"
 /*
 #include "PhysicsManager.h"
 #include "UIManager.h"
@@ -55,25 +55,22 @@ void MainForge::initFactory() {
 	loadManager.getGame().registerComponents(factory);
 }
 
-void MainForge::init(std::string const& luaConfigPath) {
+bool MainForge::init(std::string const& configPath) {
 	initialized = true;
 	finished = false;
-	if (!loadManager.init("Assets/assets.forge.lua", "scenetest.lua")) return;
+	if (!loadManager.init(configPath)) {
+		finished = true;
+		return false;
+	}
 	initFactory();
-	/* Config:
-	nombre ventana
-	mapa de audio
-	escenas
-	escena inicial
-	¿resources.cfg?
-	ui
-	*/
-	//loadManager.init(luaConfigPath);
-	renderManager.setup("mamawebo"/*loadManager.getWindowName()*/);
-	sceneManager.changeScene("Test");
+	renderManager.setup(loadManager.getGameName());
+	sceneManager.changeScene(loadManager.getInitialScene());
+
+
 
 	//physicsManager.init();???
 	//UIManager.init();???
+	return true;
 }
 
 void MainForge::manageFixedUpdates() {
@@ -124,11 +121,12 @@ void MainForge::mainLoop() {
 	finished = true;
 }
 
-void MainForge::Init(std::string const& luaConfigPath) {
+bool MainForge::Init(std::string const& configPath) {
 	if (!initialized) {
 		if (instance == nullptr) instance = std::unique_ptr<MainForge>(new MainForge());
-		instance->init(luaConfigPath);
+		return instance->init(configPath);
 	}
+	return false;
 }
 
 void MainForge::MainLoop() {
