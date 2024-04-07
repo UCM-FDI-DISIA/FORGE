@@ -1,7 +1,7 @@
 #pragma once
 #ifndef TIME_FORGE_H_
 #define TIME_FORGE_H_
-#include <ctime>
+#include <chrono>
 #include <memory>
 #include"ForgeExport.h"
 
@@ -12,7 +12,7 @@ namespace forge {
 		friend MainForge;
 		
 		static double _deltaTime;
-		time_t previous;
+		std::chrono::system_clock::time_point previous;
 
 		Time();
 		static std::unique_ptr<Time> instance;

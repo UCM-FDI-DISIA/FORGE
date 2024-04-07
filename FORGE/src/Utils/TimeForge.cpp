@@ -3,8 +3,8 @@
 double forge::Time::_deltaTime = 0.0;
 std::unique_ptr<forge::Time> forge::Time::instance = nullptr;
 
-forge::Time::Time() :
-	previous(time(NULL)) {
+forge::Time::Time(){
+	previous = std::chrono::system_clock::now();
 }
 
 forge::Time* forge::Time::getInstance() {
@@ -13,11 +13,11 @@ forge::Time* forge::Time::getInstance() {
 }
 
 void forge::Time::init() noexcept {
-	time(&previous);
+	previous = std::chrono::system_clock::now();
 }
 
-void forge::Time::update() noexcept {
-	time_t current = time(NULL);
-	_deltaTime = difftime(current, previous);
+void forge::Time::update() noexcept {	
+	std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
+	_deltaTime = std::chrono::duration<double>(current - previous).count();
 	previous = current;
 }
