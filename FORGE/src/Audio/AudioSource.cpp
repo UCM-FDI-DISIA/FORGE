@@ -32,7 +32,7 @@ bool AudioSource::initComponent(ComponentData* data) {
 		transform = entity->getComponent<Transform>();	
 	}
 	else {
-		std::cerr << "ERROR: Se necesita un componente Transform para inicializar AudioSource\n";
+		std::cerr << "ERROR: Se necesita un componente Transform para generar un AudioSource\n";
 		return false;
 	}
 	if (data->has("volume")) {

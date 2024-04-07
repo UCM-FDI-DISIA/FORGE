@@ -22,7 +22,7 @@ bool AudioListener::initComponent(ComponentData* data) {
 		transform = entity->getComponent<Transform>();  
 	}
 	else {
-        std::cerr << "ERROR: Se necesita un componente Transform para inicializar el componente AudioListener\n";
+        std::cerr << "ERROR: Se necesita un componente Transform para generar un AudioListener\n";
 		return false;
 	}
     if (manager.getListenerOnScene()) {
