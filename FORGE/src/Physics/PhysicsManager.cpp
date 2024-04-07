@@ -59,9 +59,12 @@ void PhysicsManager::initPhysics() {
     
 }
 
+void PhysicsManager::drawDebug() {
+    world->debugDrawWorld();
+}
+
 void PhysicsManager::updatePhysics() {
-    world->stepSimulation(1 / 50.f, 20);
-    if (debugMode) world->debugDrawWorld();
+    world->stepSimulation(1 / 50.f, 20);    
     handleCollisions();    
 }
 

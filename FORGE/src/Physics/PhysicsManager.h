@@ -41,6 +41,11 @@ public:
     void initPhysics();
 
     /// <summary>
+    /// Dibuja los wireframes de los cuerpos fisicos en el mundo de fisicas
+    /// </summary>
+    void drawDebug();
+
+    /// <summary>
     /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
     /// </summary>
     void updatePhysics();
@@ -78,6 +83,14 @@ public:
    /// @param enabled Sirve para activar o desactivar el mundo fisico
     inline void setDebug(bool enabled) {
         debugMode = enabled;
+    }
+
+    /// <summary>
+    /// Devuelve si el modo depuracion esta activo
+    /// </summary>
+    /// <returns>Si el modo depuracion esta activo</returns>
+    bool isDebugModeEnabled() {
+        return debugMode;
     }
 };
 

@@ -73,6 +73,10 @@ if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::I
 		ad.update();
         if(!render.render())
 			break;
+		else {
+			if (phyisicsManager.isDebugModeEnabled())
+				phyisicsManager.drawDebug();
+		}
 
 		double end = SDL_GetTicks();
 		deltaTime = end - start;
