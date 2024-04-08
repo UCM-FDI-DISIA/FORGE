@@ -133,18 +133,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Demo\Move.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="..\..\src\Demo\prueba.cpp" />
     <ClCompile Include="..\..\src\Demo\TestComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Demo\Move.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <None Include="..\..\bin\Assets\assets.forge.lua" />
     <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
   </ItemGroup>

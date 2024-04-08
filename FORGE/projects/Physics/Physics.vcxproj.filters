@@ -24,7 +24,7 @@
     <ClInclude Include="..\..\src\Physics\DebugMode.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Physics\test.h">
+    <ClInclude Include="..\..\src\Physics\Move.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="..\..\src\Physics\DebugMode.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Physics\test.cpp">
+    <ClCompile Include="..\..\src\Physics\Move.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

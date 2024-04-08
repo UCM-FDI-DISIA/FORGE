@@ -14,7 +14,6 @@
 #include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
-#include "test.h"
 #include "PhysicsManager.h"
 #include "RigidBody.h"
 #include "Move.h"
