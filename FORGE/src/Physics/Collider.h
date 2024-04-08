@@ -8,6 +8,7 @@
 class PhysicsManager;
 class btRigidBody;
 class btCollisionShape;
+class Transform;
 
 class Collider: public Component {
     
@@ -26,6 +27,7 @@ protected:
     collisionShape shapeType;
     forge::Vector3 myScale;
     std::vector<CollisionCallback> collisionCallbacks;
+    Transform* bodyTransform;
 public:
     static const std::string id;
 
@@ -43,7 +45,6 @@ public:
     /// <param name="other: ">EL otro RigidBody con el que colisiona</param>
     /// <returns>Devuelve true si ha colisionado con otro RigidBody, false en el caso contrario</returns>
     bool hasCollidedWith(Collider* other);
-
 
     /// <summary>
     /// Registra un nuevo callback de colision

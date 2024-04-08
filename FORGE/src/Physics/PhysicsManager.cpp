@@ -77,9 +77,6 @@ void PhysicsManager::handleCollisions() {
                 const btVector3& ptA = pt.getPositionWorldOnA();
                 const btVector3& ptB = pt.getPositionWorldOnB();
                 const btVector3& normalOnB = pt.m_normalWorldOnB;
-                //std::cout << "Collision at: " << ptA.getX() << " " << ptA.getY() << " " << ptA.getZ() << std::endl;
-                //std::cout << "Collision at: " << ptB.getX() << " " << ptB.getY() << " " << ptB.getZ() << std::endl;
-                //std::cout << "Collision normal: " << normalOnB.getX() << " " << normalOnB.getY() << " " << normalOnB.getZ() << std::endl;
             }
             //Llamamos a los callbacks que tenga guardados el componente Rigidbody de cada objeto
             auto auxTransformA = transforms.find((btRigidBody*)obA);

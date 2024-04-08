@@ -52,7 +52,6 @@ bool RigidBody::initComponent(ComponentData* data) {
 
     //Inicializamos el rigid body
 
-    btVector3 bodyInertia;
     Transform* aux = entity->getComponent<Transform>();
     forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
     forge::Vector3 forVect = forge::Vector3(0, 0, 0);
@@ -64,6 +63,8 @@ bool RigidBody::initComponent(ComponentData* data) {
 
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
+    
+    btVector3 bodyInertia;
     getShape()->calculateLocalInertia(getMass(), bodyInertia);
     btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
 
@@ -123,7 +124,7 @@ void RigidBody::setRigidScale(forge::Vector3 scale) {
         if (shapeType == boxShape) {
             myShape= myShape = new btBoxShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
         }
-        else if (shapeType == cilinderShape)         {
+        else if (shapeType == cilinderShape) {
             myShape = myShape = new btCylinderShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
         }
         myBody->setCollisionShape(myShape);

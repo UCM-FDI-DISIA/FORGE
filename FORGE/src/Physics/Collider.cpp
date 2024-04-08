@@ -22,7 +22,6 @@ Collider::~Collider() {
 
 bool Collider::initComponent(ComponentData* data) {
     std::string myShapeType;
-    // En caso de que la masa sea negativa, se pone a 0
    
     myShapeType = data->get<std::string>("shapeType");
 
@@ -49,7 +48,6 @@ bool Collider::initComponent(ComponentData* data) {
 
     //Inicializamos el rigid body
 
-    btVector3 bodyInertia;
     Transform* aux = entity->getComponent<Transform>();
     forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
     forge::Vector3 forVect = forge::Vector3(0, 0, 0);
@@ -59,6 +57,8 @@ bool Collider::initComponent(ComponentData* data) {
 
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
+
+    btVector3 bodyInertia;
     myShape->calculateLocalInertia(0, bodyInertia);
     btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
 
@@ -69,7 +69,7 @@ bool Collider::initComponent(ComponentData* data) {
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
     rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
-    Transform* bodyTransform = entity->getComponent<Transform>();
+    bodyTransform = entity->getComponent<Transform>();
     if (bodyTransform == nullptr) {
         // Si no existe transform, se coloca uno vacio
         entity->addComponent("Transform");
@@ -84,12 +84,12 @@ bool Collider::initComponent(ComponentData* data) {
 }
 
 void Collider::fixedUpdate() {
-    if (entity->hasComponent("Transform")) {
-        Transform* transform = entity->getComponent<Transform>();
+    if (bodyTransform == nullptr) {
+        bodyTransform = entity->getComponent<Transform>();
         forge::Vector3 pos = forge::Vector3(myBody->getWorldTransform().getOrigin());
-        transform->setPosition(pos);
+        bodyTransform->setPosition(pos);
         forge::Quaternion quat = myBody->getOrientation();
-        transform->setRotation(quat);
+        bodyTransform->setRotation(quat);
     }
 }
 
