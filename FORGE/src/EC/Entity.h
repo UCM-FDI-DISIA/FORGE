@@ -57,7 +57,7 @@ public:
 	/// </summary>
 	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Identificador del componente</param>
-	FORGE_API Component* addComponent(std::string id);
+	FORGE_API Component* addComponent(std::string const& id);
 	/// <summary>
 	/// Agrega el Component dicho a la Entity y lo inicializa
 	/// </summary>
@@ -80,7 +80,7 @@ public:
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
 	/// <param name="name">Nombre del Component a eliminar</param>
-	FORGE_API void removeComponent(std::string id);
+	FORGE_API void removeComponent(std::string const& id);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
@@ -105,7 +105,7 @@ public:
 	/// </summary>
 	/// <param name="name">Nombre del Component a consultar</param>
 	/// <returns>Booleano que indica si la Entity tiene el Component</returns>
-	FORGE_API bool hasComponent(std::string name);
+	FORGE_API bool hasComponent(std::string const& name);
 	/// <summary>
 	/// Comprueba si la Entity tiene el Component indicado
 	/// </summary>
@@ -127,5 +127,10 @@ public:
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
 	FORGE_API void fixedUpdate();
+	/// <summary>
+	///	Establece si todos los Components de la Entity estan activados
+	/// </summary>
+	/// <param name="_enabled">Nuevo estado de activacion de los Components</param>
+	FORGE_API void setEnabled(bool enabled);
 };
 #endif

@@ -21,7 +21,11 @@ public:
     
     FORGE_API ~Light();
 
-    FORGE_API void initComponent(ComponentData* data) override;
+    FORGE_API bool initComponent(ComponentData* data) override;
+
+    FORGE_API void onEnabled() override;
+
+    FORGE_API void onDisabled() override;
 
 	#pragma region setters
 	#pragma endregion

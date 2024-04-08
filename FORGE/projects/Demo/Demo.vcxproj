@@ -91,7 +91,7 @@
     <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
+    <ClInclude Include="..\..\src\Demo\TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin\Assets\assets.forge.lua" />

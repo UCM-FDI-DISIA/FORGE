@@ -28,6 +28,11 @@ public:
 	static const FORGE_API_VAR std::string id;
 
 	FORGE_API Transform();
+	
+	/// <summary>
+	/// Establece que el Tranform ha sido actualizado
+	/// </summary>
+	FORGE_API void onEnabled() override;
 
 	#pragma region setters
 	/// <summary>
@@ -41,20 +46,35 @@ public:
 	/// <param name="newRot">Nueva rotacion del Transform.</param>
 	FORGE_API void setRotation(forge::Vector3 const& newRot);
 	/// <summary>
-	/// Rota el transform en el eje x.
+	/// Rota el transform en el eje x (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="xRot">Rotacion a aplicar en el eje x.</param>
 	FORGE_API void rotateX(float xRot);
 	/// <summary>
-	/// Rota el transform en el eje y.
+	/// Rota el transform en el eje y (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="yRot">Rotacion a aplicar en el eje y.</param>
 	FORGE_API void rotateY(float yRot);
 	/// <summary>
-	/// Rota el transform en el eje z.
+	/// Rota el transform en el eje z (recibe el angulo en grados)
 	/// </summary>
 	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
 	FORGE_API void rotateZ(float zRot);
+	/// <summary>
+	/// Rota el transform en el eje x (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="xRot">Rotacion a aplicar en el eje x.</param>
+	FORGE_API void rotateXRad(float xRot);
+	/// <summary>
+	/// Rota el transform en el eje y (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="yRot">Rotacion a aplicar en el eje y.</param>
+	FORGE_API void rotateYRad(float yRot);
+	/// <summary>
+	/// Rota el transform en el eje z (recibe el angulo en radianes)
+	/// </summary>
+	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
+	FORGE_API void rotateZRad(float zRot);
 
 	/// <summary>
 	/// Establece la posicion del Transform.

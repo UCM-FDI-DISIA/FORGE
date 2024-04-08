@@ -72,10 +72,13 @@ float Quaternion::dot(const Quaternion& q) const {
 }
 
 Quaternion Quaternion::operator*(const Quaternion& q) const {
-	return Quaternion(w * q.x + x * q.w + y * q.z - z * q.y, 
-		w * q.y + y * q.w +	z * q.x - x * q.z, 
-		w * q.z + z * q.w + x * q.y - y * q.x,
-		w * q.w - x * q.x - y * q.y - z * q.z);
+	Quaternion p = Quaternion();
+	p.w = w * q.w - x * q.x - y * q.y - z * q.z;
+	p.x = w * q.x + x * q.w + y * q.z - z * q.y;
+	p.y = w * q.y + y * q.w + z * q.x - x * q.z;
+	p.z = w * q.z + z * q.w + x * q.y - y * q.x;
+	p.normalize();
+	return p;
 }
 
 Quaternion forge::Quaternion::operator*=(const Quaternion& q) {
@@ -134,6 +137,14 @@ Vector3 Quaternion::toEuler() const {
 	bank = atanf(result);
 
 	return Vector3(bank, pitch, heading);
+}
+
+void Quaternion::normalize() {
+	float num = sqrt(x * x + y * y + z * z + w * w);
+	x /= num;
+	y /= num;
+	z /= num;
+	w /= num;
 }
 
 #pragma region Setters
@@ -234,4 +245,4 @@ Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
 }
 #pragma endregion
 
-const Quaternion Quaternion::IDENTITY	(0.0f, 0.0f, 0.0f, 0.0f);
+const Quaternion Quaternion::IDENTITY	(0.0f, 0.0f, 0.0f, 1.0f);

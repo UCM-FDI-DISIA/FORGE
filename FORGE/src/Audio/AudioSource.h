@@ -33,7 +33,7 @@ public:
 	/// Se llama en la creacion del componente AudioSource
 	/// </summary>
 	/// <param name="data">Bloque con la informacion guardada para el componente</param>
-	FORGE_API void initComponent(ComponentData* data) override;
+	FORGE_API bool initComponent(ComponentData* data) override;
 	/// <summary>
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>

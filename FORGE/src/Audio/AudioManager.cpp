@@ -1,4 +1,5 @@
 #include "AudioManager.h"
+#include <iostream>
 #include <irrKlang.h>
 #include "Sound.h"
 #include "SoundGenerator.h"
@@ -6,14 +7,26 @@ using namespace irrklang;
 
 std::unique_ptr<AudioManager> AudioManager::instance = nullptr;
 
+bool AudioManager::initialised = false;
+
 AudioManager::AudioManager() :
 	engine(createIrrKlangDevice()),
 	isListenerOnScene(false) {
 }
 
-AudioManager* AudioManager::getInstance() {
-	if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<AudioManager>(new AudioManager())).get();
+bool AudioManager::Init() {
+	instance = std::unique_ptr<AudioManager>(new AudioManager());
+	if (instance.get()->engine != NULL) {
+		initialised = true;
+		return true;
+	}
+	std::cerr << "ERROR: no se pudo crear el dispositivo de irrKlang \n";
+	return false;
+}
+
+AudioManager* AudioManager::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
 }
 
 AudioManager::~AudioManager() {
@@ -32,7 +45,7 @@ void AudioManager::update() {
 	}
 }
 
-SoundGenerator* AudioManager::addSound(std::string name, std::string file) {
+SoundGenerator* AudioManager::addSound(std::string const& name, std::string const& file) {
 	ISoundSource* newSound = engine->addSoundSourceFromFile(file.c_str(), ESM_AUTO_DETECT , true);
 	if (newSound != NULL) {
 		SoundGenerator* s = new SoundGenerator(*engine, newSound);
@@ -42,7 +55,7 @@ SoundGenerator* AudioManager::addSound(std::string name, std::string file) {
 	return nullptr;
 }
 
-Sound* AudioManager::getSound(std::string name) {
+Sound* AudioManager::getSound(std::string const& name) {
 	auto s = soundLibrary.find(name);
 	if (s != soundLibrary.end()) {
 		Sound* snd = s->second->instanciate();
@@ -61,7 +74,7 @@ bool AudioManager::removeSound(Sound* sound) {
 }
 
 using namespace forge;
-void AudioManager::setListenerPosition(Vector3 position, Vector3 lookAt) {
+void AudioManager::setListenerPosition(Vector3 const& position, Vector3 const& lookAt) {
 	engine->setListenerPosition(position, lookAt, Vector3::ZERO, Vector3::UP);
 }
 

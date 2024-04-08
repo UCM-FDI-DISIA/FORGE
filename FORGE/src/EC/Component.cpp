@@ -18,11 +18,19 @@ void Component::setContext(Entity* _entity, Scene* _scene) {
     enabled = true;
 }
 
-void Component::initSerialized(ComponentData* data) {
-    serializer.initialize(*data);
+bool Component::initSerialized(ComponentData* data) {
+    try {
+        serializer.initialize(*data);
+        return true;
+    }
+    catch (std::exception e) {
+        std::cerr << "ERROR: Fallo en el serializado de lua\n";
+        return false;
+    }
+    
 }
 
-void Component::initComponent(ComponentData* data) {}
+bool Component::initComponent(ComponentData* data) { return true; }
 
 void Component::update() {}
 

@@ -11,7 +11,7 @@ const std::string AudioSource::id = "AudioSource";
 AudioSource::AudioSource() :
 	sound(nullptr),
 	transform(nullptr),
-	manager(*AudioManager::getInstance()),
+	manager(*AudioManager::GetInstance()),
 	playOnAwake(false),
 	offset(),
 	fullVolumeRadious(5.0f),
@@ -26,9 +26,15 @@ AudioSource::~AudioSource() {
 	manager.removeSound(sound);
 }
 
-void AudioSource::initComponent(ComponentData* data) {
+bool AudioSource::initComponent(ComponentData* data) {
 	sound = manager.getSound(data->get<std::string>("sound"));
-	transform = entity->getComponent<Transform>();
+	if(entity->hasComponent<Transform>()) {	
+		transform = entity->getComponent<Transform>();	
+	}
+	else {
+		std::cerr << "ERROR: Se necesita un componente Transform para generar un AudioSource\n";
+		return false;
+	}
 	if (data->has("volume")) {
 		sound->setVolume(data->get<float>("volume"));
 	}
@@ -44,6 +50,7 @@ void AudioSource::initComponent(ComponentData* data) {
 	if (playOnAwake) {
 		play();
 	}
+	return true;
 }
 
 void AudioSource::update() {

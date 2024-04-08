@@ -2,6 +2,8 @@
 #include "Serializer.h"
 using namespace forge;
 
+#define PI 3.14159265358979323846264338327950288
+
 void Transform::setParent(Transform* newParent) {
 	parent = newParent;
 }
@@ -19,6 +21,10 @@ Transform::Transform() :
 	serializer(scale, "scale");
 }
 
+void Transform::onEnabled() {
+	needsUpdate = true;
+}
+
 void Transform::setRotation(forge::Quaternion const& newRot) {
 	rotation = newRot;
 	needsUpdate = true;
@@ -30,16 +36,31 @@ void Transform::setRotation(forge::Vector3 const& newRot) {
 }
 
 void Transform::rotateX(float xRot) {
+	float rad = xRot * (float)PI / 180;
+	rotateXRad(rad);
+}
+
+void Transform::rotateY(float yRot) {
+	float rad = yRot * (float)PI / 180;
+	rotateYRad(rad);
+}
+
+void Transform::rotateZ(float zRot) {
+	float rad = zRot * (float)PI / 180;
+	rotateZRad(rad);
+}
+
+void Transform::rotateXRad(float xRot) {
 	rotation *= Quaternion(1, 0, 0, xRot);
 	needsUpdate = true;
 }
 
-void Transform::rotateY(float yRot) {
+void Transform::rotateYRad(float yRot) {
 	rotation *= Quaternion(0, 1, 0, yRot);
 	needsUpdate = true;
 }
 
-void Transform::rotateZ(float zRot) {
+void Transform::rotateZRad(float zRot) {
 	rotation *= Quaternion(0, 0, 1, zRot);
 	needsUpdate = true;
 }

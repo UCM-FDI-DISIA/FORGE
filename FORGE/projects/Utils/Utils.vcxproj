@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\Utils\Quaternion.cpp" />
     <ClCompile Include="..\..\src\Utils\TimeForge.cpp" />
+    <ClCompile Include="..\..\src\Utils\Random.cpp" />
     <ClCompile Include="..\..\src\Utils\Vector2.cpp" />
     <ClCompile Include="..\..\src\Utils\Vector3.cpp" />
   </ItemGroup>
@@ -102,6 +103,7 @@
     <ClInclude Include="..\..\src\Utils\ForgeImport.h" />
     <ClInclude Include="..\..\src\Utils\Quaternion.h" />
     <ClInclude Include="..\..\src\Utils\TimeForge.h" />
+    <ClInclude Include="..\..\src\Utils\Random.h" />
     <ClInclude Include="..\..\src\Utils\Vector2.h" />
     <ClInclude Include="..\..\src\Utils\Vector3.h" />
   </ItemGroup>

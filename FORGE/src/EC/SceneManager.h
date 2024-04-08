@@ -15,8 +15,9 @@ struct lua_State;
 class SceneManager {
 private:
     static std::unique_ptr<SceneManager> instance;
+	static bool initialised;
 
-	Scene* activeScene;
+	std::pair<std::string, Scene*> activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
 
 	std::unordered_map<std::string, EntityData*> entityBlueprints;
@@ -31,6 +32,16 @@ private:
 	Entity* addEntity(Scene* scene, EntityData* data);
 
 public:
+	/// <summary>
+	/// Crea una instancia del SceneManager
+	/// </summary>
+	/// <returns>Si la inicializacion fue correcta</returns>
+	static bool Init();
+	/// <summary>
+	/// Devuelve la instancia de SceneManager y si no existe devuelve un puntero a nulo
+	/// </summary>
+	/// <returns>Instancia singleton a SceneManager</returns>
+	static SceneManager* GetInstance();
 	/// <summary>
 	/// Destruye la instancia
 	/// </summary>
@@ -62,22 +73,22 @@ public:
 	/// <param name="renewScene">
 	/// Elimina la escena cargada en memoria y la crea de nuevo desde el blueprint
 	/// </param>
-	FORGE_API void changeScene(std::string scene, bool renewScene = false);
+	FORGE_API void changeScene(std::string const& scene, bool renewScene = false);
 	/// <summary>
 	/// Elimina una escena cargada en memoria
 	/// </summary>
 	/// <param name="id">Identificador de la escena</param>
-	FORGE_API void removeScene(std::string id);
+	FORGE_API void removeScene(std::string const& id);
 	/// <summary>
 	/// Crea una escena a partir de un blueprint
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <returns>La escena creada</returns>
-	FORGE_API Scene* createScene(std::string id);
+	FORGE_API Scene* createScene(std::string const& id);
 	/// <returns>
 	/// Una escena a partir de su Identificador
 	/// </returns>
-	FORGE_API Scene* getScene(std::string id);
+	FORGE_API Scene* getScene(std::string const& id);
 	/// <returns>
 	/// Cantidad total de grupos
 	/// </returns>
@@ -99,27 +110,27 @@ public:
 	/// </summary>
 	/// <param name="group">Nombre del grupo</param>
 	/// <returns>Id del grupo</returns>
-	FORGE_API int getGroupId(std::string group);
+	FORGE_API int getGroupId(std::string const& group);
 	/// <summary>
 	/// Agrega un blueprint de escena y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="scene">Blueprint de la escena</param>
-	FORGE_API void addSceneBlueprint(std::string id, std::vector<EntityData*> scene);
+	FORGE_API void addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene);
 	/// <summary>
 	/// Agrega un blueprint de entidad y lo mapea con su id
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="entity">Blueprint de la entidad</param>
-	FORGE_API void addEntityBlueprint(std::string id, EntityData* entity);
+	FORGE_API void addEntityBlueprint(std::string const& id, EntityData* entity);
 	/// <param name="id">Identificador del Blueprint de entidad </param>
 	/// <returns>Puntero al Blueprint de la entidad</returns>
-	FORGE_API EntityData* getEntityBlueprint(std::string id);
+	FORGE_API EntityData* getEntityBlueprint(std::string const& id);
 	/// <summary>
 	/// Guarda un nuevo grupo de entidades que no se haya guardado
 	/// </summary>
 	/// <param name="group">Identificador del grupo nuevo</param>
-	FORGE_API void addGroup(std::string group);
+	FORGE_API void addGroup(std::string const& group);
 
 };
 #endif // !SCENE_MANAGER_H_
