@@ -8,7 +8,19 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {-30, 0, 0}
+                    position = {0, -20, 0},
+                    scale = {0.25, 0.25, 0.25}
+                },
+                Animator = {
+ 		            mesh = "ninja.mesh",
+                    activeAnimations = {
+                       "Walk"
+                    }
+                },
+                TestComponent = 0,
+                AudioSource = {
+                    sound = "Test",
+                    playOnAwake = true
                 },
                 RigidBody = {
                     scale = {30, 30, 30},
@@ -18,6 +30,34 @@ local scenes = {
                     shapeType = "Sphere",
                     static = false
                 }
+            },
+            children = {
+                obstaculo = {
+                    group = "obstacle",
+                    components = {
+                        Transform = {
+                            position = {100, 0, -100},
+                            scale = {10, 10, 10}
+                        },
+                        ParticleSystem = {
+                            particle = "Examples/Smoke",
+                            emitting = true
+                        }
+                    }
+                }
+            }
+        },
+        cam = {
+            components = {
+                Transform = {
+                    position = {0, 0, 140}
+                },
+                Camera = {
+                    nearClipDistance = 1,
+                    autoAspectRatio = true,
+                    backgroundColor = {0.6, 0.3, 0.3}
+                },
+                AudioListener = 0
             }
         },
         rampa = {
@@ -33,42 +73,72 @@ local scenes = {
                 }
             }
         },
-        jugador2 = {
-            handler = "player2",
+        luz = {
             components = {
                 Transform = {
-                    position = {30, 0, 0}
+                    position = {20, 80, 0}
                 },
-                RigidBody = {
-                    scale = {30, 30, 30},
-                    mass = 1,
-                    friction = 5,
-                    restitution = 1,
-                    shapeType = "Sphere",
-                    static = false
+                Light = {
+                    type = 0 
+                }
+            }
+        }
+    },
+    Play = {
+        jugador = {
+            handler = "player",
+            components = {
+                Transform = {
+                    position = {0, 0, 0},
+                    scale = {0.25, 0.25, 0.25}
+                },
+                Animator = {
+ 		            mesh = "ninja.mesh",
+                    activeAnimations = {
+                       "Walk"
+                    }
+                },
+                TestComponent = 0,
+                AudioSource = {
+                    sound = "Test",
+                    playOnAwake = true
+                }
+            },
+        },
+        cartel = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {-100, 0, -100},
+                    scale = {10,10,10}
+                },
+                Billboard = {
+                    material = "practica1/points",
+                    billboardDimensions = {10,10}
                 }
             }
         },
-        rampa2 = {
-            handler = "rampa2",
+        cartel2 = {
+            group = "obstacle",
             components = {
                 Transform = {
-                    position = {30, -50, 0},
-                    rotation = {0, 0, 1, 3.14/6 }
+                    position = {100, 0, -100},
+                    scale = {10,10,10}
                 },
-                 Collider = {
-                    scale = {30, 10, 30},
-                    shapeType = "Cube"
+                Billboard = {
+                    size = 5,
+                    material = "practica1/points",
+                    billboardDimensions = {5,5},
+                    totalDimensions = {30,30,30}
                 }
             }
         },
         cam = {
             components = {
                 Transform = {
-                    position = {0, 0, 140}
+                    position = {0, 0, 70}
                 },
                 Camera = {
-                    name = "maincam",
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
@@ -81,8 +151,8 @@ local scenes = {
                     position = {20, 80, 0}
                 },
                 Light = {
-                    type = 0
-                }
+                    type = 0 
+                },
             }
         }
     }

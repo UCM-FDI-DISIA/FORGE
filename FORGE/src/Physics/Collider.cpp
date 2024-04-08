@@ -70,11 +70,7 @@ bool Collider::initComponent(ComponentData* data) {
     rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
     bodyTransform = entity->getComponent<Transform>();
-    if (bodyTransform == nullptr) {
-        // Si no existe transform, se coloca uno vacio
-        entity->addComponent("Transform");
-        bodyTransform = entity->getComponent<Transform>();
-    }
+
 
     myBody = rigidBody;
 
@@ -84,10 +80,15 @@ bool Collider::initComponent(ComponentData* data) {
 }
 
 void Collider::fixedUpdate() {
-    if (bodyTransform == nullptr) {
-        bodyTransform = entity->getComponent<Transform>();
-        forge::Vector3 pos = forge::Vector3(myBody->getWorldTransform().getOrigin());
+    if (bodyTransform != nullptr) {
+        btTransform aux;
+        myBody->getMotionState()->getWorldTransform(aux);
+        forge::Vector3 pos;
+        pos.setX(aux.getOrigin().x());
+        pos.setY(aux.getOrigin().y());
+        pos.setZ(aux.getOrigin().z());
         bodyTransform->setPosition(pos);
+
         forge::Quaternion quat = myBody->getOrientation();
         bodyTransform->setRotation(quat);
     }

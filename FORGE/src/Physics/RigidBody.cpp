@@ -58,11 +58,8 @@ bool RigidBody::initComponent(ComponentData* data) {
     Transform* aux = entity->getComponent<Transform>();
     forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
     forge::Vector3 forVect = forge::Vector3(0, 0, 0);
-    // En caso de que no se pueda acceder al transform, se usa un default
-    if (aux != nullptr) {
-        forQuat = aux->getRotation();
-        forVect = aux->getGlobalPosition();
-    }
+
+    bodyTransform = entity->getComponent<Transform>();
 
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
