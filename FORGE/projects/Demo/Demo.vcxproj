@@ -88,7 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Demo\ComponentRegistrier.cpp" />
-    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
+    <ClCompile Include="..\..\src\Demo\TestComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Demo\TestComponent.h" />

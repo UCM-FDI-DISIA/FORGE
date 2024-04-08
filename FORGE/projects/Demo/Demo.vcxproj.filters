@@ -15,11 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Demo\TestMovement.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Demo\ComponentRegistrier.cpp">
-          <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Demo\TestComponent.cpp">
       <Filter>Archivos de origen</Filter>
