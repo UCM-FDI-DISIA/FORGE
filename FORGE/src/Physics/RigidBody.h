@@ -25,6 +25,7 @@ private:
     float restitution;
     bool kinematic;
     bool staticBody;
+    std::vector<bool> axisBlocked;
 
 public:
     static const std::string id;
@@ -50,6 +51,23 @@ public:
     void clearForces();
 
     #pragma region setters
+
+    /// <summary>
+    /// Añade bloqueos para evitar movimiento en los ejes
+    /// </summary>
+    /// <param name="x :">True significa bloqueo en el eje</param>
+    /// <param name="y :">True significa bloqueo en el eje</param>
+    /// <param name="z :">True significa bloqueo en el eje</param>
+    void lockPosition(bool x, bool y, bool z);
+
+    /// <summary>
+    /// Añade bloqueos para evitar rotación en los ejes
+    /// </summary>
+    /// <param name="x :">True significa bloqueo en el eje</param>
+    /// <param name="y :">True significa bloqueo en el eje</param>
+    /// <param name="z :">True significa bloqueo en el eje</param>
+    void lockRotation(bool x, bool y, bool z);
+
     /// <summary>
     /// Cambia la friccion del objeto
     /// </summary>

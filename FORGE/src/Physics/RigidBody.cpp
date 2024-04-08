@@ -11,10 +11,12 @@ RigidBody::RigidBody() :
       mass(0)
     , kinematic(false), friction(0), restitution(0)
     , staticBody(false){
+    axisBlocked = std::vector<bool>(6, false);
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");
     serializer(staticBody, "static");
+    serializer(axisBlocked, "axisBlocked");
 }
 
 
@@ -89,6 +91,8 @@ bool RigidBody::initComponent(ComponentData* data) {
     physicsManager->registerBody(rigidBody, entity->getComponent<Transform>());
     myBody->setRestitution((btScalar)restitution);
     myBody->setFriction((btScalar)friction);
+    lockPosition(axisBlocked[0], axisBlocked[1], axisBlocked[2]);
+    lockRotation(axisBlocked[3], axisBlocked[4], axisBlocked[5]);
 
     return true;
 }
@@ -105,8 +109,25 @@ void RigidBody::clearForces() {
     myBody->clearForces();
 }
 
+void RigidBody::lockPosition(bool x, bool y, bool z) {
+    axisBlocked[0] = x;
+    axisBlocked[1] = y;
+    axisBlocked[2] = z;
+
+    btVector3 posConstr = btVector3(!axisBlocked[0], !axisBlocked[1], !axisBlocked[2]);
+    myBody->setLinearFactor(posConstr);
+}
+
+void RigidBody::lockRotation(bool x, bool y, bool z) {
+    axisBlocked[3] = x;
+    axisBlocked[4] = y;
+    axisBlocked[5] = z;
+
+    btVector3 rotConstr = btVector3(!axisBlocked[3], !axisBlocked[4], !axisBlocked[5]);
+    myBody->setAngularFactor(rotConstr);
+}
+
 void RigidBody::setFriction(float newFriction) {
-    
     friction = newFriction;
     myBody->setFriction(friction);
 }

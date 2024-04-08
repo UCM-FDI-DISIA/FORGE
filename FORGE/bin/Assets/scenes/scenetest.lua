@@ -16,7 +16,8 @@ local scenes = {
                     friction = 5,
                     restitution = 1,
                     shapeType = "Sphere",
-                    static = false
+                    static = false,
+                    axisBlocked = {true,false,false,false,false,true}
                 }
             }
         },

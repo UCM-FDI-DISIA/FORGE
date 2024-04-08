@@ -16,7 +16,6 @@
 #include "Camera.h"
 #include "PhysicsManager.h"
 #include "RigidBody.h"
-#include "Move.h"
 #include "Animator.h"
 
 #define FIXED_UPDATE_RATE 20
@@ -35,7 +34,6 @@ void factory() {
 	f.registerComponent<Camera>();
 	f.registerComponent<RigidBody>();
 	f.registerComponent<Collider>();
-	f.registerComponent<Move>();
 	f.registerComponent<AudioListener>();
 	f.registerComponent<Animator>();
 	f.registerComponent<AudioSource>();
