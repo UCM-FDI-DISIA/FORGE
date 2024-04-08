@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Entity.h"
 #include "AudioManager.h"
+#include "ForgeError.h"
 
 const std::string AudioListener::id = "AudioListener";
 
@@ -22,8 +23,7 @@ bool AudioListener::initComponent(ComponentData* data) {
 		transform = entity->getComponent<Transform>();  
 	}
 	else {
-        std::cerr << "ERROR: Se necesita un componente Transform para generar un AudioListener\n";
-		return false;
+        throwError(false, "Se necesita un componente Transform para generar un AudioListener");
 	}
     if (manager.getListenerOnScene()) {
         entity->removeComponent(this->id);

@@ -16,7 +16,7 @@ namespace forge {
 
 		Time();
 		static std::unique_ptr<Time> instance;
-		static Time* getInstance();
+		static Time* GetInstance();
 		/// <summary>
 		/// Inicializa el deltaTime
 		/// </summary>

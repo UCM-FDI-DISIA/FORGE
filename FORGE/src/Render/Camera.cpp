@@ -36,7 +36,7 @@ bool Camera::initComponent(ComponentData* data) {
 		ogreCamera = renderManager->addCameraNode(this);
     }
     else {
-        std::cerr << "ERROR: Se requiere un componente Transform para generar una Camera\n";
+        reportError("Se requiere un componente Transform para generar una Camera");
     }
     return ogreCamera != nullptr;
 }

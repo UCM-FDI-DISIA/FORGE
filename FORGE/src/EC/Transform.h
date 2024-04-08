@@ -28,7 +28,7 @@ public:
 	static const FORGE_API_VAR std::string id;
 
 	FORGE_API Transform();
-	
+	FORGE_API bool initComponent(ComponentData* data);
 	/// <summary>
 	/// Establece que el Tranform ha sido actualizado
 	/// </summary>

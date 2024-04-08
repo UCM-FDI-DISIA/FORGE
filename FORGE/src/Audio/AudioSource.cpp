@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "Entity.h"
 #include "Sound.h"
+#include "ForgeError.h"
 
 const std::string AudioSource::id = "AudioSource";
 
@@ -28,12 +29,12 @@ AudioSource::~AudioSource() {
 
 bool AudioSource::initComponent(ComponentData* data) {
 	sound = manager.getSound(data->get<std::string>("sound"));
+	if (sound == nullptr) {
+		throwError(false, "No se encontro el sonido asignado al AudioSource.");
+	}
+	// Si tiene Transform sera sonido espacial, si no sera sonido 2D
 	if(entity->hasComponent<Transform>()) {	
 		transform = entity->getComponent<Transform>();	
-	}
-	else {
-		std::cerr << "ERROR: Se necesita un componente Transform para generar un AudioSource\n";
-		return false;
 	}
 	if (data->has("volume")) {
 		sound->setVolume(data->get<float>("volume"));

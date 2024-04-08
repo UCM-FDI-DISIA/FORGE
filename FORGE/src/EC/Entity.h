@@ -113,7 +113,7 @@ public:
 	/// <returns>Booleano que indica si la Entity tiene el Component</returns>
 	template<class ComponentType>
 	FORGE_API inline bool hasComponent() {
-		return hasComponent(ComponentType::Id());
+		return hasComponent(ComponentType::id);
 	}
 	/// <returns>
 	/// El grupo al que pertenece la Entity
@@ -128,7 +128,7 @@ public:
 	/// </summary>
 	FORGE_API void fixedUpdate();
 	/// <summary>
-	///	Establece si todos los Components de la Entity estan activados
+	/// Establece si todos los Components de la Entity estan activados
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion de los Components</param>
 	FORGE_API void setEnabled(bool enabled);

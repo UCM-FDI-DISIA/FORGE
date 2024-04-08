@@ -7,6 +7,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Quaternion.h"
+#include "ForgeError.h"
 
 void LuaForge::importForgeClassesToLua() {
 	luabridge::getGlobalNamespace(lua)
@@ -46,9 +47,9 @@ lua_State* LuaForge::getState() const {
 bool LuaForge::doFile(std::string const& path) {
 	bool fileNotFound = luaL_dofile(lua, path.c_str());
 	if (fileNotFound) {
-		std::cerr << "ERROR: Archivo " << path << " no encontrado o contiene un error de sintaxis\n";
+		reportError("Archivo " << path << " no encontrado o contiene un error de sintaxis.");
 	}
-	return fileNotFound;
+	return !fileNotFound;
 }
 
 void LuaForge::importClassToLua(std::function<void(lua_State*)> classCreation) {

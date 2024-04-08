@@ -17,6 +17,9 @@
 #include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
+#include "Animator.h"
+#include "Billboard.h"
+#include "ParticleSystem.h"
 #include "AudioSource.h"
 #include "AudioListener.h"
 
@@ -168,7 +171,7 @@ bool LoadManager::loadAudio() {
 	if (audioRef.isNil() || !audioRef.isTable()) {
 		throwError(false, "No se encontro un bloque de audios a cargar.");
 	}
-	AudioManager& am = *AudioManager::getInstance();
+	AudioManager& am = *AudioManager::GetInstance();
 	for (auto&& audio : pairs(audioRef)) {
 		if (!audio.first.isString()) {
 			throwError(false, "Nombre de audio no valido.");
@@ -203,6 +206,9 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<Mesh>();
 	factory.registerComponent<Light>();
 	factory.registerComponent<Camera>();
+	factory.registerComponent<Animator>();
+	factory.registerComponent<Billboard>();
+	factory.registerComponent<ParticleSystem>();
 	factory.registerComponent<AudioSource>();
 	factory.registerComponent<AudioListener>();
 	return gameLoader->registerComponents(factory);
@@ -228,16 +234,15 @@ bool LoadManager::loadInitialScene(LuaRef const& config) {
 	if (!initScene.isString()) {
 		throwError(false, "No se proporciono una escena inicial o no es un string.");
 	}
-	sceneManager.changeScene(initScene.cast<std::string>());
-	return true;
+	return sceneManager.changeScene(initScene.cast<std::string>());
 }
 
 LoadManager::LoadManager() :
 	gameLoader(new GameLoader()),
 	luaForge(new LuaForge()),
-	sceneManager(*SceneManager::getInstance()),
-	renderManager(*RenderManager::getInstance()),
-	factory(*Factory::getInstance()) {
+	sceneManager(*SceneManager::GetInstance()),
+	renderManager(*RenderManager::GetInstance()),
+	factory(*Factory::GetInstance()) {
 }
 
 bool LoadManager::init(std::string const& configFile) {
@@ -262,7 +267,9 @@ bool LoadManager::init(std::string const& configFile) {
 	if (!loadScenes(config)) {
 		throwError(false, "No se pudieron cargar las escenas.");
 	}
-	renderManager.setup(gameName);
+	if (!renderManager.setup(gameName)) {
+		throwError(false, "No se pudo iniciar el sistema de renderizado.");
+	}
 	if (!loadInitialScene(config)) {
 		throwError(false, "No se pudo cargar la escena inicial.");
 	}

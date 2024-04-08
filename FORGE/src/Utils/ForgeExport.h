@@ -4,23 +4,23 @@
 
 #ifdef _FORGE
 /// <summary>
-/// Macro que marca las funciones exporta el motor
+/// Macro que marca las funciones que exporta el motor
 /// </summary>
 #define FORGE_API __declspec(dllexport)
 #else
 /// <summary>
-/// Macro que marca las funciones exporta el motor
+/// Macro que marca las funciones que exporta el motor
 /// </summary>
 #define FORGE_API
 #endif
 #ifdef _FORGE
 /// <summary>
-/// Macro que marca las variables exporta el motor
+/// Macro que marca las variables que exporta el motor
 /// </summary>
 #define FORGE_API_VAR __declspec(dllexport)
 #else
 /// <summary>
-/// Macro que marca las variables exporta el motor
+/// Macro que marca las variables que exporta el motor
 /// </summary>
 #define FORGE_API_VAR __declspec(dllimport)
 #endif

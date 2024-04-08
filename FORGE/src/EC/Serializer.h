@@ -74,7 +74,7 @@ private:
 		template<>
 		inline void handle_initialize(float& var) {
 			if (std::isinf(var)) {
-				std::cerr << "ERROR: Variable " << name << " con valor infinito. Seteado a 0" << std::endl;
+				reportError("Variable " << name << " con valor infinito. Asignado a 0.");
 				var = 0.0f;
 			}
 		}

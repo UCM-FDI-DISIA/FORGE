@@ -1,8 +1,14 @@
 #include "Animator.h"
 #include "Serializer.h"
 #include "Entity.h"
-#include "OgreAnimation.h"
-#include "OgreEntity.h"
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
+#include <OgreAnimation.h>
+#include <OgreEntity.h>
+#pragma warning(pop)
 
 const std::string Animator::id = "Animator";
 
@@ -24,18 +30,16 @@ bool Animator::initComponent(ComponentData* data) {
 					++it;
 				}
 				else {
-					std::cout << "ERROR: No se ha encontrado la animacion " << *it << " en el modelo " << mesh << std::endl;
+					reportError("No se ha encontrado la animacion " << *it << " en el modelo " << mesh);
 					it = activeAnimations.erase(it);
 				}
 			}
 			return true;
 		}
 		activeAnimations.clear();
-		std::cerr << "ERROR: No se ha podido inicializar el componente Animator\n";
-		return false;
+		throwError(false, "El mesh \"" << mesh << "\" no contenia animaciones.No se ha podido inicializar el componente Animator.");
 	}
-	std::cerr << "ERROR: No se ha podido inicializar el componente Mesh\n";
-	return false;
+	throwError(false, "No se ha podido inicializar el componente Animator.");
 }
 
 void Animator::onEnabled() {
@@ -48,14 +52,14 @@ void Animator::onEnabled() {
 				++it;
 			}
 			else {
-				std::cout << "ERROR: No se ha encontrado la animacion " << *it << " en el modelo " << mesh << std::endl;
+				reportError("No se ha encontrado la animacion " << *it << " en el modelo \"" << mesh << "\"");
 				it = activeAnimations.erase(it);
 			}
 		}
 	}
 	else {
 		activeAnimations.clear();
-		std::cerr << "ERROR: No se ha podido inicializar el componente Animator\n";
+		reportError("El mesh \"" << mesh << "\" no contenia animaciones.No se ha podido inicializar el componente Animator.");
 	}
 }
 
@@ -123,7 +127,7 @@ std::vector<std::string> Animator::getAnimations() const {
 	return animations;
 }
 
-const std::unordered_set<std::string>& Animator::getActiveAnimations() const {
+std::unordered_set<std::string> const& Animator::getActiveAnimations() const {
 	return activeAnimations;
 }
 

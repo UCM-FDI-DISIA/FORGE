@@ -59,7 +59,7 @@ public:
 	/// Crea una instancia del RenderManager
 	/// </summary>
 	/// <returns>Si la inicializacion fue correcta</returns>
-	static bool Init(std::string const& appName);
+	static void Init();
 	/// <returns>Devuelve una instancia al RenderManager si existe, si no existe devuelve un puntero a nulo</returns>
 	static RenderManager* GetInstance();
 	/// <summary>

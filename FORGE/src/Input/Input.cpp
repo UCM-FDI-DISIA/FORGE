@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 std::unique_ptr<Input> Input::instance = nullptr;
-bool Input::initialised = false;
+bool Input::initialized = false;
 
 void Input::onMouseMotion(const SDL_Event& event) {
 	mousePos.set(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
@@ -110,13 +110,13 @@ Input::Input() :
 	#undef UINT
 	keyboardState(SDL_GetKeyboardState(0)) {
 	setDefaultState();
-	SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 }
 
 bool Input::Init() {
 	try {
 		instance = std::unique_ptr<Input>(new Input());
-		initialised = true;
+		initialized = true;
+		SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 		return true;
 	}
 	catch (std::exception e) {
@@ -126,7 +126,7 @@ bool Input::Init() {
 }
 
 Input* Input::GetInstance() {
-	if (initialised) return instance.get();
+	if (initialized) return instance.get();
 	return nullptr;
 }
 

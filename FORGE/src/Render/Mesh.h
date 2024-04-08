@@ -1,9 +1,7 @@
 #pragma once
 #ifndef MESH_H_
 #define MESH_H_
-#include <Component.h>
-#include <string>
-#include "ForgeExport.h"
+#include "Component.h"
 
 class RenderManager;
 namespace Ogre {

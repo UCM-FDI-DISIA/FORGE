@@ -22,9 +22,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utils", "projects\Utils\Utils.vcxproj", "{8087E473-2FBF-46FC-BA2E-801DDBFA00F7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Demo", "projects\Demo\Demo.vcxproj", "{AF1FE739-E187-408F-8B07-64558E47EA2A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4EF5FD19-2C0E-47A0-B8FF-A921240FF6AA} = {4EF5FD19-2C0E-47A0-B8FF-A921240FF6AA}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -36,7 +36,7 @@ public:
 	/// Crea una instancia del SceneManager
 	/// </summary>
 	/// <returns>Si la inicializacion fue correcta</returns>
-	FORGE_API static bool Init();
+	FORGE_API static void Init();
 	/// <summary>
 	/// Devuelve la instancia de SceneManager y si no existe devuelve un puntero a nulo
 	/// </summary>
@@ -68,7 +68,7 @@ public:
 	/// <param name="renewScene">
 	/// Elimina la escena cargada en memoria y la crea de nuevo desde el blueprint
 	/// </param>
-	FORGE_API void changeScene(std::string const& scene, bool renewScene = false);
+	FORGE_API bool changeScene(std::string const& scene, bool renewScene = false);
 	/// <summary>
 	/// Elimina una escena cargada en memoria
 	/// </summary>

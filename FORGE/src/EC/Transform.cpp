@@ -21,6 +21,22 @@ Transform::Transform() :
 	serializer(scale, "scale");
 }
 
+FORGE_API bool Transform::initComponent(ComponentData* data) {
+	if (scale.getX() == 0.0f) {
+		scale.setX(1.0f);
+		reportError("El valor en la X de la escala no puede ser 0. Asignado a 1.");
+	}
+	if (scale.getY() == 0.0f) {
+		scale.setY(1.0f);
+		reportError("El valor en la Y de la escala no puede ser 0. Asignado a 1.");
+	}
+	if (scale.getZ() == 0.0f) {
+		scale.setZ(1.0f);
+		reportError("El valor en la Z de la escala no puede ser 0. Asignado a 1.");
+	}
+	return true;
+}
+
 void Transform::onEnabled() {
 	needsUpdate = true;
 }

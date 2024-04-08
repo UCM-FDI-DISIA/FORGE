@@ -11,8 +11,7 @@
 #include "PhysicsManager.h"
 #include "UIManager.h"
 */
-
-#include <iostream>
+#include "ForgeError.h"
 
 using namespace forge;
 
@@ -24,7 +23,7 @@ MainForge::MainForge() :
 	isRunning(false),
 	finished(false),
 	fixedUpdateTimer(0.0),
-	time(*Time::getInstance()),
+	time(*Time::GetInstance()),
 	renderManager(*RenderManager::GetInstance()),
 	sceneManager(*SceneManager::GetInstance()),
 	inputManager(*Input::GetInstance()),
@@ -81,8 +80,8 @@ void MainForge::mainLoop() {
 		manageFixedUpdates();
 		update();
 		if (!render()) {
-			std::cerr << "Could not render." << std::endl;
-			break;
+			reportError("No se pudo renderizar el juego.");
+			Exit();
 		}
 		
 		if (inputManager.isWindowClosed()) {
@@ -96,6 +95,14 @@ void MainForge::mainLoop() {
 
 bool MainForge::Init(std::string const& configPath) {
 	if (!initialized) {
+		if (!AudioManager::Init()) {
+			throwError(false, "No se pudo iniciar el sistema de audio.");
+		}
+		RenderManager::Init();
+		SceneManager::Init();
+		if (!Input::Init()) {
+			throwError(false, "No se pudo iniciar el sistema de entrada.");
+		}
 		if (instance == nullptr) instance = std::unique_ptr<MainForge>(new MainForge());
 		return instance->init(configPath);
 	}

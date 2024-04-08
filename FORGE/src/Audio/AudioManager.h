@@ -23,11 +23,12 @@ private:
 	std::unordered_map<std::string, SoundGenerator*> soundLibrary;
 	std::unordered_set<Sound*> currentSounds;
 	bool isListenerOnScene;
+	static std::unique_ptr<AudioManager> instance;
+	static bool initialized;
 	/// <summary>
 	/// Inicializa el sistema de audio
 	/// </summary>
 	AudioManager();
-	static std::unique_ptr<AudioManager> instance;
 public:
 	/// <summary>
 	/// Crea una instancia del AudioManager

@@ -7,7 +7,7 @@ forge::Time::Time() :
 	previous() {
 }
 
-forge::Time* forge::Time::getInstance() {
+forge::Time* forge::Time::GetInstance() {
 	if (instance != nullptr) return instance.get();
 	return (instance = std::unique_ptr<forge::Time>(new forge::Time())).get();
 }
