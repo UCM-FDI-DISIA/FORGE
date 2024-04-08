@@ -11,8 +11,7 @@ namespace forge {
     class Vector3;
 };
 
-class PhysicsManager
-{
+class PhysicsManager {
 private:
 	static std::unique_ptr<PhysicsManager> instance;
     btBroadphaseInterface* broadphase;
@@ -30,9 +29,10 @@ private:
     /// </summary>
     PhysicsManager();
 
-
 public:
-    
+    /// <summary>
+    /// Destructora del physics manager.
+    /// </summary>
     ~PhysicsManager();
 
     /// <summary>
@@ -70,27 +70,23 @@ public:
     /// <param name="transform">El transform asociado al btRigidbody</param>
     void registerBody(btRigidBody* body, Transform* transform);
     /// <summary>
-  /// Registra una instancia de rigidBody y la guarda en un mapa por nombre
-  /// </summary>
+    /// Registra una instancia de rigidBody y la guarda en un mapa por nombre
+    /// </summary>
     void createImportantBody(RigidBody* body, std::string name);
     /// <summary>
-   /// Borra un rigidBody
-   /// </summary>
+    /// Borra un rigidBody
+    /// </summary>
     void deleteBody(btRigidBody* body);
     /// <summary>
-   /// Activa o desactiva la visibilidad de cuerpos
-   /// </summary>
-   /// @param enabled Sirve para activar o desactivar el mundo fisico
-    inline void setDebug(bool enabled) {
-        debugMode = enabled;
-    }
+    /// Activa o desactiva la visibilidad de cuerpos
+    /// </summary>
+    /// @param enabled Sirve para activar o desactivar el mundo fisico
+    void setDebug(bool enabled);
 
     /// <summary>
     /// Devuelve si el modo depuracion esta activo
     /// </summary>
     /// <returns>Si el modo depuracion esta activo</returns>
-    bool isDebugModeEnabled() {
-        return debugMode;
-    }
+    bool isDebugModeEnabled();
 };
 

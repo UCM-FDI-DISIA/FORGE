@@ -158,14 +158,14 @@ namespace forge {
 		Vector3 operator/(float d) const;
 
 		/// <summary>
-		/// Multiplicaci�n por componentes (Hadamard)
+		/// Multiplicacion por componentes (Hadamard)
 		/// </summary>
 		/// <param name="w">Vector producto</param>
 		/// <returns>El vector resultante</returns>
 		Vector3 operator*(const Vector3& w) const;
 
 		/// <summary>
-		/// Multiplicaci�n por componentes (Hadamard) y asignacion
+		/// Multiplicacion por componentes (Hadamard) y asignacion
 		/// </summary>
 		/// <param name="w">Vector producto</param>
 		/// <returns>El vector actualizado (resultante de la operacion de V y W)</returns>

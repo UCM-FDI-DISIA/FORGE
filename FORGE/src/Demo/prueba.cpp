@@ -45,57 +45,53 @@ void factory() {
 int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
-if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init())
-{
+	
+	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init()){
 
-	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
-	RenderManager& render = *RenderManager::GetInstance();
-    SceneManager& sceneManager = *SceneManager::GetInstance();
-	PhysicsManager& phyisicsManager = *PhysicsManager::GetInstance();
-	phyisicsManager.initPhysics();
+		LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
+		RenderManager& render = *RenderManager::GetInstance();
+		SceneManager& sceneManager = *SceneManager::GetInstance();
+		PhysicsManager& phyisicsManager = *PhysicsManager::GetInstance();
+		phyisicsManager.initPhysics();
 
+		Input& input = *Input::GetInstance();
+		AudioManager& ad = *AudioManager::GetInstance();
+		sceneManager.changeScene("Test");
 
-    Input& input = *Input::GetInstance();
-	AudioManager& ad = *AudioManager::GetInstance();
-    sceneManager.changeScene("Test");
+		double deltaTime = 0;
+		double fixedUpdateTimer = 0;
 
-	double deltaTime = 0;
-	double fixedUpdateTimer = 0;
-
-    while (!input.keyUp(K_ESC)) {
-		double start = SDL_GetTicks();
-        input.refresh();
-        input.update();
-        if (!sceneManager.update()) {
+		while (!input.keyUp(K_ESC)) {
+			double start = SDL_GetTicks();
+		    input.refresh();
+		    input.update();
+		    if (!sceneManager.update()) {
+					break;
+				}
+			sceneManager.refresh();
+			ad.update();
+		    if(!render.render())
 				break;
+			else {
+				if (phyisicsManager.isDebugModeEnabled())
+					phyisicsManager.drawDebug();
 			}
-		sceneManager.refresh();
-		ad.update();
-        if(!render.render())
-			break;
-		else {
-			if (phyisicsManager.isDebugModeEnabled())
-				phyisicsManager.drawDebug();
+
+			double end = SDL_GetTicks();
+			deltaTime = end - start;
+
+			fixedUpdateTimer += deltaTime;
+
+			while (fixedUpdateTimer >= FIXED_UPDATE_RATE) {
+				sceneManager.fixedUpdate();
+				phyisicsManager.updatePhysics();
+				fixedUpdateTimer -= FIXED_UPDATE_RATE;
+			}
 		}
-
-		double end = SDL_GetTicks();
-		deltaTime = end - start;
-
-		fixedUpdateTimer += deltaTime;
-
-		while (fixedUpdateTimer >= FIXED_UPDATE_RATE) {
-			sceneManager.fixedUpdate();
-			phyisicsManager.updatePhysics();
-			fixedUpdateTimer -= FIXED_UPDATE_RATE;
-		}
-    }
-	sceneManager.cleanUp();
-	delete loadManager;
-}
+		sceneManager.cleanUp();
+		delete loadManager;
+	}
 
 	//delete render.getInstance();
-
-
-
 	return 0;
 }

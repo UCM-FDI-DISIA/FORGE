@@ -4,15 +4,18 @@ class RigidBody;
 class Move : public Component {
 public:
 	static const std::string id;	
+	
 	/// <summary>
 	/// Constructora por defecto del component Move
 	/// </summary>
 	Move();
+	
 	/// <summary>
 	/// Se llama en la creacion del componente Move
 	/// </summary>
 	/// <param name="data">Bloque con la informacion guardada para el componente</param>
 	bool initComponent(ComponentData* data) override;
+	
 	/// <summary>
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>

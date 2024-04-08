@@ -9,13 +9,11 @@ class PhysicsManager;
 class btRigidBody;
 class btCollisionShape;
 
-enum collisionShape
-{
+enum collisionShape {
     ballShape, boxShape , capsuleShape, cilinderShape, planeShape
 };
 namespace forge {
     class Vector3;
-    
 };
 
 class RigidBody : public Component {
@@ -49,12 +47,27 @@ public:
 
     virtual void fixedUpdate();
 
+    /// <summary>
+    /// Metodo para aplicar fuerzas a un rigidbody
+    /// </summary>
+    /// <param name="force: ">Fuerza en vector 3 a aplicar al objeto</param>
     void applyForce(forge::Vector3 force);
 
+    /// <summary>
+    /// Metodo para aplicar la gravedad a un objeto
+    /// </summary>
     void applyGravity();
 
+    /// <summary>
+    /// Limpia las fuerzas aplicadas al objeto, devolviendolo a un estado sin fuerzas aplicadas
+    /// </summary>
     void clearForces();
 
+    /// <summary>
+    /// Metodo para comprobar si han colisionado dos rigidbodies
+    /// </summary>
+    /// <param name="other: ">EL otro RigidBody con el que colisiona</param>
+    /// <returns>Devuelve true si ha colisionado con otro RigidBody, false en el caso contrario</returns>
     bool hasCollidedWith(RigidBody* other);
 
     /// <summary>
@@ -104,7 +117,7 @@ public:
     void setTrigger(bool isTrigger);
     #pragma endregion
 
-    #pragma region setters
+    #pragma region getters
     /// <summary>
   /// Devuelve la masa del objeto
   /// </summary>

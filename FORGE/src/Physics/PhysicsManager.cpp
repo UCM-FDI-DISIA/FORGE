@@ -13,7 +13,6 @@
 
 std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
 
-
 PhysicsManager::PhysicsManager() {
     broadphase = nullptr;
     collisionConfiguration = nullptr;
@@ -25,20 +24,12 @@ PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
-    
     if(debugger!=nullptr)delete debugger;
-    
     delete world;
-
     delete solver;
-
     delete dispatcher;
-
     delete collisionConfiguration;
-
     delete broadphase;
-    
-
 }
 
 
@@ -56,7 +47,6 @@ void PhysicsManager::initPhysics() {
     world->setDebugDrawer(debugger);
 
     world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
-    
 }
 
 void PhysicsManager::drawDebug() {
@@ -131,4 +121,12 @@ void  PhysicsManager::deleteBody(btRigidBody* body) {
     delete(*auxTransform).first->getCollisionShape();
     delete (*auxTransform).first;
     transforms.erase(auxTransform);
+}
+
+void PhysicsManager::setDebug(bool enabled) {
+    debugMode = enabled;
+}
+
+bool PhysicsManager::isDebugModeEnabled() {
+    return debugMode;
 }

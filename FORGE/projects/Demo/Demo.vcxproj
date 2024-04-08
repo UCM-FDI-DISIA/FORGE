@@ -138,13 +138,13 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="..\..\src\Demo\prueba.cpp" />
+    <ClCompile Include="..\..\src\Demo\TestComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Demo\Move.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="..\..\src\Demo\prueba.h" />
     <None Include="..\..\bin\Assets\assets.forge.lua" />
     <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
   </ItemGroup>
