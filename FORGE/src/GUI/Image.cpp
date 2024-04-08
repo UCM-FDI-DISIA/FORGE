@@ -11,9 +11,8 @@ Image::Image(const char* imgId, const std::string fileName, SDL_GLContext render
 		printf("Error loading image: %s\n", SDL_GetError());
 	}
 
-	GLuint textureID;
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, surface->pixels);
 
 	//SDL_FreeSurface(surface);
@@ -25,7 +24,8 @@ Image::Image(const char* imgId, const std::string fileName, SDL_GLContext render
 }
 
 Image::~Image() {
-	// Esto da error y no debería, hay que revisarlo porque probablemente deja basura
+	
+	glDeleteTextures(1, &texture);
 	SDL_FreeSurface(surface);
 }
 
@@ -40,7 +40,7 @@ bool Image::update() {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(windowName, NULL, window_flags);
 
-	ImGui::Image((void*) texture,imageSize);
+	ImGui::Image((void*)(intptr_t)texture,imageSize);
 	
 	ImGui::PopStyleVar();
 	ImGui::End();
@@ -59,7 +59,7 @@ forge::Vector2 Image::getSourceSize() {
 	return sourceSize;
 }
 
-SDL_Texture* Image::getTexture() {
+GLuint Image::getTexture() {
 	return texture;
 }
 

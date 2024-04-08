@@ -14,7 +14,7 @@ private:
 	static const std::string id;
 
 protected:
-	SDL_Texture* texture;
+	GLuint texture;
 
 	forge::Vector2 sourceSize;
 	forge::Vector2 imageSize;
@@ -61,9 +61,9 @@ public:
 	forge::Vector2 getSourceSize();
 
 	/// <summary>
-	/// Devuelve la textura de SDL
+	/// Devuelve la textura de OpenGL
 	/// </summary>	
-	SDL_Texture* getTexture();
+	GLuint getTexture();
 
 	/// <summary>
 	/// Devuelve el ancho de la imagen original

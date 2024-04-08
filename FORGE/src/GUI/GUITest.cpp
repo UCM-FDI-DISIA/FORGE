@@ -111,9 +111,9 @@ int main() {
     //ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, funcionImg, forge::Vector2(632, 144));
     //imgb->setPosition(forge::Vector2(550, 250));
     ////imgb->setSize(forge::Vector2(300, 300));
-    //ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, funcionImg, forge::Vector2(632, 144));
-    //imgb2->setPosition(forge::Vector2(550, 450));
-    //imgb2->setSize(forge::Vector2(300, 300));
+    /*ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, funcionImg, forge::Vector2(632, 144));
+    imgb2->setPosition(forge::Vector2(550, 450));
+    imgb2->setSize(forge::Vector2(300, 300));*/
     // --- INPUTTEXT ---
     InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 600));
     InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 660));

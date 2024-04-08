@@ -63,7 +63,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2d.lib;SDL2_image.lib;ImGui_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2d.lib;SDL2_image.lib;ImGui_d.lib;opengl32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\SDL2\build\$(Platform)\$(Configuration);$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)src\Render;$(SolutionDir)dependencies\ImGUI\build\x64\Debug;$(SolutionDir)dependencies\ImGUI\src;$(SolutionDir)dependencies\SDL2\build\$(Platfrom)\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\$(Platfrom)\include-config-$(Configuration)\SDL2;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)Dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
