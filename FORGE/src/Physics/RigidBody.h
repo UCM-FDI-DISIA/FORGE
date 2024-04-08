@@ -4,6 +4,7 @@
 #include <Component.h>
 #include <string>
 #include<Vector3.h>
+#include "Collider.h"
 
 class PhysicsManager;
 class btRigidBody;
@@ -16,36 +17,21 @@ namespace forge {
     class Vector3;
 };
 
-class RigidBody : public Component {
+class RigidBody : public Collider {
 
-    using CollisionCallback = void(*)(RigidBody* self, RigidBody* other); // Cualquier función que implique dos cuerpos
 private:
-    PhysicsManager* physicsManager;
     float mass;
     float friction;
     float restitution;
     bool kinematic;
     bool staticBody;
-    bool trigger;
-    btRigidBody* myBody;
-    btCollisionShape* myShape;
-    collisionShape shapeType;
-    forge::Vector3 myScale;
-    std::vector<CollisionCallback> collisionCallbacks;
 
-    btRigidBody* getBody();
-
-    
 public:
     static const std::string id;
 
     RigidBody();
 
-    ~RigidBody();
-
     bool initComponent(ComponentData* data) override;
-
-    virtual void fixedUpdate();
 
     /// <summary>
     /// Metodo para aplicar fuerzas a un rigidbody
@@ -63,23 +49,6 @@ public:
     /// </summary>
     void clearForces();
 
-    /// <summary>
-    /// Metodo para comprobar si han colisionado dos rigidbodies
-    /// </summary>
-    /// <param name="other: ">EL otro RigidBody con el que colisiona</param>
-    /// <returns>Devuelve true si ha colisionado con otro RigidBody, false en el caso contrario</returns>
-    bool hasCollidedWith(RigidBody* other);
-
-    /// <summary>
-    /// Registra un nuevo callback de colision
-    /// </summary>
-    void registerCallback(CollisionCallback callback);
-
-    /// <summary>
-    /// Maneja las colisiones con otros cuerpos rigidos
-    /// </summary>
-    /// <param name="other"></param>
-    void onCollision(Entity* other);
     #pragma region setters
     /// <summary>
     /// Cambia la friccion del objeto
@@ -109,12 +78,6 @@ public:
     /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
     /// <param name="height">Altura nueva par ala capsula</param>
     void setRigidScale(float radius, float height);
-
-    /// <summary>
-    /// Activa y desactiva la funcion de trigger
-    /// </summary>
-    /// <param name="isTrigger">True si el cuerpo pasara a ser un trigger</param>
-    void setTrigger(bool isTrigger);
     #pragma endregion
 
     #pragma region getters
@@ -143,11 +106,6 @@ public:
     /// Devuelve true si es un objeto estatico
     /// </summary>
     bool isStatic();
-
-    /// <summary>
-    /// Devuelve true si es un objeto que detecta colisiones pero no choca
-    /// </summary>
-    bool isTrigger();
 
     /// <summary>
     /// Devuelve el shape del objeto

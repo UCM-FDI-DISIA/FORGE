@@ -85,9 +85,19 @@ void PhysicsManager::handleCollisions() {
             auto auxTransformA = transforms.find((btRigidBody*)obA);
             auto auxTransformB = transforms.find((btRigidBody*)obB);
             if (auxTransformA != transforms.end() && auxTransformB != transforms.end()) {
-                auxTransformA->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformB->second->getEntity());
+                if (auxTransformA->second->getEntity()->hasComponent("Collider")) {
+                    auxTransformA->second->getEntity()->getComponent<Collider>()->onCollision(auxTransformB->second->getEntity());
+                }
+                else {
+                    auxTransformA->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformB->second->getEntity());
+                }
 
-                auxTransformB->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformA->second->getEntity());
+                if (auxTransformB->second->getEntity()->hasComponent("Collider")) {
+                    auxTransformB->second->getEntity()->getComponent<Collider>()->onCollision(auxTransformA->second->getEntity());
+                }
+                else {
+                    auxTransformB->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformB->second->getEntity());
+                }
             }
         }
     }

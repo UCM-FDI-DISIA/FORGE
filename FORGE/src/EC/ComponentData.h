@@ -169,7 +169,7 @@ public:
     forge::Quaternion get<forge::Quaternion>(std::string const& param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
         forge::Quaternion quaternion = forge::Quaternion();
-        if (input.size() <= 3) {
+        if (input.size() <= 4) {
             if (std::isinf(input[0]) || input.size() == 0) {    
                 input[0] = 0.0f;
                 std::cerr << "ERROR: Valor del parametro 0 del Quaternion infinito o inexistente. Seteado a 0\n";  
@@ -188,7 +188,7 @@ public:
             }
         }
         else {
-            std::cerr << "ERROR: Quaternion con mas de 3 parametros. Devolviendo los 4 primeros parametros\n";
+            std::cerr << "ERROR: Quaternion con mas de 4 parametros. Devolviendo los 4 primeros parametros\n";
         }
         quaternion = forge::Quaternion(input[0], input[1], input[2], input[3]); 
         return quaternion;

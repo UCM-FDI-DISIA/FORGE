@@ -8,21 +8,15 @@
 const std::string RigidBody::id = "RigidBody";
 
 RigidBody::RigidBody() :
-    physicsManager(nullptr), mass(0)
-    , kinematic(false), myBody(nullptr) 
-    , myShape(nullptr), friction(0), restitution(0)
-    , shapeType(boxShape), staticBody(false), trigger(false) {
-    serializer(myScale, "scale");
+      mass(0)
+    , kinematic(false), friction(0), restitution(0)
+    , staticBody(false){
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");
     serializer(staticBody, "static");
-    serializer(trigger, "trigger");
 }
 
-RigidBody::~RigidBody() {
-    physicsManager->deleteBody(myBody);
-}
 
 bool RigidBody::initComponent(ComponentData* data) {
     std::string myShapeType;
@@ -98,16 +92,6 @@ bool RigidBody::initComponent(ComponentData* data) {
     return true;
 }
 
-void RigidBody::fixedUpdate() {
-    if (entity->hasComponent("Transform")) {
-        Transform* transform = entity->getComponent<Transform>();
-        forge::Vector3 pos = forge::Vector3(myBody->getWorldTransform().getOrigin());
-        transform->setPosition(pos);
-        forge::Quaternion quat = myBody->getOrientation();
-        transform->setRotation(quat);
-    }
-}
-
 void RigidBody::applyForce(forge::Vector3 force) {
     myBody->applyCentralForce({force.getX(), force.getY(), force.getZ()});
 }
@@ -118,14 +102,6 @@ void RigidBody::applyGravity() {
 
 void RigidBody::clearForces() {
     myBody->clearForces();
-}
-
-bool RigidBody::hasCollidedWith(RigidBody* other) {
-    return myBody->checkCollideWith(other->getBody());
-}
-
-void RigidBody::registerCallback(CollisionCallback callback) {
-    collisionCallbacks.push_back(callback);
 }
 
 void RigidBody::setFriction(float newFriction) {
@@ -192,34 +168,10 @@ bool RigidBody::isStatic() {
     return staticBody;
 }
 
-bool RigidBody::isTrigger() {
-    return trigger;
-}
-
-void RigidBody::setTrigger(bool isTrigger) {
-    trigger = isTrigger;
-    if (trigger) {
-        myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-    }
-    else {
-        myBody->setCollisionFlags(myBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
-    }
-}
-
 btCollisionShape* RigidBody::getShape() {
     return myShape;
 }
 
 forge::Vector3 RigidBody::getRigidScale() {
     return myScale;
-}
-
-btRigidBody* RigidBody::getBody(){
-    return myBody;
-}
-
-void RigidBody::onCollision(Entity* other) {
-    for (auto cb : collisionCallbacks) {
-        cb(this, other->getComponent<RigidBody>());
-    }
 }

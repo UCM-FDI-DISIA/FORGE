@@ -34,6 +34,7 @@ void factory() {
 	f.registerComponent<Light>();
 	f.registerComponent<Camera>();
 	f.registerComponent<RigidBody>();
+	f.registerComponent<Collider>();
 	f.registerComponent<Move>();
 	f.registerComponent<AudioListener>();
 	f.registerComponent<Animator>();
