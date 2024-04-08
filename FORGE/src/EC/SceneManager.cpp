@@ -172,7 +172,7 @@ bool SceneManager::update() {
 }
 
 void SceneManager::fixedUpdate() {
-	activeScene->fixedUpdate();
+	activeScene.second->fixedUpdate();
 }
 
 void SceneManager::refresh() {

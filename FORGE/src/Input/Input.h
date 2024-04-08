@@ -203,7 +203,7 @@ public:
 	/// Devuelve la instancia del input y, si no existe, la crea
 	/// </summary>
 	/// <returns>Instancia singleton del Input</returns>
-	static FORGE_API Input* getInstance();
+	static FORGE_API Input* GetInstance();
 
 	/// <summary>
 	/// Lee los eventos y llama a los metodos correspondientes de cada uno de ellos

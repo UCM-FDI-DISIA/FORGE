@@ -36,12 +36,12 @@ public:
 	/// Crea una instancia del SceneManager
 	/// </summary>
 	/// <returns>Si la inicializacion fue correcta</returns>
-	static bool Init();
+	FORGE_API static bool Init();
 	/// <summary>
 	/// Devuelve la instancia de SceneManager y si no existe devuelve un puntero a nulo
 	/// </summary>
 	/// <returns>Instancia singleton a SceneManager</returns>
-	static SceneManager* GetInstance();
+	FORGE_API static SceneManager* GetInstance();
 	/// <summary>
 	/// Destruye la instancia
 	/// </summary>
@@ -50,11 +50,6 @@ public:
 	/// Destruye las escenas cargadas y las plantillas de escena y entidades guardadas
 	/// </summary>
 	FORGE_API void cleanUp();
-	/// <summary>
-	/// Devuelve la instancia de SceneManager y si no existe la crea
-	/// </summary>
-	/// <returns>Instancia singleton a SceneManager</returns>
-	FORGE_API static SceneManager* getInstance();
 	/// <summary>
 	/// Establece el lua_State usado para la carga de EC
 	/// </summary>
@@ -89,6 +84,8 @@ public:
 	/// Una escena a partir de su Identificador
 	/// </returns>
 	FORGE_API Scene* getScene(std::string const& id);
+
+	const FORGE_API std::string& getActiveSceneId() const;
 	/// <returns>
 	/// Cantidad total de grupos
 	/// </returns>
@@ -96,7 +93,7 @@ public:
 	/// <returns>
 	/// Actualiza las entidades de la escena activa
 	/// </returns>
-	FORGE_API void update();
+	FORGE_API bool update();
 	/// <summary>
 	///	Actualiza las entidades de la escena activa en periodos de tiempo fijos
 	/// </summary>
