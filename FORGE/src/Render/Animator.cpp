@@ -14,8 +14,6 @@ Animator::Animator() :
 	serializer(activeAnimations, "activeAnimations");
 }
 
-Animator::~Animator() {}
-
 bool Animator::initComponent(ComponentData* data) {
 	if(Mesh::initComponent(data)){
 		ogreAnimations = ogreEntity->getAllAnimationStates();
@@ -38,6 +36,27 @@ bool Animator::initComponent(ComponentData* data) {
 	}
 	std::cerr << "ERROR: No se ha podido inicializar el componente Mesh\n";
 	return false;
+}
+
+void Animator::onEnabled() {
+	Mesh::onEnabled();
+	ogreAnimations = ogreEntity->getAllAnimationStates();
+	if (ogreAnimations != nullptr) {
+		for (auto it = activeAnimations.begin(); it != activeAnimations.end();) {
+			if (ogreAnimations->hasAnimationState(*it)) {
+				ogreAnimations->getAnimationState(*it)->setEnabled(true);
+				++it;
+			}
+			else {
+				std::cout << "ERROR: No se ha encontrado la animacion " << *it << " en el modelo " << mesh << std::endl;
+				it = activeAnimations.erase(it);
+			}
+		}
+	}
+	else {
+		activeAnimations.clear();
+		std::cerr << "ERROR: No se ha podido inicializar el componente Animator\n";
+	}
 }
 
 void Animator::update() {

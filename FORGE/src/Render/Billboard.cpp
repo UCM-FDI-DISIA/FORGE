@@ -29,6 +29,9 @@ Billboard::~Billboard() {
 
 void Billboard::onEnabled() {
 	billboardSet = renderManager->addBillboardNode(this);
+	if (billboardSet != nullptr) {
+		addBillboards();
+	}
 }
 
 void Billboard::onDisabled() {

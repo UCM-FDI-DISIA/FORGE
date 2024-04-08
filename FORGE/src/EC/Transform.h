@@ -27,6 +27,10 @@ public:
 	static const std::string id;
 
 	Transform();
+	/// <summary>
+	/// Establece que el Tranform ha sido actualizado
+	/// </summary>
+	void onEnabled() override;
 
 	#pragma region setters
 	/// <summary>
