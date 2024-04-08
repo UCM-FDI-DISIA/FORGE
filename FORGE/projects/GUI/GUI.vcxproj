@@ -58,13 +58,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI;$(SolutionDir)dependencies\SDL2\build\x64\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\x64\include-config-$(Configuration)\SDL2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)dependencies\ImGUI\src;$(SolutionDir)dependencies\SDL2\build\x64\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\x64\include-config-$(Configuration)\SDL2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2d.lib;SDL2_image.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)dependencies\SDL2\src\image;$(SolutionDir)dependencies\SDL2\build\x64\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2d.lib;SDL2_image.lib;ImGui_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dependencies\SDL2\build\$(Platform)\$(Configuration);$(SolutionDir)dependencies\SDL2\src\include;$(SolutionDir)src\EC;$(SolutionDir)src\Utils;$(SolutionDir)src\Render;$(SolutionDir)dependencies\ImGUI\build\x64\Debug;$(SolutionDir)dependencies\ImGUI\src;$(SolutionDir)dependencies\SDL2\build\$(Platfrom)\include\SDL2;$(SolutionDir)Dependencies\SDL2\build\$(Platfrom)\include-config-$(Configuration)\SDL2;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)Dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -87,14 +87,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdl2.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdlrenderer2.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\imconfig.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\imgui.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\imgui_internal.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\imstb_rectpack.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\imstb_textedit.h" />
-    <ClInclude Include="..\..\dependencies\ImGUI\imstb_truetype.h" />
     <ClInclude Include="..\..\src\GUI\BaseButton.h" />
     <ClInclude Include="..\..\src\GUI\Button.h" />
     <ClInclude Include="..\..\src\GUI\GUI.h" />
@@ -105,13 +97,6 @@
     <ClInclude Include="..\..\src\GUI\UIComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdl2.cpp" />
-    <ClCompile Include="..\..\dependencies\ImGUI\backends\imgui_impl_sdlrenderer2.cpp" />
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui.cpp" />
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_demo.cpp" />
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_draw.cpp" />
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_tables.cpp" />
-    <ClCompile Include="..\..\dependencies\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\..\src\GUI\BaseButton.cpp" />
     <ClCompile Include="..\..\src\GUI\Button.cpp" />
     <ClCompile Include="..\..\src\GUI\GUI.cpp" />

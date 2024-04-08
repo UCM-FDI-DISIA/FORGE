@@ -17,6 +17,8 @@
 #include "ImageButton.h"
 #include "InputText.h"
 
+#define SDL_MAIN_HANDLED
+
 #if !SDL_VERSION_ATLEAST(2,0,17)
 #error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
 #endif
@@ -30,7 +32,7 @@ void funcionImg() {
 }
 
 // Main code
-int main(int, char**) {
+int main() {
     // Setup SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
         printf("Error: %s\n", SDL_GetError());
