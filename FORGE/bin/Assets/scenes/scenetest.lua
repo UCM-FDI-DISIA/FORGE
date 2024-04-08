@@ -8,7 +8,7 @@ local scenes = {
             handler = "player",
             components = {
                 Transform = {
-                    position = {0, 0, 0}
+                    position = {-30, 0, 0}
                 },
                 RigidBody = {
                     scale = {30, 30, 30},
@@ -16,8 +16,7 @@ local scenes = {
                     friction = 5,
                     restitution = 1,
                     shapeType = "Sphere",
-                    static = false,
-                    axisBlocked = {true,false,false,false,false,true}
+                    static = false
                 }
             }
         },
@@ -25,8 +24,8 @@ local scenes = {
             handler = "rampa",
             components = {
                 Transform = {
-                    position = {0, -50, 0},
-                    rotation = {0, 0, 1, 3.14/6 }
+                    position = {-30, -50, 0},
+                    rotation = {0, 0, -1, 3.14/6 }
                 },
                  Collider = {
                     scale = {30, 10, 30},
@@ -34,24 +33,33 @@ local scenes = {
                 }
             }
         },
-
-        obstaculo = {
-            group = "obstacle",
+        jugador2 = {
+            handler = "player2",
             components = {
                 Transform = {
-                    position = {0, 0, 0},
-                    scale = {5, 5, 5}
+                    position = {30, 0, 0}
                 },
-                Mesh = {
-                    mesh = "Barrel.mesh"
+                RigidBody = {
+                    scale = {30, 30, 30},
+                    mass = 1,
+                    friction = 5,
+                    restitution = 1,
+                    shapeType = "Sphere",
+                    static = false
+                }
+            }
+        },
+        rampa2 = {
+            handler = "rampa2",
+            components = {
+                Transform = {
+                    position = {30, -50, 0},
+                    rotation = {0, 0, 1, 3.14/6 }
                 },
-                -- RigidBody = {
-                --     scale = {1, 1, 1},
-                --     mass = 0.1,
-                --     friction = 0.5,
-                --     restitution = 0.6,
-                --     shapeType = "Box"
-                -- }
+                 Collider = {
+                    scale = {30, 10, 30},
+                    shapeType = "Cube"
+                }
             }
         },
         cam = {

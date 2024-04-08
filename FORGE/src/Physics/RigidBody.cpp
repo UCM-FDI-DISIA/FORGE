@@ -10,12 +10,13 @@ const std::string RigidBody::id = "RigidBody";
 RigidBody::RigidBody() :
       mass(0)
     , kinematic(false), friction(0), restitution(0)
-    , staticBody(false){
+    , staticBody(false), myGravity(FLT_MAX, FLT_MAX, FLT_MAX) {
     axisBlocked = std::vector<bool>(6, false);
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");
     serializer(staticBody, "static");
+    serializer(myGravity, "gravity");
     serializer(axisBlocked, "axisBlocked");
 }
 
@@ -93,6 +94,9 @@ bool RigidBody::initComponent(ComponentData* data) {
     myBody->setFriction((btScalar)friction);
     lockPosition(axisBlocked[0], axisBlocked[1], axisBlocked[2]);
     lockRotation(axisBlocked[3], axisBlocked[4], axisBlocked[5]);
+    if (myGravity != forge::Vector3(FLT_MAX, FLT_MAX, FLT_MAX)) {
+        myBody->setGravity(myGravity);
+    }
 
     return true;
 }
@@ -101,9 +105,6 @@ void RigidBody::applyForce(forge::Vector3 force) {
     myBody->applyCentralForce({force.getX(), force.getY(), force.getZ()});
 }
 
-void RigidBody::applyGravity() {
-    myBody->applyGravity();
-}
 
 void RigidBody::clearForces() {
     myBody->clearForces();
@@ -125,6 +126,11 @@ void RigidBody::lockRotation(bool x, bool y, bool z) {
 
     btVector3 rotConstr = btVector3(!axisBlocked[3], !axisBlocked[4], !axisBlocked[5]);
     myBody->setAngularFactor(rotConstr);
+}
+
+void RigidBody::setGravity(forge::Vector3 newGravity) {
+    myGravity = newGravity;
+    myBody->setGravity(newGravity.operator btVector3());
 }
 
 void RigidBody::setFriction(float newFriction) {

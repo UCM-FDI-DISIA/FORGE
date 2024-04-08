@@ -25,6 +25,7 @@ private:
     float restitution;
     bool kinematic;
     bool staticBody;
+    forge::Vector3 myGravity;
     std::vector<bool> axisBlocked;
 
 public:
@@ -41,9 +42,10 @@ public:
     void applyForce(forge::Vector3 force);
 
     /// <summary>
-    /// Metodo para aplicar la gravedad a un objeto
+    /// Metodo para aplicar gravedad nueva a un objeto
     /// </summary>
-    void applyGravity();
+    /// <param name="newGravity: ">La gravedad nueva a aplicar</param>
+    void setGravity(forge::Vector3 newGravity);
 
     /// <summary>
     /// Limpia las fuerzas aplicadas al objeto, devolviendolo a un estado sin fuerzas aplicadas
