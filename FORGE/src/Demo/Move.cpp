@@ -11,7 +11,8 @@ Move::Move() {
 }
 
 bool Move::initComponent(ComponentData* data) {
-	if (rb = entity->getComponent<RigidBody>()) {
+	if (entity->hasComponent<RigidBody>()) {
+		rb = entity->getComponent<RigidBody>();
 		movement = data->get<float>("speed");
 		return true;
 	}
@@ -19,8 +20,8 @@ bool Move::initComponent(ComponentData* data) {
 }
 
 void Move::update() {
-	if (!rb->isTrigger()) {
+	/*if (!rb->isTrigger()) {
 		rb->setTrigger(true);
-	}
+	}*/
 	rb->applyForce(forge::Vector3(0, movement, 0));
 }

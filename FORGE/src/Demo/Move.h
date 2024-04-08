@@ -21,8 +21,8 @@ public:
 	/// </summary>
 	void update() override;
 
-	private:
-		float movement = 10.0f;
-		RigidBody* rb;
+private:
+	float movement = 10.0f;
+	RigidBody* rb;
 
 };

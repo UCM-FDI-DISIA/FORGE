@@ -82,8 +82,8 @@ public:
     void onCollision(Entity* other);
     #pragma region setters
     /// <summary>
-   /// Cambia la friccion del objeto
-   /// </summary>
+    /// Cambia la friccion del objeto
+    /// </summary>
     void setFriction(float newFriction);
 
     /// <summary>
@@ -104,33 +104,33 @@ public:
     void setRigidScale(float radius);
 
     /// <summary>
-   /// Actualiza el tamaño del cuerpo para capsulas
-   /// </summary>
-   /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
-   /// <param name="height">Altura nueva par ala capsula</param>
+    /// Actualiza el tamaño del cuerpo para capsulas
+    /// </summary>
+    /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
+    /// <param name="height">Altura nueva par ala capsula</param>
     void setRigidScale(float radius, float height);
 
     /// <summary>
-   /// Activa y desactiva la funcion de trigger
-   /// </summary>
-   /// <param name="isTrigger">True si el cuerpo pasara a ser un trigger</param>
+    /// Activa y desactiva la funcion de trigger
+    /// </summary>
+    /// <param name="isTrigger">True si el cuerpo pasara a ser un trigger</param>
     void setTrigger(bool isTrigger);
     #pragma endregion
 
     #pragma region getters
     /// <summary>
-  /// Devuelve la masa del objeto
-  /// </summary>
+    /// Devuelve la masa del objeto
+     /// </summary>
     float getMass();
 
     /// <summary>
-  /// Devuelve la friccion del objeto
-  /// </summary>
+    /// Devuelve la friccion del objeto
+    /// </summary>
     float getFriction();
 
     /// <summary>
-  /// Devuelve la constante de restitución del objeto
-  /// </summary>
+    /// Devuelve la constante de restitución del objeto
+    /// </summary>
     float getRestitution();
 
     /// <summary>
@@ -140,13 +140,13 @@ public:
     btRigidBody* getRigidBody();
 
     /// <summary>
-  /// Devuelve true si es un objeto estatico
-  /// </summary>
+    /// Devuelve true si es un objeto estatico
+    /// </summary>
     bool isStatic();
 
     /// <summary>
-  /// Devuelve true si es un objeto que detecta colisiones pero no choca
-  /// </summary>
+    /// Devuelve true si es un objeto que detecta colisiones pero no choca
+    /// </summary>
     bool isTrigger();
 
     /// <summary>
@@ -165,4 +165,3 @@ public:
 };
 
 #endif // !RIGIDBODY_H_
-

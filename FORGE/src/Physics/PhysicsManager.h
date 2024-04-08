@@ -56,8 +56,8 @@ public:
     void handleCollisions();
 
     /// <summary>
-   /// Cambia la gravedad del mundo fisico
-   /// </summary>
+    /// Cambia la gravedad del mundo fisico
+    /// </summary>
     void changeGravity(forge::Vector3 newGravity);
 
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
@@ -89,4 +89,3 @@ public:
     /// <returns>Si el modo depuracion esta activo</returns>
     bool isDebugModeEnabled();
 };
-

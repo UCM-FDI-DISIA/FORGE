@@ -27,9 +27,13 @@ RigidBody::~RigidBody() {
 bool RigidBody::initComponent(ComponentData* data) {
     std::string myShapeType;
     // En caso de que la masa sea negativa, se pone a 0
-    if (mass < 0) mass = 0; 
+    if (mass < 0) {
+        mass = 0;
+    }
     myShapeType = data->get<std::string>("shapeType");
-    if (staticBody) mass = 0;
+    if (staticBody) {
+        mass = 0;
+    }
 
     // De forma predeterminada, el rigid es una caja
      shapeType = boxShape; 
@@ -97,9 +101,7 @@ bool RigidBody::initComponent(ComponentData* data) {
 void RigidBody::fixedUpdate() {
     if (entity->hasComponent("Transform")) {
         Transform* transform = entity->getComponent<Transform>();
-        forge::Vector3 pos = forge::Vector3(
-            myBody->getWorldTransform().getOrigin()
-        );
+        forge::Vector3 pos = forge::Vector3(myBody->getWorldTransform().getOrigin());
         transform->setPosition(pos);
         forge::Quaternion quat = myBody->getOrientation();
         transform->setRotation(quat);
@@ -196,11 +198,12 @@ bool RigidBody::isTrigger() {
 
 void RigidBody::setTrigger(bool isTrigger) {
     trigger = isTrigger;
-    if (trigger)
-		myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-	else
+    if (trigger) {
+        myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    }
+    else {
         myBody->setCollisionFlags(myBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
-    
+    }
 }
 
 btCollisionShape* RigidBody::getShape() {
@@ -220,5 +223,3 @@ void RigidBody::onCollision(Entity* other) {
         cb(this, other->getComponent<RigidBody>());
     }
 }
-
-
