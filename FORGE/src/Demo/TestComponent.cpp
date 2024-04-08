@@ -54,7 +54,6 @@ void TestComponent::update() {
 	}
 	if (input.keyDown(K_W)) {
 		transform->setPositionZ(transform->getPosition().getZ() + movement);
-		std::cout << transform->getPosition().getX() << " " << transform->getPosition().getY() << " " << transform->getPosition().getZ() << "\n";
 	}
 
 	if (input.keyPressed(K_W)) {
