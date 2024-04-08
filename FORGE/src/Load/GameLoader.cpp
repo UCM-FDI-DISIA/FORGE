@@ -1,4 +1,5 @@
 #include "GameLoader.h"
+#include "ForgeError.h"
 
 GameLoader::GameLoader() :
 	hDLL(nullptr) {
@@ -6,28 +7,31 @@ GameLoader::GameLoader() :
 
 bool GameLoader::init(std::string const& gameDll) {
 	hDLL = LoadLibraryA(gameDll.c_str());
-	return hDLL != NULL;
+	if (hDLL == NULL) {
+		throwError(false, "No se pudo cargar el juego, dll no encontrado o no valido.");
+	}
+	return true;
 }
 
 typedef void(CALLBACK* LPFNDLL_registerComponents)(Factory&);
-bool GameLoader::registerComponents(Factory& f) {
+bool GameLoader::registerComponents(Factory& factory) {
 	if (hDLL == nullptr) {
-		return false;
+		throwError(false, "No se pueden registrar los componentes porque no se ha cargado el juego.");
 	}
 
 	LPFNDLL_registerComponents lpfnDll_registerComponents;
-
 	lpfnDll_registerComponents = (LPFNDLL_registerComponents)GetProcAddress(hDLL, "registerComponents");
-	if (lpfnDll_registerComponents != NULL) {
-		lpfnDll_registerComponents(f);
-		return true;
+	if (lpfnDll_registerComponents == NULL) {
+		throwError(false, "No se pudo encontrar en el juego la funcion \"FORGE_IMPORT void registerComponents(Factory&)\".");
 	}
-	return false;
-	
+	lpfnDll_registerComponents(factory);
+	return true;
 }
 
 bool GameLoader::free() {
-	bool res = FreeLibrary(hDLL) != 0;
+	if (FreeLibrary(hDLL) == 0) {
+		throwError(false, "No se pudo cerrar la biblioteca del juego correctamente.");
+	}
 	hDLL = nullptr;
-	return res;
+	return true;
 }

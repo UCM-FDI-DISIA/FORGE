@@ -12,17 +12,7 @@
 #include "UIManager.h"
 */
 
-#include "Factory.h"
-#include "Transform.h"
-#include "Mesh.h"
-#include "Light.h"
-#include "Camera.h"
-#include "AudioManager.h"
-#include "AudioListener.h"
-#include "AudioSource.h"
-
 #include <iostream>
-#include <windows.h>
 
 using namespace forge;
 
@@ -35,7 +25,6 @@ MainForge::MainForge() :
 	finished(false),
 	fixedUpdateTimer(0.0),
 	time(*Time::getInstance()),
-	factory(*Factory::getInstance()),
 	renderManager(*RenderManager::getInstance()),
 	sceneManager(*SceneManager::getInstance()),
 	inputManager(*Input::getInstance()),
@@ -45,16 +34,6 @@ MainForge::MainForge() :
 	uiManager(*UIManager::getInstance())*/ {
 }
 
-void MainForge::initFactory() {
-	factory.registerComponent<Transform>();
-	factory.registerComponent<Mesh>();
-	factory.registerComponent<Light>();
-	factory.registerComponent<Camera>();
-	factory.registerComponent<AudioSource>();
-	factory.registerComponent<AudioListener>();
-	loadManager.getGame().registerComponents(factory);
-}
-
 bool MainForge::init(std::string const& configPath) {
 	initialized = true;
 	finished = false;
@@ -62,11 +41,6 @@ bool MainForge::init(std::string const& configPath) {
 		finished = true;
 		return false;
 	}
-	initFactory();
-	renderManager.setup(loadManager.getGameName());
-	sceneManager.changeScene(loadManager.getInitialScene());
-
-
 
 	//physicsManager.init();???
 	//UIManager.init();???
@@ -94,7 +68,6 @@ bool MainForge::render() {
 
 void MainForge::shutDown() {
 	sceneManager.cleanUp();
-	factory.cleanUp();
 	loadManager.cleanUp();
 	delete& loadManager;
 	initialized = false;

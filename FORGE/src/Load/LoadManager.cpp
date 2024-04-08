@@ -11,16 +11,17 @@
 #include "EntityData.h"
 #include "ComponentData.h"
 #include "RenderManager.h"
+#include "ForgeError.h"
+#include "Factory.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Light.h"
+#include "Camera.h"
+#include "AudioSource.h"
+#include "AudioListener.h"
 
 using namespace luabridge;
-bool isString(LuaRef const& ref) {
-	return !ref.isNil() && ref.isInstance<std::string>();
-}
-void reportError(std::string const& error) {
-#ifdef _DEBUG
-	std::cerr << error;
-#endif
-}
+
 void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& group, LuaRef& components) {
 	if (!handler.isNil()) {
 		entityData.handler = handler.cast<std::string>();
@@ -135,9 +136,8 @@ std::vector<EntityData*> LoadManager::parseScene(LuaRef& luaScene) {
 
 bool LoadManager::loadScenes(LuaRef const& config) {
 	LuaRef scenes = config["scenesFile"];
-	if (!isString(scenes)) {
-		reportError("No se proporciono un archivo de escenas o no es un string.\n");
-		return false;
+	if (!scenes.isString()) {
+		throwError(false, "No se proporciono un archivo de escenas o no es un string.");
 	}
 
 	std::string realPath = scenes.cast<std::string>();
@@ -166,141 +166,112 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 bool LoadManager::loadAudio() {
 	LuaRef audioRef = getGlobal(luaForge->getState(), "Audio");
 	if (audioRef.isNil() || !audioRef.isTable()) {
-		reportError("No se encontro un bloque de audios a cargar.\n");
-		return true;
+		throwError(false, "No se encontro un bloque de audios a cargar.");
 	}
 	AudioManager& am = *AudioManager::getInstance();
 	for (auto&& audio : pairs(audioRef)) {
-		if (!isString(audio.first)) {
-			reportError("Nombre de audio no valido.\n");
-			return false;
+		if (!audio.first.isString()) {
+			throwError(false, "Nombre de audio no valido.");
 		}
-		if (!isString(audio.second)) {
-			reportError("Ruta al audio no existe o no es un string\n");
-			return false;
+		if (!audio.second.isString()) {
+			throwError(false, "Ruta al audio no existe o no es un string");
 		}
 		am.addSound(audio.first.cast<std::string>(), audio.second.cast<std::string>());
 	}
 	return true;
 }
 
-bool LoadManager::loadGame(LuaRef const& config) {
+bool LoadManager::loadGame(LuaRef const& config, std::string& gameName) {
 #ifdef _DEBUG
 	std::string reading = "debugGame";
 #else 
 	std::string reading = "game";
 #endif
 	LuaRef game = config[reading];
-	if (!isString(game)) {
-		reportError("\"" + reading + "\" no se proporciono o no es un string.\n");
-		return false;
+	if (!game.isString()) {
+		throwError(false, "\"" << reading << "\" no se proporciono o no es un string.");
 	}
 	gameName = game.cast<std::string>();
 	if (!gameLoader->init(gameName)) {
-		reportError("No se pudo cargar el juego.\n");
-		return false;
+		throwError(false, "No se pudo cargar el juego.");
 	}
 	return true;
 }
 
+bool LoadManager::loadComponents() {
+	factory.registerComponent<Transform>();
+	factory.registerComponent<Mesh>();
+	factory.registerComponent<Light>();
+	factory.registerComponent<Camera>();
+	factory.registerComponent<AudioSource>();
+	factory.registerComponent<AudioListener>();
+	return gameLoader->registerComponents(factory);
+}
+
 bool LoadManager::loadAssets(LuaRef const& config) {
 	LuaRef assets = config["assetsFile"];
-	if (!isString(assets)) {
-		reportError("No se proporciono un archivo con assets a cargar o el valor introducido no es un string.\n");
+	if (!assets.isString()) {
+		throwError(true, "No se proporciono un archivo con assets a cargar o el valor introducido no es un string.");
 	}
-	else {
-		if (!luaForge->doFile(assets.cast<std::string>())) {
-			reportError("No hay escenas que cargar.\n");
-			return false;
-		}
-		if (!loadAudio()) {
-			reportError("No se pudo cargar el audio correctamente");
-			return false;
-		}
+	if (!luaForge->doFile(assets.cast<std::string>())) {
+		throwError(false, "No hay escenas que cargar.");
 	}
+	if (!loadAudio()) {
+		throwError(false, "No se pudo cargar el audio correctamente");
+	}
+	
 	return true;
 }
 
 bool LoadManager::loadInitialScene(LuaRef const& config) {
 	LuaRef initScene = config["initialScene"];
-	if (!isString(initScene)) {
-		reportError("No se proporciono una escena inicial o no es un string.\n");
-		return false;
+	if (!initScene.isString()) {
+		throwError(false, "No se proporciono una escena inicial o no es un string.");
 	}
-	initialScene = initScene.cast<std::string>();
+	sceneManager.changeScene(initScene.cast<std::string>());
+	return true;
 }
 
 LoadManager::LoadManager() :
 	gameLoader(new GameLoader()),
 	luaForge(new LuaForge()),
 	sceneManager(*SceneManager::getInstance()),
-	renderManager(*RenderManager::getInstance()){
+	renderManager(*RenderManager::getInstance()),
+	factory(*Factory::getInstance()) {
 }
 
 bool LoadManager::init(std::string const& configFile) {
 	if (!luaForge->doFile(configFile)) {
-		reportError("No se proporciono un archivo de configuracion, no se ha encontrado o no tiene formato correcto.\n");
-		return false;
+		throwError(false, "No se proporciono un archivo de configuracion, no se ha encontrado o no tiene formato correcto.");
 	}
 
 	LuaRef config = getGlobal(luaForge->getState(), "Config");
-	if (config.isNil() || !config.isTable()) {
-		reportError("No se pudo encontrar la configuracion en el archivo proporcionado.\n");
-		return false;
+	if (!config.isTable()) {
+		throwError(false, "No se pudo encontrar la configuracion en el archivo proporcionado.");
 	}
-
-	if (!loadGame(config)) {
-		reportError("No se pudo cargar el juego.\n");
-		return false;
+	std::string gameName;
+	if (!loadGame(config, gameName)) {
+		throwError(false, "No se pudo cargar el juego.");
+	}
+	if (!loadComponents()) {
+		throwError(false, "No se pudieron cargar los componentes.");
 	}
 	if (!loadAssets(config)) {
-		reportError("No se pudieron cargar los assets.\n");
-		return false;
+		throwError(false, "No se pudieron cargar los assets.");
 	}
 	if (!loadScenes(config)) {
-		reportError("No se pudieron cargar las escenas.\n");
-		return false;
+		throwError(false, "No se pudieron cargar las escenas.");
 	}
-	//renderManager.setup(gameName);
+	renderManager.setup(gameName);
 	if (!loadInitialScene(config)) {
-		reportError("No se pudo guardar la escena inicial.\n");
-		return false;
+		throwError(false, "No se pudo cargar la escena inicial.");
 	}
-	return true;
-}
-
-bool LoadManager::init(std::string const& assetsFile, std::string const& scenesFile) {
-#ifdef _DEBUG
-	gameLoader->init("Demo_d");
-#else
-	gameLoad->init("Demo");
-#endif
-	if (!luaForge->doFile(assetsFile)) {
-		return false;
-	}
-
-	if (!loadAudio()) {
-
-	}
-
-	//loadScenes(scenesFile);
 	return true;
 }
 
 bool LoadManager::cleanUp() {
+	factory.cleanUp();
 	return gameLoader->free();
-}
-
-GameLoader& LoadManager::getGame() {
-	return *gameLoader;
-}
-
-std::string const& LoadManager::getGameName() const {
-	return gameName;
-}
-
-std::string const& LoadManager::getInitialScene() const {
-	return initialScene;
 }
 
 LoadManager::~LoadManager() {

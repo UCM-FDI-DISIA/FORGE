@@ -8,6 +8,7 @@ class GameLoader;
 class SceneManager;
 class RenderManager;
 struct EntityData;
+class Factory;
 namespace luabridge {
 	class LuaRef;
 }
@@ -17,8 +18,7 @@ private:
 	GameLoader* gameLoader;
 	SceneManager& sceneManager;
 	RenderManager& renderManager;
-	std::string gameName;
-	std::string initialScene;
+	Factory& factory;
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.
 	/// </summary>
@@ -60,26 +60,49 @@ private:
 	/// </param>
 	bool loadScenes(luabridge::LuaRef const& path);
 	/// <summary>
-	/// 
+	/// Carga los audios indicados en el archivo de recursos
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
 	bool loadAudio();
-	bool loadGame(luabridge::LuaRef const& config);
+	/// <summary>
+	/// Carga la biblioteca del juego
+	/// </summary>
+	/// <param name="config">Referencia al LuaRef en el que se ha cargado la configuracion</param>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
+	bool loadGame(luabridge::LuaRef const& config, std::string& gameName);
+	/// <summary>
+	/// Carga los componentes del juego que se hayan agregado a la Factory
+	/// </summary>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
+	bool loadComponents();
+	/// <summary>
+	/// Carga los recursos que haya en el archivo de recursos indicado en la configuracion
+	/// </summary>
+	/// <param name="config">Referencia al LuaRef en el que se ha cargado la configuracion</param>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
 	bool loadAssets(luabridge::LuaRef const& config);
+	/// <summary>
+	/// Carga la escena inicial indicada en el archivo de configuracion
+	/// </summary>
+	/// <param name="config">Referencia al LuaRef en el que se ha cargado la configuracion</param>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
 	bool loadInitialScene(luabridge::LuaRef const& config);
 public:
+	/// <summary>
+	/// Crea el objeto de LoadManager y sus dependencias
+	/// </summary>
 	LoadManager();
 	/// <summary>
 	/// Inicializa todas las cargas del motor
 	/// </summary>
-	/// <param name="assetsFile">Ruta del archivo en el que se indican los assets a cargar</param>
-	/// <param name="scenesFile">Nombre del archivo de escenas dentro de Assets/scenes</param>
+	/// <param name="configFile">Ruta del archivo de configuracion del juego a cargar</param>
+	/// <returns>Booleano que indica si se han podido cargar los datos</returns>
 	bool init(std::string const& configFile);
-	bool init(std::string const& assetsFile, std::string const& scenesFile);
+	/// <summary>
+	/// Se encarga de vaciar las cargas
+	/// </summary>
+	/// <returns>Booleano que indica si se ha limpiado bien</returns>
 	bool cleanUp();
-	GameLoader& getGame();
-	std::string const& getGameName() const;
-	std::string const& getInitialScene() const;
 	/// <summary>
 	/// Cierra las referencias a los archivos de carga
 	/// </summary>

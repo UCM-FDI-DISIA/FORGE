@@ -23,7 +23,6 @@ private:
 	double fixedUpdateTimer;
 
 	forge::Time& time;
-	Factory& factory;
 	RenderManager& renderManager;
 	SceneManager& sceneManager;
 	AudioManager& audioManager;
@@ -41,15 +40,10 @@ private:
 	//Al ser un singleton, no se puede copiar ni igualar
 	MainForge(MainForge const&) = delete;
 	void operator=(MainForge const&) = delete;
-
-	/// <summary>
-	/// Agrega todos los componentes internos del motor a la Factory
-	/// </summary>
-	void initFactory();
 	/// <summary>
 	/// Inicializador de todos los modulos, a partir de un archivo de configuracion
 	/// </summary>
-	/// <param name="luaConfigPath">El camino al archivo de configuracion</param>
+	/// <param name="configPath">El camino al archivo de configuracion</param>
 	bool init(std::string const& configPath);
 	/// <summary>
 	/// Controla el tiempo entre updates, y si ha pasado el tiempo suficiente, llama a fixedUpdate cuantas veces sea necesario
@@ -77,7 +71,7 @@ public:
 	/// <summary>
 	/// Inicializa el motor a partir de un archivo de configuracion
 	/// </summary>
-	/// <param name="luaConfigPath">La ruta al archivo de configuracion</param>
+	/// <param name="configPath">La ruta al archivo de configuracion</param>
 	static bool FORGE_API Init(std::string const& configPath);
 	/// <summary>
 	/// Arranca el bucle principal del juego

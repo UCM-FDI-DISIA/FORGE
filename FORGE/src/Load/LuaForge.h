@@ -6,6 +6,9 @@
 #include <vector>
 #include <functional>
 struct lua_State;
+namespace luabridge {
+	class LuaRef;
+}
 
 class LuaForge {
 private:
