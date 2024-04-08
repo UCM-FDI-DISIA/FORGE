@@ -2,23 +2,26 @@
 
 const std::string Image::id = "Image";
 
-Image::Image(const char* imgId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 imgSize,
+Image::Image(const char* imgId, const std::string fileName, SDL_GLContext renderer_, forge::Vector2 imgSize,
 	forge::Vector2 pos_) : UIComponent(imgId, pos_), renderer(renderer_), imageSize(imgSize) {
 	//assert(renderer != nullptr);
 
-	surface = IMG_Load(fileName.c_str());
-	if (surface == nullptr)
-		throw "Couldn't load image: " + fileName;
-
-	texture = SDL_CreateTextureFromSurface(renderer_, surface);
-	if (texture == nullptr) {
-		SDL_FreeSurface(surface);
-		throw "Couldn't convert surface to texture for image: " + fileName;
+	SDL_Surface* surface = IMG_Load(fileName.c_str());
+	if (!surface) {
+		printf("Error loading image: %s\n", SDL_GetError());
 	}
 
-	sourceSize.set((float) surface->w, (float) surface->h);
-	renderer = renderer_;
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, surface->pixels);
 
+	//SDL_FreeSurface(surface);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	sourceSize.set((float) surface->w, (float) surface->h);
 }
 
 Image::~Image() {

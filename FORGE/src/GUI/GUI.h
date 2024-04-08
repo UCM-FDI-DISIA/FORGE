@@ -4,9 +4,10 @@
 #include <iostream>
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
-#include "imgui_impl_sdlrenderer2.h"
+#include "imgui_impl_opengl2.h"
 #include <stdio.h>
 #include <SDL.h> 
+#include <SDL_opengl.h>
 #include "Vector2.h"
 #include <unordered_map>
 #include <unordered_set>

@@ -5,6 +5,7 @@
 
 #include <string>
 #include "SDL_image.h"
+#include "SDL_opengl.h"
 #include "UIComponent.h"
 
 class Image : public UIComponent {
@@ -18,7 +19,7 @@ protected:
 	forge::Vector2 sourceSize;
 	forge::Vector2 imageSize;
 
-	SDL_Renderer* renderer;
+	SDL_GLContext renderer;
 	SDL_Surface* surface;
 
 public:
@@ -30,7 +31,7 @@ public:
 	/// <param name = "renderer_">Renderer de SDL</param>
 	/// <param name = "imgSize">Tamaño de la imagen por pantalla</param>
 	/// <param name = "pos_">Posicion de renderizado</param>
-	Image(const char* imgId, const std::string fileName, SDL_Renderer* renderer_, forge::Vector2 imgSize,
+	Image(const char* imgId, const std::string fileName, SDL_GLContext renderer_, forge::Vector2 imgSize,
 		forge::Vector2 pos_ = forge::Vector2::ZERO);
 
 	/// <summary>
