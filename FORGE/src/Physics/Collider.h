@@ -4,6 +4,7 @@
 #include <Component.h>
 #include <string>
 #include<Vector3.h>
+#include <Quaternion.h>
 
 class PhysicsManager;
 class btRigidBody;
@@ -28,6 +29,10 @@ protected:
     forge::Vector3 myScale;
     std::vector<CollisionCallback> collisionCallbacks;
     Transform* bodyTransform;
+    std::string myShapeString;
+    forge::Vector3 lastPosition;
+    forge::Vector3 lastForce;
+    forge::Quaternion lastOrientation;
 public:
     static const std::string id;
 
@@ -37,7 +42,13 @@ public:
 
     bool initComponent(ComponentData* data) override;
 
+    virtual void createRigidBody(std::string myShapeType);
+
     virtual void fixedUpdate();
+
+    virtual void onEnabled();
+
+    virtual void onDisabled();
 
     /// <summary>
     /// Metodo para comprobar si han colisionado dos colliders

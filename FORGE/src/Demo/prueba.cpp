@@ -17,6 +17,9 @@
 #include "PhysicsManager.h"
 #include "RigidBody.h"
 #include "Animator.h"
+#include "ParticleSystem.h"
+#include "Billboard.h"
+#include "TestComponent.h"
 
 #define FIXED_UPDATE_RATE 20
 
@@ -37,6 +40,9 @@ void factory() {
 	f.registerComponent<AudioListener>();
 	f.registerComponent<Animator>();
 	f.registerComponent<AudioSource>();
+	f.registerComponent<ParticleSystem>();
+	f.registerComponent<Billboard>();
+	f.registerComponent<TestComponent>();
 }
 
 

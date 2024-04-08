@@ -21,9 +21,13 @@ Collider::~Collider() {
 }
 
 bool Collider::initComponent(ComponentData* data) {
-    std::string myShapeType;
-   
-    myShapeType = data->get<std::string>("shapeType");
+    myShapeString = data->get<std::string>("shapeType");
+    createRigidBody(myShapeString);
+
+    return true;
+}
+
+void Collider::createRigidBody(std::string myShapeType) {
 
     // De forma predeterminada, el rigid es una caja
     shapeType = boxShape;
@@ -75,8 +79,6 @@ bool Collider::initComponent(ComponentData* data) {
     myBody = rigidBody;
 
     physicsManager->registerBody(rigidBody, entity->getComponent<Transform>());
-
-    return true;
 }
 
 void Collider::fixedUpdate() {
@@ -92,6 +94,22 @@ void Collider::fixedUpdate() {
         forge::Quaternion quat = myBody->getOrientation();
         bodyTransform->setRotation(quat);
     }
+}
+
+void Collider::onEnabled() {
+    createRigidBody(myShapeString);
+    btTransform trans;
+    trans.setOrigin(btVector3(lastPosition.getX(),lastPosition.getY(),lastPosition.getZ()));
+    trans.setRotation(lastOrientation.operator btQuaternion());
+    myBody->setWorldTransform(trans);
+    myBody->applyCentralForce(lastForce);
+}
+
+void Collider::onDisabled() {
+    lastForce = forge::Vector3(myBody->getTotalForce().x(), myBody->getTotalForce().y(), myBody->getTotalForce().z());
+    physicsManager->deleteBody(myBody);
+    lastPosition = bodyTransform->getPosition();
+    lastOrientation = bodyTransform->getRotation();
 }
 
 bool Collider::hasCollidedWith(Collider* other) {

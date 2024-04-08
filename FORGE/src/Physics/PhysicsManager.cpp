@@ -34,8 +34,6 @@ PhysicsManager::~PhysicsManager() {
     delete broadphase;
 }
 
-
-
 void PhysicsManager::initPhysics() {
     broadphase = new btDbvtBroadphase();
     collisionConfiguration = new btDefaultCollisionConfiguration();

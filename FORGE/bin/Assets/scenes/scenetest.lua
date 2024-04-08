@@ -23,11 +23,11 @@ local scenes = {
                     playOnAwake = true
                 },
                 RigidBody = {
-                    scale = {30, 30, 30},
+                    scale = {10, 15, 10},
                     mass = 1,
                     friction = 5,
                     restitution = 1,
-                    shapeType = "Sphere",
+                    shapeType = "Cube",
                     static = false
                 }
             },

@@ -35,6 +35,8 @@ public:
 
     bool initComponent(ComponentData* data) override;
 
+    virtual void createRigidBody(std::string myShapeType);
+
     /// <summary>
     /// Metodo para aplicar fuerzas a un rigidbody
     /// </summary>

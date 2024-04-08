@@ -22,31 +22,36 @@ RigidBody::RigidBody() :
 
 
 bool RigidBody::initComponent(ComponentData* data) {
-    std::string myShapeType;
     // En caso de que la masa sea negativa, se pone a 0
     if (mass < 0) {
         mass = 0;
     }
-    myShapeType = data->get<std::string>("shapeType");
+    myShapeString = data->get<std::string>("shapeType");
     if (staticBody) {
         mass = 0;
     }
 
-    // De forma predeterminada, el rigid es una caja
-     shapeType = boxShape; 
-     myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
+    createRigidBody(myShapeString);
 
-    if (myShapeType == "Sphere") {
+    return true;
+}
+
+void RigidBody::createRigidBody(std::string myShapeType) {
+    // De forma predeterminada, el rigid es una caja
+    shapeType = boxShape;
+    myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
+
+    if (myShapeString == "Sphere") {
         delete myShape;
         shapeType = ballShape;
-        myShape = new btSphereShape(myScale.getX()/2);
+        myShape = new btSphereShape(myScale.getX() / 2);
     }
-    else if (myShapeType == "Capsule") {
+    else if (myShapeString == "Capsule") {
         delete myShape;
         shapeType = capsuleShape;
         myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
     }
-    else if (myShapeType == "Cilinder") {
+    else if (myShapeString == "Cilinder") {
         delete myShape;
         shapeType = cilinderShape;
         myShape = new btCylinderShape(myScale.operator btVector3());
@@ -58,12 +63,11 @@ bool RigidBody::initComponent(ComponentData* data) {
     Transform* aux = entity->getComponent<Transform>();
     forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
     forge::Vector3 forVect = forge::Vector3(0, 0, 0);
-
     bodyTransform = entity->getComponent<Transform>();
 
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
-    
+
     btVector3 bodyInertia;
     getShape()->calculateLocalInertia(getMass(), bodyInertia);
     btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
@@ -94,8 +98,6 @@ bool RigidBody::initComponent(ComponentData* data) {
     if (myGravity != forge::Vector3(FLT_MAX, FLT_MAX, FLT_MAX)) {
         myBody->setGravity(myGravity);
     }
-
-    return true;
 }
 
 void RigidBody::applyForce(forge::Vector3 force) {
