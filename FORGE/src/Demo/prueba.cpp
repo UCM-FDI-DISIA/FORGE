@@ -56,13 +56,15 @@ void factory() {
 int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
-	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init()) {
+	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init()
+		&& GUIManager::Init()) {
 		LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
 		RenderManager& render = *RenderManager::GetInstance();
 		SceneManager& sceneManager = *SceneManager::GetInstance();
 		Input& input = *Input::GetInstance();
 		AudioManager& ad = *AudioManager::GetInstance();
 		GUIManager& gui = *GUIManager::GetInstance();
+		gui.loadFont("Saeda", "Assets/fonts/LTSaeada-Black.otf", 16);
 		sceneManager.changeScene("Test");
 		while (!input.keyUp(K_ESC)) {
 			input.refresh();
@@ -73,6 +75,7 @@ int main(int argc, char* argv[]) {
 			}
 			sceneManager.refresh();
 			ad.update();
+			gui.render();
 			if (!render.render())
 				break;
 			gui.refresh();

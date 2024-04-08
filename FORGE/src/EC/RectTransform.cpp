@@ -2,7 +2,7 @@
 #include "Serializer.h"
 using namespace forge;
 
-const std::string RectTransform::id = "Transform";
+const std::string RectTransform::id = "RectTransform";
 
 RectTransform::RectTransform() :
 	position(),

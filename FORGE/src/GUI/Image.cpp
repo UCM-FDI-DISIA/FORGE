@@ -30,7 +30,7 @@ bool Image::initComponent(ComponentData* data) {
 			else {
 				texture = SDL_CreateTextureFromSurface(renderer, surface);
 				if (texture == nullptr) {
-					SDL_FreeSurface(surface);
+					//SDL_FreeSurface(surface);
 					std::cerr << "ERROR: No se pudo cargar la imagen de " + fileName + " \n";
 				}
 				else {

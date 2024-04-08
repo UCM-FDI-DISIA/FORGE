@@ -15,13 +15,15 @@ bool GUIManager::Init() {
     return initialised;
 }
 
-GUIManager::GUIManager() : io(nullptr), renderer(nullptr), window(nullptr) {
+GUIManager::GUIManager() : renderer(nullptr), window(nullptr) {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    io = &ImGui::GetIO(); // Initialize io in the constructor
-    io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    ImGuiIO& io = ImGui::GetIO(); // Initialize io in the constructor
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+    //io->Fonts->AddFontDefault();
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
@@ -36,8 +38,8 @@ GUIManager::~GUIManager(){
 }
 
 bool GUIManager::setContext() {
-    window = RenderManager::getInstance()->getRenderForge()->getWindow().native;
-    renderer = (SDL_Renderer*) RenderManager::getInstance()->getRenderForge()->getWindow().render;
+    window = RenderManager::GetInstance()->getRenderForge()->getWindow().native;
+    renderer = (SDL_Renderer*) RenderManager::GetInstance()->getRenderForge()->getWindow().render;
 
     if (window != nullptr && renderer != nullptr) {
         // Setup Platform/Renderer backends
@@ -56,20 +58,16 @@ GUIManager* GUIManager::GetInstance() {
     return nullptr;
 }
 
-// HABLAR SOBRE COMO SE CARGARÍAN DESDE LUA
 void GUIManager::loadFont(std::string name, const char* fontFile, float size) {
     if (!fonts.count(name)) {
-        ImFont* font = io->Fonts->AddFontFromFileTTF(fontFile, size);
+        ImFont* font = ImGui::GetIO().Fonts->AddFontFromFileTTF(fontFile, size);
         fonts.insert({ name, font });
-        #ifdef _DEBUG
+        if (font != nullptr) {
             std::cout << "La fuente " + name + " se ha cargado\n";
-        #endif // _DEBUG
+            return;
+        }
     }
-    else {
-        #ifdef _DEBUG
-            std::cout << "La fuente " + name + " ya esta anadida\n";
-        #endif // _DEBUG
-    }
+    std::cout << "La fuente " + name + " ya esta anadida\n";
 }
 
 void GUIManager::showLoadedFonts() {
@@ -98,10 +96,6 @@ SDL_Window* GUIManager::getWindow() {
     return window;
 }
 
-ImGuiIO* GUIManager::getIO() {
-    return io;
-}
-
 bool GUIManager::update() {
     // Start the Dear ImGui frame
     ImGui_ImplSDLRenderer2_NewFrame();
@@ -113,7 +107,7 @@ bool GUIManager::update() {
 bool GUIManager::render() {
     // Rendering
     ImGui::Render();
-    SDL_RenderSetScale(renderer, io->DisplayFramebufferScale.x, io->DisplayFramebufferScale.y);
+    SDL_RenderSetScale(renderer, ImGui::GetIO().DisplayFramebufferScale.x, ImGui::GetIO().DisplayFramebufferScale.y);
     //SDL_SetRenderDrawColor(renderer, (Uint8)(255), (Uint8)(255), (Uint8)(255), (Uint8)(255));
     SDL_RenderClear(renderer);
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());

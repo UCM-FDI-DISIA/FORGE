@@ -7,6 +7,9 @@
 const std::string Button::id = "Button";
 
 Button::Button() : BaseButton(),
+    text("Boton"),
+    textColor(forge::Vector4(1.0f, 1.0f, 1.0f, 1.0f)), 
+    buttonColor(forge::Vector4(0.0f, 0.0f, 0.0f, 0.0f)),
     fontName(""),
     font(nullptr) {
     serializer(text, "text");
@@ -22,10 +25,8 @@ bool Button::initComponent(ComponentData* data) {
         if (fontName != "") {
             changeFont(fontName);
         }
-
-        if (size == forge::Vector2::ZERO) {
-            ImVec2 textSize = ImGui::CalcTextSize(text);
-            size = forge::Vector2(textSize.x * 1.1f, textSize.y * 1.3f);
+        else {
+            calcSize();
         }
 
         return true;
@@ -60,6 +61,13 @@ void Button::update() {
     ImGui::PopStyleVar();
     ImGui::PopStyleColor(3);
     ImGui::End();
+}
+
+void Button::calcSize() {
+    if (size == forge::Vector2::ZERO) {
+        ImVec2 textSize = ImGui::CalcTextSize(text);
+        size = forge::Vector2(textSize.x * 1.1f, textSize.y * 1.3f);
+    }
 }
 
 void Button::setColor(forge::Vector4 color_) {
@@ -100,6 +108,7 @@ void Button::changeFont(std::string fontName_) {
     fontName = fontName_;
     if (fontName != "" && gui->getFonts().count(fontName)) {
         font = gui->getFonts()[fontName];
+        calcSize();
     }
 }
 

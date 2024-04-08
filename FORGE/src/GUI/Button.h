@@ -23,6 +23,11 @@ private:
 	// Fuente
 	ImFont* font = nullptr;
 
+	/// <summary>
+	/// Calcula el tamano del texto segun la fuente dada
+	/// </summary>
+	void calcSize();
+
 public:
 	// Id de componente
 	static const std::string id;

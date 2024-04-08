@@ -16,7 +16,7 @@ UIComponent::UIComponent() :
 }
 
 UIComponent::~UIComponent() {
-    delete& window_flags;
+
 }
 
 bool UIComponent::initComponent(ComponentData* data) {

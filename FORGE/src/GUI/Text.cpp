@@ -10,7 +10,8 @@ Text::Text() : UIComponent(),
     fontName(""),
     font(nullptr),
     color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
-    bgColor(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })) {
+    bgColor(forge::Vector4({ 0.0, 0.0, 0.0, 0.0 })) {
+    serializer(fontName, "fontName");
     serializer(text, "text");
     serializer(color, "color");
     serializer(bgColor, "bgColor");

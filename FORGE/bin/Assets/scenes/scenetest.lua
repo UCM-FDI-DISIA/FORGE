@@ -61,6 +61,13 @@ local scenes = {
                     type = 0 
                 }
             }
+        },
+        boton = {
+            components = {
+                RectTransform = {
+                    position = {20, 80}
+                }
+            }
         }
     },
     Play = {

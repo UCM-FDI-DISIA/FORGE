@@ -6,7 +6,6 @@
 #include "Vector2.h"
 #include "Vector4.h"
 
-struct ImGuiIO;
 struct SDL_Renderer;
 struct SDL_Window;
 struct ImVec2;
@@ -20,9 +19,6 @@ private:
 
 	// Marcador de inicializacion
 	static bool initialised;
-
-	// Input/Output (Input: controles, fuentes Output: graficos)
-	ImGuiIO* io;
 
 	// Mapa desordenado de fuentes
 	std::unordered_map<std::string, ImFont*> fonts;
@@ -96,12 +92,6 @@ public:
 	/// </summary>	
 	/// <returns>La ventana de SDL</returns>
 	SDL_Window* getWindow();
-
-	/// <summary>
-	/// Devuelve el Input/Output
-	/// </summary>	
-	/// <returns>El Input/Output</returns>
-	ImGuiIO* getIO();
 
 	/// <summary>
 	/// Actualiza los frames
