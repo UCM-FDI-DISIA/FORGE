@@ -66,6 +66,10 @@ local scenes = {
             components = {
                 RectTransform = {
                     position = {20, 80}
+                },
+                Image = {
+                    id = "imgPrueb",
+                    fileName = "Assets/images/panko.png"
                 }
             }
         }

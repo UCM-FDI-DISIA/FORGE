@@ -75,9 +75,9 @@ int main(int argc, char* argv[]) {
 			}
 			sceneManager.refresh();
 			ad.update();
-			gui.render();
 			if (!render.render())
 				break;
+			gui.render();
 			gui.refresh();
 		}
 		sceneManager.cleanUp();

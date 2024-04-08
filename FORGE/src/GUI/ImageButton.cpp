@@ -38,14 +38,14 @@ bool ImageButton::initComponent(ComponentData* data) {
 }
 
 bool ImageButton::createImage(std::string file, ButtonState state) {
-	SDL_Renderer* renderer = GUIManager::GetInstance()->getRenderer();
+	Ogre::RenderWindow* renderer = GUIManager::GetInstance()->getRenderer();
 	if (renderer != nullptr) {
 		SDL_Surface* surface = IMG_Load(file.c_str());
 		if (surface == nullptr) {
 			std::cerr << "No se pudo cargar la imagen de " + file + " \n";
 		}
 		else {
-			SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+			/*SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 			if (texture == nullptr) {
 				SDL_FreeSurface(surface);
 				std::cerr << "No se pudo cargar la imagen de " + file + " \n";
@@ -54,11 +54,11 @@ bool ImageButton::createImage(std::string file, ButtonState state) {
 				if (size == forge::Vector2::ZERO) {
 					size = forge::Vector2((float)surface->w, (float)surface->h)+forge::Vector2(6, 6);
 				}
-
+				s
 				images.push_back(texture);
 
 				return true;
-			}
+			}*/
 		}
 	}
 	else {

@@ -8,6 +8,10 @@
 #include <Vector2.h>
 #include <Vector4.h>
 
+typedef unsigned int GLuint;
+namespace Ogre {
+	class RenderWindow;
+}
 struct ImVec2;
 struct ImVec4;
 struct SDL_Texture;
@@ -20,13 +24,13 @@ private:
 	std::string fileName;
 
 	// Textura
-	SDL_Texture* texture;
+	GLuint texture;
 
 	// Tamano original de la imagen
 	forge::Vector2 sourceSize;
 
 	// Renderer de SDL
-	SDL_Renderer* renderer;
+	Ogre::RenderWindow* renderer;
 
 	// Superficie de SDL
 	SDL_Surface* surface;
@@ -70,7 +74,7 @@ public:
 	/// <summary>
 	/// Devuelve la textura de SDL
 	/// </summary>	
-	SDL_Texture* getTexture();
+	GLuint getTexture();
 
 	/// <summary>
 	/// Devuelve el ancho de la imagen original

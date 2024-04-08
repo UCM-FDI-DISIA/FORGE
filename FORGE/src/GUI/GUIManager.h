@@ -6,7 +6,9 @@
 #include "Vector2.h"
 #include "Vector4.h"
 
-struct SDL_Renderer;
+namespace Ogre {
+	class RenderWindow;
+}
 struct SDL_Window;
 struct ImVec2;
 struct ImVec4;
@@ -26,8 +28,8 @@ private:
 	// Mapa desordenado de identificadores 
 	std::unordered_set<std::string> ids;
 
-	// Renderer de SDL
-	SDL_Renderer* renderer;
+	// Renderer de Ogre
+	Ogre::RenderWindow* renderer;
 
 	// Ventana de SDL
 	SDL_Window* window;
@@ -85,7 +87,7 @@ public:
 	/// Devuelve el renderer de SDL
 	/// </summary>	
 	/// <returns>El renderer de SDL</returns>
-	SDL_Renderer* getRenderer();
+	Ogre::RenderWindow* getRenderer();
 
 	/// <summary>
 	/// Devuelve la ventana de SDL

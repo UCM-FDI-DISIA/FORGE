@@ -1,8 +1,9 @@
 #include "GUIManager.h"
 #include <imgui.h>
 #include "imgui_impl_sdl2.h"
-#include "imgui_impl_sdlrenderer2.h"
+#include "imgui_impl_opengl2.h"
 #include <SDL.h>
+#include <SDL_opengl.h>
 #include "RenderForge.h"
 #include "RenderManager.h"
 
@@ -32,19 +33,18 @@ GUIManager::GUIManager() : renderer(nullptr), window(nullptr) {
 
 GUIManager::~GUIManager(){
     // Cleanup
-    ImGui_ImplSDLRenderer2_Shutdown();
+    ImGui_ImplOpenGL2_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 }
 
 bool GUIManager::setContext() {
     window = RenderManager::GetInstance()->getRenderForge()->getWindow().native;
-    renderer = (SDL_Renderer*) RenderManager::GetInstance()->getRenderForge()->getWindow().render;
+    renderer = RenderManager::GetInstance()->getRenderForge()->getWindow().render;
 
     if (window != nullptr && renderer != nullptr) {
-        // Setup Platform/Renderer backends
-        ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
-        ImGui_ImplSDLRenderer2_Init(renderer);
+        ImGui_ImplSDL2_InitForOpenGL(window, renderer);
+        ImGui_ImplOpenGL2_Init();
         return true;
     }
     else {
@@ -88,7 +88,7 @@ std::unordered_set<std::string> GUIManager::getIds() {
     return ids;
 }
 
-SDL_Renderer* GUIManager::getRenderer() {
+Ogre::RenderWindow* GUIManager::getRenderer() {
     return renderer;
 }
 
@@ -98,7 +98,7 @@ SDL_Window* GUIManager::getWindow() {
 
 bool GUIManager::update() {
     // Start the Dear ImGui frame
-    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplOpenGL2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
     return true;
@@ -107,11 +107,10 @@ bool GUIManager::update() {
 bool GUIManager::render() {
     // Rendering
     ImGui::Render();
-    SDL_RenderSetScale(renderer, ImGui::GetIO().DisplayFramebufferScale.x, ImGui::GetIO().DisplayFramebufferScale.y);
-    //SDL_SetRenderDrawColor(renderer, (Uint8)(255), (Uint8)(255), (Uint8)(255), (Uint8)(255));
-    SDL_RenderClear(renderer);
-    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
-    SDL_RenderPresent(renderer);
+    glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+    glClear(GL_COLOR_BUFFER_BIT);
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+    SDL_GL_SwapWindow(window);
     return true;
 }
 

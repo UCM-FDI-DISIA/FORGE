@@ -70,7 +70,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\SDL2\src\image;$(SolutionDir)dependencies\SDL2\build\$(Platform)\$(Configuration);$(SolutionDir)dependencies\ImGUI\build\$(Platform)\$(Configuration);$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2d.lib;SDL2_Image.lib;ImGui_d.lib;OgreMain_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2d.lib;SDL2_Image.lib;ImGui_d.lib;OgreMain_d.lib;opengl32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -95,7 +95,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)dependencies\SDL2\src\image;$(SolutionDir)dependencies\SDL2\build\$(Platform)\$(Configuration);$(SolutionDir)dependencies\ImGUI\build\$(Platform)\$(Configuration);$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2_Image.lib;ImGui.lib;OgreMain.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2_Image.lib;ImGui.lib;OgreMain.lib;opengl32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
