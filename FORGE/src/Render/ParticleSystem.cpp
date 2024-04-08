@@ -16,15 +16,14 @@ ParticleSystem::ParticleSystem() :
 }
 
 ParticleSystem::~ParticleSystem() {
-    if(ogreParticleSystem != nullptr && renderManager != nullptr)
-    {
+    if(ogreParticleSystem != nullptr && renderManager != nullptr) {
         renderManager->removeNode(ogreParticleSystem);
     }
 }
 
 bool ParticleSystem::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreParticleSystem = renderManager->addParticleSystemNode(this);
     }
     else {
@@ -42,7 +41,7 @@ void ParticleSystem::onDisabled() {
     ogreParticleSystem = nullptr;
 }
 
-void ParticleSystem::setParticle(std::string newParticle) {
+void ParticleSystem::setParticle(std::string const& newParticle) {
     particle = newParticle;
     renderManager->updateParticleSystemNode(ogreParticleSystem,this);
 }

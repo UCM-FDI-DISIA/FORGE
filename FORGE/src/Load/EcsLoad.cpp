@@ -11,7 +11,7 @@
 using namespace luabridge;
 
 EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
-	sceneManager(*SceneManager::getInstance()) {
+	sceneManager(*SceneManager::GetInstance()) {
 
 	std::string realPath = "Assets/scenes/" + path;
 	lua_State* lua = luaForge.getState();
@@ -36,7 +36,7 @@ EcsLoad::EcsLoad(std::string path, LuaForge& luaForge) :
 			}
 		}
 		catch (std::exception e) {
-			std::cerr << "ERROR: No hay escenas\n";
+			std::cerr << "ERROR: No hay escenas cargables en el archivo de Lua\n";
 		}
 	}
 	

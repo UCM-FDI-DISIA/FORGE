@@ -30,7 +30,7 @@ Mesh::~Mesh() {
 
 bool Mesh::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreEntity = renderManager->addMeshNode(this);
     }
     else 
@@ -49,12 +49,12 @@ void Mesh::onDisabled() {
     ogreEntity = nullptr;
 }
 
-void Mesh::setMesh(std::string newMesh) {
+void Mesh::setMesh(std::string const& newMesh) {
     mesh = newMesh;
     ogreEntity = renderManager->updateMeshNode(ogreEntity, this);
 }
 
-void Mesh::setMaterial(std::string newMaterial) {
+void Mesh::setMaterial(std::string const& newMaterial) {
     material = newMaterial;
     ogreEntity->setMaterialName(newMaterial);
 }

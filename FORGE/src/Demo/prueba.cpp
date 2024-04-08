@@ -1,4 +1,4 @@
-#define _CRTDBG_MAP_ALLOC
+﻿#define _CRTDBG_MAP_ALLOC
 #define SDL_MAIN_HANDLED
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -33,7 +33,7 @@
 #include "InputText.h"
 
 void factory() {
-	Factory& f = *Factory::getInstance();
+	Factory& f = *Factory::GetInstance();
 	f.registerComponent<Transform>();
 	f.registerComponent<RectTransform>();
 	f.registerComponent<Mesh>();
@@ -56,29 +56,30 @@ void factory() {
 int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
-	LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
-	RenderManager& render = *RenderManager::getInstance();
-	render.setup("Test FORGE");
-	SceneManager& sceneManager = *SceneManager::getInstance();
-	Input& input = *Input::getInstance();
-	AudioManager& ad = *AudioManager::getInstance();
-	GUIManager& gui = *GUIManager::GetInstance();
-	sceneManager.changeScene("Test");
-	while (!input.keyUp(K_ESC)) {
-		input.refresh();
-		input.update();
-		gui.update();
-		if (!sceneManager.update()) {
-			break;
+	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init()) {
+		LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
+		RenderManager& render = *RenderManager::GetInstance();
+		SceneManager& sceneManager = *SceneManager::GetInstance();
+		Input& input = *Input::GetInstance();
+		AudioManager& ad = *AudioManager::GetInstance();
+		GUIManager& gui = *GUIManager::GetInstance();
+		sceneManager.changeScene("Test");
+		while (!input.keyUp(K_ESC)) {
+			input.refresh();
+			input.update();
+			gui.update();
+			if (!sceneManager.update()) {
+				break;
+			}
+			sceneManager.refresh();
+			ad.update();
+			if (!render.render())
+				break;
+			gui.refresh();
 		}
-		sceneManager.refresh();
-		gui.refresh();
-		ad.update();
-		if (!render.render())
-			break;
+		sceneManager.cleanUp();
+		delete loadManager;
 	}
-	sceneManager.cleanUp();
-	delete loadManager;
 
 	return 0;
 }

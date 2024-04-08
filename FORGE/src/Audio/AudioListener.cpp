@@ -1,3 +1,4 @@
+#include <iostream>
 #include "AudioListener.h"
 #include "Transform.h"
 #include "Entity.h"
@@ -7,7 +8,7 @@ const std::string AudioListener::id = "AudioListener";
 
 AudioListener::AudioListener() :
     transform(nullptr),
-    manager(*AudioManager::getInstance()) {
+    manager(*AudioManager::GetInstance()) {
 }
 
 AudioListener::~AudioListener() {
@@ -17,7 +18,13 @@ AudioListener::~AudioListener() {
 }
 
 bool AudioListener::initComponent(ComponentData* data) {
-    transform = entity->getComponent<Transform>();
+    if(entity->hasComponent<Transform>()) {
+		transform = entity->getComponent<Transform>();  
+	}
+	else {
+        std::cerr << "ERROR: Se necesita un componente Transform para generar un AudioListener\n";
+		return false;
+	}
     if (manager.getListenerOnScene()) {
         entity->removeComponent(this->id);
     }

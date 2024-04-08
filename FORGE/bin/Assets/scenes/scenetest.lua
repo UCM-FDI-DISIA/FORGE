@@ -71,11 +71,18 @@ local scenes = {
                     position = {0, 0, 0},
                     scale = {0.25, 0.25, 0.25}
                 },
-                AudioListener = 0,
-                Mesh = {
- 		            mesh = "ogrehead.mesh",
+                Animator = {
+ 		            mesh = "ninja.mesh",
+                    activeAnimations = {
+                       "Walk"
+                    }
+                },
+                TestComponent = 0,
+                AudioSource = {
+                    sound = "Test",
+                    playOnAwake = true
                 }
-            }
+            },
         },
         cartel = {
             group = "obstacle",
@@ -114,8 +121,7 @@ local scenes = {
                     nearClipDistance = 1,
                     autoAspectRatio = true,
                     backgroundColor = {0.6, 0.3, 0.3}
-                },
-                TestComponent = 0
+                }
             }
         },
         luz = {

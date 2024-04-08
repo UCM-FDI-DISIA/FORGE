@@ -11,7 +11,7 @@ Random::~Random() {
 
 }
 
-Random* Random::getInstance() {
+Random* Random::GetInstance() {
 	if (instance != nullptr) return instance.get();
 	return (instance = std::unique_ptr<Random>(new Random())).get();
 }

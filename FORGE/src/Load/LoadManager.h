@@ -12,7 +12,7 @@ public:
 	/// </summary>
 	/// <param name="assetsFile">Ruta del archivo en el que se indican los assets a cargar</param>
 	/// <param name="scenesFile">Nombre del archivo de escenas dentro de Assets/scenes</param>
-	LoadManager(std::string assetsFile, std::string scenesFile);
+	LoadManager(std::string const& assetsFile, std::string const& scenesFile);
 	/// <summary>
 	/// Cierra las referencias a los archivos de carga
 	/// </summary>

@@ -31,7 +31,7 @@ Camera::~Camera() {
 
 bool Camera::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
 		ogreCamera = renderManager->addCameraNode(this);
     }
     else {
@@ -60,7 +60,7 @@ void Camera::setAutoAspectRatio(bool newAutoAspectRatio) {
     ogreCamera->setAutoAspectRatio(newAutoAspectRatio);
 }
 
-void Camera::setBackgroundColor(forge::Vector3 newbackgroundColor) {
+void Camera::setBackgroundColor(forge::Vector3 const& newbackgroundColor) {
     backgroundColor = newbackgroundColor;
     Ogre::ColourValue value = Ogre::ColourValue(backgroundColor.getX(), backgroundColor.getY(), backgroundColor.getZ());
     ogreCamera->getViewport()->setBackgroundColour(value);

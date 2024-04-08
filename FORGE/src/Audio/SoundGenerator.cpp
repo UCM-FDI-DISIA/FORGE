@@ -3,9 +3,8 @@
 #include "Sound.h"
 
 using namespace irrklang;
-using namespace forge;
 
-SoundGenerator::SoundGenerator(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source) :
+SoundGenerator::SoundGenerator(ISoundEngine& _engine, ISoundSource* _source) :
 	engine(_engine),
 	source(_source) {
 }

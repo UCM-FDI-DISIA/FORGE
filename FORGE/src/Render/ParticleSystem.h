@@ -47,7 +47,7 @@ public:
     /// Cambia la particula a emitir por el sistema
     /// </summary>
     /// <param name="newParticle">La nueva particula</param>
-    void setParticle(std::string newParticle);
+    void setParticle(std::string const& newParticle);
     /// <summary>
     /// Cambia el estado de emision del sistema de particulas
     /// </summary>

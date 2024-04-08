@@ -10,24 +10,27 @@
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
-	input(*Input::getInstance()),
+	input(*Input::GetInstance()),
 	movement(2.0f),
 	transform(nullptr),
 	animator(nullptr),
 	audio(nullptr),
-	sceneManager(SceneManager::getInstance()),
+	sceneManager(SceneManager::GetInstance()),
 	anims(),
 	activeAnim(0) {
 }
 
 bool TestComponent::initComponent(ComponentData* data) {
-	transform = entity->getComponent<Transform>();
-	audio = entity->getComponent<AudioSource>();
-	animator = entity->getComponent<Animator>();
-	if (animator != nullptr && animator->getEntity()->isAlive()) {
-		anims = animator->getAnimations();
-		return true;
+	if (entity->hasComponent<Transform>() && entity->hasComponent<AudioSource>() && entity->hasComponent<Animator>()) {
+		transform = entity->getComponent<Transform>();	
+		audio = entity->getComponent<AudioSource>();	
+		animator = entity->getComponent<Animator>();
+		if (animator != nullptr && animator->getEntity()->isAlive()) {
+			anims = animator->getAnimations();	
+			return true;
+		}
 	}
+	std::cerr << "ERROR: Se necesita un componente Transform, AudioSource y Animator para generar un TestComponent\n";
 	return false;
 }
 

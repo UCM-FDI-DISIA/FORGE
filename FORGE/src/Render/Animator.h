@@ -42,37 +42,37 @@ public:
     /// </summary>
     /// <param name="animation">Nombre de la animacion modificada</param>
     /// <param name="looped">Nuevo estado de bucle</param>
-    void setLoop(std::string animation, bool looped);
+    void setLoop(std::string const& animation, bool looped);
     /// <summary>
     /// Establece el estado de reproduccion de una animacion
     /// </summary>
     /// <param name="animation">Nombre de la animacion modificada</param>
     /// <param name="active">Nuevo estado de bucle</param>
-    void setActive(std::string animation, bool active);
+    void setActive(std::string const& animation, bool active);
     /// <summary>
     /// Establece el estado de bucle de varias animaciones
     /// </summary>
     /// <param name="animations">Vector con los nombres de las animaciones modificadas</param>
     /// <param name="looped">Nuevo estado de bucle de las animaciones</param>
-    void setLoop(std::vector<std::string> animations, bool looped);
+    void setLoop(std::vector<std::string> const& animations, bool looped);
     /// <summary>
     /// Establece el estado de reproduccion de varias animaciones
     /// </summary>
     /// <param name="animations">Vector con los nombres de las animaciones modificadas</param>
     /// <param name="looped">Nuevo estado de reproduccion de las animaciones</param>
-    void setActive(std::vector<std::string> activeAnimations, bool active);
+    void setActive(std::vector<std::string> const& activeAnimations, bool active);
     /// <summary>
     /// Establece el estado de una unica animacion a verdadero
     /// y el de todas las demas a falso 
     /// </summary>
     /// <param name="animation">Nombre de las animacion que se reproducira</param>
-    void changeActive(std::string animation);
+    void changeActive(std::string const& animation);
     /// <summary>
     /// Establece el estado de un conjunto de animaciones a verdadero
     /// y el de todas las demas a falso 
     /// </summary>
     /// <param name="activeAnimations">Vector con los nombres de las animaciones que se reproduciran</param>
-    void changeActive(std::vector<std::string> activeAnimations);
+    void changeActive(std::vector<std::string> const& activeAnimations);
     #pragma endregion
 
     #pragma region getters

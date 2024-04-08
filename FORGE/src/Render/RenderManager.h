@@ -28,15 +28,16 @@ namespace Ogre {
 }
 
 
-class RenderManager
-{
+class RenderManager {
 
 private:
 	static std::unique_ptr<RenderManager> instance;
+	static bool initialised;
 
 	RenderForge* forge;
 	Ogre::Root* root;        
 	Ogre::SceneManager* sceneManager;
+
 	std::unordered_map<Ogre::SceneNode*, Transform*> transforms;
 
 	//Generadores de nombres aleatorios
@@ -55,18 +56,23 @@ private:
 
 public:
 	/// <summary>
+	/// Crea una instancia del RenderManager
+	/// </summary>
+	/// <returns>Si la inicializacion fue correcta</returns>
+	static bool Init(std::string const& appName);
+	/// <returns>Devuelve una instancia al RenderManager si existe, si no existe devuelve un puntero a nulo</returns>
+	static RenderManager* GetInstance();
+	/// <summary>
 	/// Destructora del RenderManager
 	/// </summary>
 	~RenderManager();
 
-	/// <returns>Devuelve una instancia al RenderManager</returns>
-	static RenderManager* getInstance();
 #pragma region Setup
 	/// <summary>
 	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de OGRE sin mas.
 	/// </summary>
 	//<param name="name"> Nombre de la aplicacion</param>
-	void setup(std::string appName);
+	bool setup(std::string const& appName);
 
 	/// <summary>
 	/// Renderiza un frame

@@ -19,15 +19,14 @@ Light::Light() :
 }
 
 Light::~Light() {
-    if(ogreLight != nullptr && renderManager != nullptr)
-    {
+    if(ogreLight != nullptr && renderManager != nullptr) {
         renderManager->removeNode(ogreLight);
     }
 }
 
 bool Light::initComponent(ComponentData* data) {
     if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::getInstance();
+        renderManager = RenderManager::GetInstance();
         ogreLight = renderManager->addLightNode(this);
     }
     else {

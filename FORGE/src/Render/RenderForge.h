@@ -1,15 +1,19 @@
 #pragma once
+#ifndef RENDER_FORGE_H_
+#define RENDER_FORGE_H_
 /// <summary>
 /// Clase de manejo de los metodos de render
 /// </summary>
-#include <SDL_syswm.h>
-#include <OgreString.h>
+
+#include <string>
 
 namespace Ogre {
+	class Root;
 	class FileSystemLayer;
 	class RenderWindow;
 }
 
+struct SDL_Window;
 typedef SDL_Window NativeWindowType;
 
 /// <summary>
@@ -29,8 +33,9 @@ private:
 
 	Ogre::FileSystemLayer* fileSystemLayer; 
 
-	Ogre::String appName;
-	Ogre::String solutionPath;
+	std::string appName;
+	std::string solutionPath;
+	bool correctInitialitation;
 	
 	#pragma region Setup
 	/// <summary>
@@ -51,14 +56,12 @@ private:
 	NativeWindowPair createWindow();
 	#pragma endregion
 
-
 public:
-
 	/// <summary>
 	/// Constructora de RenderForge
 	/// </summary>
 	/// <param name="appName:">Nombre de la aplicacion ejecutada</param>
-	RenderForge(std::string appName);
+	RenderForge(std::string const& appName);
 
 	/// <summary>
 	/// Destructora del RenderForge
@@ -71,7 +74,9 @@ public:
 
 	/// <returns> Devuelve el par de ventanas: La ventana nativa de SDL y la de ventana render de OGRE</returns>
 	NativeWindowPair& getWindow();
+
+	bool getInitialitation();
 	#pragma endregion
 };
 
-
+#endif // !RENDER_FORGE_H_

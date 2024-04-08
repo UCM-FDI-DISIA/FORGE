@@ -49,12 +49,12 @@ public:
     /// destruyendola y volviendola a crear
     /// </summary>
     /// <param name="newMesh">Nombre de la nueva malla</param>
-    void setMesh(std::string newMesh);
+    void setMesh(std::string const& newMesh);
     /// <summary>
     /// Cambia el material utilizado para la entidad de Ogre
     /// </summary>
     /// <param name="newMaterial">Nombre del nuevo material</param>
-    void setMaterial(std::string newMaterial);
+    void setMaterial(std::string const& newMaterial);
 	#pragma endregion
 
 	#pragma region getters

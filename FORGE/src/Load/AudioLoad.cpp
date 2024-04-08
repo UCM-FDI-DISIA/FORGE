@@ -6,7 +6,7 @@
 #pragma warning(pop)
 #include "AudioManager.h"
 AudioLoad::AudioLoad(luabridge::LuaRef& audioRef) {
-	AudioManager& am = *AudioManager::getInstance();
+	AudioManager& am = *AudioManager::GetInstance();
 	for (auto&& audio : pairs(audioRef)) {
 		if (audio.second.isTable()) {
 			auto path = audio.second["path"];

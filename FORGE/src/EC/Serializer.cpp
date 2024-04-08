@@ -5,7 +5,7 @@
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 
-Component::Serializer::BaseSerialized::BaseSerialized(std::string myName) :
+Component::Serializer::BaseSerialized::BaseSerialized(std::string const& myName) :
     name(myName) {
 }
 

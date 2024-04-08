@@ -1,4 +1,5 @@
 #include "RenderForge.h"
+#include <iostream>
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
@@ -18,8 +19,9 @@
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
 #include <OgreDataStream.h>
+#include <OgreString.h>
 #include <SDL_video.h>
-#include <iostream>
+#include <SDL_syswm.h>
 #pragma warning(pop)
 
 
@@ -31,13 +33,13 @@ Ogre::Root* RenderForge::createRoot() {
 
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
 		std::cerr << "ERROR: No se ha encontrado el archivo de plugins" << std::endl;
+		correctInitialitation = false;
 		return nullptr;
 	}
 
 	solutionPath = pluginsPath;
 	solutionPath.erase(solutionPath.find_last_of("\\") + 1, solutionPath.size() - 1);
 	fileSystemLayer->setHomePath(solutionPath);
-	//mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
 
 	// Creamos la raíz de OGRE 
 	return new Ogre::Root(pluginsPath, fileSystemLayer->getWritablePath("ogre.cfg"), fileSystemLayer->getWritablePath("ogre.log"));
@@ -52,9 +54,9 @@ void RenderForge::locateResources() {
 		cf.load(resourcesPath);
 	}
 	else {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-			Ogre::FileSystemLayer::resolveBundlePath(solutionPath + "\\media"),
-			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		correctInitialitation = false;
+		std::cerr << "ERROR: No se localizaron los recursos\n";
+		return;
 	}
 
 	Ogre::String sec, type, arch;
@@ -64,18 +66,18 @@ void RenderForge::locateResources() {
 		// Esto sirve para dividir los recursos en secciones. Al comentarlo se van todos a "General"
 		// sec = seci->first;
 		const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
-		Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
-
+		
 		// iterar por todas las rutas de configuracion
-		for (i = settings.begin(); i != settings.end(); i++) {
-			type = i->first;
-			arch = i->second;
-			if (arch[0] == '.' && (arch[1] == '/' || arch[1] == '\\')) {
-				arch = arch.substr(2);
+		for (auto& i : settings) {
+			type = i.first;
+			arch = i.second;
+			if (arch[0] == '.' && (arch[1] == '/' || arch[1] == '\\' ||
+					(arch[1] == '.' && (arch[2] == '/' || arch[2] == '\\')))) {
 				arch = fileSystemLayer->getWritablePath(arch);
 			}
 			arch = Ogre::FileSystemLayer::resolveBundlePath(arch);
 			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parámetro sería "sec" si dividieramos en secciones
+		
 		}
 	}
 
@@ -164,29 +166,52 @@ NativeWindowPair RenderForge::createWindow() {
 	return window;
 }
 
-RenderForge::RenderForge(std::string _appName) :
+RenderForge::RenderForge(std::string const& _appName) :
 	root(nullptr),
 	window({nullptr, nullptr}),
 	fileSystemLayer(nullptr),
 	appName(_appName),
 	solutionPath() {
-
+	correctInitialitation = true;
+	
 	root = createRoot();
 
-	// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
-	Ogre::RenderSystem* rs = root->getRenderSystemByName("OpenGL Rendering Subsystem");
-	root->setRenderSystem(rs);
+	if (correctInitialitation) {
+		// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
+		try {
+			Ogre::RenderSystem* rs = root->getRenderSystemByName("OpenGL Rendering Subsystem");
+			root->setRenderSystem(rs);
+		}
+		catch (std::exception e) {
+			correctInitialitation = false;
+			std::cerr << "ERROR: Fallo al asignar el Render System\n";
+		}
 
-	// Inicializamos el sistema de renderizado
-	root->initialise(false);
+		if (correctInitialitation) {
+			// Inicializamos el sistema de renderizado
+			try {
+				root->initialise(false);
+			} 
+			catch (std::exception e) {
+				correctInitialitation = false;
+				std::cerr << "ERROR: Fallo al inicializar root\n";
+			}
+			
+			if (correctInitialitation) {
+				// Creamos la ventana
+				window = createWindow();
+				if (window.render == nullptr || window.native == nullptr) {
+					correctInitialitation = false;
+					std::cerr << "ERROR: Fallo en la creacion de la ventana\n";
+				}
 
-	// Creamos la ventana
-	window = createWindow();
-	//SDL_SetWindowGrab(myWindow.native, SDL_bool(false));
-	//SDL_ShowCursor(SDL_bool(false));
-
-	// Inicializamos los recursos
-	locateResources();
+				if (correctInitialitation) {
+					// Inicializamos los recursos
+					locateResources();
+				}
+			}
+		}
+	}
 }
 
 RenderForge::~RenderForge() {
@@ -200,4 +225,8 @@ Ogre::Root* RenderForge::getRoot() {
 
 NativeWindowPair& RenderForge::getWindow() {
 	return window;
+}
+
+bool RenderForge::getInitialitation() { 
+	return correctInitialitation;
 }

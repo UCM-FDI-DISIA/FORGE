@@ -71,7 +71,7 @@ public:
     /// Cambia el material de los billboards
     /// </summary>
     /// <param name="newMaterial">Nombre del nuevo material</param>
-    void setMaterial(std::string newMaterial);
+    void setMaterial(std::string const& newMaterial);
     /// <summary>
     /// Cambia el tamaño del billboardSet (el número de billboards que puede contener)
     /// </summary>

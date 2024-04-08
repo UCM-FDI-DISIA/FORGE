@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Identificador del componente</param>
-	Component* addComponent(std::string id);
+	Component* addComponent(std::string const& id);
 	/// <summary>
 	/// Agrega el Component dicho a la Entity y lo inicializa
 	/// </summary>
@@ -79,7 +79,7 @@ public:
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
 	/// <param name="name">Nombre del Component a eliminar</param>
-	void removeComponent(std::string id);
+	void removeComponent(std::string const& id);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
@@ -104,7 +104,7 @@ public:
 	/// </summary>
 	/// <param name="name">Nombre del Component a consultar</param>
 	/// <returns>Booleano que indica si la Entity tiene el Component</returns>
-	bool hasComponent(std::string name);
+	bool hasComponent(std::string const& name);
 	/// <summary>
 	/// Comprueba si la Entity tiene el Component indicado
 	/// </summary>
