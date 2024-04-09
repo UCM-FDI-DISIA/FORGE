@@ -9,11 +9,13 @@ class Transform;
 class Animator;
 class AudioSource;
 class SceneManager;
+class RigidBody;
 
 class TestComponent : public Component {
 private:
 	Transform* transform;
 	Animator* animator;
+	RigidBody* rigidBody;
 	Input& input;
 	float movement;
 	std::vector<std::string> anims;

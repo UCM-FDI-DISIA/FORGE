@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include <Transform.h>
 #include <Serializer.h>
-
+#define PI 3.14159265358979323846264338327950288
 
 const std::string RigidBody::id = "RigidBody";
 
@@ -174,6 +174,58 @@ void RigidBody::setRigidScale(float radius, float height) {
         myBody->setCollisionShape(myShape);
     }
 }
+
+void RigidBody::setPositionX(float newX) {
+    btTransform trans;
+    btTransform prevTransform = myBody->getWorldTransform();
+    trans.setOrigin(btVector3(newX, prevTransform.getOrigin().y(), prevTransform.getOrigin().z()));
+    trans.setRotation(prevTransform.getRotation());
+    myBody->setWorldTransform(trans);
+}
+
+void RigidBody::setPositionY(float newY) {
+    btTransform trans;
+    btTransform prevTransform = myBody->getWorldTransform();
+    trans.setOrigin(btVector3(prevTransform.getOrigin().x(), newY, prevTransform.getOrigin().z()));
+    trans.setRotation(prevTransform.getRotation());
+    myBody->setWorldTransform(trans);
+}
+
+void RigidBody::setPositionZ(float newZ) {
+    btTransform trans;
+    btTransform prevTransform = myBody->getWorldTransform();
+    trans.setOrigin(btVector3(prevTransform.getOrigin().x(), prevTransform.getOrigin().y(), newZ));
+    trans.setRotation(prevTransform.getRotation());
+    myBody->setWorldTransform(trans);
+}
+
+void RigidBody::rotateX(float newAngle) {
+    float rad = newAngle * (float)PI / 180;
+    btTransform trans;
+    btTransform prevTransform = myBody->getWorldTransform();
+    trans.setOrigin(prevTransform.getOrigin());
+    trans.setRotation(prevTransform.getRotation()* btQuaternion(1,0,0,rad));
+    myBody->setWorldTransform(trans);
+}
+
+void RigidBody::rotateY(float newAngle) {
+    float rad = newAngle * (float)PI / 180;
+    btTransform trans;
+    btTransform prevTransform = myBody->getWorldTransform();
+    trans.setOrigin(prevTransform.getOrigin());
+    trans.setRotation(prevTransform.getRotation() * btQuaternion(0, 1, 0, rad));
+    myBody->setWorldTransform(trans);
+}
+
+void RigidBody::rotateZ(float newAngle) {
+    float rad = newAngle * (float)PI / 180;
+    btTransform trans;
+    btTransform prevTransform = myBody->getWorldTransform();
+    trans.setOrigin(prevTransform.getOrigin());
+    trans.setRotation(prevTransform.getRotation() * btQuaternion(0, 0, 1, rad));
+    myBody->setWorldTransform(trans);
+}
+
 
 float RigidBody::getMass() {
     return mass;

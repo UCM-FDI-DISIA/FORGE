@@ -50,13 +50,12 @@ int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	factory();
 	
-	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init()){
+	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init() && PhysicsManager::Init()){
 
 		LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
 		RenderManager& render = *RenderManager::GetInstance();
 		SceneManager& sceneManager = *SceneManager::GetInstance();
 		PhysicsManager& phyisicsManager = *PhysicsManager::GetInstance();
-		phyisicsManager.initPhysics();
 
 		Input& input = *Input::GetInstance();
 		AudioManager& ad = *AudioManager::GetInstance();

@@ -12,6 +12,7 @@
 #include <RenderManager.h>
 
 std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
+bool PhysicsManager::initialised = false;
 
 PhysicsManager::PhysicsManager() {
     broadphase = nullptr;
@@ -34,19 +35,34 @@ PhysicsManager::~PhysicsManager() {
     delete broadphase;
 }
 
-void PhysicsManager::initPhysics() {
-    broadphase = new btDbvtBroadphase();
-    collisionConfiguration = new btDefaultCollisionConfiguration();
-    dispatcher = new btCollisionDispatcher(collisionConfiguration);
-    solver = new btSequentialImpulseConstraintSolver();
-    world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+bool PhysicsManager::Init() {
+    instance = std::unique_ptr<PhysicsManager>(new PhysicsManager());
+    if (instance->setup()) {
+        initialised = true;
+        return true;
+    }
+    return false;
+}
 
-    debugger = new DebugMode(RenderManager::GetInstance()->getSceneManager());
-    // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
-    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe); 
-    world->setDebugDrawer(debugger);
+bool PhysicsManager::setup() {
+    try {
+        broadphase = new btDbvtBroadphase();
+        collisionConfiguration = new btDefaultCollisionConfiguration();
+        dispatcher = new btCollisionDispatcher(collisionConfiguration);
+        solver = new btSequentialImpulseConstraintSolver();
+        world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-    world->setGravity(btVector3((btScalar)0, (btScalar)-9.8 , (btScalar)0));
+        debugger = new DebugMode(RenderManager::GetInstance()->getSceneManager());
+        // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
+        debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+        world->setDebugDrawer(debugger);
+
+        world->setGravity(btVector3((btScalar)0, (btScalar)-9.8, (btScalar)0));
+        return true;
+    }
+    catch (std::exception e) {
+        return false;
+    }
 }
 
 void PhysicsManager::drawDebug() {
@@ -103,10 +119,8 @@ void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
 }
 
 PhysicsManager* PhysicsManager::GetInstance() {
-    if (instance.get() != nullptr) {
-        return instance.get();
-    }
-	return (instance = std::unique_ptr<PhysicsManager>(new PhysicsManager())).get();
+    if (initialised) return instance.get();
+    return nullptr;
 }
 
 void PhysicsManager::registerBody(btRigidBody* body, Transform* transform) {

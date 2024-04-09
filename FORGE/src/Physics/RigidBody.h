@@ -100,6 +100,13 @@ public:
     /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
     /// <param name="height">Altura nueva par ala capsula</param>
     void setRigidScale(float radius, float height);
+
+    void setPositionX(float newX);
+    void setPositionY(float newY);
+    void setPositionZ(float newZ);
+    void rotateX(float newAngle);
+    void rotateY(float newAngle);
+    void rotateZ(float newAngle);
     #pragma endregion
 
     #pragma region getters

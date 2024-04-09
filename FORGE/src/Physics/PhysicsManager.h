@@ -14,6 +14,8 @@ namespace forge {
 class PhysicsManager {
 private:
 	static std::unique_ptr<PhysicsManager> instance;
+    static bool initialised;
+
     btBroadphaseInterface* broadphase;
     btDefaultCollisionConfiguration* collisionConfiguration;
     btCollisionDispatcher* dispatcher;
@@ -35,10 +37,11 @@ public:
     /// </summary>
     ~PhysicsManager();
 
+    static bool Init();
     /// <summary>
     /// Inicializa el mundo de fisicas y pone una gravedad default (9.8)
     /// </summary>
-    void initPhysics();
+    bool setup();
 
     /// <summary>
     /// Dibuja los wireframes de los cuerpos fisicos en el mundo de fisicas
