@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 	if (RenderManager::Init("Test FORGE") && AudioManager::Init() && SceneManager::Init() && Input::Init()
 		&& GUIManager::Init()) {
 		LoadManager* loadManager = new LoadManager("Assets/assets.forge.lua", "scenetest.lua");
-		RenderManager& render = *RenderManager::GetInstance();
+		//RenderManager& render = *RenderManager::GetInstance();
 		SceneManager& sceneManager = *SceneManager::GetInstance();
 		Input& input = *Input::GetInstance();
 		AudioManager& ad = *AudioManager::GetInstance();
@@ -73,11 +73,11 @@ int main(int argc, char* argv[]) {
 			if (!sceneManager.update()) {
 				break;
 			}
+			gui.render();
 			sceneManager.refresh();
 			ad.update();
-			if (!render.render())
-				break;
-			gui.render();
+			/*if (!render.render())
+				break;*/
 			gui.refresh();
 		}
 		sceneManager.cleanUp();

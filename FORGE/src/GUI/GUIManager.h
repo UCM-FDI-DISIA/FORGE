@@ -16,6 +16,7 @@ struct ImFont;
 
 class GUIManager {
 private:
+	bool load = false;
 	// Instancia Singleton
 	static std::unique_ptr<GUIManager> instance;
 

@@ -29,9 +29,6 @@ private:
 	// Tamano original de la imagen
 	forge::Vector2 sourceSize;
 
-	// Renderer de SDL
-	Ogre::RenderWindow* renderer;
-
 	// Superficie de SDL
 	SDL_Surface* surface;
 
