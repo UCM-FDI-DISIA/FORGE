@@ -67,9 +67,8 @@ local scenes = {
                 RectTransform = {
                     position = {20, 80}
                 },
-                Image = {
-                    id = "imgPrueb",
-                    fileName = "Assets/images/panko.png"
+                Button = {
+                    id = "imgPrueb"
                 }
             }
         }

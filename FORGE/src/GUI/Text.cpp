@@ -25,10 +25,11 @@ bool Text::initComponent(ComponentData* data) {
             changeFont(fontName);
         }
 
-        if (size == forge::Vector2::ZERO) {
+        setBackground();
+        /*if (size == forge::Vector2::ZERO) {
             ImVec2 textSize = ImGui::CalcTextSize(text);
             size = forge::Vector2(textSize.x * 1.07f, textSize.y);
-        }
+        }*/
 
         return true;
     }
@@ -36,6 +37,10 @@ bool Text::initComponent(ComponentData* data) {
 }
 
 void Text::update() {
+    if (size == forge::Vector2::ZERO) {
+        ImVec2 textSize = ImGui::CalcTextSize(text);
+        size = forge::Vector2(textSize.x * 1.07f, textSize.y);
+    }
     // Tamano y posicion de la ventana
     ImGui::SetNextWindowSize(gui->Vector2ToGUI(size));
     ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));

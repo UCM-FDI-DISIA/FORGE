@@ -25,9 +25,6 @@ bool Button::initComponent(ComponentData* data) {
         if (fontName != "") {
             changeFont(fontName);
         }
-        else {
-            calcSize();
-        }
 
         return true;
     }
@@ -35,6 +32,7 @@ bool Button::initComponent(ComponentData* data) {
 }
 
 void Button::update() {
+    calcSize();
     // Tamano y posicion de la ventana
     ImGui::SetNextWindowSize(gui->Vector2ToGUI(size));
     ImGui::SetNextWindowPos(gui->Vector2ToGUI(transform->getPosition()));
