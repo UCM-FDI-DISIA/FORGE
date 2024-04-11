@@ -26,12 +26,12 @@ bool TestComponent::initComponent(ComponentData* data) {
 		audio = entity->getComponent<AudioSource>();	
 		animator = entity->getComponent<Animator>();
 		if (animator != nullptr && animator->getEntity()->isAlive()) {
-			anims = animator->getAnimations();	
+			anims = animator->getAnimations();
+			animator->setLoop(anims, true);
 			return true;
 		}
 	}
-	std::cerr << "ERROR: Se necesita un componente Transform, AudioSource y Animator para generar un TestComponent\n";
-	return false;
+	throwError(false, "Se necesita un componente Transform, AudioSource y Animator para generar un TestComponent");
 }
 
 void TestComponent::update() {

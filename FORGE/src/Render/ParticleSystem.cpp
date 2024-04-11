@@ -27,7 +27,7 @@ bool ParticleSystem::initComponent(ComponentData* data) {
         ogreParticleSystem = renderManager->addParticleSystemNode(this);
     }
     else {
-       		std::cerr << "ERROR: Se requiere un componente Transform para generar un ParticleSystem\n";
+        reportError("Se requiere un componente Transform para generar un ParticleSystem");
 	}
     return ogreParticleSystem != nullptr;
 }

@@ -56,7 +56,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_FORGE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\irrKlang\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -75,7 +75,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_FORGE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\irrKlang\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -92,12 +92,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Utils\Quaternion.cpp" />
+    <ClCompile Include="..\..\src\Utils\TimeForge.cpp" />
     <ClCompile Include="..\..\src\Utils\Random.cpp" />
     <ClCompile Include="..\..\src\Utils\Vector2.cpp" />
     <ClCompile Include="..\..\src\Utils\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Utils\ForgeError.h" />
+    <ClInclude Include="..\..\src\Utils\ForgeExport.h" />
+    <ClInclude Include="..\..\src\Utils\ForgeImport.h" />
     <ClInclude Include="..\..\src\Utils\Quaternion.h" />
+    <ClInclude Include="..\..\src\Utils\TimeForge.h" />
     <ClInclude Include="..\..\src\Utils\Random.h" />
     <ClInclude Include="..\..\src\Utils\Vector2.h" />
     <ClInclude Include="..\..\src\Utils\Vector3.h" />

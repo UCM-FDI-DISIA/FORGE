@@ -23,6 +23,7 @@
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 #pragma warning(pop)
+#include "ForgeError.h"
 
 
 Ogre::Root* RenderForge::createRoot() {
@@ -32,9 +33,8 @@ Ogre::Root* RenderForge::createRoot() {
 	pluginsPath = fileSystemLayer->getConfigFilePath("plugins.cfg");
 
 	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
-		std::cerr << "ERROR: No se ha encontrado el archivo de plugins" << std::endl;
 		correctInitialitation = false;
-		return nullptr;
+		throwError(nullptr, "No se ha encontrado el archivo de plugins");
 	}
 
 	solutionPath = pluginsPath;
@@ -55,7 +55,7 @@ void RenderForge::locateResources() {
 	}
 	else {
 		correctInitialitation = false;
-		std::cerr << "ERROR: No se localizaron los recursos\n";
+		reportError("No se localizaron los recursos");
 		return;
 	}
 
@@ -184,7 +184,7 @@ RenderForge::RenderForge(std::string const& _appName) :
 		}
 		catch (std::exception e) {
 			correctInitialitation = false;
-			std::cerr << "ERROR: Fallo al asignar el Render System\n";
+			reportError("Fallo al asignar el Render System");
 		}
 
 		if (correctInitialitation) {
@@ -194,7 +194,7 @@ RenderForge::RenderForge(std::string const& _appName) :
 			} 
 			catch (std::exception e) {
 				correctInitialitation = false;
-				std::cerr << "ERROR: Fallo al inicializar root\n";
+				reportError("Fallo al inicializar root");
 			}
 			
 			if (correctInitialitation) {
@@ -202,7 +202,7 @@ RenderForge::RenderForge(std::string const& _appName) :
 				window = createWindow();
 				if (window.render == nullptr || window.native == nullptr) {
 					correctInitialitation = false;
-					std::cerr << "ERROR: Fallo en la creacion de la ventana\n";
+					reportError("Fallo en la creacion de la ventana");
 				}
 
 				if (correctInitialitation) {

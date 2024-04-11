@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 std::unique_ptr<Input> Input::instance = nullptr;
-bool Input::initialised = false;
+bool Input::initialized = false;
 
 void Input::onMouseMotion(const SDL_Event& event) {
 	mousePos.set(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
@@ -77,6 +77,18 @@ void Input::onControllerButtonUp(const SDL_Event& event) {
 void Input::onControllerAxisMotion(const SDL_Event& event) {
 	isControllerAxisMotionEvent = true;
 }
+void Input::onWindowEvent(const SDL_Event& event) {
+	switch (event.window.event) {
+		case SDL_WINDOWEVENT_CLOSE:
+			onWindowClose();
+			break;
+		default:
+			break;
+	}
+}
+void Input::onWindowClose() {
+	isWindowCloseEvent = true;
+}
 
 
 Input::Input() :
@@ -98,13 +110,13 @@ Input::Input() :
 	#undef UINT
 	keyboardState(SDL_GetKeyboardState(0)) {
 	setDefaultState();
-	SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 }
 
 bool Input::Init() {
 	try {
 		instance = std::unique_ptr<Input>(new Input());
-		initialised = true;
+		initialized = true;
+		SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 		return true;
 	}
 	catch (std::exception e) {
@@ -114,7 +126,7 @@ bool Input::Init() {
 }
 
 Input* Input::GetInstance() {
-	if (initialised) return instance.get();
+	if (initialized) return instance.get();
 	return nullptr;
 }
 
@@ -150,6 +162,9 @@ void Input::update() {
 			case SDL_CONTROLLERAXISMOTION:
 				onControllerAxisMotion(event);
 				break;
+			case SDL_WINDOWEVENT:
+				onWindowEvent(event);
+				break;
 			default: 
 				break;
 		}
@@ -177,6 +192,7 @@ void Input::setDefaultState() {
 	isControllerButtonDownEvent = false;
 	isControllerButtonUpEvent = false;
 	isControllerAxisMotionEvent = false;
+	isWindowCloseEvent = false;
 }
 
 bool Input::keyDown(KeyNames k) {
@@ -248,4 +264,8 @@ float Input::getNormalizedControllerAxis(ControllerAxisNames ax) {
 
 bool Input::isControllerConnected() {
 	return controller != nullptr;
+}
+
+bool Input::isWindowClosed() {
+	return isWindowCloseEvent;
 }

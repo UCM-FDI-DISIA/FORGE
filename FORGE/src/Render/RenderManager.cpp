@@ -32,6 +32,7 @@
 #include "Light.h"
 #include "ParticleSystem.h"
 #include "Billboard.h"
+#include "ForgeError.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 bool RenderManager::initialised = false;
@@ -66,13 +67,9 @@ RenderManager::~RenderManager() {
 	delete forge;
 }
 
-bool RenderManager::Init(std::string const& appName) {
+void RenderManager::Init() {
 	instance = std::unique_ptr<RenderManager>(new RenderManager());
-	if (instance->setup(appName)) {
-		initialised = true;
-		return true;
-	}
-	return false;
+	initialised = true;
 }
 
 RenderManager* RenderManager::GetInstance() {
@@ -84,8 +81,7 @@ bool RenderManager::setup(std::string const& appName) {
 	// Verificacion de nombre de ventana valido	
 	for (char c : appName) {
 		if (c == '?') {
-			std::cerr << "ERROR: Nombre de ventana no valido\n";
-			return false;
+			throwError(false, "Nombre de ventana no valido");
 		}
 	}
 	forge = new RenderForge(appName);

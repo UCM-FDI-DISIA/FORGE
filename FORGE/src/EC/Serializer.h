@@ -6,6 +6,7 @@
 #include <vector>
 #include "Component.h"
 #include "ComponentData.h"
+#include "ForgeExport.h"
 #include <type_traits>
 
 
@@ -73,7 +74,7 @@ private:
 		template<>
 		inline void handle_initialize(float& var) {
 			if (std::isinf(var)) {
-				std::cerr << "ERROR: Variable " << name << " con valor infinito. Seteado a 0" << std::endl;
+				reportError("Variable " << name << " con valor infinito. Asignado a 0.");
 				var = 0.0f;
 			}
 		}
@@ -105,7 +106,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	inline void addField(T& var, std::string const& name) {
+	FORGE_API inline void addField(T& var, std::string name) {
 		serializations.push_back(new Serialized<T>(var, name));
 	}
 	/// <summary>
@@ -132,7 +133,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	inline void operator()(T& var, std::string const& name) {
+	FORGE_API inline void operator()(T& var, std::string name) {
 		addField<T>(var, name);
 	}
 	/// <summary>
@@ -140,11 +141,11 @@ public:
 	/// a traves de un archivo Lua o un ComponentData.
 	/// </summary>
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
-	void initialize(ComponentData& data);
+	FORGE_API void initialize(ComponentData& data);
 	/// <summary>
 	/// Destructor del Serializer, elimina todos los registros de campos a serializar.
 	/// </summary>
-	~Serializer();
+	FORGE_API ~Serializer();
 
 };
 

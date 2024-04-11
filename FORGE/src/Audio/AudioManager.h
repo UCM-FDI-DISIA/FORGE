@@ -22,9 +22,9 @@ private:
 	irrklang::ISoundEngine* engine;
 	std::unordered_map<std::string, SoundGenerator*> soundLibrary;
 	std::unordered_set<Sound*> currentSounds;
-	bool isListenerOnScene = false;
+	bool isListenerOnScene;
 	static std::unique_ptr<AudioManager> instance;
-	static bool initialised;
+	static bool initialized;
 	/// <summary>
 	/// Inicializa el sistema de audio
 	/// </summary>

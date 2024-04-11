@@ -1,8 +1,7 @@
 #pragma once
 #ifndef MESH_H_
 #define MESH_H_
-#include <Component.h>
-#include <string>
+#include "Component.h"
 
 class RenderManager;
 namespace Ogre {
@@ -17,31 +16,31 @@ protected:
     RenderManager* renderManager; 
 
 public:
-	static const std::string id;
+    static const FORGE_API_VAR std::string id;
 
 	/// <summary>
 	/// Crea Mesh con valores por defecto
 	/// </summary>
-	Mesh();
+	FORGE_API Mesh();
     /// <summary>
     /// Destruye la entidad de Ogre asociada a este Mesh
     /// </summary>
-    ~Mesh();
+    FORGE_API ~Mesh();
 
     /// <summary>
     /// Obtiene la referencia al singleton del RenderManager y la utiliza para
     /// crear una entidad de Ogre que guarda en ogreEntity
     /// </summary>
     /// <param name="data"></param>
-    bool initComponent(ComponentData* data) override;
+    FORGE_API bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Crea una entidad de Ogre que guarda en ogreEntity
     /// </summary>
-    void onEnabled() override;
+    FORGE_API void onEnabled() override;
     /// <summary>
     /// Destruye la entidad de Ogre asociada a este Mesh
     /// </summary>
-    void onDisabled() override;
+    FORGE_API void onDisabled() override;
 
 	#pragma region setters
     /// <summary>
@@ -49,12 +48,12 @@ public:
     /// destruyendola y volviendola a crear
     /// </summary>
     /// <param name="newMesh">Nombre de la nueva malla</param>
-    void setMesh(std::string const& newMesh);
+    FORGE_API void setMesh(std::string const& newMesh);
     /// <summary>
     /// Cambia el material utilizado para la entidad de Ogre
     /// </summary>
     /// <param name="newMaterial">Nombre del nuevo material</param>
-    void setMaterial(std::string const& newMaterial);
+    FORGE_API void setMaterial(std::string const& newMaterial);
 	#pragma endregion
 
 	#pragma region getters
@@ -62,12 +61,12 @@ public:
     /// Devuelve el nombre del archivo .mesh utilizado para la malla
     /// </summary>
     /// <returns>El nombre del archivo .mesh</returns>
-    const std::string& getMesh() const;
+    const FORGE_API std::string& getMesh() const;
     /// <summary>
     /// Obtiene el nombre del material utilizado
     /// </summary>
     /// <returns>El nombre del archivo .mesh</returns>
-    const std::string& getMaterial() const;
+    const FORGE_API std::string& getMaterial() const;
 	#pragma endregion
 };
 
