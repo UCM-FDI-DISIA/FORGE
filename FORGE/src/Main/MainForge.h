@@ -28,7 +28,7 @@ private:
 	AudioManager& audioManager;
 	LoadManager& loadManager;
 	Input& inputManager;
-	//PhysicsManager& physicsManager;
+	PhysicsManager& physicsManager;
 	//UIManager& uiManager;
 
 	static std::unique_ptr<MainForge> instance;

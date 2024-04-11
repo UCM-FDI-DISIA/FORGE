@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Bullet\src\src;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,7 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Bullet\src\src;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

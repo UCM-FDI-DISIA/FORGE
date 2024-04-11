@@ -40,8 +40,7 @@ public:
     /// <summary>
     /// Crea una instancia del manager iniacializada
     /// </summary>
-    /// <returns>Si la creacion ocurrio sin fallos</returns>
-    static bool Init();
+    static void Init();
 
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* GetInstance();

@@ -35,13 +35,9 @@ PhysicsManager::~PhysicsManager() {
     delete broadphase;
 }
 
-bool PhysicsManager::Init() {
+void PhysicsManager::Init() {
     instance = std::unique_ptr<PhysicsManager>(new PhysicsManager());
-    if (instance->setup()) {
-        initialised = true;
-        return true;
-    }
-    return false;
+    initialised = true;
 }
 
 PhysicsManager* PhysicsManager::GetInstance() {
@@ -71,7 +67,9 @@ bool PhysicsManager::setup() {
 }
 
 void PhysicsManager::drawDebug() {
-    world->debugDrawWorld();
+    if (debugMode) {
+        world->debugDrawWorld();
+    }
 }
 
 void PhysicsManager::updatePhysics() {

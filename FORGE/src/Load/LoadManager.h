@@ -7,6 +7,7 @@ class LuaForge;
 class GameLoader;
 class SceneManager;
 class RenderManager;
+class PhysicsManager;
 struct EntityData;
 class Factory;
 namespace luabridge {
@@ -18,6 +19,7 @@ private:
 	GameLoader* gameLoader;
 	SceneManager& sceneManager;
 	RenderManager& renderManager;
+	PhysicsManager& physicsManager;
 	Factory& factory;
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.

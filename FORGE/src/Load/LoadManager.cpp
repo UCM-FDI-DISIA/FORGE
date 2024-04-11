@@ -11,6 +11,7 @@
 #include "EntityData.h"
 #include "ComponentData.h"
 #include "RenderManager.h"
+#include "PhysicsManager.h"
 #include "ForgeError.h"
 #include "Factory.h"
 #include "Transform.h"
@@ -246,6 +247,7 @@ LoadManager::LoadManager() :
 	luaForge(new LuaForge()),
 	sceneManager(*SceneManager::GetInstance()),
 	renderManager(*RenderManager::GetInstance()),
+	physicsManager(*PhysicsManager::GetInstance()),
 	factory(*Factory::GetInstance()) {
 }
 
@@ -273,6 +275,9 @@ bool LoadManager::init(std::string const& configFile) {
 	}
 	if (!renderManager.setup(gameName)) {
 		throwError(false, "No se pudo iniciar el sistema de renderizado.");
+	}
+	if (!physicsManager.setup()) {
+		throwError(false, "No se pudo iniciar el sistema de fisicas.");
 	}
 	if (!loadInitialScene(config)) {
 		throwError(false, "No se pudo cargar la escena inicial.");
