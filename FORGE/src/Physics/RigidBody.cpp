@@ -73,16 +73,15 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         btRigidBody::btRigidBodyConstructionInfo bodyCI =
             btRigidBody::btRigidBodyConstructionInfo(getMass(), motionState, getShape(), bodyInertia);
 
-        btRigidBody* rigidBody = new btRigidBody(bodyCI);
+        myBody = new btRigidBody(bodyCI);
         if (isStatic()) {
-            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+            myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
         }
 
         bodyTransform = entity->getComponent<Transform>();
+        myBody->setActivationState(DISABLE_DEACTIVATION);
 
-        myBody = rigidBody;
-
-        physicsManager->registerBody(rigidBody, entity->getComponent<Transform>());
+        physicsManager->registerBody(myBody, entity->getComponent<Transform>());
         myBody->setRestitution((btScalar)restitution);
         myBody->setFriction((btScalar)friction);
         lockPosition(axisBlocked[0], axisBlocked[1], axisBlocked[2]);
@@ -197,29 +196,29 @@ void RigidBody::setPositionZ(float newZ) {
 }
 
 void RigidBody::rotateX(float newAngle) {
-    float rad = newAngle * (float)PI / 180;
+    btScalar aux = newAngle * (float)PI / 180;
     btTransform trans;
     btTransform prevTransform = myBody->getWorldTransform();
     trans.setOrigin(prevTransform.getOrigin());
-    trans.setRotation(prevTransform.getRotation()* btQuaternion(1,0,0,rad));
+    trans.setRotation(prevTransform.getRotation()* btQuaternion(btVector3(1, 0, 0), aux));
     myBody->setWorldTransform(trans);
 }
 
 void RigidBody::rotateY(float newAngle) {
-    float rad = newAngle * (float)PI / 180;
+    btScalar aux = newAngle * (float)PI / 180;
     btTransform trans;
     btTransform prevTransform = myBody->getWorldTransform();
     trans.setOrigin(prevTransform.getOrigin());
-    trans.setRotation(prevTransform.getRotation() * btQuaternion(0, 1, 0, rad));
+    trans.setRotation(prevTransform.getRotation() * btQuaternion(btVector3(0, 1, 0), aux));
     myBody->setWorldTransform(trans);
 }
 
 void RigidBody::rotateZ(float newAngle) {
-    float rad = newAngle * (float)PI / 180;
+    btScalar aux = newAngle * (float)PI / 180;
     btTransform trans;
     btTransform prevTransform = myBody->getWorldTransform();
     trans.setOrigin(prevTransform.getOrigin());
-    trans.setRotation(prevTransform.getRotation() * btQuaternion(0, 0, 1, rad));
+    trans.setRotation(prevTransform.getRotation() * btQuaternion(btVector3(0, 0, 1), aux));
     myBody->setWorldTransform(trans);
 }
 

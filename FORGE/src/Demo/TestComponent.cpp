@@ -7,7 +7,6 @@
 #include "SceneManager.h"
 #include "AudioSource.h"
 #include "RigidBody.h"
-
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
