@@ -99,10 +99,6 @@ public:
 	/// </summary>
 	FORGE_API void fixedUpdate();
 	/// <returns>
-	/// Actualiza las entidades de la escena activa en intervalos constantes
-	/// </returns>
-	void fixedUpdate();
-	/// <returns>
 	/// Borra todas las Entity no vivas de la escena activa
 	/// </returns>
 	FORGE_API void refresh();

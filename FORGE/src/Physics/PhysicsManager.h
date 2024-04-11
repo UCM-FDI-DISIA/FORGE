@@ -37,7 +37,15 @@ public:
     /// </summary>
     ~PhysicsManager();
 
+    /// <summary>
+    /// Crea una instancia del manager iniacializada
+    /// </summary>
+    /// <returns>Si la creacion ocurrio sin fallos</returns>
     static bool Init();
+
+    /// <returns>Devuelve una instancia al PhysicsManager</returns>
+    static PhysicsManager* GetInstance();
+
     /// <summary>
     /// Inicializa el mundo de fisicas y pone una gravedad default (9.8)
     /// </summary>
@@ -62,9 +70,6 @@ public:
     /// Cambia la gravedad del mundo fisico
     /// </summary>
     void changeGravity(forge::Vector3 newGravity);
-
-    /// <returns>Devuelve una instancia al PhysicsManager</returns>
-    static PhysicsManager* GetInstance();
     
     /// <summary>
     /// Registra un btRigidbody y su transform asociado para busquedas y tratamiento de colisiones

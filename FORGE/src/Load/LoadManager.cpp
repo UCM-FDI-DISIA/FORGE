@@ -22,6 +22,8 @@
 #include "ParticleSystem.h"
 #include "AudioSource.h"
 #include "AudioListener.h"
+#include "Collider.h"
+#include "RigidBody.h"
 
 using namespace luabridge;
 
@@ -211,6 +213,8 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<ParticleSystem>();
 	factory.registerComponent<AudioSource>();
 	factory.registerComponent<AudioListener>();
+	factory.registerComponent<Collider>();
+	factory.registerComponent<RigidBody>();
 	return gameLoader->registerComponents(factory);
 }
 

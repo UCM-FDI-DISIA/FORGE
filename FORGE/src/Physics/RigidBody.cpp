@@ -5,7 +5,7 @@
 #include <Serializer.h>
 #define PI 3.14159265358979323846264338327950288
 
-const std::string RigidBody::id = "RigidBody";
+const std::string RigidBody::id = "Animator";
 
 RigidBody::RigidBody() :
       mass(0)
@@ -37,6 +37,7 @@ bool RigidBody::initComponent(ComponentData* data) {
 }
 
 void RigidBody::createRigidBody(std::string myShapeType) {
+    physicsManager = PhysicsManager::GetInstance();
     // De forma predeterminada, el rigid es una caja
     shapeType = boxShape;
     myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
@@ -56,14 +57,10 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         shapeType = cilinderShape;
         myShape = new btCylinderShape(myScale.operator btVector3());
     }
-    physicsManager = PhysicsManager::GetInstance();
 
     //Inicializamos el rigid body
-
-    Transform* aux = entity->getComponent<Transform>();
     forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
     forge::Vector3 forVect = forge::Vector3(0, 0, 0);
-    bodyTransform = entity->getComponent<Transform>();
 
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
@@ -75,18 +72,16 @@ void RigidBody::createRigidBody(std::string myShapeType) {
     btRigidBody::btRigidBodyConstructionInfo bodyCI =
         btRigidBody::btRigidBodyConstructionInfo(getMass(), motionState, getShape(), bodyInertia);
 
-
     btRigidBody* rigidBody = new btRigidBody(bodyCI);
     if (isStatic()) {
         rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
     }
 
-    Transform* bodyTransform = entity->getComponent<Transform>();
-    if (bodyTransform == nullptr) {
+    if (!entity->hasComponent<Transform>()) {
         // Si no existe transform, se coloca uno vacio
         entity->addComponent("Transform");
-        bodyTransform = entity->getComponent<Transform>();
     }
+    bodyTransform = entity->getComponent<Transform>();
 
     myBody = rigidBody;
 

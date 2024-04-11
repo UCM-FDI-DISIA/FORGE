@@ -34,54 +34,54 @@ protected:
     forge::Vector3 lastForce;
     forge::Quaternion lastOrientation;
 public:
-    static const std::string id;
+    static const FORGE_API_VAR std::string id;
 
-	Collider();
+    FORGE_API Collider();
 
-	~Collider();
+    FORGE_API ~Collider();
 
-    bool initComponent(ComponentData* data) override;
+    FORGE_API bool initComponent(ComponentData* data) override;
 
-    virtual void createRigidBody(std::string myShapeType);
+    virtual FORGE_API void createRigidBody(std::string myShapeType);
 
-    virtual void fixedUpdate();
+    virtual FORGE_API void fixedUpdate();
 
-    virtual void onEnabled();
+    virtual FORGE_API void onEnabled();
 
-    virtual void onDisabled();
+    virtual FORGE_API void onDisabled();
 
     /// <summary>
     /// Metodo para comprobar si han colisionado dos colliders
     /// </summary>
     /// <param name="other: ">EL otro RigidBody con el que colisiona</param>
     /// <returns>Devuelve true si ha colisionado con otro RigidBody, false en el caso contrario</returns>
-    bool hasCollidedWith(Collider* other);
+    FORGE_API bool hasCollidedWith(Collider* other);
 
     /// <summary>
     /// Registra un nuevo callback de colision
     /// </summary>
-    void registerCallback(CollisionCallback callback);
+    FORGE_API void registerCallback(CollisionCallback callback);
 
     /// <summary>
     /// Maneja las colisiones con otras entidades
     /// </summary>
     /// <param name="other"></param>
-    void onCollision(Entity* other);
+    FORGE_API void onCollision(Entity* other);
 #pragma region setters
     /// <summary>
     /// Activa y desactiva la funcion de trigger
     /// </summary>
     /// <param name="isTrigger">True si el cuerpo pasara a ser un trigger</param>
-    void setTrigger(bool isTrigger);
+    FORGE_API void setTrigger(bool isTrigger);
 #pragma endregion
 
 #pragma region getters
     /// <summary>
     /// Devuelve true si es un objeto que detecta colisiones pero no choca
     /// </summary>
-    bool isTrigger();
+    FORGE_API bool isTrigger();
 
-    btRigidBody* getBody();
+    FORGE_API btRigidBody* getBody();
 #pragma endregion
 };
 #endif // !COLLIDER_H_

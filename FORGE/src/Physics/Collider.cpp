@@ -23,12 +23,11 @@ Collider::~Collider() {
 bool Collider::initComponent(ComponentData* data) {
     myShapeString = data->get<std::string>("shapeType");
     createRigidBody(myShapeString);
-
     return true;
 }
 
 void Collider::createRigidBody(std::string myShapeType) {
-
+    physicsManager = PhysicsManager::GetInstance();
     // De forma predeterminada, el rigid es una caja
     shapeType = boxShape;
     myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
@@ -48,16 +47,19 @@ void Collider::createRigidBody(std::string myShapeType) {
         shapeType = cilinderShape;
         myShape = new btCylinderShape(myScale.operator btVector3());
     }
-    physicsManager = PhysicsManager::GetInstance();
 
     //Inicializamos el rigid body
-
-    Transform* aux = entity->getComponent<Transform>();
     forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
     forge::Vector3 forVect = forge::Vector3(0, 0, 0);
     // En caso de que no se pueda acceder al transform, se usa un default
-    forQuat = aux->getRotation();
-    forVect = aux->getGlobalPosition();
+    Transform* aux = entity->getComponent<Transform>();
+    if (aux != nullptr) {
+        forQuat = aux->getRotation();
+        forVect = aux->getGlobalPosition();
+    }
+    else {
+        std::cerr << "ERROR: No se pudo acceder al Transform desde el Collider\n";
+    }
 
     btQuaternion quat = forQuat.operator btQuaternion();
     btVector3 vect = forVect.operator btVector3();
@@ -74,7 +76,6 @@ void Collider::createRigidBody(std::string myShapeType) {
     rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
     bodyTransform = entity->getComponent<Transform>();
-
 
     myBody = rigidBody;
 

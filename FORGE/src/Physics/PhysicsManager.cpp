@@ -44,6 +44,11 @@ bool PhysicsManager::Init() {
     return false;
 }
 
+PhysicsManager* PhysicsManager::GetInstance() {
+    if (initialised) return instance.get();
+    return nullptr;
+}
+
 bool PhysicsManager::setup() {
     try {
         broadphase = new btDbvtBroadphase();
@@ -116,11 +121,6 @@ void PhysicsManager::handleCollisions() {
 
 void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
     world->setGravity(newGravity.operator btVector3());
-}
-
-PhysicsManager* PhysicsManager::GetInstance() {
-    if (initialised) return instance.get();
-    return nullptr;
 }
 
 void PhysicsManager::registerBody(btRigidBody* body, Transform* transform) {

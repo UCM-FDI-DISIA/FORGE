@@ -58,7 +58,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\EC\;$(SolutionDir)Dependencies\Lua\src;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Render\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\EC\;$(SolutionDir)Dependencies\Lua\src;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Render\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
@@ -83,7 +83,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\EC\;$(SolutionDir)Dependencies\Lua\src;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Render\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\EC\;$(SolutionDir)Dependencies\Lua\src;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Render\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
@@ -116,6 +116,9 @@
     </ProjectReference>
     <ProjectReference Include="..\EC\EC.vcxproj">
       <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Physics\Physics.vcxproj">
+      <Project>{a43f2981-4da2-48c7-b2f0-e4468c4caa51}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Render\Render.vcxproj">
       <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
