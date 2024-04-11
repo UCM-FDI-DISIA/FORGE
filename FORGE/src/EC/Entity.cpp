@@ -96,6 +96,10 @@ int Entity::getGroup() {
     return groupId;
 }
 
+FORGE_API const std::unordered_set<Entity*>& Entity::getChildren() const {
+    return children;
+}
+
 void Entity::update() {
 	for (auto& componentPair : components) {
         Component* component = componentPair.second;

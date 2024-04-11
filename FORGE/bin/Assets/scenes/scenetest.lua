@@ -1,28 +1,30 @@
 local prefabs = {
-
+    player = {
+        handler = "player",
+        components = {
+            Transform = {
+                position = {0, -20, 0},
+                scale = {0.25, 0.25, 0.25}
+            },
+            Animator = {
+                 mesh = "ninja.mesh",
+                activeAnimations = {
+                   "Walk"
+                }
+            },
+            TestComponent = 0,
+            AudioSource = {
+                sound = "Test",
+                playOnAwake = true
+            }
+        }
+    }
 }
 
 local scenes = {
     Test = {
         jugador = {
-            handler = "player",
-            components = {
-                Transform = {
-                    position = {0, -20, 0},
-                    scale = {0.25, 0.25, 0.25}
-                },
-                Animator = {
- 		            mesh = "ninja.mesh",
-                    activeAnimations = {
-                       "Walk"
-                    }
-                },
-                TestComponent = 0,
-                AudioSource = {
-                    sound = "Test",
-                    playOnAwake = true
-                }
-            },
+            blueprint = "player",
             children = {
                 obstaculo = {
                     group = "obstacle",
@@ -65,24 +67,13 @@ local scenes = {
     },
     Play = {
         jugador = {
-            handler = "player",
+            blueprint = "player",
             components = {
                 Transform = {
                     position = {0, 0, 0},
                     scale = {0.25, 0.25, 0.25}
-                },
-                Animator = {
- 		            mesh = "ninja.mesh",
-                    activeAnimations = {
-                       "Walk"
-                    }
-                },
-                TestComponent = 0,
-                AudioSource = {
-                    sound = "Test",
-                    playOnAwake = true
                 }
-            },
+            }
         },
         cartel = {
             group = "obstacle",

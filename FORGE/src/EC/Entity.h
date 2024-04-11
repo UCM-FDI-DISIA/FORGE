@@ -119,6 +119,11 @@ public:
 	/// El grupo al que pertenece la Entity
 	/// </returns>
 	FORGE_API int getGroup();
+	/// <returns>
+	/// Un unordered_set con punteros a los hijos de la entidad
+	/// </returns>
+	FORGE_API const std::unordered_set<Entity*>& getChildren() const;
+
 	/// <summary>
 	/// Actualiza la logica de la Entity
 	/// </summary>

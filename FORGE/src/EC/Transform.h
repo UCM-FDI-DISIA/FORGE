@@ -127,6 +127,11 @@ public:
 	/// </summary>
 	/// <param name="needed">True si lo necesita, falase sita no lo necesita.</param>
 	FORGE_API void setNeedsUpdate(bool needed);
+	/// <summary>
+	/// Establece si requiere actualizarse la instancia de los hijos del transform
+	/// </summary>
+	/// <param name="needed">True si lo necesita, falase sita no lo necesita</param>
+	FORGE_API void setChildNeedsUpdate(bool needed);
 
 	#pragma endregion //setters
 	#pragma region getters
