@@ -3,28 +3,29 @@
 #include <irrKlang.h>
 #include "Sound.h"
 #include "SoundGenerator.h"
+#include "ForgeError.h"
 using namespace irrklang;
 
 std::unique_ptr<AudioManager> AudioManager::instance = nullptr;
 
-bool AudioManager::initialised = false;
+bool AudioManager::initialized = false;
 
 AudioManager::AudioManager() :
-	engine(createIrrKlangDevice()) {
+	engine(createIrrKlangDevice()),
+	isListenerOnScene(false) {
 }
 
 bool AudioManager::Init() {
 	instance = std::unique_ptr<AudioManager>(new AudioManager());
 	if (instance.get()->engine != NULL) {
-		initialised = true;
+		initialized = true;
 		return true;
 	}
-	std::cerr << "ERROR: no se pudo crear el dispositivo de irrKlang \n";
-	return false;
+	throwError(false, "No se pudo crear el dispositivo de irrKlang");
 }
 
 AudioManager* AudioManager::GetInstance() {
-	if (initialised) return instance.get();
+	if (initialized) return instance.get();
 	return nullptr;
 }
 

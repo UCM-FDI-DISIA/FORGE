@@ -437,3 +437,5 @@ FodyWeavers.xsd
 
 # Los idb
 *.idb
+
+*.exp

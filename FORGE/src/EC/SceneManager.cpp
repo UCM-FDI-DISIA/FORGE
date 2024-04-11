@@ -8,6 +8,7 @@
 #pragma warning(disable : 26439)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
+#include "ForgeError.h"
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 bool SceneManager::initialised = false;
@@ -27,37 +28,37 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& componentData : data->components) {
 		Component* component = entity->addComponent(componentData.first);
-		if(component != nullptr) 
-		{
+		if(component != nullptr) {
 			initData.insert({ component, componentData.second });
 		}
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
 			Entity* child = addEntity(scene, childData);
-			if (!child->isAlive()) entity->setAlive(false);
+			if (!child->isAlive()) {
+				entity->setAlive(false);
+			}
 			entity->addChild(child);
 		}
 	}
 	for (auto& componentInit : initData) {
-		if (componentInit.first->initSerialized(componentInit.second)) {
-			// Si un componente se inicializa mal no se inicia la escena
-			if (!componentInit.first->initComponent(componentInit.second)) {
-				entity->setAlive(false);
-			}
-		}
-		else {
+		if (!componentInit.first->initSerialized(componentInit.second)) {
 			entity->setAlive(false);
 		}
 	}
+	for (auto& componentInit : initData) {
+		if (!componentInit.first->initComponent(componentInit.second)) {
+			entity->setAlive(false);
+		}
+	}
+
 	return entity;
 
 }
 
-bool SceneManager::Init() {
+void SceneManager::Init() {
 	instance = std::unique_ptr<SceneManager>(new SceneManager());
 	initialised = true;
-	return true;
 }
 
 SceneManager* SceneManager::GetInstance() {
@@ -93,13 +94,13 @@ lua_State* SceneManager::getLuaState() {
 	return lua;
 }
 
-void SceneManager::changeScene(std::string const& scene, bool renewScene) {
+bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
 	Scene*& activeScenePointer = activeScene.second;
 	Scene* newScene;
-	auto iter = loadedScenes.find(scene);
 	if (activeScenePointer != nullptr) {
 		activeScenePointer->setEnabled(false);
 	}
+	auto iter = loadedScenes.find(scene);
 	if (iter == loadedScenes.end()) {
 		newScene = createScene(scene);
 	}
@@ -116,11 +117,9 @@ void SceneManager::changeScene(std::string const& scene, bool renewScene) {
 	}
 	if (newScene != nullptr) {
 		activeScene = { scene, newScene };
+		return true;
 	}
-	else if (activeScenePointer != nullptr) {
-		activeScenePointer->setEnabled(true);
-	}
-	if (activeScene.second == nullptr || activeScene.second->getEndScene() == true) std::cerr << "ERROR: La escena no se ha encontrado o no se ha podido iniciar correctamente\n";
+	throwError(false, "La escena no se ha encontrado o no se ha podido iniciar correctamente.");
 }
 
 void SceneManager::removeScene(std::string const& id) {
@@ -134,13 +133,12 @@ void SceneManager::removeScene(std::string const& id) {
 Scene* SceneManager::createScene(std::string const& id) {
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
-		std::cerr << "ERROR: Si una escena no aparece en los archivos, no existe" << std::endl;
-		return nullptr;
+		throwError(nullptr, "Si una escena no aparece en los archivos, no existe.");
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* entity : iter->second) {
 		if (!addEntity(newScene, entity)->isAlive()) {
-			newScene->endScene();
+			reportError("No se ha podido crear la entidad.");
 		}
 	}
 	loadedScenes.insert({ id, newScene });

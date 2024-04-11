@@ -1,5 +1,7 @@
 #pragma once
 #include "Vector3.h"
+#include "ForgeExport.h"
+
 namespace Ogre {
 	class Quaternion;
 }
@@ -19,7 +21,7 @@ namespace forge {
 		/// <summary>
 		/// Constructor predeterminado: Quaternion(0,0,0,0)
 		/// </summary>
-		Quaternion();
+		FORGE_API Quaternion();
 
 		/// <summary>
 		/// Constructor completo
@@ -28,33 +30,33 @@ namespace forge {
 		/// <param name="_y">Valor en la componente Y</param>
 		/// <param name="_z">Valor en la componente Z</param>
 		/// <param name="_angle">Valor del angulo del par rotacion</param>
-		Quaternion(float _x, float _y, float _z, float _angle);
+		FORGE_API Quaternion(float _x, float _y, float _z, float _angle);
 
 		/// <summary>
 		/// Constructor por copia
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar</param>
-		Quaternion(const Quaternion& q);
+		FORGE_API Quaternion(const Quaternion& q);
 
 		/// <summary>
 		/// Constructor por copia (referencia)
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar</param>
-		Quaternion(Quaternion&& q) noexcept;
+		FORGE_API Quaternion(Quaternion&& q) noexcept;
 
 		/// <summary>
 		/// Constructor por copia (puntero)
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar</param>
-		Quaternion(const Quaternion* q);
+		FORGE_API Quaternion(const Quaternion* q);
 
 		/// <summary>
 		/// Contructor a partir de un vector (Euleriano)
 		/// </summary>
 		/// <param name="e">Vector euleriano a comvertir en cuaternion</param>
-		Quaternion(const Vector3& e);
+		FORGE_API Quaternion(const Vector3& e);
 
-		~Quaternion();
+		FORGE_API ~Quaternion();
 		#pragma endregion
 
 		#pragma region Operadores
@@ -63,63 +65,63 @@ namespace forge {
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar</param>
 		/// <returns>Cuaternion actualizado</returns>
-		Quaternion& operator=(const Quaternion& q);
+		FORGE_API Quaternion& operator=(const Quaternion& q);
 		
 		/// <summary>
 		/// Asigna la informacion del vector E (Euleriano) a este cuaternion
 		/// </summary>
 		/// <param name="e">Euleriano a convertir</param>
 		/// <returns>Cuaternion actualizado</returns>
-		Quaternion& operator=(const Vector3& e);
+		FORGE_API Quaternion& operator=(const Vector3& e);
 
 		/// <summary>
 		/// Calcula el producto escalar de los quaterniones
 		/// </summary>
 		/// <param name="q">El otro cuaternion</param>
 		/// <returns>Producto escalar de ambos</returns>
-		float dot(const Quaternion& q) const;
+		FORGE_API float dot(const Quaternion& q) const;
 		
 		/// <summary>
 		/// Multiplicacion polinomial de cuaterniones
 		/// </summary>
 		/// <param name="q">El otro cuaternion</param>
 		/// <returns>El resultado de la multiplicacion polinomial</returns>
-		Quaternion operator*(const Quaternion& q) const;
+		FORGE_API Quaternion operator*(const Quaternion& q) const;
 		
 		/// <summary>
 		/// Calcula la multiplicacion polinomial de cuaterniones y asigna su resultado a este cuaternion
 		/// </summary>
 		/// <param name="q">El otro cuaternion</param>
 		/// <returns>El cuaternion actualizado</returns>
-		Quaternion operator*=(const Quaternion& q);
+		FORGE_API Quaternion operator*=(const Quaternion& q);
 		
 		/// <summary>
 		/// Rotacion de un vector aplicando este cuaternion
 		/// </summary>
 		/// <param name="v">El vector a rotar</param>
 		/// <returns>El vector V rotado</returns>
-		Vector3 operator*(const Vector3& v) const;
+		FORGE_API Vector3 operator*(const Vector3& v) const;
 
 		/// <summary>
 		/// Compara dos cuaterniones. Seran iguales si su producto escalar es igual a 1
 		/// </summary>
 		/// <param name="q">El otro cuaternion</param>
 		/// <returns>Si son iguales</returns>
-		bool operator==(const Quaternion& q) const;
+		FORGE_API bool operator==(const Quaternion& q) const;
 		
 		/// <summary>
 		/// Compara dos cuaterniones. Seran distintos si su producto escalar es menor a 1
 		/// </summary>
 		/// <param name="q">El otro cuaternion</param>
 		/// <returns>Si son distintos</returns>
-		bool operator!=(const Quaternion& q) const;
+		FORGE_API bool operator!=(const Quaternion& q) const;
 		#pragma endregion
 
 		/// <summary>
 		/// Calcula un vector Euleriano a partir del cuaternion
 		/// </summary>
 		/// <returns>El vector Euleriano constante</returns>
-		Vector3 toEuler() const;
+		FORGE_API Vector3 toEuler() const;
 
 		/// <summary>
 		/// Normaliza el vector del quaternion
@@ -131,25 +133,25 @@ namespace forge {
 		/// Asigna un nuevo valor a la componente en X del par-rotacion
 		/// </summary>
 		/// <param name="newX">Nuevo valor en X</param>
-		void setX(float newX);
+		FORGE_API void setX(float newX);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en Y del par-rotacion
 		/// </summary>
 		/// <param name="newY">Nuevo valor en Y</param>
-		void setY(float newY);
+		FORGE_API void setY(float newY);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en Z del par-rotacion
 		/// </summary>
 		/// <param name="newZ">Nuevo valor en Z</param>
-		void setZ(float newZ);
+		FORGE_API void setZ(float newZ);
 
 		/// <summary>
 		/// Asigna un nuevo angulo
 		/// </summary>
 		/// <param name="newAngle">Nuevo valor del angulo del par rotacion</param>
-		void setAngle(float newAngle);
+		FORGE_API void setAngle(float newAngle);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion
@@ -158,26 +160,25 @@ namespace forge {
 		/// <param name="newY">Valor del par-rotacion en el eje Y</param>
 		/// <param name="newZ">Valor del par-rotacion en el eje Z</param>
 		/// <param name="newAngle">Valor del angulo del par rotacion</param>
-		void set(float newX, float newY, float newZ, float newAngle);
+		FORGE_API void set(float newX, float newY, float newZ, float newAngle);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion copiando los de Q
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar</param>
-		void set(const Quaternion& q);
+		FORGE_API void set(const Quaternion& q);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion copiando los de Q
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar (referencia)</param>
-		void set(const Quaternion&& q);
+		FORGE_API void set(const Quaternion&& q);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion copiando los del cuaternion al que apunta Q
 		/// </summary>
 		/// <param name="q">Cuaternion a copiar (puntero)</param>
-		void set(const Quaternion* q);
-
+		FORGE_API void set(const Quaternion* q);
 		#pragma endregion
 
 		#pragma region Getters
@@ -185,25 +186,25 @@ namespace forge {
 		/// Acceso a la componente en X del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en X</returns>
-		float getX() const;
+		FORGE_API float getX() const;
 
 		/// <summary>
 		/// Acceso a la componente en Y del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en Y</returns>
-		float getY() const;
+		FORGE_API float getY() const;
 
 		/// <summary>
 		/// Acceso a la componente en Z del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en Z</returns>
-		float getZ() const;
+		FORGE_API float getZ() const;
 
 		/// <summary>
 		/// Acceso al angulo del cuaternion
 		/// </summary>
 		/// <returns>Devuelve el angulo entre 0 y 2PI</returns>
-		float getAngle() const;
+		FORGE_API float getAngle() const;
 		#pragma endregion
 
 		#pragma region Conversiones
@@ -256,6 +257,6 @@ namespace forge {
 		Quaternion& operator=(const btQuaternion& q);
 		#pragma endregion
 
-		static const Quaternion IDENTITY;
+		static const FORGE_API_VAR Quaternion IDENTITY;
 	};
 }

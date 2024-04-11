@@ -2,6 +2,7 @@
 #ifndef LIGHT_H_
 #define LIGHT_H_
 #include <Component.h>
+#include "ForgeExport.h"
 class RenderManager;
 namespace Ogre {
     class Light;
@@ -14,23 +15,23 @@ private:
     RenderManager* renderManager; 
 
 public:
-	static const std::string id;
+    static const FORGE_API_VAR std::string id;
 
-    Light();
+    FORGE_API Light();
     
-    ~Light();
+    FORGE_API ~Light();
 
-    bool initComponent(ComponentData* data) override;
+    FORGE_API bool initComponent(ComponentData* data) override;
 
-    void onEnabled() override;
+    FORGE_API void onEnabled() override;
 
-    void onDisabled() override;
+    FORGE_API void onDisabled() override;
 
 	#pragma region setters
 	#pragma endregion
 
 	#pragma region getters
-    const int& getType() const;
+    FORGE_API const int& getType() const;
 	#pragma endregion
 };
 

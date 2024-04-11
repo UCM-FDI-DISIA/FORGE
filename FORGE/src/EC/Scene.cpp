@@ -5,9 +5,6 @@
 Scene::Scene() :
     entitiesByGroup(SceneManager::GetInstance()->getMaxGroupId()),
     handlers() {
-    //for (auto & group : entitiesByGroup) {
-    //    group.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
-    //}
 }
 
 Scene::~Scene() {
@@ -20,13 +17,13 @@ Scene::~Scene() {
 }
 
 void Scene::update() {
-    refresh();
     for (auto& group : entitiesByGroup) {
         for (auto& entity : group) {
             entity->update();
         }
     }
-    
+
+    refresh();
 }
 
 void Scene::fixedUpdate() {

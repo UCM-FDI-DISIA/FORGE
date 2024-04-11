@@ -30,7 +30,7 @@ bool Light::initComponent(ComponentData* data) {
         ogreLight = renderManager->addLightNode(this);
     }
     else {
-		std::cerr << "ERROR: Se requiere un componente Transform para generar un Light\n";
+        reportError("Se requiere un componente Transform para generar un Light");
 	}
     return ogreLight != nullptr;
 }

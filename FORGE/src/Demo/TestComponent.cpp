@@ -31,7 +31,8 @@ bool TestComponent::initComponent(ComponentData* data) {
 		rigidBody = entity->getComponent<RigidBody>();
 
 		if (animator != nullptr && animator->getEntity()->isAlive()) {
-			anims = animator->getAnimations();	
+			anims = animator->getAnimations();
+			animator->setLoop(anims, true);
 			return true;
 		}
 	}
@@ -40,14 +41,18 @@ bool TestComponent::initComponent(ComponentData* data) {
 }
 
 void TestComponent::update() {
-	if (input.keyPressed(K_Q) && anims.size() > 0) {
+	if (anims.size() <= 0) {
+		anims = animator->getAnimations();
+		animator->setLoop(anims, true);
+	}
+	if (input.keyPressed(K_Q)) {
 		if (activeAnim <= 0) {
 			activeAnim = anims.size();
 		}
 		activeAnim--;
 		animator->changeActive(anims[activeAnim]);
 	}
-	if (input.keyPressed(K_E) && anims.size() > 0) {
+	if (input.keyPressed(K_E)) {
 		activeAnim++;
 		if (activeAnim >= anims.size()) {
 			activeAnim = 0;

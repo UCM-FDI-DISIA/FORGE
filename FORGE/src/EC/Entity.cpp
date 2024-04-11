@@ -21,9 +21,9 @@ Entity::~Entity() {
     for (auto& child : children) {
         child->setAlive(false);
     }
-    // if (parent != nullptr) {
-    //     parent->removeChild(this);
-    // }
+    //if (parent != nullptr) {
+    //    parent->removeChild(this);
+    //}
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
@@ -43,9 +43,7 @@ void Entity::setAlive(bool _alive) {
 Component* Entity::addComponent(std::string const& id) {
     Component* component = fact.generateComponent(id);
     if (component == nullptr) {
-        std::cerr<<"ERROR: No existe un componente " << id <<std::endl;
-        removeComponent(id);   
-        return nullptr;
+        throwError(nullptr, "No existe un componente \"" << id << "\".\n");
     }
     removeComponent(id);    
     components.insert(std::pair<std::string, Component*>(id, component));
@@ -76,7 +74,7 @@ Entity* Entity::setParent(Entity* newParent) {
         parent->removeChild(this);
     }
     parent = newParent;
-    if (hasComponent("Transform") && parent->hasComponent("Transform")) {
+    if (hasComponent(Transform::id) && parent->hasComponent(Transform::id)) {
         getComponent<Transform>()->setParent(parent->getComponent<Transform>());
     }
     return parent;
@@ -96,6 +94,10 @@ bool Entity::hasComponent(std::string const& id) {
 
 int Entity::getGroup() {
     return groupId;
+}
+
+FORGE_API const std::unordered_set<Entity*>& Entity::getChildren() const {
+    return children;
 }
 
 void Entity::update() {
