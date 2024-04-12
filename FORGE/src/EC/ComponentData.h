@@ -68,6 +68,11 @@ public:
 	/// <param name="compId"> Identificador del componente </param>
 	/// <param name="lrData"> Referencia a una LuaTable</param>
 	FORGE_API ComponentData(std::string const& _id, luabridge::LuaRef* _data);
+	/// <summary>
+	/// Constructora por copia de ComponentData
+	/// </summary>
+	/// <param name="other">Instancia del ComponentData a copiar</param>
+	FORGE_API ComponentData(ComponentData const& other);
     /// <summary>
     /// Destruye la instancia de LuaRef apuntada
     /// </summary>
