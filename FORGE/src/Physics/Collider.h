@@ -33,6 +33,7 @@ protected:
     forge::Vector3 lastPosition;
     forge::Vector3 lastForce;
     forge::Quaternion lastOrientation;
+    std::string collisionLayer;
 public:
     static const FORGE_API_VAR std::string id;
 
@@ -82,6 +83,8 @@ public:
     FORGE_API bool isTrigger();
 
     FORGE_API btRigidBody* getBody();
+
+    FORGE_API std::string getLayer();
 #pragma endregion
 };
 #endif // !COLLIDER_H_

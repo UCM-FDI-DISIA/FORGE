@@ -11,9 +11,10 @@ const std::string Collider::id = "Collider";
 Collider::Collider() :
     physicsManager(nullptr), myBody(nullptr)
     , myShape(nullptr),shapeType(boxShape), 
-    trigger(false) {
+    trigger(false),collisionLayer("") {
     serializer(myScale, "scale");
     serializer(trigger, "trigger");
+    serializer(collisionLayer, "layer");
 }
 
 Collider::~Collider() {
@@ -80,7 +81,7 @@ void Collider::createRigidBody(std::string myShapeType) {
 
         myBody = rigidBody;
 
-        physicsManager->registerBody(rigidBody, entity->getComponent<Transform>());
+        physicsManager->registerBody(rigidBody, entity->getComponent<Transform>(), collisionLayer==""? "ALL":collisionLayer);
     }
     else{
         reportError("Se requiere un componente Transform para generar un Collider");
@@ -148,4 +149,8 @@ bool Collider::isTrigger() {
 
 btRigidBody* Collider::getBody() {
     return myBody;
+}
+
+std::string Collider::getLayer() {
+    return collisionLayer;
 }

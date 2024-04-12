@@ -11,6 +11,8 @@
 #include "DebugMode.h"
 #include <RenderManager.h>
 
+#define BIT(x) (1<<(x))
+
 std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
 bool PhysicsManager::initialised = false;
 
@@ -22,7 +24,10 @@ PhysicsManager::PhysicsManager() {
     world = nullptr;
     debugger = nullptr;
     debugMode = true;
+    collisionMatrix = std::unordered_map<std::string, std::unordered_map<std::string, bool>>();
 }
+
+
 
 PhysicsManager::~PhysicsManager() {
     if (debugger != nullptr) {
@@ -59,6 +64,10 @@ bool PhysicsManager::setup() {
         world->setDebugDrawer(debugger);
 
         world->setGravity(btVector3((btScalar)0, (btScalar)-9.8, (btScalar)0));
+        collisionLayers["NOTHING"] = 0;
+        collisionLayers["ALL"] = BIT(1);
+        collisionMatrix["ALL"]["ALL"] = true;
+        numberOfLayers = 2;
         return true;
     }
     catch (std::exception e) {
@@ -121,9 +130,13 @@ void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
     world->setGravity(newGravity.operator btVector3());
 }
 
-void PhysicsManager::registerBody(btRigidBody* body, Transform* transform) {
+void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::string layer) {
     transforms.insert({ body,transform });
-    world->addRigidBody(body);
+    int bitmask;
+    for (auto layersToCollide : collisionMatrix[layer]) {
+        bitmask |= collisionLayers[layersToCollide.first];
+    }
+    world->addRigidBody(body,collisionLayers[layer], bitmask);
 }
 
 
@@ -148,4 +161,24 @@ void PhysicsManager::setDebug(bool enabled) {
 
 bool PhysicsManager::isDebugModeEnabled() {
     return debugMode;
+}
+
+
+
+bool PhysicsManager::addLayer(const std::string layerName) {
+    if (collisionLayers.count(layerName) == 0) {
+        numberOfLayers++;
+        collisionLayers[layerName] = BIT(numberOfLayers);
+        collisionMatrix["ALL"][layerName] = true;
+        return true;
+    }
+    return false;
+}
+
+void PhysicsManager::setCollideWith(const std::string layer, const std::vector<std::string>& layersToCollide) {
+    if (collisionLayers.count(layer) > 0) {
+        for (std::string aux : layersToCollide) {
+                collisionMatrix[layer][aux] = true;
+        }
+    }
 }

@@ -23,7 +23,8 @@ local prefabs = {
                 friction = 5,
                 restitution = 1,
                 shapeType = "Cube",
-                static = false
+                static = false,
+                layer = "ALL"
             }
         }
     }

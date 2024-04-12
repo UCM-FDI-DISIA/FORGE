@@ -81,7 +81,7 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         bodyTransform = entity->getComponent<Transform>();
         myBody->setActivationState(DISABLE_DEACTIVATION);
 
-        physicsManager->registerBody(myBody, entity->getComponent<Transform>());
+        physicsManager->registerBody(myBody, entity->getComponent<Transform>(),(collisionLayer=="")? "ALL" : collisionLayer);
         myBody->setRestitution((btScalar)restitution);
         myBody->setFriction((btScalar)friction);
         lockPosition(axisBlocked[0], axisBlocked[1], axisBlocked[2]);

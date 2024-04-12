@@ -23,8 +23,11 @@ private:
     btDiscreteDynamicsWorld* world;
     std::unordered_map<btRigidBody*, Transform*> transforms;
     std::unordered_map<std::string, btRigidBody*> importantObjects;
+    std::unordered_map<std::string, int> collisionLayers;
+    std::unordered_map<std::string, std::unordered_map<std::string,bool>> collisionMatrix;
     DebugMode* debugger;
     bool debugMode;
+    int numberOfLayers;
 
     /// <summary>
     /// Constructora del physics manager.
@@ -75,7 +78,7 @@ public:
     /// </summary>
     /// <param name="body">El btRigidbody a registrar</param>
     /// <param name="transform">El transform asociado al btRigidbody</param>
-    void registerBody(btRigidBody* body, Transform* transform);
+    void registerBody(btRigidBody* body, Transform* transform, std::string layer = "ALL");
     /// <summary>
     /// Registra una instancia de rigidBody y la guarda en un mapa por nombre
     /// </summary>
@@ -95,4 +98,13 @@ public:
     /// </summary>
     /// <returns>Si el modo depuracion esta activo</returns>
     bool isDebugModeEnabled();
+
+    /// <summary>
+    /// Devuelve true si puede añadir la capa de colision al registro y false si ya estaba
+    /// </summary>
+    /// <param name="layerName: ">El nombre de la capa a añadir</param>
+    /// <returns></returns>
+    bool addLayer(const std::string layerName);
+
+    void setCollideWith(const std::string layer, const std::vector<std::string>& layersToCollide);
 };
