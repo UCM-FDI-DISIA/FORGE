@@ -227,6 +227,49 @@ bool LoadManager::loadComponents() {
 	return gameLoader->registerComponents(factory);
 }
 
+bool LoadManager::loadPhysics() {
+	LuaRef config = getGlobal(luaForge->getState(), "Physics");
+	if (!config.isTable()) {
+		throwError(false, "No se ha proporcionado una configuracion de fisicas");
+	}
+	LuaRef layers = config["layers"];
+	if (!layers.isTable()) {
+		throwError(false, "No se ha proporcionado una matriz de capas de colision");
+	}
+	std::vector<std::pair<std::string, std::vector<bool>>> layersVector;
+	for (auto&& layer : pairs(layers)) {
+		if (!layer.first.isString()) {
+			throwError(false, "Nombre de capa de colision no valido.");
+		}
+		if (!layer.second.isTable()) {
+			throwError(false, "No se pudieron leer las interacciones con capas de \"" << layer.first.cast<std::string>() << "\".");
+		}
+		layersVector.push_back({ layer.first,{} });
+		auto& layerVector = layersVector[layersVector.size() - 1].second;
+		for (auto&& interaction : pairs(layer.second)) {
+			if (!interaction.second.isBool()) {
+				throwError(false, "Valor de interaccion con la capa \"" << layer.first.cast<std::string>() << "\" no valido.");
+			}
+			layerVector.push_back(interaction.second.cast<bool>());
+		}
+	}
+
+	for (auto const& layer : layersVector) {
+		int i = 0;
+		physicsManager.addLayer(layer.first);
+		std::vector<std::string> interactions;
+		for (auto const& interacts : layer.second) {
+			if (interacts) {
+				interactions.push_back(layersVector[i].first);
+			}
+			++i;
+		}
+		physicsManager.setCollideWith(layer.first, interactions);
+	}
+
+	return true;
+}
+
 bool LoadManager::loadAssets(LuaRef const& config) {
 	LuaRef assets = config["assetsFile"];
 	if (!assets.isString()) {
@@ -283,6 +326,9 @@ bool LoadManager::init(std::string const& configFile) {
 	}
 	if (!renderManager.setup(gameName)) {
 		throwError(false, "No se pudo iniciar el sistema de renderizado.");
+	}
+	if (!loadPhysics()) {
+		throwError(false, "No se pudo cargar la configuracion de fisicas.");
 	}
 	if (!physicsManager.setup()) {
 		throwError(false, "No se pudo iniciar el sistema de fisicas.");

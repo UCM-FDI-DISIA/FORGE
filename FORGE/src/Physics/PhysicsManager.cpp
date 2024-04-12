@@ -179,6 +179,7 @@ void PhysicsManager::setCollideWith(const std::string layer, const std::vector<s
     if (collisionLayers.count(layer) > 0) {
         for (std::string aux : layersToCollide) {
                 collisionMatrix[layer][aux] = true;
+                collisionMatrix[aux][layer] = true;
         }
     }
 }

@@ -78,6 +78,11 @@ private:
 	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
 	bool loadComponents();
 	/// <summary>
+	/// Carga desde el archivo de configuracion la configuracion de fisicas
+	/// </summary>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
+	bool loadPhysics();
+	/// <summary>
 	/// Carga los recursos que haya en el archivo de recursos indicado en la configuracion
 	/// </summary>
 	/// <param name="config">Referencia al LuaRef en el que se ha cargado la configuracion</param>

@@ -5,3 +5,10 @@ Config = {
 	scenesFile = "Assets/scenes/scenetest.lua",
 	initialScene = "Test"
 }
+
+Physics = {
+	layers = {--	ALL		Players
+		Players	= {	true,	false},
+		ALL 	= {	true	}
+	}
+}
