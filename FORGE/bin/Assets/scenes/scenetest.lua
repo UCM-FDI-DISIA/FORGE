@@ -41,6 +41,18 @@ local scenes = {
                 }
             }
         },
+        cigar = {
+            group = "obstacle",
+            components = {
+                Transform = {
+                    position = {-20, -20, -20},
+                    scale = {1, 1, 1}
+                },
+                Mesh = {
+                    mesh = "cigar.mesh"
+                },
+            },
+        },
         cam = {
             components = {
                 Transform = {
