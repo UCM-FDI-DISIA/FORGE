@@ -41,6 +41,10 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 			std::string id = component.first.cast<std::string>();
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
 			LuaRef* data = new LuaRef(component.second);
+			auto comp = entityData.components.find(id);
+			if (comp != entityData.components.end()) {
+				delete comp->second;
+			}
 			entityData.components[id] = new ComponentData(id, data);
 		}
 	}
@@ -99,9 +103,10 @@ void LoadManager::modifyChildrenData(EntityData& childData, LuaRef& data) {
 		components = data["components"],
 		children = data["children"];
 	extractEntityValues(childData, handler, group, components);
+	bool wasBlueprint = childData.isBlueprint;
 	childData.isBlueprint = true;
 	extractChildren(childData, children);
-	childData.isBlueprint = false;
+	childData.isBlueprint = wasBlueprint;
 }
 
 
@@ -123,6 +128,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 		entityData = sceneManager.getEntityBlueprint(blueprint.cast<std::string>());
 		if (!(handler.isNil() && group.isNil() && components.isNil() && children.isNil())) {
 			entityData = new EntityData(*entityData);
+			entityData->isBlueprint = true;
 			extractEntityValues(*entityData, handler, group, components);
 			extractChildren(*entityData, children);
 			entityData->isBlueprint = false;
@@ -147,7 +153,9 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 	}
 
 	std::string realPath = scenes.cast<std::string>();
-	luaForge->doFile(realPath);
+	if (!luaForge->doFile(realPath)) {
+		throwError(false, "No se pudo abrir el archivo de escenas.");
+	}
 	lua_State* lua = luaForge->getState();
 	sceneManager.setLuaState(lua);
 

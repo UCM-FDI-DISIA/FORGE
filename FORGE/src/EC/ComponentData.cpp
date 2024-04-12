@@ -1,6 +1,6 @@
 #include "ComponentData.h"
 #include "SceneManager.h"
-#include <Vector3.h>
+#include "Vector3.h"
 
 ComponentData::ComponentData(std::string const& _id) :
     id(_id),
@@ -10,6 +10,11 @@ ComponentData::ComponentData(std::string const& _id) :
 ComponentData::ComponentData(std::string const& _id, luabridge::LuaRef* _data) :
     id(_id),
     data(_data) {
+}
+
+ComponentData::ComponentData(ComponentData const& other) :
+    id(other.id),
+    data(new luabridge::LuaRef(*other.data)) {
 }
 
 ComponentData::~ComponentData() {
