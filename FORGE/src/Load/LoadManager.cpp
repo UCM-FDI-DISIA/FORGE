@@ -1,4 +1,5 @@
 #include "LoadManager.h"
+#include <set>
 #include <lua.hpp>
 #pragma warning(push)
 #pragma warning(disable : 26439)
@@ -236,7 +237,13 @@ bool LoadManager::loadPhysics() {
 	if (!layers.isTable()) {
 		throwError(false, "No se ha proporcionado una matriz de capas de colision");
 	}
-	std::vector<std::pair<std::string, std::vector<bool>>> layersVector;
+	struct orderLayers {
+		bool operator()(std::pair<std::string, std::vector<bool>> const& a, std::pair<std::string, std::vector<bool>> const& b) const {
+			return a.second.size() < b.second.size();
+		}
+	};
+
+	std::set<std::pair<std::string, std::vector<bool>>, orderLayers> layersVector;
 	for (auto&& layer : pairs(layers)) {
 		if (!layer.first.isString()) {
 			throwError(false, "Nombre de capa de colision no valido.");
@@ -244,25 +251,26 @@ bool LoadManager::loadPhysics() {
 		if (!layer.second.isTable()) {
 			throwError(false, "No se pudieron leer las interacciones con capas de \"" << layer.first.cast<std::string>() << "\".");
 		}
-		layersVector.push_back({ layer.first,{} });
-		auto& layerVector = layersVector[layersVector.size() - 1].second;
+		std::vector<bool> layerVector;
 		for (auto&& interaction : pairs(layer.second)) {
 			if (!interaction.second.isBool()) {
 				throwError(false, "Valor de interaccion con la capa \"" << layer.first.cast<std::string>() << "\" no valido.");
 			}
 			layerVector.push_back(interaction.second.cast<bool>());
 		}
+		layersVector.insert({ layer.first, layerVector });
 	}
 
 	for (auto const& layer : layersVector) {
 		int i = 0;
+		auto layerI = layersVector.begin();
 		physicsManager.addLayer(layer.first);
 		std::vector<std::string> interactions;
 		for (auto const& interacts : layer.second) {
 			if (interacts) {
-				interactions.push_back(layersVector[i].first);
+				interactions.push_back(layerI->first);
 			}
-			++i;
+			++layerI;
 		}
 		physicsManager.setCollideWith(layer.first, interactions);
 	}
