@@ -1,21 +1,24 @@
 #ifndef DebugDrawer_h__
 #define DebugDrawer_h__
-#include<Ogre.h>
-#include "LinearMath/btIDebugDraw.h"
+#include <vector>
+#include <Ogre.h>
+#include <btBulletCollisionCommon.h>
 #include "ForgeExport.h"
+
+/// <summary>
+/// Struct para guardar los puntos de cintacto entre bodies
+/// </summary>
+struct ContactPoint {
+    Ogre::Vector3 from;
+    Ogre::Vector3 to;
+    Ogre::ColourValue color;
+    size_t dieTime;
+};
 
 class DebugMode : public btIDebugDraw, public Ogre::FrameListener {
 private:
-    /// <summary>
-    /// Struct para guardar los puntos de cintacto entre bodies
-    /// </summary>
-    struct ContactPoint {
-        Ogre::Vector3 from;
-        Ogre::Vector3 to;
-        Ogre::ColourValue   color;
-        size_t        dieTime;
-    };
-    DebugDrawModes               mDebugModes;
+
+    DebugDrawModes mDebugModes;
     Ogre::ManualObject* mLines;
     Ogre::ManualObject* mTriangles;
     std::vector< ContactPoint >* mContactPoints;

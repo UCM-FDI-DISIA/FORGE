@@ -1,14 +1,10 @@
 #pragma once
 #ifndef RIGIDBODY_H_
 #define RIGIDBODY_H_
-#include <Component.h>
 #include <string>
-#include<Vector3.h>
+#include <Component.h>
+#include <Vector3.h>
 #include "Collider.h"
-
-class PhysicsManager;
-class btRigidBody;
-class btCollisionShape;
 
 enum collisionShape {
     ballShape, boxShape , capsuleShape, cilinderShape, planeShape

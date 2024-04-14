@@ -1,8 +1,8 @@
 #pragma once
 #ifndef COLLIDER_H_
 #define COLLIDER_H_
-#include <Component.h>
 #include <string>
+#include <Component.h>
 #include<Vector3.h>
 #include <Quaternion.h>
 

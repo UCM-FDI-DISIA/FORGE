@@ -10,6 +10,7 @@
 #include <Transform.h>
 #include "DebugMode.h"
 #include <RenderManager.h>
+#include <btBulletDynamicsCommon.h>
 
 #define BIT(x) (1<<(x))
 

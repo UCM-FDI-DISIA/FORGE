@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include <Transform.h>
 #include <Serializer.h>
+#include "btBulletDynamicsCommon.h"
 #define PI 3.14159265358979323846264338327950288
 
 const std::string RigidBody::id = "RigidBody";

@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include <Transform.h>
 #include <Serializer.h>
+#include <btBulletDynamicsCommon.h>
 
 
 const std::string Collider::id = "Collider";

@@ -12,5 +12,6 @@ Physics = {
 		--Layer2	= {	true,	false,	true},
 		--Layer1	= {	true,	false},
 		Default		= {	true }
-	}
+	},
+	debug		= true
 }

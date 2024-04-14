@@ -1,12 +1,18 @@
 #pragma once
 #include <memory>
 #include <unordered_map>
-#include <btBulletDynamicsCommon.h>
+#include<string>
 
 
 class Transform;
 class RigidBody;
 class DebugMode;
+class btBroadphaseInterface;
+class btDefaultCollisionConfiguration;
+class btCollisionDispatcher;
+class btSequentialImpulseConstraintSolver;
+class btDiscreteDynamicsWorld;
+class btRigidBody;
 namespace forge {
     class Vector3;
 };

@@ -274,6 +274,11 @@ bool LoadManager::loadPhysics() {
 		}
 		physicsManager.setCollideWith(layer.first, interactions);
 	}
+	LuaRef debugBool = config["debug"];
+	if (!debugBool.isBool()) {
+		throwError(false, "El valor introducido no es un booleano valido");
+	}
+	physicsManager.setDebug(debugBool);
 
 	return true;
 }
