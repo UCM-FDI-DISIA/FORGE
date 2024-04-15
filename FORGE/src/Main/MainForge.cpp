@@ -61,7 +61,9 @@ void MainForge::update() {
 }
 
 bool MainForge::render() {
+#ifdef _DEBUG
 	physicsManager.drawDebug();
+#endif // _DEBUG
 	return renderManager.render() /*&& uiManager.render()*/;
 }
 
