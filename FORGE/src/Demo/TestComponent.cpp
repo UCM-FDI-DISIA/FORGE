@@ -39,7 +39,7 @@ bool TestComponent::initComponent(ComponentData* data) {
 	return false;
 }
 
-void TestComponent::update() {
+void TestComponent::update(double dt) {
 	if (anims.size() <= 0) {
 		anims = animator->getAnimations();
 		animator->setLoop(anims, true);

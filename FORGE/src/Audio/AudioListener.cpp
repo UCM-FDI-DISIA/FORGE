@@ -35,7 +35,7 @@ bool AudioListener::initComponent(ComponentData* data) {
     return true;
 }
 
-void AudioListener::update() {
+void AudioListener::update(double dt) {
     if (transform->getNeedsUpdate()) {
         manager.setListenerPosition(transform->getGlobalPosition(), transform->getForward());
     }

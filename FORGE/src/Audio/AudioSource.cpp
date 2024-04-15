@@ -54,7 +54,7 @@ bool AudioSource::initComponent(ComponentData* data) {
 	return true;
 }
 
-void AudioSource::update() {
+void AudioSource::update(double dt) {
 	if (transform != nullptr && transform->getNeedsUpdate()) {
 		sound->setPosition(transform->getGlobalPosition());
 	}

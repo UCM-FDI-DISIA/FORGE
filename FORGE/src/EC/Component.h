@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// Actualiza la logica del Component
 	/// </summary>
-	FORGE_API virtual void update();
+	FORGE_API virtual void update(double dt);
 	/// <summary>
 	///	Actualiza el Component en periodos de tiempo fijos
 	/// </summary>

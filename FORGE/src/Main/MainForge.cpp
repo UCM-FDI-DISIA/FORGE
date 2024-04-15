@@ -56,7 +56,7 @@ void MainForge::manageFixedUpdates() {
 
 void MainForge::update() {
 	inputManager.update();
-	sceneManager.update();
+	sceneManager.update(Time::deltaTime);
 	audioManager.update();
 }
 

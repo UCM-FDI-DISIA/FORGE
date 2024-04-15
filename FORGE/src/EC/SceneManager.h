@@ -93,7 +93,7 @@ public:
 	/// <returns>
 	/// Actualiza las entidades de la escena activa
 	/// </returns>
-	FORGE_API bool update();
+	FORGE_API bool update(double dt);
 	/// <summary>
 	///	Actualiza las entidades de la escena activa en periodos de tiempo fijos
 	/// </summary>

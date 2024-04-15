@@ -37,7 +37,7 @@ public:
 	/// <summary>
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>
-	FORGE_API void update() override;
+	FORGE_API void update(double dt) override;
 	/// <summary>
 	/// Reanuda la reproduccion del sonido si se estaba reproduciendo cuando se desactivo el componente
 	/// </summary>

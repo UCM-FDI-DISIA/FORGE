@@ -34,7 +34,7 @@ public:
     /// <summary>
     /// Actualiza las animaciones activas agregandole el tiempo transcurrido
     /// </summary>
-    FORGE_API void update() override;
+    FORGE_API void update(double dt) override;
 
     #pragma region setters
     /// <summary>

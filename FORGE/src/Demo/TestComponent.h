@@ -27,7 +27,7 @@ public:
 
 	TestComponent();
 	bool initComponent(ComponentData* data) override;
-	void update() override;
+	void update(double dt) override;
 
 };
 
