@@ -255,6 +255,10 @@ void RenderManager::removeCamera(Ogre::Camera* camera) {
 	transforms.erase(node);
 }
 
+Ogre::SceneManager* RenderManager::getSceneManager() {
+	return sceneManager;
+}
+
 Ogre::ManualObject* RenderManager::createManualObject(std::string name) {
 	Ogre::ManualObject* newManualObject = sceneManager->createManualObject(name);
 	sceneManager->getRootSceneNode()->attachObject(newManualObject);
