@@ -23,7 +23,7 @@
 #include <OgreParticleSystem.h>
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
-#include "OgreNameGenerator.h"
+#include <OgreNameGenerator.h>
 #pragma warning(pop)
 #include "Entity.h"
 #include "Transform.h"

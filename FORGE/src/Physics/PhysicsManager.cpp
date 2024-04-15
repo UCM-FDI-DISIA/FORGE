@@ -1,16 +1,16 @@
 #include "PhysicsManager.h"
-#include <Entity.h>
-#include <Component.h>
-#include <EntityData.h>
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
-#include <Scene.h>
-#include "SceneManager.h"
-#include "RigidBody.h"
-#include <Transform.h>
-#include "DebugMode.h"
-#include <RenderManager.h>
 #include <btBulletDynamicsCommon.h>
+#include "Scene.h"
+#include "SceneManager.h"
+#include "RenderManager.h"
+#include "Entity.h"
+#include "Component.h"
+#include "EntityData.h"
+#include "RigidBody.h"
+#include "Transform.h"
+#include "DebugMode.h"
 
 #define BIT(x) (1<<(x))
 

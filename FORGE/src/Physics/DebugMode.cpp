@@ -1,6 +1,6 @@
 #include "DebugMode.h"
 #include "RenderManager.h"
-#include "LinearMath/btIDebugDraw.h"
+#include <LinearMath/btIDebugDraw.h>
 
 using namespace Ogre;
 

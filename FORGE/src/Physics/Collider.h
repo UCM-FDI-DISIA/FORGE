@@ -3,7 +3,7 @@
 #define COLLIDER_H_
 #include <string>
 #include <Component.h>
-#include<Vector3.h>
+#include <Vector3.h>
 #include <Quaternion.h>
 
 class PhysicsManager;

@@ -1,10 +1,9 @@
 #include "Collider.h"
-
+#include <btBulletDynamicsCommon.h>
 #include "PhysicsManager.h"
 #include "Entity.h"
-#include <Transform.h>
-#include <Serializer.h>
-#include <btBulletDynamicsCommon.h>
+#include "Serializer.h"
+#include "Transform.h"
 
 
 const std::string Collider::id = "Collider";
