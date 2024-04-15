@@ -1,4 +1,5 @@
 #include "LoadManager.h"
+#include <set>
 #include <lua.hpp>
 #pragma warning(push)
 #pragma warning(disable : 26439)
@@ -11,6 +12,7 @@
 #include "EntityData.h"
 #include "ComponentData.h"
 #include "RenderManager.h"
+#include "PhysicsManager.h"
 #include "ForgeError.h"
 #include "Factory.h"
 #include "Transform.h"
@@ -22,6 +24,8 @@
 #include "ParticleSystem.h"
 #include "AudioSource.h"
 #include "AudioListener.h"
+#include "Collider.h"
+#include "RigidBody.h"
 
 using namespace luabridge;
 
@@ -219,7 +223,66 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<ParticleSystem>();
 	factory.registerComponent<AudioSource>();
 	factory.registerComponent<AudioListener>();
+	factory.registerComponent<Collider>();
+	factory.registerComponent<RigidBody>();
 	return gameLoader->registerComponents(factory);
+}
+
+bool LoadManager::loadPhysics() {
+	LuaRef config = getGlobal(luaForge->getState(), "Physics");
+	if (!config.isTable()) {
+		throwError(false, "No se ha proporcionado una configuracion de fisicas");
+	}
+	LuaRef layers = config["layers"];
+	if (!layers.isTable()) {
+		throwError(false, "No se ha proporcionado una matriz de capas de colision");
+	}
+	struct orderLayers {
+		bool operator()(std::pair<std::string, std::vector<bool>> const& a, std::pair<std::string, std::vector<bool>> const& b) const {
+			return a.second.size() < b.second.size();
+		}
+	};
+
+	std::set<std::pair<std::string, std::vector<bool>>, orderLayers> layersVector;
+	for (auto&& layer : pairs(layers)) {
+		if (!layer.first.isString()) {
+			throwError(false, "Nombre de capa de colision no valido.");
+		}
+		if (!layer.second.isTable()) {
+			throwError(false, "No se pudieron leer las interacciones con capas de \"" << layer.first.cast<std::string>() << "\".");
+		}
+		std::vector<bool> layerVector;
+		for (auto&& interaction : pairs(layer.second)) {
+			if (!interaction.second.isBool()) {
+				throwError(false, "Valor de interaccion con la capa \"" << layer.first.cast<std::string>() << "\" no valido.");
+			}
+			layerVector.push_back(interaction.second.cast<bool>());
+		}
+		layersVector.insert({ layer.first, layerVector });
+	}
+
+	for (auto const& layer : layersVector) {
+		int i = 0;
+		auto layerI = layersVector.begin();
+		physicsManager.addLayer(layer.first);
+		std::vector<std::string> interactions;
+		for (auto const& interacts : layer.second) {
+			if (interacts) {
+				interactions.push_back(layerI->first);
+			}
+			++layerI;
+		}
+		physicsManager.setCollideWith(layer.first, interactions);
+	}
+#ifdef _DEBUG
+	LuaRef debugBool = config["debug"];
+	if (!debugBool.isBool()) {
+		throwError(false, "PHYSICS DEBUG: El valor introducido no es un booleano valido");
+	}
+	physicsManager.setDebug(debugBool);
+#endif // _DEBUG
+	
+	return true;
 }
 
 bool LoadManager::loadAssets(LuaRef const& config) {
@@ -250,6 +313,7 @@ LoadManager::LoadManager() :
 	luaForge(new LuaForge()),
 	sceneManager(*SceneManager::GetInstance()),
 	renderManager(*RenderManager::GetInstance()),
+	physicsManager(*PhysicsManager::GetInstance()),
 	factory(*Factory::GetInstance()) {
 }
 
@@ -277,6 +341,12 @@ bool LoadManager::init(std::string const& configFile) {
 	}
 	if (!renderManager.setup(gameName)) {
 		throwError(false, "No se pudo iniciar el sistema de renderizado.");
+	}
+	if (!loadPhysics()) {
+		throwError(false, "No se pudo cargar la configuracion de fisicas.");
+	}
+	if (!physicsManager.setup()) {
+		throwError(false, "No se pudo iniciar el sistema de fisicas.");
 	}
 	if (!loadInitialScene(config)) {
 		throwError(false, "No se pudo cargar la escena inicial.");

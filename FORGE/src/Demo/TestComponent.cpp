@@ -6,7 +6,7 @@
 #include "Animator.h"
 #include "SceneManager.h"
 #include "AudioSource.h"
-
+#include "RigidBody.h"
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
@@ -15,23 +15,28 @@ TestComponent::TestComponent() :
 	transform(nullptr),
 	animator(nullptr),
 	audio(nullptr),
+	rigidBody(nullptr),
 	sceneManager(SceneManager::GetInstance()),
 	anims(),
 	activeAnim(0) {
 }
 
 bool TestComponent::initComponent(ComponentData* data) {
-	if (entity->hasComponent<Transform>() && entity->hasComponent<AudioSource>() && entity->hasComponent<Animator>()) {
+	if (entity->hasComponent<Transform>() && entity->hasComponent<AudioSource>() 
+		&& entity->hasComponent<Animator>() && entity->hasComponent<RigidBody>()) {
 		transform = entity->getComponent<Transform>();	
 		audio = entity->getComponent<AudioSource>();	
 		animator = entity->getComponent<Animator>();
+		rigidBody = entity->getComponent<RigidBody>();
+
 		if (animator != nullptr && animator->getEntity()->isAlive()) {
 			anims = animator->getAnimations();
 			animator->setLoop(anims, true);
 			return true;
 		}
 	}
-	throwError(false, "Se necesita un componente Transform, AudioSource y Animator para generar un TestComponent");
+	std::cerr << "ERROR: Se necesita un componente Transform, RigidBody, AudioSource y Animator para generar un TestComponent\n";
+	return false;
 }
 
 void TestComponent::update() {
@@ -57,27 +62,34 @@ void TestComponent::update() {
 		audio->restart();
 	}
 	if (input.keyDown(K_W)) {
-		transform->setPositionZ(transform->getPosition().getZ() + movement);
+		//transform->setPositionZ(transform->getPosition().getZ() + movement);
+		rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
 	}
 
 	if (input.keyPressed(K_W)) {
-		transform->setPositionZ(transform->getPosition().getZ() + movement);
+		//transform->setPositionZ(transform->getPosition().getZ() + movement);
+		rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
 	}
 	if (input.keyPressed(K_S)) {
-		transform->setPositionZ(transform->getPosition().getZ() - movement);
+		//transform->setPositionZ(transform->getPosition().getZ() - movement);
+		rigidBody->setPositionZ(transform->getPosition().getZ() - movement);
 
 	}
 	if (input.keyPressed(K_D)) {
-		transform->setPositionX(transform->getPosition().getX() + movement);
+		//transform->setPositionX(transform->getPosition().getX() + movement);
+		rigidBody->setPositionX(transform->getPosition().getX() + movement);
 	}
 	if (input.keyPressed(K_A)) {
-		transform->setPositionX(transform->getPosition().getX() - movement);
+		//transform->setPositionX(transform->getPosition().getX() - movement);
+		rigidBody->setPositionX(transform->getPosition().getX() - movement);
 	}
 	if (input.keyPressed(K_RIGHT)) {
-		transform->rotateY(movement);
+		//transform->rotateY(movement);
+		rigidBody->rotateY(movement);
 	}
 	if (input.keyPressed(K_LEFT)) {
-		transform->rotateY(-movement);
+		//transform->rotateY(-movement);
+		rigidBody->rotateY(-movement);
 	}
 
 	if (input.keyDown(K_R)) {

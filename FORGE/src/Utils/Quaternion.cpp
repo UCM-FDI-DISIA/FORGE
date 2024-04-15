@@ -3,6 +3,7 @@
 #pragma warning(push)
 #pragma warning(disable : 26495)
 #include <OgreQuaternion.h>
+#include <btQuaternion.h>
 #pragma warning(pop)
 using namespace forge;
 
@@ -241,6 +242,30 @@ Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
 	y = q.y;
 	z = q.z;
 	w = q.w;
+	return (*this);
+}
+
+Quaternion::operator btQuaternion() const {
+	return btQuaternion(x, y, z, w);
+}
+
+Quaternion::Quaternion(const btQuaternion& q) :
+	x(q.getX()),
+	y(q.getY()),
+	z(q.getZ()),
+	w(q.getW()) {}
+
+Quaternion::Quaternion(btQuaternion&& q) noexcept :
+	x(q.getX()),
+	y(q.getY()),
+	z(q.getZ()),
+	w(q.getW()) {}
+
+Quaternion& Quaternion::operator=(const btQuaternion& q) {
+	x = q.getX();
+	y = q.getY();
+	z = q.getZ();
+	w = q.getW();
 	return (*this);
 }
 #pragma endregion

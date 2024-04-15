@@ -16,6 +16,15 @@ local prefabs = {
             AudioSource = {
                 sound = "Test",
                 playOnAwake = true
+            },
+            RigidBody = {
+                scale = {10, 15, 10},
+                mass = 1,
+                friction = 5,
+                restitution = 1,
+                shapeType = "Cube",
+                static = false,
+                layer = "ALL"
             }
         }
     }
@@ -64,6 +73,19 @@ local scenes = {
                     backgroundColor = {0.6, 0.3, 0.3}
                 },
                 AudioListener = 0
+            }
+        },
+        rampa = {
+            handler = "rampa",
+            components = {
+                Transform = {
+                    position = {-30, -50, 0},
+                    rotation = {0, 0, -1, 3.14/6 }
+                },
+                 Collider = {
+                    scale = {30, 10, 30},
+                    shapeType = "Cube"
+                }
             }
         },
         luz = {

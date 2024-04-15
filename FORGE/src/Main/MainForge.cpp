@@ -7,10 +7,8 @@
 #include "AudioManager.h"
 #include "LoadManager.h"
 #include "GameLoader.h"
-/*
 #include "PhysicsManager.h"
-#include "UIManager.h"
-*/
+//#include "UIManager.h"
 #include "ForgeError.h"
 
 using namespace forge;
@@ -28,9 +26,10 @@ MainForge::MainForge() :
 	sceneManager(*SceneManager::GetInstance()),
 	inputManager(*Input::GetInstance()),
 	audioManager(*AudioManager::GetInstance()),
-	loadManager(*(new LoadManager()))/*,
-	physicsManager(*PhysicsManager::getInstance()),
-	uiManager(*UIManager::getInstance())*/ {
+	loadManager(*(new LoadManager())),
+	physicsManager(*PhysicsManager::GetInstance())
+	//uiManager(*UIManager::getInstance()) 
+	{
 }
 
 bool MainForge::init(std::string const& configPath) {
@@ -41,7 +40,7 @@ bool MainForge::init(std::string const& configPath) {
 		return false;
 	}
 
-	//physicsManager.init();???
+	//physicsManager.Init();
 	//UIManager.init();???
 	return true;
 }
@@ -49,7 +48,7 @@ bool MainForge::init(std::string const& configPath) {
 void MainForge::manageFixedUpdates() {
 	fixedUpdateTimer += Time::deltaTime;
 	while (fixedUpdateTimer >= Time::fixedDeltaTime) {
-		// physicsManager.updatePhysics();
+		physicsManager.updatePhysics();
 		sceneManager.fixedUpdate();
 		fixedUpdateTimer -= Time::fixedDeltaTime;
 	}
@@ -62,6 +61,9 @@ void MainForge::update() {
 }
 
 bool MainForge::render() {
+#ifdef _DEBUG
+	physicsManager.drawDebug();
+#endif // _DEBUG
 	return renderManager.render() /*&& uiManager.render()*/;
 }
 
@@ -100,6 +102,7 @@ bool MainForge::Init(std::string const& configPath) {
 		}
 		RenderManager::Init();
 		SceneManager::Init();
+		PhysicsManager::Init();
 		if (!Input::Init()) {
 			throwError(false, "No se pudo iniciar el sistema de entrada.");
 		}

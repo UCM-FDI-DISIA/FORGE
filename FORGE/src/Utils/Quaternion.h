@@ -5,6 +5,8 @@
 namespace Ogre {
 	class Quaternion;
 }
+
+class btQuaternion;
 namespace forge {
 	/// TO DO: Adaptar para que los set y get de los parametros los pueda tratar el usuario como par rotacion. Habrá que guardar el angulo o el seno.
 	class Quaternion {
@@ -218,17 +220,41 @@ namespace forge {
 		Quaternion(const Ogre::Quaternion& q);
 
 		/// <summary>
-		/// Constructor por copia de referencia a R value de Ogre::Quaternion
+		/// Constructor por copia de referencia a R value de btQuaternion
 		/// </summary>
-		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		/// <param name="q">Cuaternion de Bullet a copiar</param>
 		Quaternion(Ogre::Quaternion&& q) noexcept;
 
 		/// <summary>
 		/// Asigna la informacion de Q a este cuaternion
 		/// </summary>
-		/// <param name="q">Cuaternion de Ogre a copiar</param>
+		/// <param name="q">Cuaternion de Bullet a copiar</param>
 		/// <returns>Cuaternion actualizado</returns>
 		Quaternion& operator=(const Ogre::Quaternion& q);
+
+		/// <summary>
+		/// Conversion implicita de forge::Quaternion a btQuaternion
+		/// </summary>
+		operator btQuaternion() const;
+
+		/// <summary>
+		/// Constructor por copia de Ogre::Quaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Bullet a copiar</param>
+		Quaternion(const btQuaternion& q);
+
+		/// <summary>
+		/// Constructor por copia de referencia a R value de Ogre::Quaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Bullet a copiar</param>
+		Quaternion(btQuaternion&& q) noexcept;
+
+		/// <summary>
+		/// Asigna la informacion de Q a este cuaternion
+		/// </summary>
+		/// <param name="q">Cuaternion de Bullet a copiar</param>
+		/// <returns>Cuaternion actualizado</returns>
+		Quaternion& operator=(const btQuaternion& q);
 		#pragma endregion
 
 		static const FORGE_API_VAR Quaternion IDENTITY;

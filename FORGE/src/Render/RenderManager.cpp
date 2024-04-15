@@ -23,7 +23,7 @@
 #include <OgreParticleSystem.h>
 #include <OgreBillboardSet.h>
 #include <OgreViewport.h>
-#include "OgreNameGenerator.h"
+#include <OgreNameGenerator.h>
 #pragma warning(pop)
 #include "Entity.h"
 #include "Transform.h"
@@ -253,4 +253,14 @@ void RenderManager::removeCamera(Ogre::Camera* camera) {
 	sceneManager->destroyCamera(camera);
 	sceneManager->destroySceneNode(node);
 	transforms.erase(node);
+}
+
+Ogre::SceneManager* RenderManager::getSceneManager() {
+	return sceneManager;
+}
+
+Ogre::ManualObject* RenderManager::createManualObject(std::string name) {
+	Ogre::ManualObject* newManualObject = sceneManager->createManualObject(name);
+	sceneManager->getRootSceneNode()->attachObject(newManualObject);
+	return newManualObject;
 }

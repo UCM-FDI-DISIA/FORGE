@@ -7,6 +7,7 @@ class LuaForge;
 class GameLoader;
 class SceneManager;
 class RenderManager;
+class PhysicsManager;
 struct EntityData;
 class Factory;
 namespace luabridge {
@@ -18,6 +19,7 @@ private:
 	GameLoader* gameLoader;
 	SceneManager& sceneManager;
 	RenderManager& renderManager;
+	PhysicsManager& physicsManager;
 	Factory& factory;
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.
@@ -75,6 +77,11 @@ private:
 	/// </summary>
 	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
 	bool loadComponents();
+	/// <summary>
+	/// Carga desde el archivo de configuracion la configuracion de fisicas
+	/// </summary>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
+	bool loadPhysics();
 	/// <summary>
 	/// Carga los recursos que haya en el archivo de recursos indicado en la configuracion
 	/// </summary>

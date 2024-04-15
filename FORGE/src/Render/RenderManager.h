@@ -25,6 +25,7 @@ namespace Ogre {
 	class SceneManager;
 	class MovableObject;
 	class NameGenerator;
+	class ManualObject;
 }
 
 
@@ -67,7 +68,7 @@ public:
 	/// </summary>
 	~RenderManager();
 
-#pragma region Setup
+	#pragma region Setup
 	/// <summary>
 	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de OGRE sin mas.
 	/// </summary>
@@ -79,10 +80,10 @@ public:
 	/// </summary>
 	/// <returns>Devuelve True si ha podido renderizar</returns>
 	bool render();
-#pragma endregion
+	#pragma endregion
 
 
-#pragma region ECS
+	#pragma region ECS
 	/// <summary>
 	/// Agrega un mesh a la escena
 	/// </summary>
@@ -146,7 +147,16 @@ public:
 	/// </summary>
 	/// <param name="camera">Camara que queremos eliminar</param>
 	void removeCamera(Ogre::Camera* camera);
-#pragma endregion
+	#pragma endregion
+
+	#pragma region Getters
+	// <summary>
+	/// Devuelve el sceneManager
+	/// </summary>
+	Ogre::SceneManager* getSceneManager();
+	#pragma endregion
+	
+	#pragma region utils
+	Ogre::ManualObject* createManualObject(std::string name);
+	#pragma endregion
 };
-
-
