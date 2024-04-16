@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
-	std::string configFile = "Assets/config.forge.lua";
+	std::string configFile = "config.forge.lua";
 	if (argc > 2) {
 		throwError(EXIT_FAILURE, "Se proporcionaron demasiados argumentos, el unico argumento opcional es la ruta del archivo de configuracion.");
 	}
