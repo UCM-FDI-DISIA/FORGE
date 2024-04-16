@@ -63,9 +63,9 @@ void Animator::onEnabled() {
 	}
 }
 
-void Animator::update(double dt) {
+void Animator::update() {
 	for (std::string animation : activeAnimations) {
-		ogreAnimations->getAnimationState(animation)->addTime(dt);
+		ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
 	}
 }
 

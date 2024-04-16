@@ -16,10 +16,10 @@ Scene::~Scene() {
     }
 }
 
-void Scene::update(double dt) {
+void Scene::update() {
     for (auto& group : entitiesByGroup) {
         for (auto& entity : group) {
-            entity->update(dt);
+            entity->update();
         }
     }
 

@@ -127,7 +127,7 @@ public:
 	/// <summary>
 	/// Actualiza la logica de la Entity
 	/// </summary>
-	FORGE_API void update(double dt);
+	FORGE_API void update();
 	/// <summary>
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>

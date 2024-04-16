@@ -100,11 +100,11 @@ FORGE_API const std::unordered_set<Entity*>& Entity::getChildren() const {
     return children;
 }
 
-void Entity::update(double dt) {
+void Entity::update() {
 	for (auto& componentPair : components) {
         Component* component = componentPair.second;
         if(component->isEnabled()) {
-		    component->update(dt);
+		    component->update();
         }
 	}
 }

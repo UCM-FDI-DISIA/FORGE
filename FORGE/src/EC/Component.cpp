@@ -32,7 +32,7 @@ bool Component::initSerialized(ComponentData* data) {
 
 bool Component::initComponent(ComponentData* data) { return true; }
 
-void Component::update(double dt) {}
+void Component::update() {}
 
 void Component::fixedUpdate() {}
 

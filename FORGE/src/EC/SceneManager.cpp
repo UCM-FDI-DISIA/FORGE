@@ -161,9 +161,9 @@ int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
-bool SceneManager::update(double dt) {
+bool SceneManager::update() {
 	if (activeScene.second != nullptr && !activeScene.second->getEndScene()) {
-		activeScene.second->update(dt);
+		activeScene.second->update();
 		return true;
 	}
 	return false;
