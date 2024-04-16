@@ -29,6 +29,6 @@ public:
 	/// Comprueba si hay que actualizar la posicion del escuchador y si es asi
 	/// la actualiza
 	/// </summary>
-	FORGE_API void update(double dt) override;
+	FORGE_API void update() override;
 };
 #endif // AUDIO_LISTENER_H_

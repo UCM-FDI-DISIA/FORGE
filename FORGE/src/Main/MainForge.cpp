@@ -40,7 +40,6 @@ bool MainForge::init(std::string const& configPath) {
 		return false;
 	}
 
-	//physicsManager.Init();
 	//UIManager.init();???
 	return true;
 }
@@ -67,14 +66,17 @@ bool MainForge::render() {
 	return renderManager.render() /*&& uiManager.render()*/;
 }
 
-void MainForge::shutDown() {
+bool MainForge::shutDown() {
+	bool result = true;
 	sceneManager.cleanUp();
-	loadManager.cleanUp();
+	result = loadManager.cleanUp();
 	delete& loadManager;
 	initialized = false;
+	return result;
 }
 
-void MainForge::mainLoop() {
+bool MainForge::mainLoop() {
+	bool result = true;
 	isRunning = true;
 	time.init();
 	while (isRunning) {
@@ -83,6 +85,7 @@ void MainForge::mainLoop() {
 		update();
 		if (!render()) {
 			reportError("No se pudo renderizar el juego.");
+			result = false;
 			Exit();
 		}
 		
@@ -93,6 +96,7 @@ void MainForge::mainLoop() {
 		inputManager.refresh();
 	}
 	finished = true;
+	return result;
 }
 
 bool MainForge::Init(std::string const& configPath) {
@@ -109,23 +113,33 @@ bool MainForge::Init(std::string const& configPath) {
 		if (instance == nullptr) instance = std::unique_ptr<MainForge>(new MainForge());
 		return instance->init(configPath);
 	}
-	return false;
+	throwError(false, "No se puede inicializar FORGE cuando ya esta inicializado.");
 }
 
-void MainForge::MainLoop() {
+bool MainForge::MainLoop() {
 	if (initialized && !instance->isRunning) {
-		instance->mainLoop();
+		return instance->mainLoop();
 	}
+	throwError(false, "No se puede activar el bucle principal si no se ha inicializado FORGE o si ya esta corriendo.");
 }
 
-void MainForge::ShutDown() {
+bool MainForge::ShutDown() {
 	if (initialized && instance->finished) {
-		instance->shutDown();
+		if (!instance->shutDown()) {
+			throwError(false, "No se pudo apagar FORGE correctamente.");
+		}
+		return true;
 	}
+	throwError(false, "No se no se puede apagar FORGE si no se ha inicializado o no ha finalizado sus operaciones.");
 }
 
 void MainForge::Exit() {
 	if (initialized && instance->isRunning) {
 		instance->isRunning = false;
 	}
+#ifdef _DEBUG
+	else {
+		reportError("No se puede salir de la aplicacion si no esta inicializada o no esta corriendo.");
+	}
+#endif
 }

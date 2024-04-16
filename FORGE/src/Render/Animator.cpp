@@ -9,6 +9,8 @@
 #include <OgreAnimation.h>
 #include <OgreEntity.h>
 #pragma warning(pop)
+#include "TimeForge.h"
+using namespace forge;
 
 const std::string Animator::id = "Animator";
 
@@ -65,7 +67,7 @@ void Animator::onEnabled() {
 
 void Animator::update() {
 	for (std::string animation : activeAnimations) {
-		ogreAnimations->getAnimationState(animation)->addTime(0.017f /*TODO: DELTA TIME*/);
+		ogreAnimations->getAnimationState(animation)->addTime(Time::deltaTime);
 	}
 }
 

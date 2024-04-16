@@ -61,11 +61,11 @@ private:
 	/// <summary>
 	/// Arranca el bucle principal del juego
 	/// </summary>
-	void mainLoop();
+	bool mainLoop();
 	/// <summary>
 	/// Desactiva todos los sistemas
 	/// </summary>
-	void shutDown();
+	bool shutDown();
 
 public:
 	/// <summary>
@@ -76,7 +76,7 @@ public:
 	/// <summary>
 	/// Arranca el bucle principal del juego
 	/// </summary>
-	static void FORGE_API MainLoop();
+	static bool FORGE_API MainLoop();
 	/// <summary>
 	/// Detiene la ejecucion del bucle principal, saliendo del programa
 	/// </summary>
@@ -84,7 +84,7 @@ public:
 	/// <summary>
 	/// Vacia el objeto de MainForge
 	/// </summary>
-	static void FORGE_API ShutDown();
+	static bool FORGE_API ShutDown();
 };
 
 #endif // !MAIN_FORGE_H_
