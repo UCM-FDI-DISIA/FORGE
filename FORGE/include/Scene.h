@@ -26,7 +26,7 @@ public:
     /// <summary>
     /// Actualiza las Entity de la escena
 	/// </summary>
-    FORGE_API void update(double dt);
+    FORGE_API void update();
     /// <summary>
 	///	Actualiza la Entity en periodos de tiempo fijos
 	/// </summary>
