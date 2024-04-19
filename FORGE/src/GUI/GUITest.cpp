@@ -72,7 +72,7 @@ int main() {
 
     // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
-    ImGui_ImplOpenGL2_Init();
+    ImGui_ImplOpenGL3_Init();
 
     // Our state
     bool show_demo_window = true;
@@ -108,12 +108,12 @@ int main() {
     img->setPosition(forge::Vector2(250, 250));
     img->setSize(forge::Vector2(200, 200));
     // --- IMAGE BUTTON ---
-    //ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", renderer, funcionImg, forge::Vector2(632, 144));
-    //imgb->setPosition(forge::Vector2(550, 250));
-    ////imgb->setSize(forge::Vector2(300, 300));
-    /*ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", renderer, funcionImg, forge::Vector2(632, 144));
+    ImageButton* imgb = new ImageButton("butImg", "idle.png", "hover.png", "pressed.png", gl_context, funcionImg, forge::Vector2(632, 144));
+    imgb->setPosition(forge::Vector2(550, 250));
+    //imgb->setSize(forge::Vector2(300, 300));
+    ImageButton* imgb2 = new ImageButton("butImg2", "idle.png", gl_context, funcionImg, forge::Vector2(632, 144));
     imgb2->setPosition(forge::Vector2(550, 450));
-    imgb2->setSize(forge::Vector2(300, 300));*/
+    //imgb2->setSize(forge::Vector2(300, 300));
     // --- INPUTTEXT ---
     InputText* itext = new InputText("prueba5", "Introduce texto", text, forge::Vector2(100, 600));
     InputText* itext2 = new InputText("prueba4", "Introduce texto", forge::Vector2(100, 660));
@@ -138,7 +138,7 @@ int main() {
         }
 
         // Start the Dear ImGui frame
-        ImGui_ImplOpenGL2_NewFrame();
+        ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -154,8 +154,8 @@ int main() {
         BaseButton::resetFunction();
         button->update();
         img->update();
-        /*imgb->update();
-        imgb2->update();*/
+        imgb->update();
+        imgb2->update();
         BaseButton::mainFunctionCall();
 
         // Rendering
@@ -164,14 +164,14 @@ int main() {
         glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
         //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
-        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         SDL_GL_SwapWindow(window);
 
         gui->freeIds();
     }
 
     // Cleanup
-    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
