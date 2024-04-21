@@ -21,6 +21,7 @@ private:
 	std::unordered_set<Entity*> children;
 	int groupId;
 	bool alive;
+	bool keepBetweenScenes;
 
 	/// <summary>
 	/// Establece cual es la Entity padre de esta Entity.
@@ -123,7 +124,6 @@ public:
 	/// Un unordered_set con punteros a los hijos de la entidad
 	/// </returns>
 	FORGE_API const std::unordered_set<Entity*>& getChildren() const;
-
 	/// <summary>
 	/// Actualiza la logica de la Entity
 	/// </summary>
@@ -137,5 +137,20 @@ public:
 	/// </summary>
 	/// <param name="_enabled">Nuevo estado de activacion de los Components</param>
 	FORGE_API void setEnabled(bool enabled);
+	/// <returns>
+	/// Si la Entity se mantiene entre escenas
+	/// </returns>
+	FORGE_API bool isKeepBetweenScenes();
+	/// <summary>
+	/// Asigna si la Entity se mantiene entre escenas al realizar un cambio de escena
+	/// </summary>
+	/// <param name="_alive">Si se mantiene la Entity</param>
+	FORGE_API void setKeepBetweenScenes(bool keep);
+	/// <summary>
+	/// Cambia la Scene en la que se encuentra esta Entity
+	/// </summary>
+	/// <param name="newScene">Puntero a la nueva Scene</param>
+	FORGE_API void changeScene(Scene* newScene);
+
 };
 #endif

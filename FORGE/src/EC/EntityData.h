@@ -8,6 +8,7 @@ class ComponentData;
 
 struct EntityData {
 	bool isBlueprint;
+	bool keepBetweenScenes;
 	std::string group;
 	std::string handler;
 	std::unordered_map<std::string, ComponentData*> components;

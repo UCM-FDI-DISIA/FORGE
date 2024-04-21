@@ -11,7 +11,8 @@ Entity::Entity() :
     parent(nullptr),
     children(),
     groupId(0),
-    alive(false) {
+    alive(false),
+    keepBetweenScenes(false) {
 }
 
 Entity::~Entity() {
@@ -21,9 +22,9 @@ Entity::~Entity() {
     for (auto& child : children) {
         child->setAlive(false);
     }
-    //if (parent != nullptr) {
-    //    parent->removeChild(this);
-    //}
+    if (parent != nullptr) {
+        parent->removeChild(this);
+    }
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
@@ -122,5 +123,21 @@ void Entity::setEnabled(bool enabled) {
     for (auto& componentPair : components) {
         Component* component = componentPair.second;
         component->setEnabled(enabled);
+    }
+}
+
+FORGE_API bool Entity::isKeepBetweenScenes() {
+    return keepBetweenScenes;
+}
+
+FORGE_API void Entity::setKeepBetweenScenes(bool ddol) {
+    keepBetweenScenes = ddol;
+}
+
+FORGE_API void Entity::changeScene(Scene* newScene) {
+    scene = this->scene;
+    for (auto& componentPair : components) {
+        Component* component = componentPair.second;
+        component->setContext(this, scene);
     }
 }

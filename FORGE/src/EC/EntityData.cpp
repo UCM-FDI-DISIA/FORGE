@@ -4,6 +4,7 @@
 
 EntityData::EntityData() :
 	isBlueprint(false),
+	keepBetweenScenes(false),
 	group(""),
 	handler("") {
 }

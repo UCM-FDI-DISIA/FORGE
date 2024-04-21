@@ -15,12 +15,12 @@ Component::~Component() {
 void Component::setContext(Entity* _entity, Scene* _scene) {
     entity = _entity;
     scene = _scene;
-    enabled = true;
 }
 
 bool Component::initSerialized(ComponentData* data) {
     try {
         serializer.initialize(*data);
+        enabled = true;
         return true;
     }
     catch (std::exception e) {

@@ -24,12 +24,13 @@ private:
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.
 	/// </summary>
-	/// <param name="es">Estructura donde se guardan los parametros.</param>
-	/// <param name="h">Entrada en lua con el la informacion de handler.</param>
-	/// <param name="g">Entrada en lua con el la informacion de group.</param>
-	/// <param name="cmps">Entrada en lua con la informacion de los componentes.</param>
-	void extractEntityValues(EntityData& entityData, luabridge::LuaRef& handler, luabridge::LuaRef& group, luabridge::LuaRef& components);
-	/// <summary>
+	/// <param name="entityData">Estructura donde se guardan los parametros.</param>
+	/// <param name="handler">Entrada en lua con el la informacion de handler.</param>
+	/// <param name="keepBetweenScenes">Entrada en lua con el la informacion si se mantiene entre escenas.</param>
+	/// <param name="group">Entrada en lua con el la informacion de group.</param>
+	/// <param name="components">Entrada en lua con la informacion de los componentes.</param>
+	void extractEntityValues(EntityData& entityData, luabridge::LuaRef& handler, luabridge::LuaRef& keepBetweenScenes, luabridge::LuaRef& group, luabridge::LuaRef& components);
+		/// <summary>
 	/// Modifica una entidad hija en una copia de un blueprint.
 	/// </summary>
 	/// <param name="cd">Estructura donde se guardan los parametros del hijo.</param>

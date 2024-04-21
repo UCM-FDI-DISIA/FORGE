@@ -9,8 +9,6 @@
 class Entity;
 
 class Scene {
-private:
-    bool sceneEnd = false;
 protected:
     std::vector<std::vector<Entity*>> entitiesByGroup;
     std::unordered_map<std::string, Entity*> handlers;
@@ -41,14 +39,20 @@ public:
     /// <param name="groupId">Id del grupo que se le da a la Entity</param>
     /// <returns>La Entity creada</returns>
     FORGE_API Entity* addEntity(int groupId);
+    /// <summary>
+    /// Inserta una Entity ya existente a la escena
+    /// </summary>
+    /// <param name="entity">Entity ya existente</param>
+    /// <returns>Entity insertada</returns>
+    FORGE_API Entity* addEntity(Entity* entity);
     /// <returns>
     /// Una lista con todas las entidades en escena del grupo seleccionado
     /// </returns>
-    const FORGE_API std::vector<Entity*>& getEntitiesByGroup(int groupId);
+    FORGE_API std::vector<Entity*>& getEntitiesByGroup(int groupId);
     /// <returns>
     /// Una entidad en escena a partir de su handler
     /// </returns>
-    const FORGE_API Entity* getEntityByHandler(std::string const& handler);
+    FORGE_API Entity* getEntityByHandler(std::string const& handler);
     /// <summary>
     /// </summary>
     /// <param name="handler">Nombre que se le va a dar al Handler</param>
@@ -56,16 +60,13 @@ public:
     /// <returns>Si se ha podido agregar el Handler</returns>
     FORGE_API bool setHandler(std::string const& handler, Entity* entity);
     /// <summary>
-    /// Cambia el booleano sceneEnd a true
+    /// Desactiva la escena para cuando esta deja de estar activa
     /// </summary>
-    FORGE_API void endScene();
+    /// <returns>Las entidades que se mantienen entre escenas</returns>
+    FORGE_API std::vector<Entity*> disableScene();
     /// <summary>
-    /// Devuelve el booleano sceneEnd, para comprobar si la escena debe terminar
+    /// Activa la escena para cuando esta vuelve a estar activa
     /// </summary>
-    FORGE_API bool getEndScene();
-    ///	Establece si todos los Entity de la Scene estan activados
-    /// </summary>
-    /// <param name="_enabled">Nuevo estado de activacion de los Entities</param>
-    FORGE_API void setEnabled(bool enabled);
+    FORGE_API void enableScene();
 };
 #endif // !COMPONENT_H_
