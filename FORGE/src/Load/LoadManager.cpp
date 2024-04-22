@@ -29,9 +29,12 @@
 
 using namespace luabridge;
 
-void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& group, LuaRef& components) {
+void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& keepBetweenScenes, LuaRef& group, LuaRef& components) {
 	if (!handler.isNil()) {
 		entityData.handler = handler.cast<std::string>();
+	}
+	if (!handler.isNil()) {
+		entityData.keepBetweenScenes = keepBetweenScenes.cast<bool>();
 	}
 	if (!group.isNil()) {
 		entityData.group = group.cast<std::string>();
@@ -101,9 +104,10 @@ void LoadManager::modifyChildrenData(EntityData& childData, LuaRef& data) {
 	LuaRef
 		group = data["group"],
 		handler = data["handler"],
+		keepBetweenScenes = data["keepBetweenScenes"],
 		components = data["components"],
 		children = data["children"];
-	extractEntityValues(childData, handler, group, components);
+	extractEntityValues(childData, handler, keepBetweenScenes, group, components);
 	bool wasBlueprint = childData.isBlueprint;
 	childData.isBlueprint = true;
 	extractChildren(childData, children);
@@ -115,6 +119,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	LuaRef
 		group = luaEntity["group"],
 		handler = luaEntity["handler"],
+		keepBetweenScenes = luaEntity["keepBetweenScenes"],
 		blueprint = luaEntity["blueprint"],
 		components = luaEntity["components"],
 		children = luaEntity["children"];
@@ -122,7 +127,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	EntityData* entityData;
 	if (blueprint.isNil()) {
 		entityData = new EntityData();
-		extractEntityValues(*entityData, handler, group, components);
+		extractEntityValues(*entityData, handler, keepBetweenScenes, group, components);
 		extractChildren(*entityData, children);
 	}
 	else {
@@ -130,7 +135,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 		if (!(handler.isNil() && group.isNil() && components.isNil() && children.isNil())) {
 			entityData = new EntityData(*entityData);
 			entityData->isBlueprint = true;
-			extractEntityValues(*entityData, handler, group, components);
+			extractEntityValues(*entityData, handler, keepBetweenScenes, group, components);
 			extractChildren(*entityData, children);
 			entityData->isBlueprint = false;
 		}

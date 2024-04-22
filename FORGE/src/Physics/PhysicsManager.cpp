@@ -147,8 +147,8 @@ void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
 
 void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::string layer) {
     transforms.insert({ body,transform });
-    int bitmask;
-    for (auto layersToCollide : collisionMatrix[layer]) {
+    int bitmask = 0;
+    for (auto& layersToCollide : collisionMatrix[layer]) {
         bitmask |= collisionLayers[layersToCollide.first];
     }
     world->addRigidBody(body,collisionLayers[layer], bitmask);

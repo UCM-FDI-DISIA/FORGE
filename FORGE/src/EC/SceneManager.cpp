@@ -26,6 +26,9 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	if (data->handler != "") {
 		scene->setHandler(data->handler, entity);
 	}
+	if (data->keepBetweenScenes) {
+		entity->setKeepBetweenScenes(true);
+	}
 	for (auto& componentData : data->components) {
 		Component* component = entity->addComponent(componentData.first);
 		if(component != nullptr) {
@@ -97,8 +100,9 @@ lua_State* SceneManager::getLuaState() {
 bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
 	Scene*& activeScenePointer = activeScene.second;
 	Scene* newScene;
+	std::vector<Entity*> keptEntities;
 	if (activeScenePointer != nullptr) {
-		activeScenePointer->setEnabled(false);
+		keptEntities = activeScenePointer->disableScene();
 	}
 	auto iter = loadedScenes.find(scene);
 	if (iter == loadedScenes.end()) {
@@ -112,10 +116,13 @@ bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
 		}
 		else {
 			newScene = iter->second;
-			newScene->setEnabled(true);
+			newScene->enableScene();
 		}
 	}
 	if (newScene != nullptr) {
+		for (Entity* entity : keptEntities) {
+			newScene->addEntity(entity);
+		}
 		activeScene = { scene, newScene };
 		return true;
 	}
@@ -153,6 +160,10 @@ Scene* SceneManager::getScene(std::string const& id) {
 	return nullptr;
 }
 
+Scene* SceneManager::getActiveScene() {
+	return activeScene.second;
+}
+
 const std::string& SceneManager::getActiveSceneId() const{
 	return activeScene.first;
 }
@@ -162,7 +173,7 @@ int SceneManager::getMaxGroupId() {
 }
 
 bool SceneManager::update() {
-	if (activeScene.second != nullptr && !activeScene.second->getEndScene()) {
+	if (activeScene.second != nullptr) {
 		activeScene.second->update();
 		return true;
 	}
