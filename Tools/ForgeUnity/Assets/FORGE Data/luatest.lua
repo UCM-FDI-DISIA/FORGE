@@ -14,13 +14,13 @@ local prefabs = {
 				Alex = true				
 			}
 		}
-	}
+	},
 }
 
 local scenes = {
 	Sample = {
 
-		Main Camera= {
+		MainCamera= {
 			handler = "MainCamera",
 			components = {
 				Transform= {
@@ -32,29 +32,29 @@ local scenes = {
 					Key = "string"					
 				}
 			}
-		}
+		},
 
-		Directional Light= {
+		DirectionalLight= {
 			components = {
 				Transform= {
 					position = {15.49,3,-1.25},
 					rotation = {0.4082179,-0.2345697,0.1093816,0.8754261},
 					scale = {1,1,1}
 				}
-			}
+			},
 			
 			hola1= {
 				blueprint = "hola"
-			}
+			},
 			
 			hola2= {
 				blueprint = "hola"
 			}
-		}
+		},
 
 		hola3= {
 			blueprint = "hola"
-		}
+		},
 
 		GameObject= {
 			components = {
@@ -64,7 +64,7 @@ local scenes = {
 					scale = {1,1,1}
 				}
 			}
-		}
+		},
 
 		Cube= {
 			group = "TransparentFX",
@@ -75,7 +75,7 @@ local scenes = {
 					scale = {1,1,1}
 				}
 			}
-		}
+		},
 
 		Cube_1= {
 			handler = "MainCamera",
