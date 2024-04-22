@@ -84,14 +84,13 @@ public:
 	/// Una escena a partir de su Identificador
 	/// </returns>
 	FORGE_API Scene* getScene(std::string const& id);
-	/// <summary>
-	/// Devuelve el identificador de la escena activa
-	/// </summary>
 	/// <returns> String con el identificador de la escena activa</returns>
 	/// Devuelve la escena en ejecucion
 	/// </summary>
 	FORGE_API Scene* getActiveScene();
-
+	/// <summary>
+	/// Devuelve el identificador de la escena activa
+	/// </summary>
 	const FORGE_API std::string& getActiveSceneId() const;
 	/// <returns>
 	/// Cantidad total de grupos
