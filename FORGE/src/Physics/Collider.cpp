@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Serializer.h"
 #include "Transform.h"
-
+#include "RigidBody.h"
 
 const std::string Collider::id = "Collider";
 
@@ -119,18 +119,62 @@ void Collider::onDisabled() {
     lastOrientation = bodyTransform->getRotation();
 }
 
-bool Collider::hasCollidedWith(Collider* other) {
-    return myBody->checkCollideWith(other->getBody());
+bool Collider::hasCollidedWith(Entity* other) {
+
+    if (other->hasComponent<RigidBody>()) {
+        return myBody->checkCollideWith(other->getComponent<RigidBody>()->getBody());
+    }
+    if (other->hasComponent<Collider>()) {
+        return myBody->checkCollideWith(other->getComponent<Collider>()->getBody());
+    }
+    //Si no tiene ningun componente de colision, no ha colisionado.
+    //Posiblemente haya algun problema aqui, si un componente sin collider ha llegado hasta aqui
+    return false;
 }
 
-void Collider::registerCallback(CollisionCallback callback) {
-    collisionCallbacks.push_back(callback);
+void Collider::registerCallback(callbackType type, std::function<void(Collider*, Collider*)> callback) {   
+    switch (type) {
+        case Collider::onCollisionEnter:
+                onCollisionEnterCallbacks.push_back(callback);
+            break;
+        case Collider::onCollisionStay:
+                oncollisionStayCallbacks.push_back(callback);
+            break;
+        case Collider::onCollisionLeave:
+        		oncollisionLeaveCallbacks.push_back(callback);
+            break;
+    }
 }
 
 void Collider::onCollision(Entity* other) {
-    for (auto cb : collisionCallbacks) {
-        cb(this, other->getComponent<Collider>());
-    }
+
+    //Si la entidad no esta en la lista de colisiones, se llama a los OnCollisionEnterCallbacks
+    if (std::find(collidedEntities.begin(), collidedEntities.end(), other) == collidedEntities.end()) {
+        for (auto cb : onCollisionEnterCallbacks) {
+			cb(this, other->getComponent<Collider>());
+		}
+		collidedEntities.push_back(other);
+	}
+	else { //Si la entidad esta en la lista de colisiones, se llama a los OnCollisionStayCallbacks
+        for (auto cb : oncollisionStayCallbacks) {
+			cb(this, other->getComponent<Collider>());
+		}
+	}
+}
+
+void Collider::checkCollisionEnd() {
+    std::list<Entity*> toDelete;
+    for (auto entity : collidedEntities) {
+        if (!hasCollidedWith(entity)) {
+            for (auto cb : oncollisionLeaveCallbacks) {
+				cb(this, entity->getComponent<Collider>());
+			}
+			toDelete.push_back(entity);
+		}
+	}
+    for (auto entity : toDelete) {
+		collidedEntities.remove(entity);
+	}
 }
 
 void Collider::setTrigger(bool isTrigger) {

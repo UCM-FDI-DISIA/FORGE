@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "AudioSource.h"
 #include "RigidBody.h"
+#include "Collider.h"
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
@@ -34,6 +35,20 @@ bool TestComponent::initComponent(ComponentData* data) {
 			animator->setLoop(anims, true);
 			return true;
 		}
+
+		entity->getComponent<RigidBody>()->registerCallback(Collider::onCollisionEnter, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Iniciada" << std::endl;
+		});
+
+		entity->getComponent<RigidBody>()->registerCallback(Collider::onCollisionStay, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Continuada" << std::endl;
+		});
+
+		entity->getComponent<RigidBody>()->registerCallback(Collider::onCollisionLeave, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Finalizada" << std::endl;
+		});
+
+
 	}
 	std::cerr << "ERROR: Se necesita un componente Transform, RigidBody, AudioSource y Animator para generar un TestComponent\n";
 	return false;
