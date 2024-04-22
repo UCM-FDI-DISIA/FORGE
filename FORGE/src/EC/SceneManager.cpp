@@ -160,6 +160,10 @@ Scene* SceneManager::getScene(std::string const& id) {
 	return nullptr;
 }
 
+Scene* SceneManager::getActiveScene() {
+	return activeScene.second;
+}
+
 const std::string& SceneManager::getActiveSceneId() const{
 	return activeScene.first;
 }
