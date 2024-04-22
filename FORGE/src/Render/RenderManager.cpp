@@ -259,6 +259,10 @@ Ogre::SceneManager* RenderManager::getSceneManager() {
 	return sceneManager;
 }
 
+Ogre::Root* RenderManager::getRoot() {
+	return forge->getRoot();
+}
+
 Ogre::ManualObject* RenderManager::createManualObject(std::string name) {
 	Ogre::ManualObject* newManualObject = sceneManager->createManualObject(name);
 	sceneManager->getRootSceneNode()->attachObject(newManualObject);

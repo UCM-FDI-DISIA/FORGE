@@ -72,7 +72,7 @@ public:
 	/// <summary>
 	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de OGRE sin mas.
 	/// </summary>
-	//<param name="name"> Nombre de la aplicacion</param>
+	/// <param name="name"> Nombre de la aplicacion</param>
 	bool setup(std::string const& appName);
 
 	/// <summary>
@@ -154,6 +154,9 @@ public:
 	/// Devuelve el sceneManager
 	/// </summary>
 	Ogre::SceneManager* getSceneManager();
+
+	/// <returns> Devuelve la raiz de OGRE</returns>
+	Ogre::Root* getRoot();
 	#pragma endregion
 	
 	#pragma region utils

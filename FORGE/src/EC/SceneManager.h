@@ -84,9 +84,10 @@ public:
 	/// Una escena a partir de su Identificador
 	/// </returns>
 	FORGE_API Scene* getScene(std::string const& id);
-	/// <returns> String con el identificador de la escena activa</returns>
+	/// <summary>
 	/// Devuelve la escena en ejecucion
 	/// </summary>
+	/// <returns> String con el identificador de la escena activa</returns>
 	FORGE_API Scene* getActiveScene();
 	/// <summary>
 	/// Devuelve el identificador de la escena activa

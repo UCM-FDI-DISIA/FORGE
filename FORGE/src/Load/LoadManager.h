@@ -7,6 +7,7 @@ class LuaForge;
 class GameLoader;
 class SceneManager;
 class RenderManager;
+class GUIManager;
 class PhysicsManager;
 struct EntityData;
 class Factory;
@@ -20,6 +21,7 @@ private:
 	SceneManager& sceneManager;
 	RenderManager& renderManager;
 	PhysicsManager& physicsManager;
+	GUIManager& guiManager;
 	Factory& factory;
 	/// <summary>
 	/// Establece los parametros necesarios para poder construir una Entidad.

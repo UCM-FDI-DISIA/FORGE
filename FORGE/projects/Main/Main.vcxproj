@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;$(SolutionDir)src\GUI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,7 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;$(SolutionDir)src\GUI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,6 +93,9 @@
     </ProjectReference>
     <ProjectReference Include="..\EC\EC.vcxproj">
       <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.vcxproj">
+      <Project>{cec9e50f-ff08-49a1-b636-479eebfff93f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Input\Input.vcxproj">
       <Project>{b5c0fcf0-3753-4906-bf1c-20044e9fc4ba}</Project>

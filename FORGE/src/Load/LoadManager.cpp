@@ -12,6 +12,7 @@
 #include "EntityData.h"
 #include "ComponentData.h"
 #include "RenderManager.h"
+#include "GUIManager.h"
 #include "PhysicsManager.h"
 #include "ForgeError.h"
 #include "Factory.h"
@@ -26,6 +27,8 @@
 #include "AudioListener.h"
 #include "Collider.h"
 #include "RigidBody.h"
+#include "RectTransform.h"
+#include "Text.h"
 
 using namespace luabridge;
 
@@ -220,6 +223,7 @@ bool LoadManager::loadGame(LuaRef const& config, std::string& gameName) {
 
 bool LoadManager::loadComponents() {
 	factory.registerComponent<Transform>();
+	factory.registerComponent<RectTransform>();
 	factory.registerComponent<Mesh>();
 	factory.registerComponent<Light>();
 	factory.registerComponent<Camera>();
@@ -230,6 +234,7 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<AudioListener>();
 	factory.registerComponent<Collider>();
 	factory.registerComponent<RigidBody>();
+	factory.registerComponent<Text>();
 	return gameLoader->registerComponents(factory);
 }
 
@@ -319,6 +324,7 @@ LoadManager::LoadManager() :
 	sceneManager(*SceneManager::GetInstance()),
 	renderManager(*RenderManager::GetInstance()),
 	physicsManager(*PhysicsManager::GetInstance()),
+	guiManager(*GUIManager::GetInstance()),
 	factory(*Factory::GetInstance()) {
 }
 
@@ -346,6 +352,9 @@ bool LoadManager::init(std::string const& configFile) {
 	}
 	if (!renderManager.setup(gameName)) {
 		throwError(false, "No se pudo iniciar el sistema de renderizado.");
+	}
+	if (!guiManager.setup()) {
+		throwError(false, "No se pudo iniciar la interfaz.");
 	}
 	if (!loadPhysics()) {
 		throwError(false, "No se pudo cargar la configuracion de fisicas.");

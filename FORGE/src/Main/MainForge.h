@@ -13,7 +13,7 @@ class AudioManager;
 class LoadManager;
 class Input;
 class PhysicsManager;
-//class UIManager;
+class GUIManager;
 
 class MainForge {
 private:
@@ -29,7 +29,7 @@ private:
 	LoadManager& loadManager;
 	Input& inputManager;
 	PhysicsManager& physicsManager;
-	//UIManager& uiManager;
+	GUIManager& guiManager;
 
 	static std::unique_ptr<MainForge> instance;
 	

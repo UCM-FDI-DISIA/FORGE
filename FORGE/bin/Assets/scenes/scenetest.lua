@@ -51,6 +51,7 @@ local scenes = {
             }
         },
         cam = {
+            handler = "camera",
             components = {
                 Transform = {
                     position = {0, 0, 140}
@@ -83,6 +84,17 @@ local scenes = {
                 },
                 Light = {
                     type = 0 
+                }
+            }
+        },
+        texto = {
+            components = {
+                RectTransform = {
+                    position = {20, 20}
+                },
+                Text = {
+                    id = "texto1",
+                    text = "hola"
                 }
             }
         }

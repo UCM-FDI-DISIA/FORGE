@@ -58,11 +58,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils;$(SolutionDir)src\EC;$(SolutionDir)src\Render;$(SolutionDir)Dependencies\Lua\src;$(SolutionDir)Dependencies\LuaBridge\Source;$(SolutionDir)Dependencies\Ogre\src\OgreMain\include;$(SolutionDir)Dependencies\Ogre\src\Components\Overlay\include;$(SolutionDir)Dependencies\Ogre\src\Components\Overlay\src;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\imgui-1.89.8;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>OgreMain_d.lib;OgreOverlay_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -72,6 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils;$(SolutionDir)src\EC;$(SolutionDir)src\Render;$(SolutionDir)Dependencies\Lua\src;$(SolutionDir)Dependencies\LuaBridge\Source;$(SolutionDir)Dependencies\Ogre\src\OgreMain\include;$(SolutionDir)Dependencies\Ogre\src\Components\Overlay\include;$(SolutionDir)Dependencies\Ogre\src\Components\Overlay\src;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\include;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\imgui-1.89.8;$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,8 +85,28 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>OgreMain.lib;OgreOverlay.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Ogre\build\$(Platform)\lib\$(Configuration)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\GUI\GUIManager.cpp" />
+    <ClCompile Include="..\..\src\GUI\Text.cpp" />
+    <ClCompile Include="..\..\src\GUI\UIComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\GUI\GUIManager.h" />
+    <ClInclude Include="..\..\src\GUI\Text.h" />
+    <ClInclude Include="..\..\src\GUI\UIComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EC\EC.vcxproj">
+      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.vcxproj">
+      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
