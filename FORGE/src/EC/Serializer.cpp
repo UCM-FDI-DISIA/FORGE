@@ -9,6 +9,9 @@ Component::Serializer::BaseSerialized::BaseSerialized(std::string const& myName)
     name(myName) {
 }
 
+void Component::Serializer::BaseSerialized::initialize(ComponentData& data) {
+}
+
 void Component::Serializer::initialize(ComponentData& data) {
     for (auto& serialized : serializations) {
         serialized->initialize(data);
