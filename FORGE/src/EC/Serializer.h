@@ -143,6 +143,10 @@ public:
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
 	FORGE_API void initialize(ComponentData& data);
 	/// <summary>
+	/// Constructor por defecto del Serializer
+	/// </summary>
+	FORGE_API Serializer();
+	/// <summary>
 	/// Destructor del Serializer, elimina todos los registros de campos a serializar.
 	/// </summary>
 	FORGE_API ~Serializer();

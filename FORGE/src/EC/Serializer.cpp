@@ -15,6 +15,10 @@ void Component::Serializer::initialize(ComponentData& data) {
     }
 }
 
+Component::Serializer::Serializer() : 
+    serializations() {
+}
+
 Component::Serializer::~Serializer() {
     for (auto& serialized : serializations) {
         delete serialized;
