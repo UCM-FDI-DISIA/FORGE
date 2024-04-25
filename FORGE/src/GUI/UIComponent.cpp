@@ -1,5 +1,7 @@
 #include "UIComponent.h"
 #include <OgreOverlayContainer.h>
+#include <OgreOverlayManager.h>
+#include <OgreOverlay.h>
 #include "Entity.h"
 #include "Serializer.h"
 #include "GUIManager.h"
@@ -8,22 +10,28 @@
 const std::string UIComponent::id = "UIComponent";
 
 void UIComponent::createOverlayContainer() {
-    /* ogreContainer = static_cast<Ogre::OverlayContainer*>(gui->getOverlayManager()->createOverlayElement("Panel", id + std::to_string(_numUIElements)));
-    ogreContainer->setMetricsMode(Ogre::GMM_PIXELS);
-    ogreContainer->setPosition(xPos, yPos);
-    ogreContainer->setDimensions(width, height);
-    ogreContainer->show();*/
+    ogreContainer = static_cast<Ogre::OverlayContainer*>(
+        gui->getOverlayManager()->createOverlayElement("Panel", elementID));
+    ogreContainer->setMetricsMode(Ogre::GMM_RELATIVE);
+    ogreContainer->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
+    ogreContainer->setDimensions(size.getX(), size.getY());
+    ogreContainer->show();
 }
 
-void UIComponent::registerElement() {
-
+void UIComponent::registerElement(int depth) {
+    ogreElement = gui->getOverlayManager()->create("over" + elementID);
+    ogreElement->add2D(ogreContainer);
+    ogreElement->show();
+    setDepth(depth);
 }
 
 UIComponent::UIComponent() :
     gui(GUIManager::GetInstance()),
     transform(nullptr),
-    size(forge::Vector2::ZERO) {
-
+    size(forge::Vector2::ZERO),
+    depth(0) {
+    serializer(elementID, "id");
+    serializer(depth, "depth");
 }
 
 UIComponent::~UIComponent() {
@@ -34,6 +42,13 @@ bool UIComponent::initComponent(ComponentData* data) {
     if (entity->hasComponent("RectTransform")) {
         transform = entity->getComponent<RectTransform>();
         gui = GUIManager::GetInstance();
+        if (gui->getIds().count(elementID) == 0) {
+            gui->getIds().insert(elementID);
+            return true;
+        }
+        else {
+            std::cerr << "ERROR: El id " + (std::string)elementID + " ya existe\n";
+        }
     }
     else {
         std::cerr << "ERROR: Se requiere un componente RectTransform para generar un UIComponent\n";
@@ -50,10 +65,14 @@ void UIComponent::onDisabled() {
 	
 }
 
-FORGE_API forge::Vector2 UIComponent::getSize() const {
+forge::Vector2 UIComponent::getSize() const {
 	return size;
 }
 
-FORGE_API void UIComponent::setSize(forge::Vector2 const& s) {
+void UIComponent::setSize(forge::Vector2 const& s) {
 	size = s;
+}
+
+void UIComponent::setDepth(int depth) {
+    ogreElement->setZOrder(Ogre::ushort(depth));
 }

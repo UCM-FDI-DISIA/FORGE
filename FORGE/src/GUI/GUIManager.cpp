@@ -1,11 +1,11 @@
 #include "GUIManager.h"
-//#include "RenderManager.h"
-
+#include "RenderManager.h"
 #include <OgreOverlayManager.h>
 #include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreOverlaySystem.h>
 #include <OgreFontManager.h>
+#include <OgreSceneManager.h>
 
 std::unique_ptr<GUIManager> GUIManager::instance = nullptr;
 bool GUIManager::initialised = false;
@@ -34,11 +34,14 @@ bool GUIManager::setup() {
 	overlaySystem = new Ogre::OverlaySystem();
 	overlayManager = Ogre::OverlayManager::getSingletonPtr();
 	fontManager = Ogre::FontManager::getSingletonPtr();
-	numUIElements = 0;
+
+	RenderManager::GetInstance()->getSceneManager()->addRenderQueueListener(overlaySystem);
+
 	return true;
 }
 
 void GUIManager::cleanUp() {
+	RenderManager::GetInstance()->getSceneManager()->removeRenderQueueListener(overlaySystem);
 	delete overlayManager;
 	initialised = false;
 }
@@ -55,10 +58,23 @@ void GUIManager::refresh() {
 	
 }
 
+void GUIManager::loadFont(std::string font) {
+	Ogre::FontPtr mFont = Ogre::FontManager::getSingleton().create(font, "General");
+	mFont->setType(Ogre::FT_TRUETYPE);
+	mFont->setSource(font);
+	mFont->setParameter("size", "100");
+	mFont->setParameter("resolution", "250");
+	mFont->load();
+}
+
 Ogre::Font* GUIManager::getFont(std::string const& fontName) {
 	return nullptr;
 }
 
 Ogre::OverlayManager* GUIManager::getOverlayManager() {
 	return overlayManager;
+}
+
+std::unordered_set<std::string> GUIManager::getIds() {
+	return ids;
 }

@@ -54,7 +54,7 @@ public:
 	/// <summary>
 	/// Actualizacion del texto
 	/// </summary>	
-	virtual void update();
+	//virtual void update();
 
 	/// <summary>
 	/// Cambia el color del texto

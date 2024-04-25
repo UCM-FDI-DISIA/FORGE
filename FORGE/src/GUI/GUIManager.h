@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include <unordered_map>
+#include <unordered_set>
 #include <string>
 
 namespace Ogre {
@@ -17,7 +17,11 @@ private:
 	static std::unique_ptr<GUIManager> instance;
 	static bool initialised;
 
-	int numUIElements;
+	// Conjunto desordenado de fuentes
+	std::unordered_set<std::string> fonts;
+
+	// Conjunto desordenado de identificadores 
+	std::unordered_set<std::string> ids;
 
 	// Sistema y manager de la interfaz de Ogre
 	Ogre::OverlaySystem* overlaySystem;
@@ -68,10 +72,26 @@ public:
 	/// </summary>	
 	void refresh();
 
+	void loadFont(std::string font);
+
 	#pragma region Getters
+	/// <summary>
+	/// Devuelve la fuente consultada
+	/// </summary>	
+	/// <returns>La fuente si existe</returns>
 	Ogre::Font* getFont(std::string const& fontName);
 
+	/// <summary>
+	/// Devuelve el manager del overlay
+	/// </summary>	
+	/// <returns>El manager del overlay</returns>
 	Ogre::OverlayManager* getOverlayManager();
+
+	/// <summary>
+	/// Devuelve el conjunto desordenado de identificadores guardados
+	/// </summary>	
+	/// <returns>El conjunto desordenado de identificadores guardados</returns>
+	std::unordered_set<std::string> getIds();
 	#pragma endregion
 
 	#pragma region Setters

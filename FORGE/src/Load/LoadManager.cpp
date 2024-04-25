@@ -28,6 +28,7 @@
 #include "AudioListener.h"
 #include "Collider.h"
 #include "RigidBody.h"
+#include "Text.h"
 
 using namespace luabridge;
 
@@ -99,7 +100,6 @@ void LoadManager::extractChildren(EntityData& entityData, LuaRef& children) {
 			}
 		}
 	}
-
 }
 
 void LoadManager::modifyChildrenData(EntityData& childData, LuaRef& data) {
@@ -233,6 +233,7 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<AudioListener>();
 	factory.registerComponent<Collider>();
 	factory.registerComponent<RigidBody>();
+	factory.registerComponent<Text>();
 	return gameLoader->registerComponents(factory);
 }
 

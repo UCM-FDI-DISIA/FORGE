@@ -5,6 +5,7 @@
 
 namespace Ogre {
     class OverlayContainer;
+    class Overlay;
 }
 class GUIManager;
 class RectTransform;
@@ -14,7 +15,7 @@ protected:
     // Referencia al GuiManager
     GUIManager* gui;
 
-    // Nombre del elemento (para los nodos de Ogre :|)
+    // Nombre del elemento (para los nodos de Ogre)
     std::string elementID;
 
     // Referencia al transform
@@ -25,10 +26,14 @@ protected:
 
     // Contenedor del elemento de ogre
     Ogre::OverlayContainer* ogreContainer;
+    Ogre::Overlay* ogreElement;
+
+    // Porfundidad
+    int depth;
 
     void createOverlayContainer();
 
-    void registerElement();
+    void registerElement(int depth);
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -61,6 +66,8 @@ public:
 
     #pragma region Setter
     FORGE_API void setSize(forge::Vector2 const& s);
+
+    FORGE_API void setDepth(int depth);
     #pragma endregion
 
 };
