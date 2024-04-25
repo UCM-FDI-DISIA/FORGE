@@ -8,6 +8,8 @@ namespace Ogre {
 	class OverlayManager;
 	class Overlay;
 	class OverlayContainer;
+	class FontManager;
+	class Font;
 }
 
 class GUIManager {
@@ -15,9 +17,12 @@ private:
 	static std::unique_ptr<GUIManager> instance;
 	static bool initialised;
 
+	int numUIElements;
+
 	// Sistema y manager de la interfaz de Ogre
 	Ogre::OverlaySystem* overlaySystem;
 	Ogre::OverlayManager* overlayManager;
+	Ogre::FontManager* fontManager;
 
 	/// <summary>
 	/// Constructora de la clase GUI
@@ -44,6 +49,11 @@ public:
 	bool setup();
 
 	/// <summary>
+	/// Elimina la memoria creada por el GUIManager
+	/// </summary>
+	void cleanUp();
+
+	/// <summary>
 	/// Actualiza los frames
 	/// </summary>	
 	bool update();
@@ -57,4 +67,14 @@ public:
 	/// Preparacion para el siguiente update
 	/// </summary>	
 	void refresh();
+
+	#pragma region Getters
+	Ogre::Font* getFont(std::string const& fontName);
+
+	Ogre::OverlayManager* getOverlayManager();
+	#pragma endregion
+
+	#pragma region Setters
+
+	#pragma endregion
 };

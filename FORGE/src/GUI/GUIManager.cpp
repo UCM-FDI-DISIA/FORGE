@@ -5,6 +5,7 @@
 #include <OgreOverlay.h>
 #include <OgreOverlayContainer.h>
 #include <OgreOverlaySystem.h>
+#include <OgreFontManager.h>
 
 std::unique_ptr<GUIManager> GUIManager::instance = nullptr;
 bool GUIManager::initialised = false;
@@ -26,14 +27,20 @@ GUIManager* GUIManager::GetInstance() {
 }
 
 GUIManager::~GUIManager() {
-
+	//delete overlaySystem;
 }
 
 bool GUIManager::setup() {
 	overlaySystem = new Ogre::OverlaySystem();
 	overlayManager = Ogre::OverlayManager::getSingletonPtr();
-
+	fontManager = Ogre::FontManager::getSingletonPtr();
+	numUIElements = 0;
 	return true;
+}
+
+void GUIManager::cleanUp() {
+	delete overlayManager;
+	initialised = false;
 }
 
 bool GUIManager::update() {
@@ -46,4 +53,12 @@ bool GUIManager::render() {
 
 void GUIManager::refresh() {
 	
+}
+
+Ogre::Font* GUIManager::getFont(std::string const& fontName) {
+	return nullptr;
+}
+
+Ogre::OverlayManager* GUIManager::getOverlayManager() {
+	return overlayManager;
 }

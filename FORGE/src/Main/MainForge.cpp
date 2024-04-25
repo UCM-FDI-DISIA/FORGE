@@ -69,6 +69,7 @@ bool MainForge::render() {
 bool MainForge::shutDown() {
 	bool result = true;
 	sceneManager.cleanUp();
+	guiManager.cleanUp();
 	result = loadManager.cleanUp();
 	delete& loadManager;
 	initialized = false;
