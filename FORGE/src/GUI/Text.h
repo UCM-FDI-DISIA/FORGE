@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef TEXT_H_
+#define TEXT_H_
+
 #include "UIComponent.h"
 
 namespace Ogre {
@@ -24,7 +28,7 @@ private:
     Ogre::Font* font;
 
 	// Elemento de overlay para el texto
-	Ogre::TextAreaOverlayElement* ogreText;
+	Ogre::TextAreaOverlayElement* textAreaOverlay;
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -94,7 +98,7 @@ public:
 	/// <summary>
 	/// Cambia el texto
 	/// </summary>	
-	/// <param name = "text_">Posicion</param>
+	/// <param name = "text_">Texto nuevo</param>
 	void changeText(std::string const& text_);
 
 	/// <summary>
@@ -103,3 +107,5 @@ public:
 	/// <returns>El texto</returns>
 	std::string getText() const;
 };
+
+#endif // !TEXT_H_

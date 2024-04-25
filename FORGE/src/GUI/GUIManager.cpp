@@ -6,13 +6,17 @@
 #include <OgreOverlaySystem.h>
 #include <OgreFontManager.h>
 #include <OgreSceneManager.h>
+#include "OgreTextureManager.h"
+#include "Vector4.h"
 
 std::unique_ptr<GUIManager> GUIManager::instance = nullptr;
 bool GUIManager::initialised = false;
 
 GUIManager::GUIManager() :
 	overlaySystem(nullptr),
-	overlayManager(nullptr) {
+	overlayManager(nullptr),
+	fontManager(nullptr),
+	textureManager(nullptr) {
 }
 
 bool GUIManager::Init() {
@@ -34,6 +38,7 @@ bool GUIManager::setup() {
 	overlaySystem = new Ogre::OverlaySystem();
 	overlayManager = Ogre::OverlayManager::getSingletonPtr();
 	fontManager = Ogre::FontManager::getSingletonPtr();
+	textureManager = Ogre::TextureManager::getSingletonPtr();
 
 	RenderManager::GetInstance()->getSceneManager()->addRenderQueueListener(overlaySystem);
 
@@ -52,10 +57,6 @@ bool GUIManager::update() {
 
 bool GUIManager::render() {
 	return true;
-}
-
-void GUIManager::refresh() {
-	
 }
 
 void GUIManager::loadFont(std::string font) {
@@ -77,4 +78,8 @@ Ogre::OverlayManager* GUIManager::getOverlayManager() {
 
 std::unordered_set<std::string> GUIManager::getIds() {
 	return ids;
+}
+
+Ogre::ColourValue GUIManager::Vector4ToColorValue(forge::Vector4 const& v) {
+	return Ogre::ColourValue(v.getX(), v.getY(), v.getZ(), v.getW());
 }

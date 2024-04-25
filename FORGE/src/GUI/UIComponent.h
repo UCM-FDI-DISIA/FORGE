@@ -25,15 +25,22 @@ protected:
     forge::Vector2 size;
 
     // Contenedor del elemento de ogre
-    Ogre::OverlayContainer* ogreContainer;
-    Ogre::Overlay* ogreElement;
+    Ogre::OverlayContainer* overlayPanel;
+    Ogre::Overlay* overlay;
 
     // Porfundidad
-    int depth;
+    int zOrder;
 
-    void createOverlayContainer();
+    /// <summary>
+    /// Crea un panel el cual será el contenedor de la Overlay
+    /// </summary>	
+    void createPanel();
 
-    void registerElement(int depth);
+    /// <summary>
+    /// Crea el Overlay correspondiente a este componente
+    /// </summary>
+    /// <param name="depth"> Capa en la que se crea la Overlay</param>	
+    void createOverlay(int depth);
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -61,13 +68,25 @@ public:
     virtual FORGE_API void onDisabled();
 
     #pragma region Getters
+    /// <summary>
+    /// Devuelve el tamaño actual
+    /// </summary>	
+    /// <returns>El tamaño actual</returns>
     FORGE_API forge::Vector2 getSize() const;
     #pragma endregion
 
     #pragma region Setter
+    /// <summary>
+    /// Asigna un tamaño
+    /// </summary>	
+    /// <param name="data"> Tamaño a asignar</param>
     FORGE_API void setSize(forge::Vector2 const& s);
 
-    FORGE_API void setDepth(int depth);
+    /// <summary>
+    /// Devuelve el texto
+    /// </summary>	
+    /// <param name="zO"> Profundidad</param>
+    FORGE_API void setDepth(int zO);
     #pragma endregion
 
 };

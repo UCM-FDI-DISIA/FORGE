@@ -10,6 +10,12 @@ namespace Ogre {
 	class OverlayContainer;
 	class FontManager;
 	class Font;
+	class ColourValue;
+	class TextureManager;
+}
+
+namespace forge {
+	class Vector4;
 }
 
 class GUIManager {
@@ -27,6 +33,7 @@ private:
 	Ogre::OverlaySystem* overlaySystem;
 	Ogre::OverlayManager* overlayManager;
 	Ogre::FontManager* fontManager;
+	Ogre::TextureManager* textureManager;
 
 	/// <summary>
 	/// Constructora de la clase GUI
@@ -68,10 +75,9 @@ public:
 	bool render();
 
 	/// <summary>
-	/// Preparacion para el siguiente update
-	/// </summary>	
-	void refresh();
-
+	/// Carga una fuente en el manager de la interfaz (OverlayManager)
+	/// </summary>
+	/// <param name = "font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
 	void loadFont(std::string font);
 
 	#pragma region Getters
@@ -97,4 +103,11 @@ public:
 	#pragma region Setters
 
 	#pragma endregion
+
+	/// <summary>
+	/// Convierte un Vector4 en un Color Value
+	/// </summary>
+	/// <param name = "v">Vector4 a convertir</param>
+	/// <returns>Un Ogre::ColorValue equivalente al Vector4</returns>
+	Ogre::ColourValue Vector4ToColorValue(forge::Vector4 const& v);
 };

@@ -9,29 +9,31 @@
 
 const std::string UIComponent::id = "UIComponent";
 
-void UIComponent::createOverlayContainer() {
-    ogreContainer = static_cast<Ogre::OverlayContainer*>(
+void UIComponent::createPanel() {
+    overlayPanel = static_cast<Ogre::OverlayContainer*>(
         gui->getOverlayManager()->createOverlayElement("Panel", elementID));
-    ogreContainer->setMetricsMode(Ogre::GMM_RELATIVE);
-    ogreContainer->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
-    ogreContainer->setDimensions(size.getX(), size.getY());
-    ogreContainer->show();
+    overlayPanel->setMetricsMode(Ogre::GMM_RELATIVE);
+    overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
+    overlayPanel->setDimensions(size.getX(), size.getY());
 }
 
-void UIComponent::registerElement(int depth) {
-    ogreElement = gui->getOverlayManager()->create("over" + elementID);
-    ogreElement->add2D(ogreContainer);
-    ogreElement->show();
+void UIComponent::createOverlay(int depth) {
+    overlay = gui->getOverlayManager()->create("over" + elementID);
+    overlay->add2D(overlayPanel);
     setDepth(depth);
+
+    overlay->show();
 }
 
 UIComponent::UIComponent() :
     gui(GUIManager::GetInstance()),
     transform(nullptr),
     size(forge::Vector2::ZERO),
-    depth(0) {
+    zOrder(0),
+    overlayPanel(nullptr),
+    overlay(nullptr) {
     serializer(elementID, "id");
-    serializer(depth, "depth");
+    serializer(zOrder, "depth");
 }
 
 UIComponent::~UIComponent() {
@@ -73,6 +75,6 @@ void UIComponent::setSize(forge::Vector2 const& s) {
 	size = s;
 }
 
-void UIComponent::setDepth(int depth) {
-    ogreElement->setZOrder(Ogre::ushort(depth));
+void UIComponent::setDepth(int zO) {
+    overlay->setZOrder(Ogre::ushort(zO));
 }

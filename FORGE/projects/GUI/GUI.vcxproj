@@ -12,11 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GUI\GUIManager.cpp" />
+    <ClCompile Include="..\..\src\GUI\Image.cpp" />
     <ClCompile Include="..\..\src\GUI\Text.cpp" />
     <ClCompile Include="..\..\src\GUI\UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GUI\GUIManager.h" />
+    <ClInclude Include="..\..\src\GUI\Image.h" />
     <ClInclude Include="..\..\src\GUI\Text.h" />
     <ClInclude Include="..\..\src\GUI\UIComponent.h" />
   </ItemGroup>

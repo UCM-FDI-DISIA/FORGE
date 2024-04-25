@@ -24,6 +24,9 @@
     <ClCompile Include="..\..\src\GUI\Text.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Image.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GUI\GUIManager.h">
@@ -33,6 +36,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GUI\Text.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Image.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

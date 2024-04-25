@@ -29,6 +29,7 @@
 #include "Collider.h"
 #include "RigidBody.h"
 #include "Text.h"
+#include "Image.h"
 
 using namespace luabridge;
 
@@ -234,6 +235,7 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<Collider>();
 	factory.registerComponent<RigidBody>();
 	factory.registerComponent<Text>();
+	factory.registerComponent<Image>();
 	return gameLoader->registerComponents(factory);
 }
 

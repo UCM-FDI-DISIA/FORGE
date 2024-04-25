@@ -12,6 +12,7 @@
 const std::string Text::id = "Text";
 
 Text::Text() : UIComponent(),
+    textAreaOverlay(nullptr),
     fontName(""),
     font(nullptr),
     color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
@@ -26,40 +27,24 @@ Text::~Text() {}
 
 bool Text::initComponent(ComponentData* data) {
     if (UIComponent::initComponent(data)) {
-        /*if (fontName != "") {
-            changeFont(fontName);
+        if (fontName != "") {
+            gui->loadFont("Saeda.ttf");
         }
-        setBackground();*/
 
-        gui->loadFont("Saeda.ttf");
+        createPanel();
 
-        createOverlayContainer();
+        textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID +  "textArea"));
+        textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
+        textAreaOverlay->setPosition(transform->getPosition().getX() / 2, transform->getPosition().getY() / 2);
+        textAreaOverlay->setDimensions(size.getX(), size.getY());
+        textAreaOverlay->setCaption(text);
+        textAreaOverlay->setCharHeight(size.getY());
+        textAreaOverlay->setFontName(fontName);
+        textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
+        textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Center);
+        overlayPanel->addChild(textAreaOverlay);
 
-        ogreText = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID +  "textArea"));
-        ogreText->setMetricsMode(Ogre::GMM_PIXELS);
-        ogreText->setPosition(transform->getPosition().getX() / 2, transform->getPosition().getY() / 2);
-        ogreText->setDimensions(1, 1);
-        ogreText->setCaption(text);
-        ogreText->setCharHeight(size.getY());
-        ogreText->setFontName(fontName);
-        // TODO: CONVERSOR DE VECTOR4 A COLORVALUE
-        ogreText->setColour(Ogre::ColourValue(color.getX(), color.getY(), color.getZ(), color.getW()));
-        ogreText->setAlignment(Ogre::TextAreaOverlayElement::Center);
-        ogreContainer->addChild(ogreText);
-        ogreText->show();
-
-        registerElement(0);
-
-        /*if (!Ogre::FontManager::getSingleton().resourceExists(font)) {
-            if (eden_resources::ResourcesManager::Instance()->FileExist(font, eden_resources::ResourcesManager::Fonts)) {
-                LoadFont(font);
-            }
-            else if (eden_resources::ResourcesManager::Instance()->FileExist("default.ttf", eden_resources::ResourcesManager::Default)) {
-                font = "default.ttf";
-                if (!Ogre::FontManager::getSingleton().resourceExists("default.ttf"))LoadFont("default.ttf");
-            }
-            else eden_error::ErrorHandler::Instance()->Exception("[SPY ERROR] Load Font Error:", "Failed to load the font: default.ttf");
-        }*/
+        createOverlay(1);
 
         return true;
     }
@@ -103,6 +88,7 @@ void Text::changeBackgroundOpacity(float op) {
 
 void Text::changeText(std::string const& text_) {
     text = text_;
+    textAreaOverlay->setCaption(text);
 }
 
 std::string Text::getText() const {
