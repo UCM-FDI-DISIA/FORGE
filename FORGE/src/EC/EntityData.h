@@ -11,8 +11,8 @@ struct EntityData {
 	bool keepBetweenScenes;
 	std::string group;
 	std::string handler;
-	std::unordered_map<std::string, ComponentData*> componentMap;
 	std::vector<ComponentData*> components;
+	std::unordered_map<std::string, int> componentMap;
 	std::vector<EntityData*> children;
 	/// <summary>
 	/// Constructora por defecto, deja todo vacio

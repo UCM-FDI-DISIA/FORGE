@@ -61,6 +61,28 @@ Component* Entity::addComponent(ComponentData* data) {
     return component;
 }
 
+FORGE_API bool Entity::initComponents(std::vector<ComponentData*> data)
+{
+    for (int i = 0; i < components.size(); ++i) {
+        if (!components[i]->initComponent(data[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+FORGE_API bool Entity::initSerializedComponents(std::vector<ComponentData*> data)
+{
+    for (int i = 0; i < components.size(); ++i) {
+        if (!components[i]->initSerialized(data[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 Entity* Entity::addChild(Entity* child) {
     children.insert(child);
     child->setParent(this);

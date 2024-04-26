@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "Component.h"
+#include "ComponentData.h"
 #include "EntityData.h"
 #include <lua.hpp>
 #pragma warning(push)
@@ -40,19 +41,14 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 			entity->addChild(child);
 		}
 	}
-	for (auto& componentData : data->components) {//TODO
-		if (!componentInit.first->initSerialized(componentInit.second)) {
-			entity->setAlive(false);
-		}
+	if (!entity->initSerializedComponents(data->components)) {
+		entity->setAlive(false);
 	}
-	for (auto& componentInit : initData) {
-		if (!componentInit.first->initComponent(componentInit.second)) {
-			entity->setAlive(false);
-		}
+	if (!entity->initComponents(data->components)) {
+		entity->setAlive(false);
 	}
 
 	return entity;
-
 }
 
 void SceneManager::Init() {

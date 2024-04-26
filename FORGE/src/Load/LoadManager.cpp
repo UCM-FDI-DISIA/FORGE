@@ -49,11 +49,16 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 			std::string id = component.first.cast<std::string>();
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
 			LuaRef* data = new LuaRef(component.second);
-			auto comp = entityData.components.find(id);
-			if (comp != entityData.components.end()) {
-				delete comp->second;
+			ComponentData* componentData = new ComponentData(id, data);
+			auto comp = entityData.componentMap.find(id);
+			if (comp != entityData.componentMap.end()) {
+				delete entityData.components[comp->second];
+				entityData.components[comp->second] = componentData;
 			}
-			entityData.components[id] = new ComponentData(id, data);
+			else {
+				entityData.componentMap[id] = entityData.components.size();
+				entityData.components.push_back(componentData);
+			}
 		}
 	}
 }
