@@ -100,6 +100,7 @@
     <ClCompile Include="..\..\src\EC\Entity.cpp" />
     <ClCompile Include="..\..\src\EC\EntityData.cpp" />
     <ClCompile Include="..\..\src\EC\Factory.cpp" />
+    <ClCompile Include="..\..\src\EC\RectTransform.cpp" />
     <ClCompile Include="..\..\src\EC\Scene.cpp" />
     <ClCompile Include="..\..\src\EC\SceneManager.cpp" />
     <ClCompile Include="..\..\src\EC\Serializer.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="..\..\src\EC\Entity.h" />
     <ClInclude Include="..\..\src\EC\EntityData.h" />
     <ClInclude Include="..\..\src\EC\Factory.h" />
+    <ClInclude Include="..\..\src\EC\RectTransform.h" />
     <ClInclude Include="..\..\src\EC\Scene.h" />
     <ClInclude Include="..\..\src\EC\SceneManager.h" />
     <ClInclude Include="..\..\src\EC\Serializer.h" />

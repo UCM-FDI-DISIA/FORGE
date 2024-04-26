@@ -8,7 +8,7 @@
 #include "LoadManager.h"
 #include "GameLoader.h"
 #include "PhysicsManager.h"
-//#include "UIManager.h"
+#include "GUIManager.h"
 #include "ForgeError.h"
 
 using namespace forge;
@@ -27,8 +27,8 @@ MainForge::MainForge() :
 	inputManager(*Input::GetInstance()),
 	audioManager(*AudioManager::GetInstance()),
 	loadManager(*(new LoadManager())),
-	physicsManager(*PhysicsManager::GetInstance())
-	//uiManager(*UIManager::getInstance()) 
+	physicsManager(*PhysicsManager::GetInstance()),
+	guiManager(*GUIManager::GetInstance())
 	{
 }
 
@@ -40,7 +40,6 @@ bool MainForge::init(std::string const& configPath) {
 		return false;
 	}
 
-	//UIManager.init();???
 	return true;
 }
 
@@ -54,6 +53,7 @@ void MainForge::manageFixedUpdates() {
 }
 
 void MainForge::update() {
+	guiManager.update();
 	inputManager.update();
 	sceneManager.update();
 	audioManager.update();
@@ -63,12 +63,13 @@ bool MainForge::render() {
 #ifdef _DEBUG
 	physicsManager.drawDebug();
 #endif // _DEBUG
-	return renderManager.render() /*&& uiManager.render()*/;
+	return renderManager.render() && guiManager.render();
 }
 
 bool MainForge::shutDown() {
 	bool result = true;
 	sceneManager.cleanUp();
+	guiManager.cleanUp();
 	result = loadManager.cleanUp();
 	delete& loadManager;
 	initialized = false;
@@ -110,6 +111,7 @@ bool MainForge::Init(std::string const& configPath) {
 		if (!Input::Init()) {
 			throwError(false, "No se pudo iniciar el sistema de entrada.");
 		}
+		GUIManager::Init();
 		if (instance == nullptr) instance = std::unique_ptr<MainForge>(new MainForge());
 		return instance->init(configPath);
 	}

@@ -23,7 +23,7 @@ Entity::~Entity() {
         child->setAlive(false);
     }
     if (parent != nullptr) {
-        parent->removeChild(this);
+       // parent->removeChild(this);
     }
 }
 

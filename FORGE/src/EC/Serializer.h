@@ -26,14 +26,13 @@ private:
 		/// Constructor de BaseSerialized, almacena el nombre dentro de Lua o ComponentData de la variable que inicializara.
 		/// </summary>
 		/// <param name="myName">Nombre que se le dara a la variable dentro de Lua o ComponentData.</param>
-		BaseSerialized(std::string const& myName);
+		FORGE_API BaseSerialized(std::string const& myName);
 		/// <summary>
 		/// Asigna a la variable serializada el valor que tenga dentro del ComponentData.
 		/// </summary>
 		/// <param name="data">ComponentData dentro del que esta la informacion de la variable serializada.</param>
-		virtual void initialize(ComponentData& data) = 0;
+		FORGE_API virtual void initialize(ComponentData& data);
 	};
-
 
 	/// <summary>
 	/// Clase plantilla interna que almacena e inicializa una variable serializada en Lua o ComponentData.
@@ -48,7 +47,7 @@ private:
 		/// </summary>
 		/// <param name="myVar">Variable que se va a inicializar.</param>
 		/// <param name="myName">Nombre de la variable dentro del archivo Lua o del ComponentData.</param>
-		inline Serialized(T& myVar, std::string const& myName) :
+		FORGE_API inline Serialized(T& myVar, std::string const& myName) :
 			BaseSerialized(myName),
 			var(myVar) {
 		}
@@ -56,7 +55,7 @@ private:
 		/// Asigna a la variable serializada el valor que tenga dentro del LuaRef o ComponentData.
 		/// </summary>
 		/// <param name="data">ComponentData dentro del que esta la informacion de la variable serializada.</param>
-		void initialize(ComponentData& data) override {
+		FORGE_API void initialize(ComponentData& data) override {
 			if (data.has(name)) {
 				var = data.get<T>(name);
 				handle_initialize<T>(var);
@@ -68,11 +67,11 @@ private:
 		/// <typeparam name="U">Tipo de la variable</typeparam>
 		/// <param name="var">La variable casteada que se va a comprobar</param>
 		template<typename U>
-		inline void handle_initialize(U& var) {
+		FORGE_API inline void handle_initialize(U& var) {
 		}
 
 		template<>
-		inline void handle_initialize(float& var) {
+		FORGE_API inline void handle_initialize(float& var) {
 			if (std::isinf(var)) {
 				reportError("Variable " << name << " con valor infinito. Asignado a 0.");
 				var = 0.0f;
@@ -142,6 +141,10 @@ public:
 	/// </summary>
 	/// <param name="data">ComponentData dentro del que se encuentra la informacion de las variables serializadas.</param>
 	FORGE_API void initialize(ComponentData& data);
+	/// <summary>
+	/// Constructor por defecto del Serializer
+	/// </summary>
+	FORGE_API Serializer();
 	/// <summary>
 	/// Destructor del Serializer, elimina todos los registros de campos a serializar.
 	/// </summary>
