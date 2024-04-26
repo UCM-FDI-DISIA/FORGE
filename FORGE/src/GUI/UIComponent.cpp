@@ -12,9 +12,9 @@ const std::string UIComponent::id = "UIComponent";
 void UIComponent::createPanel() {
     overlayPanel = static_cast<Ogre::OverlayContainer*>(
         gui->getOverlayManager()->createOverlayElement("Panel", elementID));
-    overlayPanel->setMetricsMode(Ogre::GMM_RELATIVE);
+    overlayPanel->setMetricsMode(Ogre::GMM_PIXELS);
     overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
-    overlayPanel->setDimensions(size.getX(), size.getY());
+    overlayPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
 }
 
 void UIComponent::createOverlay(int depth) {
@@ -28,7 +28,6 @@ void UIComponent::createOverlay(int depth) {
 UIComponent::UIComponent() :
     gui(GUIManager::GetInstance()),
     transform(nullptr),
-    size(forge::Vector2::ZERO),
     zOrder(0),
     overlayPanel(nullptr),
     overlay(nullptr) {
@@ -68,11 +67,11 @@ void UIComponent::onDisabled() {
 }
 
 forge::Vector2 UIComponent::getSize() const {
-	return size;
+	return transform->getScale();
 }
 
 void UIComponent::setSize(forge::Vector2 const& s) {
-	size = s;
+	transform->setScale(s);
 }
 
 void UIComponent::setDepth(int zO) {

@@ -70,7 +70,7 @@ local scenes = {
                     position = {-30, -50, 0},
                     rotation = {0, 0, -1, 3.14/6 }
                 },
-                 Collider = {
+                Collider = {
                     scale = {30, 10, 30},
                     shapeType = "Cube"
                 }
@@ -86,16 +86,15 @@ local scenes = {
                 }
             }
         },
-        texto = {
+        imagen = {
             components = {
                 RectTransform = {
-                    position = {200, 200},
+                    position = {100, 100},
                     scale = {200, 200}
                 },
-                Text = {
-                    id = "texto",
-                    text = "hola",
-                    fontName = "Saeda.ttf"
+                Image = {
+                    id = "imagen",
+                    texture = "panko"
                 }
             }
         }

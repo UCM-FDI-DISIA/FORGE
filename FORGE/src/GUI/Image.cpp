@@ -1,16 +1,19 @@
+#pragma warning(push)
+#pragma warning(disable : 26495)
+#pragma warning(disable : 4251)
 #include "Image.h"
 #include <OgreOverlayContainer.h>
 #include "Serializer.h"
 #include "RectTransform.h"
 #include "GUIManager.h"
 #include "Vector2.h"
+#pragma warning(pop)
 
 const std::string Image::id = "Image";
 
 Image::Image() : UIComponent(),
 	texture("def.png") {
 	serializer(texture, "texture");
-	serializer(size, "size");
 }
 
 Image::~Image() {
@@ -48,7 +51,7 @@ unsigned int Image::getSourceWidth() {
 }
 
 unsigned int Image::getWidth() {
-	return (int) size.getX();
+	return (int) transform->getScale().getX();
 }
 
 unsigned int Image::getSourceHeight() {
@@ -56,7 +59,7 @@ unsigned int Image::getSourceHeight() {
 }
 
 unsigned int Image::getHeight() {
-	return (int) size.getY();
+	return (int) transform->getScale().getY();
 }
 
 void Image::setMaterial(std::string const& mat) {

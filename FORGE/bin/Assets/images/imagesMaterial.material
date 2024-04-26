@@ -1,0 +1,14 @@
+material panko
+ {
+    technique
+    {
+       pass
+        {
+          texture_unit
+          {
+            texture panko.png
+            scale 1 1
+          }
+       }   
+    }
+ }

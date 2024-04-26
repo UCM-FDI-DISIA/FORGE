@@ -21,9 +21,6 @@ protected:
     // Referencia al transform
     RectTransform* transform;
 
-    // Tamano del objeto
-    forge::Vector2 size;
-
     // Contenedor del elemento de ogre
     Ogre::OverlayContainer* overlayPanel;
     Ogre::Overlay* overlay;

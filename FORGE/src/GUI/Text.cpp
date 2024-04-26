@@ -36,9 +36,9 @@ bool Text::initComponent(ComponentData* data) {
         textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID +  "textArea"));
         textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
         textAreaOverlay->setPosition(transform->getPosition().getX() / 2, transform->getPosition().getY() / 2);
-        textAreaOverlay->setDimensions(size.getX(), size.getY());
+        textAreaOverlay->setDimensions(transform->getScale().getX(), transform->getScale().getY());
         textAreaOverlay->setCaption(text);
-        textAreaOverlay->setCharHeight(size.getY());
+        textAreaOverlay->setCharHeight(transform->getScale().getY());
         textAreaOverlay->setFontName(fontName);
         textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
         textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Center);
@@ -65,9 +65,9 @@ void Text::setColor(forge::Vector4 color_) {
 
 void Text::setBackground(forge::Vector4 color_, forge::Vector2 size_) {
     bgColor = color_;
-    if (size_ != forge::Vector2::ZERO) {
+    /*if (size_ != forge::Vector2::ZERO) {
         size = size_;
-    }
+    }*/
 }
 
 void Text::removeBackground() {
