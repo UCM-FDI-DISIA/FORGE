@@ -16,7 +16,8 @@ class Entity {
 private:
 	Factory& fact;
 	Scene* scene;
-	std::unordered_map<std::string, Component*> components;
+	std::vector<Component*> components;
+	std::unordered_map<std::string, Component*> componentMap;
 	Entity* parent;
 	std::unordered_set<Entity*> children;
 	int groupId;
@@ -95,8 +96,8 @@ public:
 	/// </returns>
 	template<class ComponentType>
 	FORGE_API inline ComponentType* getComponent() {
-		auto comp = components.find(ComponentType::id);
-		if (comp == components.end()) {
+		auto comp = componentMap.find(ComponentType::id);
+		if (comp == componentMap.end()) {
 			return nullptr;
 		}
 		return static_cast<ComponentType*>(comp->second);

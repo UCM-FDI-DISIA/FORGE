@@ -13,8 +13,8 @@ EntityData::EntityData(EntityData const& other) :
 	isBlueprint(false),
 	group(other.group),
 	handler(other.handler) {
-	for (auto const& component : other.components) {
-		components.insert({ component.first, new ComponentData(*component.second) });
+	for (auto const& component : other.componentMap) {
+		componentMap.insert({ component.first, new ComponentData(*component.second) });
 	}
 	for (auto const& child : other.children) {
 		children.push_back(new EntityData(*child));
@@ -22,7 +22,7 @@ EntityData::EntityData(EntityData const& other) :
 }
 
 EntityData::~EntityData() {
-	for (auto& component : components) {
+	for (auto& component : componentMap) {
 		delete component.second;
 	}
 	for (auto& child : children) {
