@@ -21,6 +21,7 @@ Text::Text() : UIComponent(),
     serializer(text, "text");
     serializer(color, "color");
     serializer(bgColor, "bgColor");
+    serializer(size, "size");
 }
 
 Text::~Text() {}
@@ -35,10 +36,13 @@ bool Text::initComponent(ComponentData* data) {
 
         textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID +  "textArea"));
         textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
-        textAreaOverlay->setPosition(transform->getPosition().getX() / 2, transform->getPosition().getY() / 2);
-        textAreaOverlay->setDimensions(transform->getScale().getX(), transform->getScale().getY());
+        forge::Vector2 point = 
+            forge::Vector2(transform->getPosition().getX() - (size.getX() * transform->getScale().getX() / 2), 
+                transform->getPosition().getY() - (size.getY() * transform->getScale().getY() / 2));
+        textAreaOverlay->setPosition(point.getX(), point.getY());
+        textAreaOverlay->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
         textAreaOverlay->setCaption(text);
-        textAreaOverlay->setCharHeight(transform->getScale().getY());
+        textAreaOverlay->setCharHeight(size.getY() * transform->getScale().getY());
         textAreaOverlay->setFontName(fontName);
         textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
         textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Center);

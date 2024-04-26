@@ -86,6 +86,20 @@ local scenes = {
                 }
             }
         },
+        texto = {
+            components = {
+                RectTransform = {
+                    position = {200, 200},
+                    scale = {5, 5}
+                },
+                Text = {
+                    id = "texto",
+                    text = "hola",
+                    fontName = "Saeda.ttf",
+                    size = {40, 40}
+                }
+            }
+        },
         imagen = {
             components = {
                 RectTransform = {

@@ -25,6 +25,9 @@ protected:
     Ogre::OverlayContainer* overlayPanel;
     Ogre::Overlay* overlay;
 
+    // Tamaño del elemento de la UI
+    forge::Vector2 size;
+
     // Porfundidad
     int zOrder;
 
