@@ -24,9 +24,6 @@ private:
     // Nombre de la fuente
     std::string fontName;
 
-    // La fuente
-    Ogre::Font* font;
-
 	// Elemento de overlay para el texto
 	Ogre::TextAreaOverlayElement* textAreaOverlay;
 
@@ -34,7 +31,7 @@ public:
     static const FORGE_API_VAR std::string id;
 
     /// <summary>
-    /// Contructora de un componente de interfaz
+    /// Contructora del componente texto
     /// </summary>	
     FORGE_API Text();
 
@@ -49,11 +46,25 @@ public:
     /// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
     FORGE_API bool initComponent(ComponentData* data) override;
 
-
+	/// <summary>
+	/// Activa el componente (llama a crear el texto)
+	/// </summary>	
     virtual FORGE_API void onEnabled();
 
-
+	/// <summary>
+	/// Desactiva el componente (llama a destruir el texto)
+	/// </summary>	
     virtual FORGE_API void onDisabled();
+
+	/// <summary>
+	/// Crea el texto con su Panel y su Overlay
+	/// </summary>	
+	void createText();
+
+	/// <summary>
+	/// Destruye el texto con su Panel y su Overlay
+	/// </summary>	
+	void destroyText();
 
 	/// <summary>
 	/// Actualizacion del texto
@@ -71,12 +82,12 @@ public:
 	/// </summary>	
 	/// <param name = "color_">Color del fondo</param>
 	/// <param name = "size_">Tamano del fondo</param>
-	void setBackground(forge::Vector4 color_ = forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }), forge::Vector2 size_ = forge::Vector2::ZERO);
+	//void setBackground(forge::Vector4 color_ = forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }), forge::Vector2 size_ = forge::Vector2::ZERO);
 
 	/// <summary>
 	/// Quita el fondo
 	/// </summary>	
-	void removeBackground();
+	//void removeBackground();
 
 	/// <summary>
 	/// Cambia la fuente

@@ -92,6 +92,13 @@ public:
 	/// <param name = "font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
 	void loadFont(std::string font);
 
+	/// <summary>
+	/// Comprueba si la fuente ya se a cargado (si ya existe en el conjunto (set))
+	/// </summary>
+	/// <param name = "font">Nombre de la fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
+	/// <returns>True si la fuente ya esta anadida, false si no lo esta</returns>
+	bool hasFont(std::string font);
+
 	#pragma region Getters
 	/// <summary>
 	/// Devuelve la fuente consultada

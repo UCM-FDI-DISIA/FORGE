@@ -18,69 +18,82 @@ const std::string Text::id = "Text";
 Text::Text() : UIComponent(),
     textAreaOverlay(nullptr),
     fontName(""),
-    font(nullptr),
     color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
     bgColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 })) {
     serializer(fontName, "fontName");
     serializer(text, "text");
     serializer(color, "color");
     serializer(bgColor, "bgColor");
-    serializer(size, "size");
 }
 
-Text::~Text() {}
+Text::~Text() {
+    destroyText();
+}
 
 bool Text::initComponent(ComponentData* data) {
     if (UIComponent::initComponent(data)) {
-        if (fontName != "") {
-            gui->loadFont("Saeda.ttf");
-        }
-
-        createPanel();
-
-        textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID +  "textArea"));
-        textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
-        forge::Vector2 point = 
-            forge::Vector2(transform->getPosition().getX() - (size.getX() * transform->getScale().getX() / 2), 
-                transform->getPosition().getY() - (size.getY() * transform->getScale().getY() / 2));
-        textAreaOverlay->setPosition(point.getX(), point.getY());
-        textAreaOverlay->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
-        textAreaOverlay->setCaption(text);
-        textAreaOverlay->setCharHeight(size.getY() * transform->getScale().getY());
-        textAreaOverlay->setFontName(fontName);
-        textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
-        textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Center);
-        overlayPanel->addChild(textAreaOverlay);
-
-        createOverlay(1);
-
+        createText();
         return true;
     }
     return false;
 }
 
 void Text::onEnabled() {
-
+    createText();
 }
 
 void Text::onDisabled() {
+    destroyText();
+}
 
+void Text::createText() {
+    createPanel();
+
+    textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID + "textArea"));
+    textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
+    forge::Vector2 point =
+        forge::Vector2(transform->getPosition().getX() - (size.getX() * transform->getScale().getX() / 2),
+            transform->getPosition().getY() - (size.getY() * transform->getScale().getY() / 2));
+    textAreaOverlay->setPosition(point.getX(), point.getY());
+    textAreaOverlay->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
+    textAreaOverlay->setCaption(text);
+    textAreaOverlay->setCharHeight(size.getY() * transform->getScale().getY());
+    if (fontName != "" && !gui->hasFont(fontName)) {
+        gui->loadFont(fontName);
+        textAreaOverlay->setFontName(fontName);
+    }
+    else {
+        textAreaOverlay->setFontName("Saeda.ttf");
+    }
+    textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
+    //textAreaOverlay->setColourBottom(gui->Vector4ToColorValue(bgColor));
+    textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Center);
+    overlayPanel->addChild(textAreaOverlay);
+
+    createOverlay(zOrder);
+}
+
+void Text::destroyText() {
+    gui->getOverlayManager()->destroyOverlayElement(textAreaOverlay);
+    destroyPanel();
+    destroyOverlay();
+    textAreaOverlay = nullptr;
 }
 
 void Text::setColor(forge::Vector4 color_) {
     color = color_;
 }
 
-void Text::setBackground(forge::Vector4 color_, forge::Vector2 size_) {
-    bgColor = color_;
-    /*if (size_ != forge::Vector2::ZERO) {
-        size = size_;
-    }*/
-}
+//void Text::setBackground(forge::Vector4 color_, forge::Vector2 size_) {
+//    bgColor = color_;
+//    /*if (size_ != forge::Vector2::ZERO) {
+//        size = size_;
+//    }*/
+//}
 
-void Text::removeBackground() {
-    
-}
+//void Text::removeBackground() {
+//    
+//}
 
 void Text::changeFont(std::string const& fontName_) {
     fontName = fontName_;

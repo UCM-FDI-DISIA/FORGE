@@ -25,6 +25,16 @@ void UIComponent::createOverlay(int depth) {
     overlay->show();
 }
 
+void UIComponent::destroyPanel() {
+    gui->getOverlayManager()->destroyOverlayElement(overlayPanel);
+    overlayPanel = nullptr;
+}
+
+void UIComponent::destroyOverlay() {
+    gui->getOverlayManager()->destroy("over" + elementID);
+    overlay = nullptr;
+}
+
 UIComponent::UIComponent() :
     gui(GUIManager::GetInstance()),
     transform(nullptr),
@@ -33,6 +43,7 @@ UIComponent::UIComponent() :
     overlay(nullptr) {
     serializer(elementID, "id");
     serializer(zOrder, "depth");
+    serializer(size, "size");
 }
 
 UIComponent::~UIComponent() {
@@ -54,16 +65,7 @@ bool UIComponent::initComponent(ComponentData* data) {
     else {
         std::cerr << "ERROR: Se requiere un componente RectTransform para generar un UIComponent\n";
     }
-
     return false;
-}
-
-void UIComponent::onEnabled() {
-
-}
-
-void UIComponent::onDisabled() {
-	
 }
 
 forge::Vector2 UIComponent::getSize() const {

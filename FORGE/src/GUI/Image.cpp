@@ -33,7 +33,7 @@ bool Image::initComponent(ComponentData* data) {
 		
 		setMaterial(texture);
 
-		createOverlay(1);
+		createOverlay(zOrder);
 
 		return true;
 	}
@@ -69,7 +69,7 @@ unsigned int Image::getSourceWidth() {
 }
 
 unsigned int Image::getWidth() {
-	return (int) transform->getScale().getX();
+	return (int) transform->getScale().getX()*size.getX();
 }
 
 unsigned int Image::getSourceHeight() {
@@ -77,7 +77,7 @@ unsigned int Image::getSourceHeight() {
 }
 
 unsigned int Image::getHeight() {
-	return (int) transform->getScale().getY();
+	return (int) transform->getScale().getY()*size.getY();
 }
 
 void Image::setMaterial(std::string const& mat) {

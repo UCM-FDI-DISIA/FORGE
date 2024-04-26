@@ -53,6 +53,8 @@ bool GUIManager::setup() {
 	
 	renderManager->getSceneManager()->addRenderQueueListener(overlaySystem);
 
+	loadFont("Saeda.ttf");
+
 	return true;
 }
 
@@ -60,6 +62,10 @@ void GUIManager::cleanUp() const {
 	renderManager->getSceneManager()->removeRenderQueueListener(overlaySystem);
 	delete overlayManager;
 	initialised = false;
+}
+
+bool GUIManager::hasFont(std::string font) {
+	return fonts.find(font) != fonts.end();
 }
 
 bool GUIManager::update() {
@@ -77,6 +83,7 @@ void GUIManager::loadFont(std::string font) {
 	mFont->setParameter("size", "100");
 	mFont->setParameter("resolution", "250");
 	mFont->load();
+	fonts.insert(font);
 }
 
 Ogre::Font* GUIManager::getFont(std::string const& fontName) {
