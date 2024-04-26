@@ -100,15 +100,27 @@ local scenes = {
                 }
             }
         },
-        imagen = {
+        imagen1 = {
             components = {
                 RectTransform = {
                     position = {100, 100},
                     scale = {200, 200}
                 },
                 Image = {
-                    id = "imagen",
-                    texture = "panko"
+                    id = "imagen1",
+                    texture = "panko.png"
+                }
+            }
+        },
+        imagen2 = {
+            components = {
+                RectTransform = {
+                    position = {300, 100},
+                    scale = {200, 200}
+                },
+                Image = {
+                    id = "imagen2",
+                    texture = "dinocat.png"
                 }
             }
         }

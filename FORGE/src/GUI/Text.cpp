@@ -1,10 +1,14 @@
 #include "Text.h"
+#pragma warning(push)
+#pragma warning(disable : 26495)
+#pragma warning(disable : 4251)
 #include <OgreFont.h>
 #include <OgreFontManager.h>
 #include <OgreOverlayManager.h>
 #include <OgreTextAreaOverlayElement.h>
 #include <OgreOverlayContainer.h>
 #include <OgreOverlay.h>
+#pragma warning(pop)
 #include "Serializer.h"
 #include "GUIManager.h"
 #include "RectTransform.h"
