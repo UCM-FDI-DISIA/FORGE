@@ -10,7 +10,7 @@
 #ifdef _DEBUG
 #define closeWithError(message) reportError(message); std::cout << "Pulsa cualquier tecla para continuar.\n"; static_cast<int>(std::getchar()); return EXIT_FAILURE
 #else
-#define closeWithError(message)
+#define closeWithError(message) return EXIT_FAILURE
 #endif
 
 int main(int argc, char* argv[]) {
