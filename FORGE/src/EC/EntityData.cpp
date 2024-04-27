@@ -1,12 +1,14 @@
 ﻿#include "EntityData.h"
 #include "ComponentData.h"
+#include "Factory.h"
 
 
 EntityData::EntityData() :
 	isBlueprint(false),
 	keepBetweenScenes(false),
 	group(""),
-	handler("") {
+	handler(""),
+	components(Factory::GetInstance()->getComponentAmount(), nullptr) {
 }
 
 EntityData::EntityData(EntityData const& other) :
@@ -15,8 +17,10 @@ EntityData::EntityData(EntityData const& other) :
 	keepBetweenScenes(other.keepBetweenScenes),
 	handler(other.handler) {
 	for (auto const& component : other.components) {
-		ComponentData* newComp = new ComponentData(*component);
-		componentMap.insert({ component->getId(), components.size()});
+		ComponentData* newComp = nullptr;
+		if (component != nullptr) {
+			newComp = new ComponentData(*component);
+		}
 		components.push_back(newComp);
 	}
 	for (auto const& child : other.children) {
@@ -26,7 +30,9 @@ EntityData::EntityData(EntityData const& other) :
 
 EntityData::~EntityData() {
 	for (auto& component : components) {
-		delete component;
+		if (component != nullptr) {
+			delete component;
+		}
 	}
 	for (auto& child : children) {
 		if (!child->isBlueprint) { 

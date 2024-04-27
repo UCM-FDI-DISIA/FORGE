@@ -30,7 +30,9 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 		entity->setKeepBetweenScenes(true);
 	}
 	for (auto& componentData : data->components) {
-		Component* component = entity->addComponent(componentData);
+		if (componentData != nullptr) {
+			Component* component = entity->addComponent(componentData->getId());
+		}
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {

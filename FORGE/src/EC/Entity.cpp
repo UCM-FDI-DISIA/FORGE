@@ -62,25 +62,27 @@ Component* Entity::addComponent(ComponentData* data) {
     return component;
 }
 
-FORGE_API bool Entity::initComponents(std::vector<ComponentData*> data)
-{
-    for (int i = 0; i < components.size(); ++i) {
-        if (!components[i]->initComponent(data[i])) {
-            return false;
+FORGE_API bool Entity::initComponents(std::vector<ComponentData*> data) {
+    for (auto& componentData : data) {
+        if (componentData != nullptr) {
+            auto component = componentMap.find(componentData->getId());
+            if (component == componentMap.end() || !component->second->initComponent(componentData)) {
+                return false;
+            }
         }
     }
-
     return true;
 }
 
-FORGE_API bool Entity::initSerializedComponents(std::vector<ComponentData*> data)
-{
-    for (int i = 0; i < components.size(); ++i) {
-        if (!components[i]->initSerialized(data[i])) {
-            return false;
+FORGE_API bool Entity::initSerializedComponents(std::vector<ComponentData*> data) {
+    for (auto& componentData : data) {
+        if (componentData != nullptr) {
+            auto component = componentMap.find(componentData->getId());
+            if (component == componentMap.end() || !component->second->initSerialized(componentData)) {
+                return false;
+            }
         }
     }
-
     return true;
 }
 
@@ -101,11 +103,12 @@ Entity* Entity::setParent(Entity* newParent) {
     }
     parent = newParent;
     if (hasComponent(Transform::id)) {
-        if (parent == nullptr || !parent->hasComponent(Transform::id)) {
-            getComponent<Transform>()->setParent(nullptr);
+        if (parent->hasComponent(Transform::id)) {
+            getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+
         }
         else {
-            getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+            getComponent<Transform>()->setParent(nullptr);
         }
     }
     return parent;
@@ -114,6 +117,9 @@ Entity* Entity::setParent(Entity* newParent) {
 
 void Entity::removeParent() {
     parent = nullptr;
+    if (hasComponent(Transform::id)) {
+        getComponent<Transform>()->setParent(nullptr);
+    }
 }
 
 void Entity::removeComponent(std::string const& id) {

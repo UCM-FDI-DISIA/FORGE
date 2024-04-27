@@ -50,15 +50,7 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
 			LuaRef* data = new LuaRef(component.second);
 			ComponentData* componentData = new ComponentData(id, data);
-			auto comp = entityData.componentMap.find(id);
-			if (comp != entityData.componentMap.end()) {
-				delete entityData.components[comp->second];
-				entityData.components[comp->second] = componentData;
-			}
-			else {
-				entityData.componentMap[id] = entityData.components.size();
-				entityData.components.push_back(componentData);
-			}
+			entityData.components[Factory::GetInstance()->getComponentOrder(id)] = componentData;
 		}
 	}
 }

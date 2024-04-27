@@ -119,7 +119,6 @@ void Animator::changeActive(std::vector<std::string> const& newAnimations) {
 std::vector<std::string> Animator::getAnimations() const {
 	std::vector<std::string> animations;
 	if (ogreAnimations != nullptr) {
-
 		auto iterator = ogreAnimations->getAnimationStateIterator();
 		while (iterator.hasMoreElements()) {
 			animations.push_back(iterator.peekNextKey());

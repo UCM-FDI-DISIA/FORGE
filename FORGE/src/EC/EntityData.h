@@ -12,7 +12,6 @@ struct EntityData {
 	std::string group;
 	std::string handler;
 	std::vector<ComponentData*> components;
-	std::unordered_map<std::string, int> componentMap;
 	std::vector<EntityData*> children;
 	/// <summary>
 	/// Constructora por defecto, deja todo vacio

@@ -25,7 +25,7 @@ private:
 	/// <param name="newParent">Puntero al Transform de la nueva Entity padre.</param>
 	void setParent(Transform* newParent);
 public:
-	static const FORGE_API_VAR std::string id;
+	static  const FORGE_API_VAR std::string id;
 
 	FORGE_API Transform();
 	FORGE_API bool initComponent(ComponentData* data);
