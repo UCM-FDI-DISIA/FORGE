@@ -28,6 +28,9 @@ private:
     // Nombre de la fuente
     std::string fontName;
 
+	// Altura de la fuente
+	int fontHeight;
+
 	// Elemento de overlay para el texto
 	Ogre::TextAreaOverlayElement* textAreaOverlay;
 
@@ -40,6 +43,18 @@ private:
 	/// Destruye el texto con su Panel y su Overlay
 	/// </summary>	
 	void destroyText();
+
+	/// <summary>
+	/// Calcula la longitud del componente de texto
+	/// </summary>
+	/// <returns>La longitud calculada</returns>
+	float calculateTextWidth();
+
+	/// <summary>
+	/// Calcula la esquina superior izquierda del texto
+	/// </summary>
+	/// <returns>Un vector correspondiente</returns>
+	forge::Vector2 getUpperLeftPoint();
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -71,18 +86,6 @@ public:
     virtual FORGE_API void onDisabled();
 
 	/// <summary>
-	/// Anade un fondo al texto del color y tamano dados
-	/// </summary>	
-	/// <param name = "color_">Color del fondo</param>
-	/// <param name = "size_">Tamano del fondo</param>
-	//void setBackground(forge::Vector4 color_ = forge::Vector4({ 0.0, 0.0, 0.0, 1.0 }), forge::Vector2 size_ = forge::Vector2::ZERO);
-
-	/// <summary>
-	/// Quita el fondo
-	/// </summary>	
-	//void removeBackground();
-
-	/// <summary>
 	/// Cambia la opacidad del fondo
 	/// </summary>	
 	/// <param name = "op">Opacidad</param>
@@ -104,10 +107,16 @@ public:
 
 	#pragma region Setters
 	/// <summary>
+	/// Cambiar la posicion del texto
+	/// </summary>
+	/// <param name="newPosition">La nueva posicion del texto</param>
+	FORGE_API void setPosition(forge::Vector2 const& newPosition);
+
+	/// <summary>
     /// Asigna un tamaño
     /// </summary>	
-    /// <param name="data"> Tamaño a asignar</param>
-	virtual FORGE_API void setSize(forge::Vector2 const& s);
+    /// <param name="fSize">Altura a asignar</param>
+	FORGE_API void setHeight(int fHeight);
 
 	/// <summary>
 	/// Cambia la fuente

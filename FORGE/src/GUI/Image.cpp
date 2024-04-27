@@ -69,7 +69,7 @@ unsigned int Image::getSourceWidth() {
 }
 
 unsigned int Image::getWidth() {
-	return (int) transform->getScale().getX()*size.getX();
+	return (int) transform->getScale().getX();
 }
 
 unsigned int Image::getSourceHeight() {
@@ -77,7 +77,7 @@ unsigned int Image::getSourceHeight() {
 }
 
 unsigned int Image::getHeight() {
-	return (int) transform->getScale().getY()*size.getY();
+	return (int) transform->getScale().getY();
 }
 
 void Image::setMaterial(std::string const& mat) {

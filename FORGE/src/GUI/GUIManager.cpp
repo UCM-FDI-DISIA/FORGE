@@ -10,6 +10,7 @@
 #include <OgreSceneManager.h>
 #include <OgreTextureManager.h>
 #include <OgreMaterialManager.h>
+#include <OgreNameGenerator.h>
 #pragma warning(pop)
 #include "RenderManager.h"
 #include "Vector4.h"
@@ -24,7 +25,8 @@ GUIManager::GUIManager() :
 	textureManager(nullptr),
 	materialManager(nullptr),
 	resourceGroupManager(nullptr),
-	renderManager(nullptr) {
+	renderManager(nullptr),
+	overlayNames(new Ogre::NameGenerator("UI")) {
 }
 
 bool GUIManager::Init() {
@@ -77,7 +79,7 @@ bool GUIManager::render() {
 }
 
 void GUIManager::loadFont(std::string font) {
-	Ogre::FontPtr mFont = Ogre::FontManager::getSingleton().create(font, "General");
+	Ogre::FontPtr mFont = fontManager->create(font, "General");
 	mFont->setType(Ogre::FT_TRUETYPE);
 	mFont->setSource(font);
 	mFont->setParameter("size", "100");
@@ -94,6 +96,10 @@ Ogre::OverlayManager* GUIManager::getOverlayManager() {
 	return overlayManager;
 }
 
+Ogre::FontManager* GUIManager::getFontManager() {
+	return fontManager;
+}
+
 Ogre::TextureManager* GUIManager::getTextureManager() {
 	return textureManager;
 }
@@ -108,6 +114,10 @@ Ogre::ResourceGroupManager* GUIManager::getResourceManager() {
 
 std::unordered_set<std::string> GUIManager::getIds() {
 	return ids;
+}
+
+std::string GUIManager::getRandomName() {
+	return overlayNames->generate();
 }
 
 std::unordered_set <std::string> GUIManager::getResourceRegistry() {

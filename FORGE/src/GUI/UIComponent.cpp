@@ -13,10 +13,6 @@ void UIComponent::createPanel() {
     overlayPanel = static_cast<Ogre::OverlayContainer*>(
         gui->getOverlayManager()->createOverlayElement("Panel", elementID));
     overlayPanel->setMetricsMode(Ogre::GMM_PIXELS);
-    overlayPanel->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
-    forge::Vector2 centerPoint = getCenterPoint();
-    overlayPanel->setPosition(centerPoint.getX(), centerPoint.getY());
-    overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 }
 
 void UIComponent::createOverlay(int depth) {
@@ -37,22 +33,14 @@ void UIComponent::destroyOverlay() {
     overlay = nullptr;
 }
 
-forge::Vector2 UIComponent::getCenterPoint() {
-    forge::Vector2 point =
-        forge::Vector2(transform->getPosition().getX() - (size.getX() * transform->getScale().getX() / 2),
-            transform->getPosition().getY() - (size.getY() * transform->getScale().getY() / 2));
-    return point;
-}
-
 UIComponent::UIComponent() :
-    gui(GUIManager::GetInstance()),
+    gui(nullptr),
     transform(nullptr),
     zOrder(0),
     overlayPanel(nullptr),
-    overlay(nullptr) {
-    serializer(elementID, "id");
+    overlay(nullptr),
+    elementID("") {
     serializer(zOrder, "depth");
-    serializer(size, "size");
 }
 
 UIComponent::~UIComponent() {
@@ -63,13 +51,12 @@ bool UIComponent::initComponent(ComponentData* data) {
     if (entity->hasComponent("RectTransform")) {
         transform = entity->getComponent<RectTransform>();
         gui = GUIManager::GetInstance();
-        if (gui->getIds().count(elementID) == 0) {
-            gui->getIds().insert(elementID);
-            return true;
+        elementID = gui->getRandomName();
+        while (gui->getIds().count(elementID) != 0) {
+            elementID = gui->getRandomName();
         }
-        else {
-            std::cerr << "ERROR: El id " + (std::string)elementID + " ya existe\n";
-        }
+        gui->getIds().insert(elementID);
+        return true;
     }
     else {
         std::cerr << "ERROR: Se requiere un componente RectTransform para generar un UIComponent\n";
@@ -77,19 +64,19 @@ bool UIComponent::initComponent(ComponentData* data) {
     return false;
 }
 
-forge::Vector2 UIComponent::getSize() const {
-	return size;
-}
+//forge::Vector2 UIComponent::getSize() const {
+//	return size;
+//}
 
 void UIComponent::setPosition(forge::Vector2 const& p) {
     transform->setPosition(p);
     overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 }
 
-void UIComponent::setSize(forge::Vector2 const& s) {
-	size = s;
-    overlayPanel->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
-}
+//void UIComponent::setSize(forge::Vector2 const& s) {
+//	size = s;
+//    overlayPanel->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
+//}
 
 void UIComponent::setDepth(int zO) {
     overlay->setZOrder(Ogre::ushort(zO));

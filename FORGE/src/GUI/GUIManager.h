@@ -14,6 +14,7 @@ namespace Ogre {
 	class TextureManager;
 	class MaterialManager;
 	class ResourceGroupManager;
+	class NameGenerator;
 }
 
 namespace forge {
@@ -46,6 +47,9 @@ private:
 
 	// Manager de renderizado
 	RenderManager* renderManager;
+
+	//Generadores de nombres aleatorios
+	Ogre::NameGenerator* overlayNames;
 
 	/// <summary>
 	/// Constructora de la clase GUI
@@ -89,7 +93,9 @@ public:
 	/// <summary>
 	/// Carga una fuente en el manager de la interfaz (OverlayManager)
 	/// </summary>
-	/// <param name = "font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
+	/// <param name="font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
+	/// <param name="size">Altura de la fuente nueva</param>
+	/// <param name="resolution">Resolucion de la fuente nueva</param>
 	void loadFont(std::string font);
 
 	/// <summary>
@@ -111,6 +117,12 @@ public:
 	/// </summary>	
 	/// <returns>El manager del overlay</returns>
 	Ogre::OverlayManager* getOverlayManager();
+
+	/// <summary>
+	/// Devuelve el manager del overlay
+	/// </summary>	
+	/// <returns>El manager del overlay</returns>
+	Ogre::FontManager* getFontManager();
 
 	/// <summary>
 	/// Devuelve el manager de texturas
@@ -135,6 +147,12 @@ public:
 	/// </summary>	
 	/// <returns>El conjunto desordenado de identificadores guardados</returns>
 	std::unordered_set<std::string> getIds();
+
+	/// <summary>
+	/// Devuelve un nombre aleatorio nuevo generado por Ogre
+	/// </summary>
+	/// <returns>El nombre generado por el generador de nombres de Ogre</returns>
+	std::string getRandomName();
 
 	/// <summary>
 	/// Devuelve el conjunto desordenado de recursos guardados

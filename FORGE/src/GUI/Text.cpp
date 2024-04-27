@@ -2,6 +2,7 @@
 #pragma warning(push)
 #pragma warning(disable : 26495)
 #pragma warning(disable : 4251)
+#include <OgreSharedPtr.h>
 #include <OgreFont.h>
 #include <OgreFontManager.h>
 #include <OgreOverlayManager.h>
@@ -18,16 +19,18 @@ const std::string Text::id = "Text";
 Text::Text() : UIComponent(),
     textAreaOverlay(nullptr),
     fontName(""),
+    fontHeight(50),
     color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
     bgColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 })) {
     serializer(fontName, "fontName");
+    serializer(fontHeight, "fontHeight");
     serializer(text, "text");
     serializer(color, "color");
     serializer(bgColor, "bgColor");
 }
 
 Text::~Text() {
-    destroyText();
+    if (textAreaOverlay != nullptr) destroyText();
 }
 
 bool Text::initComponent(ComponentData* data) {
@@ -48,19 +51,15 @@ void Text::onDisabled() {
 
 void Text::createText() {
     createPanel();
-
     textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID + "textArea"));
     textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
-    forge::Vector2 center = getCenterPoint();
-    textAreaOverlay->setPosition(center.getX(), center.getY());
-    textAreaOverlay->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
-    textAreaOverlay->setCaption(text);
-    textAreaOverlay->setCharHeight(size.getY() * transform->getScale().getY());
+    setText(text);
+    setHeight(fontHeight);
     setFont(fontName);
     setColor(color);
-    textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Center);
+    setTextAligment(forge::Alignment::CENTER);
+    setPosition(getUpperLeftPoint());
     overlayPanel->addChild(textAreaOverlay);
-
     createOverlay(zOrder);
 }
 
@@ -71,17 +70,22 @@ void Text::destroyText() {
     textAreaOverlay = nullptr;
 }
 
-//void Text::setBackground(forge::Vector4 color_, forge::Vector2 size_) {
-//    bgColor = color_;
-//    /*if (size_ != forge::Vector2::ZERO) {
-//        size = size_;
-//    }*/
-//}
+float Text::calculateTextWidth() {
+    float w = 0;
+    Ogre::FontPtr font = gui->getFontManager()->getByName(fontName, "General");
+    for (char& l : text) {
+        w += (font.get()->getGlyphAspectRatio(l) * fontHeight);
+    }
+    return w;
+}
 
-//void Text::removeBackground() {
-//    
-//}
-
+forge::Vector2 Text::getUpperLeftPoint() {
+    Ogre::FontPtr font = gui->getFontManager()->getByName("Saeda.ttf", "General");
+    forge::Vector2 point = 
+        forge::Vector2(transform->getPosition().getX() + (calculateTextWidth() / 2)
+            , transform->getPosition().getY());
+    return point;
+}
 
 void Text::changeBackgroundOpacity(float op) {
     bgColor.setW(op);
@@ -95,9 +99,14 @@ forge::Vector4 Text::getColor() const {
     return color;
 }
 
-void Text::setSize(forge::Vector2 const& s) {
-    UIComponent::setSize(s);
-    textAreaOverlay->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
+void Text::setPosition(forge::Vector2 const& newPosition) {
+    transform->setPosition(newPosition);
+    textAreaOverlay->setPosition(newPosition.getX(), newPosition.getY());
+}
+
+void Text::setHeight(int fHeight) {
+    fontHeight = fHeight;
+    textAreaOverlay->setCharHeight(fHeight);
 }
 
 void Text::setFont(std::string const& fontName_) {
@@ -108,6 +117,7 @@ void Text::setFont(std::string const& fontName_) {
     }
     else {
         textAreaOverlay->setFontName("Saeda.ttf");
+        fontName = "Saeda.ttf";
     }
 }
 
