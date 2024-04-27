@@ -12,11 +12,15 @@ namespace Ogre {
 	class Font;
 	class ColourValue;
 	class TextureManager;
+	class MaterialManager;
+	class ResourceGroupManager;
 }
 
 namespace forge {
 	class Vector4;
 }
+
+class RenderManager;
 
 class GUIManager {
 private:
@@ -29,11 +33,19 @@ private:
 	// Conjunto desordenado de identificadores 
 	std::unordered_set<std::string> ids;
 
-	// Sistema y manager de la interfaz de Ogre
+	// Conjunto desordenado de recursos
+	std::unordered_set<std::string> resourceRegistry;
+
+	// Managers de Ogre
 	Ogre::OverlaySystem* overlaySystem;
 	Ogre::OverlayManager* overlayManager;
 	Ogre::FontManager* fontManager;
 	Ogre::TextureManager* textureManager;
+	Ogre::MaterialManager* materialManager;
+	Ogre::ResourceGroupManager* resourceGroupManager;
+
+	// Manager de renderizado
+	RenderManager* renderManager;
 
 	/// <summary>
 	/// Constructora de la clase GUI
@@ -62,7 +74,7 @@ public:
 	/// <summary>
 	/// Elimina la memoria creada por el GUIManager
 	/// </summary>
-	void cleanUp();
+	void cleanUp() const;
 
 	/// <summary>
 	/// Actualiza los frames
@@ -80,6 +92,13 @@ public:
 	/// <param name = "font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
 	void loadFont(std::string font);
 
+	/// <summary>
+	/// Comprueba si la fuente ya se a cargado (si ya existe en el conjunto (set))
+	/// </summary>
+	/// <param name = "font">Nombre de la fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
+	/// <returns>True si la fuente ya esta anadida, false si no lo esta</returns>
+	bool hasFont(std::string font);
+
 	#pragma region Getters
 	/// <summary>
 	/// Devuelve la fuente consultada
@@ -94,10 +113,34 @@ public:
 	Ogre::OverlayManager* getOverlayManager();
 
 	/// <summary>
+	/// Devuelve el manager de texturas
+	/// </summary>	
+	/// <returns>El manager del texturas</returns>
+	Ogre::TextureManager* getTextureManager();
+
+	/// <summary>
+	/// Devuelve el manager de materiales
+	/// </summary>	
+	/// <returns>El manager de materiales</returns>
+	Ogre::MaterialManager* getMaterialManager();
+
+	/// <summary>
+	/// Devuelve el manager de recursos
+	/// </summary>	
+	/// <returns>El manager de recursos</returns>
+	Ogre::ResourceGroupManager* getResourceManager();
+
+	/// <summary>
 	/// Devuelve el conjunto desordenado de identificadores guardados
 	/// </summary>	
 	/// <returns>El conjunto desordenado de identificadores guardados</returns>
 	std::unordered_set<std::string> getIds();
+
+	/// <summary>
+	/// Devuelve el conjunto desordenado de recursos guardados
+	/// </summary>	
+	/// <returns>El conjunto desordenado de recursos guardados</returns>
+	std::unordered_set<std::string> getResourceRegistry();
 	#pragma endregion
 
 	#pragma region Setters

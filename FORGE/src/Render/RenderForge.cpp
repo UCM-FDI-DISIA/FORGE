@@ -14,7 +14,6 @@
 #include <OgreFileSystemLayer.h>
 #include <OgreFrameListener.h>
 #include <OgreRTShaderConfig.h>
-#include <OgreRTShaderExports.h>	
 #include <OgreGpuProgramManager.h>
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>

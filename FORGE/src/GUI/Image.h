@@ -5,9 +5,13 @@
 
 #include "UIComponent.h"
 
+namespace Ogre {
+	class Image;
+};
+
 namespace forge {
 	class Vector2;
-}
+};
 
 class Image : public UIComponent {
 private:
@@ -15,7 +19,7 @@ private:
 	std::string texture;
 
 	// Tamano original de la imagen
-	forge::Vector2 sourceSize;
+	Ogre::Image* imageSource;
 
 public:
 	// Id de componente
@@ -41,6 +45,12 @@ public:
 	/// Actualizacion de la imagen
 	/// </summary>
 	virtual void update();
+
+	/// <summary>
+	/// Carga y guarda la imagen del componente en imageSource, creando tambien una textura y un material, y
+	/// regsitrandola en el registro de recursos del GUIManager
+	/// </summary>
+	void createTextureAndMaterialFromImage();
 
 	#pragma region Getters
 	/// <summary>
