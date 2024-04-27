@@ -89,14 +89,13 @@ local scenes = {
         texto = {
             components = {
                 RectTransform = {
-                    position = {200, 100},
+                    position = {0, 0},
                     scale = {5, 5}
                 },
                 Text = {
-                    id = "texto",
                     text = "texto",
-                    fontName = "Saeda.ttf",
-                    size = {40, 40}
+                    fontName = "Willow.ttf",
+                    fontHeight = 100
                 }
             }
         },
@@ -108,9 +107,7 @@ local scenes = {
                 },
                 Image = {
                     depth = 0,
-                    id = "imagen",
-                    texture = "panko.png",
-                    size = {1, 1}
+                    texture = "panko.png"
                 }
             }
         },
@@ -122,9 +119,7 @@ local scenes = {
                 },
                 Image = {
                     depth = 3,
-                    id = "imagen2",
-                    texture = "dinocat.png",
-                    size = {1, 1}
+                    texture = "dinocat.png"
                 }
             }
         }

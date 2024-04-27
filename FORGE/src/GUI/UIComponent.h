@@ -21,14 +21,11 @@ protected:
     // Referencia al transform
     RectTransform* transform;
 
-    // Contenedor del elemento de ogre
+    // Contenedores del elemento de ogre
     Ogre::OverlayContainer* overlayPanel;
     Ogre::Overlay* overlay;
 
-    // Tamaño del elemento de la UI
-    forge::Vector2 size;
-
-    // Porfundidad
+    // Profundidad
     int zOrder;
 
     /// <summary>
@@ -51,12 +48,6 @@ protected:
     /// Destruye el Overlay correspondiente a este componente
     /// </summary>
     void destroyOverlay();
-
-    /// <summary>
-    /// Calcula el punto central del elemento de la UI
-    /// </summary>
-    /// <returns>Un vector correspondiente</returns>
-    forge::Vector2 getCenterPoint();
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -82,7 +73,7 @@ public:
     /// Devuelve el tamaño actual
     /// </summary>	
     /// <returns>El tamaño actual</returns>
-    FORGE_API forge::Vector2 getSize() const;
+    //FORGE_API forge::Vector2 getSize() const;
     #pragma endregion
 
     #pragma region Setter
@@ -92,7 +83,7 @@ public:
     /// Asigna un tamaño
     /// </summary>	
     /// <param name="data"> Tamaño a asignar</param>
-    virtual FORGE_API void setSize(forge::Vector2 const& s);
+    //virtual FORGE_API void setSize(forge::Vector2 const& s);
 
     /// <summary>
     /// Devuelve el texto
