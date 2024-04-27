@@ -37,7 +37,7 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 	if (!handler.isNil()) {
 		entityData.handler = handler.cast<std::string>();
 	}
-	if (!handler.isNil()) {
+	if (!keepBetweenScenes.isNil()) {
 		entityData.keepBetweenScenes = keepBetweenScenes.cast<bool>();
 	}
 	if (!group.isNil()) {
@@ -49,11 +49,8 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 			std::string id = component.first.cast<std::string>();
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
 			LuaRef* data = new LuaRef(component.second);
-			auto comp = entityData.components.find(id);
-			if (comp != entityData.components.end()) {
-				delete comp->second;
-			}
-			entityData.components[id] = new ComponentData(id, data);
+			ComponentData* componentData = new ComponentData(id, data);
+			entityData.components[Factory::GetInstance()->getComponentOrder(id)] = componentData;
 		}
 	}
 }
@@ -135,7 +132,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	}
 	else {
 		entityData = sceneManager.getEntityBlueprint(blueprint.cast<std::string>());
-		if (!(handler.isNil() && group.isNil() && components.isNil() && children.isNil())) {
+		if (!(handler.isNil() && keepBetweenScenes.isNil() && group.isNil() && components.isNil() && children.isNil())) {
 			entityData = new EntityData(*entityData);
 			entityData->isBlueprint = true;
 			extractEntityValues(*entityData, handler, keepBetweenScenes, group, components);

@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "Component.h"
+#include "ComponentData.h"
 #include "EntityData.h"
 #include <lua.hpp>
 #pragma warning(push)
@@ -21,7 +22,6 @@ SceneManager::SceneManager() :
 
 Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 
-	std::unordered_map<Component*, ComponentData*> initData;
 	Entity* entity = scene->addEntity(getGroupId(data->group));
 	if (data->handler != "") {
 		scene->setHandler(data->handler, entity);
@@ -30,9 +30,8 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 		entity->setKeepBetweenScenes(true);
 	}
 	for (auto& componentData : data->components) {
-		Component* component = entity->addComponent(componentData.first);
-		if(component != nullptr) {
-			initData.insert({ component, componentData.second });
+		if (componentData != nullptr) {
+			Component* component = entity->addComponent(componentData->getId());
 		}
 	}
 	for (auto& childData : data->children) {
@@ -44,19 +43,14 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 			entity->addChild(child);
 		}
 	}
-	for (auto& componentInit : initData) {
-		if (!componentInit.first->initSerialized(componentInit.second)) {
-			entity->setAlive(false);
-		}
+	if (!entity->initSerializedComponents(data->components)) {
+		entity->setAlive(false);
 	}
-	for (auto& componentInit : initData) {
-		if (!componentInit.first->initComponent(componentInit.second)) {
-			entity->setAlive(false);
-		}
+	if (!entity->initComponents(data->components)) {
+		entity->setAlive(false);
 	}
 
 	return entity;
-
 }
 
 void SceneManager::Init() {

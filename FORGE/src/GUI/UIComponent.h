@@ -21,18 +21,15 @@ protected:
     // Referencia al transform
     RectTransform* transform;
 
-    // Tamano del objeto
-    forge::Vector2 size;
-
-    // Contenedor del elemento de ogre
+    // Contenedores del elemento de ogre
     Ogre::OverlayContainer* overlayPanel;
     Ogre::Overlay* overlay;
 
-    // Porfundidad
+    // Profundidad
     int zOrder;
 
     /// <summary>
-    /// Crea un panel el cual será el contenedor de la Overlay
+    /// Crea un panel el cual será el contenedor del elemento de la UI
     /// </summary>	
     void createPanel();
 
@@ -42,45 +39,51 @@ protected:
     /// <param name="depth"> Capa en la que se crea la Overlay</param>	
     void createOverlay(int depth);
 
+    /// <summary>
+    /// Destruye el panel contenedor del elemento de la UI
+    /// </summary>	
+    void destroyPanel();
+
+    /// <summary>
+    /// Destruye el Overlay correspondiente a este componente
+    /// </summary>
+    void destroyOverlay();
+
 public:
     static const FORGE_API_VAR std::string id;
 
     /// <summary>
     /// Contructora de un componente de interfaz
     /// </summary>	
-    FORGE_API UIComponent();
+    UIComponent();
 
     /// <summary>
     /// Destructora
     /// </summary>	
-    FORGE_API ~UIComponent();
+    ~UIComponent();
 
     /// <summary>
     /// Inicializa el UIComponent con los parametros adecuados
     /// </summary>
     /// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-    FORGE_API bool initComponent(ComponentData* data) override;
-
-
-    virtual FORGE_API void onEnabled();
-
-
-    virtual FORGE_API void onDisabled();
+    bool initComponent(ComponentData* data) override;
 
     #pragma region Getters
     /// <summary>
     /// Devuelve el tamaño actual
     /// </summary>	
     /// <returns>El tamaño actual</returns>
-    FORGE_API forge::Vector2 getSize() const;
+    //FORGE_API forge::Vector2 getSize() const;
     #pragma endregion
 
     #pragma region Setter
+    virtual FORGE_API void setPosition(forge::Vector2 const& p);
+
     /// <summary>
     /// Asigna un tamaño
     /// </summary>	
     /// <param name="data"> Tamaño a asignar</param>
-    FORGE_API void setSize(forge::Vector2 const& s);
+    //virtual FORGE_API void setSize(forge::Vector2 const& s);
 
     /// <summary>
     /// Devuelve el texto

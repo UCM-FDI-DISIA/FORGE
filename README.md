@@ -16,7 +16,7 @@
 - Sofía Sánchez Fernández ([sosanc03](https://github.com/sosanc03))
 
 ## Descripción
-**FORGE** es un motor de videojuegos desarrollado por 10 alumnos de la UCM el cual cuenta con todo lo necesario para crear juegos en 3D.
+**FORGE** es un motor de videojuegos desarrollado por 11 alumnos de la UCM el cual cuenta con todo lo necesario para crear juegos en 3D.
 
 ## Estructura
 **FORGE** está contenido dentro de una solución de Visual Studio de C++, dentro de la cual hay diferentes proyectos dedicados a las distintas funcionalidades que tiene el motor:

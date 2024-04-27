@@ -29,8 +29,6 @@ PhysicsManager::PhysicsManager() {
     collisionMatrix = std::unordered_map<std::string, std::unordered_map<std::string, bool>>();
 }
 
-
-
 PhysicsManager::~PhysicsManager() {
     if (debugger != nullptr) {
         delete debugger;
@@ -163,11 +161,13 @@ void PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
 
 void  PhysicsManager::deleteBody(btRigidBody* body) {
     auto auxTransform = transforms.find(body);
-    world->removeRigidBody((*auxTransform).first);
-    delete(*auxTransform).first->getMotionState();
-    delete(*auxTransform).first->getCollisionShape();
-    delete (*auxTransform).first;
-    transforms.erase(auxTransform);
+    if (auxTransform != transforms.end()) {
+        world->removeRigidBody((*auxTransform).first);
+        delete(*auxTransform).first->getMotionState();
+        delete(*auxTransform).first->getCollisionShape();
+        delete (*auxTransform).first;
+        transforms.erase(auxTransform);
+    }
 }
 
 void PhysicsManager::setDebug(bool enabled) {

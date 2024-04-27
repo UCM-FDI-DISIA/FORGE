@@ -8,6 +8,7 @@ Entity::Entity() :
     fact(*Factory::GetInstance()),
     scene(nullptr),
     components(),
+    componentMap(),
     parent(nullptr),
     children(),
     groupId(0),
@@ -17,9 +18,10 @@ Entity::Entity() :
 
 Entity::~Entity() {
     for (auto& component : components) {
-        delete component.second;
+        delete component;
     }
     for (auto& child : children) {
+        child->removeParent();
         child->setAlive(false);
     }
     if (parent != nullptr) {
@@ -46,8 +48,9 @@ Component* Entity::addComponent(std::string const& id) {
     if (component == nullptr) {
         throwError(nullptr, "No existe un componente \"" << id << "\".\n");
     }
-    removeComponent(id);    
-    components.insert(std::pair<std::string, Component*>(id, component));
+    removeComponent(id);
+    components.push_back(component);
+    componentMap.insert(std::pair<std::string, Component*>(id, component));
     component->setContext(this, scene);
     return component;
 }
@@ -57,6 +60,30 @@ Component* Entity::addComponent(ComponentData* data) {
     component->initSerialized(data);
     component->initComponent(data);
     return component;
+}
+
+FORGE_API bool Entity::initComponents(std::vector<ComponentData*> data) {
+    for (auto& componentData : data) {
+        if (componentData != nullptr) {
+            auto component = componentMap.find(componentData->getId());
+            if (component == componentMap.end() || !component->second->initComponent(componentData)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+FORGE_API bool Entity::initSerializedComponents(std::vector<ComponentData*> data) {
+    for (auto& componentData : data) {
+        if (componentData != nullptr) {
+            auto component = componentMap.find(componentData->getId());
+            if (component == componentMap.end() || !component->second->initSerialized(componentData)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 Entity* Entity::addChild(Entity* child) {
@@ -75,22 +102,36 @@ Entity* Entity::setParent(Entity* newParent) {
         parent->removeChild(this);
     }
     parent = newParent;
-    if (hasComponent(Transform::id) && parent->hasComponent(Transform::id)) {
-        getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+    if (hasComponent(Transform::id)) {
+        if (parent->hasComponent(Transform::id)) {
+            getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+
+        }
+        else {
+            getComponent<Transform>()->setParent(nullptr);
+        }
     }
     return parent;
 }
 
+
+void Entity::removeParent() {
+    parent = nullptr;
+    if (hasComponent(Transform::id)) {
+        getComponent<Transform>()->setParent(nullptr);
+    }
+}
+
 void Entity::removeComponent(std::string const& id) {
-    auto iter = components.find(id);
-    if (iter != components.end()) {
+    auto iter = componentMap.find(id);
+    if (iter != componentMap.end()) {
         delete iter->second;
-        components.erase(iter);
+        componentMap.erase(iter);
     }
 }
 
 bool Entity::hasComponent(std::string const& id) {
-    return components.count(id);
+    return componentMap.count(id);
 }
 
 int Entity::getGroup() {
@@ -102,17 +143,15 @@ FORGE_API const std::unordered_set<Entity*>& Entity::getChildren() const {
 }
 
 void Entity::update() {
-	for (auto& componentPair : components) {
-        Component* component = componentPair.second;
-        if(component->isEnabled()) {
+    for (auto& component : components) {
+        if (component->isEnabled()) {
 		    component->update();
         }
 	}
 }
 
 void Entity::fixedUpdate() {
-	for (auto& componentPair : components) {
-		Component* component = componentPair.second;
+    for (auto& component : components) {
 		if (component->isEnabled()) {
 			component->fixedUpdate();
 		}
@@ -120,8 +159,7 @@ void Entity::fixedUpdate() {
 }
 
 void Entity::setEnabled(bool enabled) {
-    for (auto& componentPair : components) {
-        Component* component = componentPair.second;
+    for (auto& component : components) {
         component->setEnabled(enabled);
     }
 }
@@ -136,8 +174,7 @@ FORGE_API void Entity::setKeepBetweenScenes(bool ddol) {
 
 FORGE_API void Entity::changeScene(Scene* newScene) {
     scene = this->scene;
-    for (auto& componentPair : components) {
-        Component* component = componentPair.second;
+    for (auto& component : components) {
         component->setContext(this, scene);
     }
 }

@@ -70,7 +70,7 @@ local scenes = {
                     position = {-30, -50, 0},
                     rotation = {0, 0, -1, 3.14/6 }
                 },
-                 Collider = {
+                Collider = {
                     scale = {30, 10, 30},
                     shapeType = "Cube"
                 }
@@ -89,13 +89,37 @@ local scenes = {
         texto = {
             components = {
                 RectTransform = {
-                    position = {200, 200},
-                    scale = {200, 200}
+                    position = {0, 0},
+                    scale = {5, 5}
                 },
                 Text = {
-                    id = "texto",
-                    text = "hola",
-                    fontName = "Saeda.ttf"
+                    text = "texto",
+                    fontName = "Willow.ttf",
+                    fontHeight = 100
+                }
+            }
+        },
+        imagen1 = {
+            components = {
+                RectTransform = {
+                    position = {100, 100},
+                    scale = {200, 200}
+                },
+                Image = {
+                    depth = 0,
+                    texture = "panko.png"
+                }
+            }
+        },
+        imagen2 = {
+            components = {
+                RectTransform = {
+                    position = {300, 100},
+                    scale = {200, 200}
+                },
+                Image = {
+                    depth = 3,
+                    texture = "dinocat.png"
                 }
             }
         }
