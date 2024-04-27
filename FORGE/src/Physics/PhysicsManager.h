@@ -13,6 +13,7 @@ class btCollisionDispatcher;
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
 class btRigidBody;
+class Collider;
 namespace forge {
     class Vector3;
 };
@@ -34,6 +35,8 @@ private:
     DebugMode* debugger;
     bool debugMode;
     int numberOfLayers;
+
+    std::list<Collider*> collisionedObjects;
 
     /// <summary>
     /// Constructora del physics manager.

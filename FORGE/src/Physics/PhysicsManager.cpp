@@ -11,6 +11,7 @@
 #include "RigidBody.h"
 #include "Transform.h"
 #include "DebugMode.h"
+#include "Collider.h"
 
 #define BIT(x) (1<<(x))
 
@@ -125,6 +126,17 @@ void PhysicsManager::handleCollisions() {
             }
         }
     }
+
+    //Iteramos en todos los colliders para manejar los fines de colision
+    for (auto t : transforms) {
+        if (t.second->getEntity()->hasComponent("Collider")) {
+            t.second->getEntity()->getComponent<Collider>()->checkCollisionEnd();
+        }
+        else {
+            t.second->getEntity()->getComponent<RigidBody>()->checkCollisionEnd();
+        }
+    }
+
 }
 
 void PhysicsManager::changeGravity(forge::Vector3 newGravity) {

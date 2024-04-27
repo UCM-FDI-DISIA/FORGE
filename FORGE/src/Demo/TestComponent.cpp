@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "AudioSource.h"
 #include "RigidBody.h"
+#include "Collider.h"
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
@@ -28,6 +29,18 @@ bool TestComponent::initComponent(ComponentData* data) {
 		audio = entity->getComponent<AudioSource>();	
 		animator = entity->getComponent<Animator>();
 		rigidBody = entity->getComponent<RigidBody>();
+
+		rigidBody->registerCallback(Collider::onCollisionEnter, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Iniciada" << std::endl;
+		});
+
+		rigidBody->registerCallback(Collider::onCollisionStay, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Continuada" << std::endl;
+		});
+
+		rigidBody->registerCallback(Collider::onCollisionLeave, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Finalizada" << std::endl;
+		});
 
 		if (animator != nullptr && animator->getEntity()->isAlive()) {
 			anims = animator->getAnimations();

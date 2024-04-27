@@ -5,6 +5,9 @@
 #include <Component.h>
 #include <Vector3.h>
 #include <Quaternion.h>
+#include <functional>
+#include <list>
+#include <vector>
 
 class PhysicsManager;
 class btRigidBody;
@@ -17,24 +20,27 @@ protected:
     enum collisionShape {
         ballShape, boxShape, capsuleShape, cilinderShape, planeShape
     };
-
-    // Cualquier función que implique dos cuerpos
-    using CollisionCallback = void(*)(Collider* self, Collider* other);
-
     PhysicsManager* physicsManager;
     bool trigger;
     btRigidBody* myBody;
     btCollisionShape* myShape;
     collisionShape shapeType;
     forge::Vector3 myScale;
-    std::vector<CollisionCallback> collisionCallbacks;
+    std::vector< std::function<void(Collider*, Collider*)>> onCollisionEnterCallbacks;
+    std::vector< std::function<void(Collider*, Collider*)>> oncollisionStayCallbacks;
+    std::vector< std::function<void(Collider*, Collider*)>> oncollisionLeaveCallbacks;
     Transform* bodyTransform;
     std::string myShapeString;
     forge::Vector3 lastPosition;
     forge::Vector3 lastForce;
     forge::Quaternion lastOrientation;
     std::string collisionLayer;
+    std::list<Entity*> collidedEntities;
 public:
+    enum callbackType {
+        onCollisionEnter, onCollisionStay, onCollisionLeave
+    };
+
     static const FORGE_API_VAR std::string id;
 
     FORGE_API Collider();
@@ -56,18 +62,23 @@ public:
     /// </summary>
     /// <param name="other: ">EL otro RigidBody con el que colisiona</param>
     /// <returns>Devuelve true si ha colisionado con otro RigidBody, false en el caso contrario</returns>
-    FORGE_API bool hasCollidedWith(Collider* other);
+    FORGE_API bool hasCollidedWith(Entity* other);
 
     /// <summary>
     /// Registra un nuevo callback de colision
     /// </summary>
-    FORGE_API void registerCallback(CollisionCallback callback);
+    FORGE_API void registerCallback(callbackType type, std::function<void(Collider*, Collider*)> callback);
 
     /// <summary>
     /// Maneja las colisiones con otras entidades
     /// </summary>
     /// <param name="other"></param>
     FORGE_API void onCollision(Entity* other);
+
+    /// <summary>
+    /// Si se ha dejado de colisionar con otras entidades, se llama a los callbacks de fin de colision
+    /// </summary>
+    FORGE_API void checkCollisionEnd();
 #pragma region setters
     /// <summary>
     /// Activa y desactiva la funcion de trigger
