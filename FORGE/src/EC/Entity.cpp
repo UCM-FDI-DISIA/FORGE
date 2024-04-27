@@ -21,6 +21,7 @@ Entity::~Entity() {
         delete component;
     }
     for (auto& child : children) {
+        child->removeParent();
         child->setAlive(false);
     }
     if (parent != nullptr) {
@@ -99,10 +100,20 @@ Entity* Entity::setParent(Entity* newParent) {
         parent->removeChild(this);
     }
     parent = newParent;
-    if (hasComponent(Transform::id) && parent->hasComponent(Transform::id)) {
-        getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+    if (hasComponent(Transform::id)) {
+        if (parent == nullptr || !parent->hasComponent(Transform::id)) {
+            getComponent<Transform>()->setParent(nullptr);
+        }
+        else {
+            getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+        }
     }
     return parent;
+}
+
+
+void Entity::removeParent() {
+    parent = nullptr;
 }
 
 void Entity::removeComponent(std::string const& id) {

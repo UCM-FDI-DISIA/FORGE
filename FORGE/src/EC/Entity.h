@@ -30,6 +30,10 @@ private:
 	/// <param name="parent">Puntero a la Entity que se establece como padre.</param>
 	/// <returns>Puntero a la Entity que se establece como padre.</returns>
 	Entity* setParent(Entity* parent);
+	/// <summary>
+	/// Establece el parent de la entidad como nullptr
+	/// </summary>
+	void removeParent();
 public:
 	/// <summary>
 	/// Constructor por defecto de la clase Entity
