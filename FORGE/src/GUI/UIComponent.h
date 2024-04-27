@@ -48,9 +48,15 @@ protected:
     void destroyPanel();
 
     /// <summary>
-   /// Destruye el Overlay correspondiente a este componente
-   /// </summary>
+    /// Destruye el Overlay correspondiente a este componente
+    /// </summary>
     void destroyOverlay();
+
+    /// <summary>
+    /// Calcula el punto central del elemento de la UI
+    /// </summary>
+    /// <returns>Un vector correspondiente</returns>
+    forge::Vector2 getCenterPoint();
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -80,11 +86,13 @@ public:
     #pragma endregion
 
     #pragma region Setter
+    virtual FORGE_API void setPosition(forge::Vector2 const& p);
+
     /// <summary>
     /// Asigna un tamaño
     /// </summary>	
     /// <param name="data"> Tamaño a asignar</param>
-    FORGE_API void setSize(forge::Vector2 const& s);
+    virtual FORGE_API void setSize(forge::Vector2 const& s);
 
     /// <summary>
     /// Devuelve el texto

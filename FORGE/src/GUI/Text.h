@@ -10,6 +10,10 @@ namespace Ogre {
 	class TextAreaOverlayElement;
 }
 
+namespace forge {
+	enum Alignment {CENTER, RIGHT, LEFT};
+}
+
 class Text : public UIComponent {
 private:
     // Texto a mostrar
@@ -26,6 +30,16 @@ private:
 
 	// Elemento de overlay para el texto
 	Ogre::TextAreaOverlayElement* textAreaOverlay;
+
+	/// <summary>
+	/// Crea el texto con su Panel y su Overlay
+	/// </summary>	
+	void createText();
+
+	/// <summary>
+	/// Destruye el texto con su Panel y su Overlay
+	/// </summary>	
+	void destroyText();
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -57,27 +71,6 @@ public:
     virtual FORGE_API void onDisabled();
 
 	/// <summary>
-	/// Crea el texto con su Panel y su Overlay
-	/// </summary>	
-	void createText();
-
-	/// <summary>
-	/// Destruye el texto con su Panel y su Overlay
-	/// </summary>	
-	void destroyText();
-
-	/// <summary>
-	/// Actualizacion del texto
-	/// </summary>	
-	//virtual void update();
-
-	/// <summary>
-	/// Cambia el color del texto
-	/// </summary>	
-	/// <param name = "color_">Color del texto</param>
-	void setColor(forge::Vector4 color_);
-
-	/// <summary>
 	/// Anade un fondo al texto del color y tamano dados
 	/// </summary>	
 	/// <param name = "color_">Color del fondo</param>
@@ -90,33 +83,62 @@ public:
 	//void removeBackground();
 
 	/// <summary>
-	/// Cambia la fuente
-	/// </summary>	
-	/// <param name = "fontName_">Nombre de la fuente</param>
-	void changeFont(std::string const& fontName_);
-
-	/// <summary>
-	/// Cambia la opacidad del texto
-	/// </summary>	
-	/// <param name = "op">Opacidad</param>
-	void changeTextOpacity(float op = 1.0f);
-	/// <summary>
 	/// Cambia la opacidad del fondo
 	/// </summary>	
 	/// <param name = "op">Opacidad</param>
-	void changeBackgroundOpacity(float op = 1.0f);
+	FORGE_API void changeBackgroundOpacity(float op = 1.0f);
+
+	#pragma region Getters
+	/// <summary>
+	/// Devuelve el texto
+	/// </summary>	
+	/// <returns>El texto</returns>
+	FORGE_API std::string getText() const;
+
+	/// <summary>
+	/// Devuelve el color del texto
+	/// </summary>
+	/// <returns>El vector 4 que representa el color</returns>
+	FORGE_API forge::Vector4 getColor() const;
+	#pragma endregion
+
+	#pragma region Setters
+	/// <summary>
+    /// Asigna un tamaño
+    /// </summary>	
+    /// <param name="data"> Tamaño a asignar</param>
+	virtual FORGE_API void setSize(forge::Vector2 const& s);
+
+	/// <summary>
+	/// Cambia la fuente
+	/// </summary>	
+	/// <param name = "fontName_">Nombre de la fuente</param>
+	FORGE_API void setFont(std::string const& fontName_);
 
 	/// <summary>
 	/// Cambia el texto
 	/// </summary>	
 	/// <param name = "text_">Texto nuevo</param>
-	void changeText(std::string const& text_);
+	FORGE_API void setText(std::string const& text_);
 
 	/// <summary>
-	/// Devuelve el texto
+	/// Cambia el color del texto
+	/// </summary>
+	/// <param name="c">El nuevo color en formato Vector4</param>
+	FORGE_API void setColor(forge::Vector4 c);
+
+	/// <summary>
+	/// Cambia la opacidad del texto
 	/// </summary>	
-	/// <returns>El texto</returns>
-	std::string getText() const;
+	/// <param name = "op">Opacidad</param>
+	FORGE_API void setTextOpacity(float op = 1.0f);
+
+	/// <summary>
+	/// Coloca el texto con distinta alineacion
+	/// </summary>
+	/// <param name="a">La nueva alineacion del texto</param>
+	FORGE_API void setTextAligment(forge::Alignment a);
+	#pragma endregion
 };
 
 #endif // !TEXT_H_

@@ -14,6 +14,8 @@ void UIComponent::createPanel() {
         gui->getOverlayManager()->createOverlayElement("Panel", elementID));
     overlayPanel->setMetricsMode(Ogre::GMM_PIXELS);
     overlayPanel->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
+    forge::Vector2 centerPoint = getCenterPoint();
+    overlayPanel->setPosition(centerPoint.getX(), centerPoint.getY());
     overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 }
 
@@ -33,6 +35,13 @@ void UIComponent::destroyPanel() {
 void UIComponent::destroyOverlay() {
     gui->getOverlayManager()->destroy("over" + elementID);
     overlay = nullptr;
+}
+
+forge::Vector2 UIComponent::getCenterPoint() {
+    forge::Vector2 point =
+        forge::Vector2(transform->getPosition().getX() - (size.getX() * transform->getScale().getX() / 2),
+            transform->getPosition().getY() - (size.getY() * transform->getScale().getY() / 2));
+    return point;
 }
 
 UIComponent::UIComponent() :
@@ -72,8 +81,14 @@ forge::Vector2 UIComponent::getSize() const {
 	return size;
 }
 
+void UIComponent::setPosition(forge::Vector2 const& p) {
+    transform->setPosition(p);
+    overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
+}
+
 void UIComponent::setSize(forge::Vector2 const& s) {
 	size = s;
+    overlayPanel->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
 }
 
 void UIComponent::setDepth(int zO) {
