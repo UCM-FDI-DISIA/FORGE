@@ -31,6 +31,9 @@ private:
 	// Altura de la fuente
 	int fontHeight;
 
+	// Posicion ajustada del texto
+	forge::Vector2 fixedPosition;
+
 	// Elemento de overlay para el texto
 	Ogre::TextAreaOverlayElement* textAreaOverlay;
 
@@ -51,10 +54,9 @@ private:
 	float calculateTextWidth();
 
 	/// <summary>
-	/// Calcula la esquina superior izquierda del texto
+	/// Calcula y setea la posicion ajustada (esquina superior izquierda) del texto
 	/// </summary>
-	/// <returns>Un vector correspondiente</returns>
-	forge::Vector2 getUpperLeftPoint();
+	void fixPosition();
 
 public:
     static const FORGE_API_VAR std::string id;

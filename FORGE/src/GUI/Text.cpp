@@ -21,7 +21,8 @@ Text::Text() : UIComponent(),
     fontName(""),
     fontHeight(50),
     color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
-    bgColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 })) {
+    bgColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 })),
+    fixedPosition() {
     serializer(fontName, "fontName");
     serializer(fontHeight, "fontHeight");
     serializer(text, "text");
@@ -50,20 +51,24 @@ void Text::onDisabled() {
 }
 
 void Text::createText() {
+    // Se crea el panel
     createPanel();
+    // Se crea el texto y se le setean los parametros: fuente, texto, altura de la letra, color, alineacion y posicion
     textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID + "textArea"));
     textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
+    setFont(fontName);
     setText(text);
     setHeight(fontHeight);
-    setFont(fontName);
     setColor(color);
     setTextAligment(forge::Alignment::CENTER);
-    setPosition(getUpperLeftPoint());
+    setPosition(transform->getPosition());
+    // Se adjunta al panel y se crea el Overlay
     overlayPanel->addChild(textAreaOverlay);
     createOverlay(zOrder);
 }
 
 void Text::destroyText() {
+    // Destruye de menor a mayor (texto < panel < Overlay)
     gui->getOverlayManager()->destroyOverlayElement(textAreaOverlay);
     destroyPanel();
     destroyOverlay();
@@ -73,18 +78,18 @@ void Text::destroyText() {
 float Text::calculateTextWidth() {
     float w = 0;
     Ogre::FontPtr font = gui->getFontManager()->getByName(fontName, "General");
+    // Sumamos la anchura de cada caracter del texto 
+    // ...getGlynphAspectRatio -> devuelve la relacion entre anchura y altura de una letra
     for (char& l : text) {
         w += (font.get()->getGlyphAspectRatio(l) * fontHeight);
     }
     return w;
 }
 
-forge::Vector2 Text::getUpperLeftPoint() {
-    Ogre::FontPtr font = gui->getFontManager()->getByName("Saeda.ttf", "General");
-    forge::Vector2 point = 
-        forge::Vector2(transform->getPosition().getX() + (calculateTextWidth() / 2)
-            , transform->getPosition().getY());
-    return point;
+void Text::fixPosition() {
+    fixedPosition = 
+        forge::Vector2(transform->getPosition().getX() + (calculateTextWidth() / 2), transform->getPosition().getY());
+    textAreaOverlay->setPosition(fixedPosition.getX(), fixedPosition.getY());
 }
 
 void Text::changeBackgroundOpacity(float op) {
@@ -101,7 +106,7 @@ forge::Vector4 Text::getColor() const {
 
 void Text::setPosition(forge::Vector2 const& newPosition) {
     transform->setPosition(newPosition);
-    textAreaOverlay->setPosition(newPosition.getX(), newPosition.getY());
+    fixPosition();
 }
 
 void Text::setHeight(int fHeight) {
@@ -110,15 +115,19 @@ void Text::setHeight(int fHeight) {
 }
 
 void Text::setFont(std::string const& fontName_) {
-    if (fontName_ != "" && !gui->hasFont(fontName_)) {
+    // Si se ha especificado una fuente...
+    if (fontName_ != "") {
+        // Si no estaba cargada...
+        if (!gui->hasFont(fontName_)) {
+            gui->loadFont(fontName);
+        }
         fontName = fontName_;
-        gui->loadFont(fontName);
-        textAreaOverlay->setFontName(fontName);
     }
+    // Si no se le ha especificado una fuente
     else {
-        textAreaOverlay->setFontName("Saeda.ttf");
         fontName = "Saeda.ttf";
     }
+    textAreaOverlay->setFontName(fontName);
 }
 
 void Text::setText(std::string const& text_) {
