@@ -30,25 +30,23 @@ bool TestComponent::initComponent(ComponentData* data) {
 		animator = entity->getComponent<Animator>();
 		rigidBody = entity->getComponent<RigidBody>();
 
+		rigidBody->registerCallback(Collider::onCollisionEnter, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Iniciada" << std::endl;
+		});
+
+		rigidBody->registerCallback(Collider::onCollisionStay, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Continuada" << std::endl;
+		});
+
+		rigidBody->registerCallback(Collider::onCollisionLeave, [this] (Collider* me, Collider* other) {
+			std::cerr << "Colision Finalizada" << std::endl;
+		});
+
 		if (animator != nullptr && animator->getEntity()->isAlive()) {
 			anims = animator->getAnimations();
 			animator->setLoop(anims, true);
 			return true;
 		}
-
-		entity->getComponent<RigidBody>()->registerCallback(Collider::onCollisionEnter, [this] (Collider* me, Collider* other) {
-			std::cerr << "Colision Iniciada" << std::endl;
-		});
-
-		entity->getComponent<RigidBody>()->registerCallback(Collider::onCollisionStay, [this] (Collider* me, Collider* other) {
-			std::cerr << "Colision Continuada" << std::endl;
-		});
-
-		entity->getComponent<RigidBody>()->registerCallback(Collider::onCollisionLeave, [this] (Collider* me, Collider* other) {
-			std::cerr << "Colision Finalizada" << std::endl;
-		});
-
-
 	}
 	std::cerr << "ERROR: Se necesita un componente Transform, RigidBody, AudioSource y Animator para generar un TestComponent\n";
 	return false;
