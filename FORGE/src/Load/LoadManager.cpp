@@ -37,7 +37,7 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 	if (!handler.isNil()) {
 		entityData.handler = handler.cast<std::string>();
 	}
-	if (!handler.isNil()) {
+	if (!keepBetweenScenes.isNil()) {
 		entityData.keepBetweenScenes = keepBetweenScenes.cast<bool>();
 	}
 	if (!group.isNil()) {
@@ -135,7 +135,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	}
 	else {
 		entityData = sceneManager.getEntityBlueprint(blueprint.cast<std::string>());
-		if (!(handler.isNil() && group.isNil() && components.isNil() && children.isNil())) {
+		if (!(handler.isNil() && keepBetweenScenes.isNil() && group.isNil() && components.isNil() && children.isNil())) {
 			entityData = new EntityData(*entityData);
 			entityData->isBlueprint = true;
 			extractEntityValues(*entityData, handler, keepBetweenScenes, group, components);
