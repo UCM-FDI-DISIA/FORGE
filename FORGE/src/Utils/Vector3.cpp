@@ -6,8 +6,8 @@
 #pragma warning(disable : 26439)
 #pragma warning(disable : 26495)
 #include <OgreVector.h>
-#pragma warning(pop)
 #include <ik_vec3d.h>
+#pragma warning(pop)
 using namespace forge;
 
 #define PI 3.14159265358979323846264338327950288

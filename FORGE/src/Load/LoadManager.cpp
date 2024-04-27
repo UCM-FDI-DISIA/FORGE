@@ -49,11 +49,8 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 			std::string id = component.first.cast<std::string>();
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
 			LuaRef* data = new LuaRef(component.second);
-			auto comp = entityData.components.find(id);
-			if (comp != entityData.components.end()) {
-				delete comp->second;
-			}
-			entityData.components[id] = new ComponentData(id, data);
+			ComponentData* componentData = new ComponentData(id, data);
+			entityData.components[Factory::GetInstance()->getComponentOrder(id)] = componentData;
 		}
 	}
 }

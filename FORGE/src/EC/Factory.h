@@ -12,6 +12,7 @@ class Component;
 class Factory : private std::unordered_map<std::string, std::function<Component*()>> {
 private:
     static std::unique_ptr<Factory> instance;
+    std::unordered_map<std::string, int> componentOrder;
 public:
     /// <returns>Devuelve un puntero a la unica instancia de la clase</returns>
     FORGE_API static Factory* GetInstance();
@@ -22,6 +23,7 @@ public:
     /// <returns>Si se ha registrado correctamnte el Component</returns>
     template <class ComponentType>
     FORGE_API inline bool registerComponent() {
+        componentOrder.insert({ ComponentType::id, componentOrder.size()});
         return insert(std::pair<std::string, std::function<Component*()>>(ComponentType::id,
             [] () -> Component* {
                 return new ComponentType();
@@ -35,8 +37,21 @@ public:
     /// <param name="compName">Nombre del componente que se quiere agregar</param>
     /// <returns>Un puntero a la instancia de componente creada</returns>
     FORGE_API Component* generateComponent(std::string const& id);
-
+    /// <summary>
+    /// Borra todas las funciones de la Factoria
+    /// </summary>
     FORGE_API void cleanUp();
+    /// <summary>
+    /// Devuelve la cantidad de componentes registrados
+    /// </summary>
+    /// <returns>La cantidad de componentes registrados</returns>
+    FORGE_API int getComponentAmount();
+    /// <summary>
+    /// Devuelve el orden de inicializacion del componente
+    /// </summary>
+    /// <returns>El orden de inicializacion del componente</returns>
+    FORGE_API int getComponentOrder(std::string componentId);
+    
 };
 
 #endif // !FACTORY_H_

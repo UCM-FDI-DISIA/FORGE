@@ -16,7 +16,8 @@ class Entity {
 private:
 	Factory& fact;
 	Scene* scene;
-	std::unordered_map<std::string, Component*> components;
+	std::vector<Component*> components;
+	std::unordered_map<std::string, Component*> componentMap;
 	Entity* parent;
 	std::unordered_set<Entity*> children;
 	int groupId;
@@ -70,6 +71,18 @@ public:
 	/// <param name="data">Informacion del componente en formato de object de Lua</param>
 	FORGE_API Component* addComponent(ComponentData* data);
 	/// <summary>
+	/// Inicializa todos los componentes de la entidad
+	/// </summary>
+	/// <param name="data">Vector con los datos de la inicializacion</param>
+	/// <returns>Si la inicializacion ha sido correcta</returns>
+	FORGE_API bool initComponents(std::vector<ComponentData*> data);
+	/// <summary>
+	/// Inicializa todos los componentes de la entidad
+	/// </summary>
+	/// <param name="data">Vector con los datos de la inicializacion</param>
+	/// <returns>Si la inicializacion ha sido correcta</returns>
+	FORGE_API bool initSerializedComponents(std::vector<ComponentData*> data);
+	/// <summary>
 	/// Agrega una nueva Entity como hija de this, y establece this como el padre de la hija.
 	/// </summary>
 	/// <param name="child">Puntero a la Entity hija.</param>
@@ -99,8 +112,8 @@ public:
 	/// </returns>
 	template<class ComponentType>
 	FORGE_API inline ComponentType* getComponent() {
-		auto comp = components.find(ComponentType::id);
-		if (comp == components.end()) {
+		auto comp = componentMap.find(ComponentType::id);
+		if (comp == componentMap.end()) {
 			return nullptr;
 		}
 		return static_cast<ComponentType*>(comp->second);

@@ -18,3 +18,13 @@ Component* Factory::generateComponent(std::string const& id) {
 void Factory::cleanUp() {
     for (auto it = begin(); it != end(); it = erase(it));
 }
+
+int Factory::getComponentAmount() {
+    return componentOrder.size();
+}
+
+int Factory::getComponentOrder(std::string componentId) {
+    return componentOrder[componentId];
+}
+
+
