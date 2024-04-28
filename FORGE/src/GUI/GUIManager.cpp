@@ -1,5 +1,7 @@
 #include "GUIManager.h"
 #pragma warning(push)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
 #pragma warning(disable : 26495)
 #pragma warning(disable : 4251)
 #include <OgreOverlayManager.h>
@@ -41,7 +43,7 @@ GUIManager* GUIManager::GetInstance() {
 }
 
 GUIManager::~GUIManager() {
-	//delete overlaySystem;
+	delete overlayNames;
 }
 
 bool GUIManager::setup() {
@@ -62,7 +64,7 @@ bool GUIManager::setup() {
 
 void GUIManager::cleanUp() const {
 	renderManager->getSceneManager()->removeRenderQueueListener(overlaySystem);
-	delete overlayManager;
+	delete overlaySystem;
 	initialised = false;
 }
 

@@ -1,7 +1,4 @@
 #include "Camera.h"
-#include "RenderManager.h"
-#include "Entity.h"
-#include "Serializer.h"
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
@@ -11,6 +8,9 @@
 #include <OgreColourValue.h>
 #include <OgreViewport.h>
 #pragma warning(pop)
+#include "RenderManager.h"
+#include "Entity.h"
+#include "Serializer.h"
 
 const std::string Camera::id = "Camera";
 

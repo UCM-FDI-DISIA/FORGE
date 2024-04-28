@@ -1,6 +1,4 @@
 #include "RenderManager.h"
-#include "RenderForge.h"
-#include <iostream>
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
@@ -24,6 +22,7 @@
 #include <OgreViewport.h>
 #include <OgreNameGenerator.h>
 #pragma warning(pop)
+#include "RenderForge.h"
 #include "Entity.h"
 #include "Transform.h"
 #include "Mesh.h"

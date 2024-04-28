@@ -1,5 +1,4 @@
 #include "RenderForge.h"
-#include <iostream>
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
