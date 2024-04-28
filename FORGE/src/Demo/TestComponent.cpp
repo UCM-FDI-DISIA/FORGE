@@ -75,7 +75,7 @@ void TestComponent::update() {
 		audio->restart();
 	}
 	if (input.keyDown(K_O)) {
-		sceneManager->instantiateBlueprint("obstaculo", forge::Vector3(0,0,0));
+		sceneManager->instantiateBlueprint("obstaculo", entity);
 	}
 	if (input.keyDown(K_W)) {
 		//transform->setPositionZ(transform->getPosition().getZ() + movement);

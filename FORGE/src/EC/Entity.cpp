@@ -105,7 +105,6 @@ Entity* Entity::setParent(Entity* newParent) {
     if (hasComponent(Transform::id)) {
         if (parent->hasComponent(Transform::id)) {
             getComponent<Transform>()->setParent(parent->getComponent<Transform>());
-
         }
         else {
             getComponent<Transform>()->setParent(nullptr);

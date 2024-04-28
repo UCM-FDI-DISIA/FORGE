@@ -76,6 +76,13 @@ public:
 	/// <returns></returns>
 	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId, forge::Vector3 newPos);
 	/// <summary>
+	/// Instancia un blueprint en escena en la posicion indicada
+	/// </summary>
+	/// <param name="bluePrintId">Identificador del blueprint</param>
+	/// <param name="parent">Entidad padre del blueprint instanciado</param>
+	/// <returns></returns>
+	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId, Entity* parent);
+	/// <summary>
 	/// Cambia la escena activa a una con el identificador del parametro
 	/// Si no hay ninguna cargada en memoria la crea a traves de su blueprint
 	/// </summary>
