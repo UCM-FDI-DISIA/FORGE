@@ -74,9 +74,19 @@ public:
     /// </summary>	
     /// <returns>El tamaño actual</returns>
     //FORGE_API forge::Vector2 getSize() const;
+
+    /// <summary>
+    /// Devuelve la posicion actual
+    /// </summary>	
+    /// <returns>La posicion actual</returns>
+    FORGE_API forge::Vector2 getPosition() const;
     #pragma endregion
 
     #pragma region Setter
+    /// <summary>
+    /// Cambiar la posicion del componente
+    /// </summary>
+    /// <param name="newPosition">La nueva posicion del componente</param>
     virtual FORGE_API void setPosition(forge::Vector2 const& p);
 
     /// <summary>

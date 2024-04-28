@@ -1,7 +1,11 @@
 #include "UIComponent.h"
+#pragma warning(push)
+#pragma warning(disable : 26495)
+#pragma warning(disable : 4251)
 #include <OgreOverlayContainer.h>
 #include <OgreOverlayManager.h>
 #include <OgreOverlay.h>
+#pragma warning(pop)
 #include "Entity.h"
 #include "Serializer.h"
 #include "GUIManager.h"
@@ -67,6 +71,10 @@ bool UIComponent::initComponent(ComponentData* data) {
 //forge::Vector2 UIComponent::getSize() const {
 //	return size;
 //}
+
+forge::Vector2 UIComponent::getPosition() const {
+    return transform->getPosition();
+}
 
 void UIComponent::setPosition(forge::Vector2 const& p) {
     transform->setPosition(p);

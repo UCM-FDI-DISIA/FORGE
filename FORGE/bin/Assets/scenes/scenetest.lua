@@ -12,7 +12,6 @@ local prefabs = {
                    "Walk"
                 }
             },
-            TestComponent = 0,
             AudioSource = {
                 sound = "Test",
                 playOnAwake = true
@@ -86,14 +85,27 @@ local scenes = {
                 }
             }
         },
-        texto = {
+        texto1 = {
             components = {
                 RectTransform = {
                     position = {0, 0},
                     scale = {5, 5}
                 },
                 Text = {
-                    text = "texto",
+                    text = "texto1",
+                    fontName = "Willow.ttf",
+                    fontHeight = 100
+                }
+            }
+        },
+        texto2 = {
+            components = {
+                RectTransform = {
+                    position = {0, 400},
+                    scale = {5, 5}
+                },
+                Text = {
+                    text = "texto2",
                     fontName = "Willow.ttf",
                     fontHeight = 100
                 }
@@ -102,7 +114,7 @@ local scenes = {
         imagen1 = {
             components = {
                 RectTransform = {
-                    position = {100, 100},
+                    position = {20, 100},
                     scale = {200, 200}
                 },
                 Image = {
@@ -114,12 +126,25 @@ local scenes = {
         imagen2 = {
             components = {
                 RectTransform = {
-                    position = {300, 100},
+                    position = {420, 100},
+                    scale = {200, 300}
+                },
+                Image = {
+                    depth = 1,
+                    texture = "dinocat.png"
+                }
+            }
+        },
+        imagen3 = {
+            components = {
+                RectTransform = {
+                    position = {220, 100},
                     scale = {200, 200}
                 },
                 Image = {
-                    depth = 3,
-                    texture = "dinocat.png"
+                    depth = 2,
+                    id = "imagen3",
+                    texture = "dinoocat.png"
                 }
             }
         }

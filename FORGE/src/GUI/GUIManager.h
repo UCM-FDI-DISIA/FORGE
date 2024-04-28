@@ -105,6 +105,18 @@ public:
 	/// <returns>True si la fuente ya esta anadida, false si no lo esta</returns>
 	bool hasFont(std::string font);
 
+	/// <summary>
+	/// Inserta un recurso en el conjunto de recursos
+	/// </summary>	
+	/// <returns>True si lo ha podido introducir, false si esta repetido</returns>
+	bool addResource(std::string resource);
+
+	/// <summary>
+	/// Devuelve si tiene el recurso o no
+	/// </summary>	
+	/// <returns>True si lo tiene, false si no</returns>
+	bool hasResource(std::string resource);
+
 	#pragma region Getters
 	/// <summary>
 	/// Devuelve la fuente consultada
@@ -135,12 +147,6 @@ public:
 	/// </summary>	
 	/// <returns>El manager de materiales</returns>
 	Ogre::MaterialManager* getMaterialManager();
-
-	/// <summary>
-	/// Devuelve el manager de recursos
-	/// </summary>	
-	/// <returns>El manager de recursos</returns>
-	Ogre::ResourceGroupManager* getResourceManager();
 
 	/// <summary>
 	/// Devuelve el conjunto desordenado de identificadores guardados

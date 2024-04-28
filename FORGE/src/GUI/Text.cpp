@@ -111,7 +111,7 @@ void Text::setPosition(forge::Vector2 const& newPosition) {
 
 void Text::setHeight(int fHeight) {
     fontHeight = fHeight;
-    textAreaOverlay->setCharHeight(fHeight);
+    textAreaOverlay->setCharHeight(Ogre::Real(fHeight));
 }
 
 void Text::setFont(std::string const& fontName_) {

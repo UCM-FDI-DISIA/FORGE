@@ -8,6 +8,7 @@
 #include <OgreTexture.h>
 #include <OgreMaterialManager.h>
 #include <OgreTechnique.h>
+#include <OgreException.h>
 #pragma warning(pop)
 #include "Serializer.h"
 #include "RectTransform.h"
@@ -15,6 +16,40 @@
 #include "Vector2.h"
 
 const std::string Image::id = "Image";
+
+void Image::createImage() {
+	createPanel();
+	overlayPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
+	overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
+	setMaterial(texture);
+	createOverlay(zOrder);
+}
+
+void Image::destroyImage() {
+	// Destruye de menor a mayor (material < textura < imagen < panel < Overlay)
+	gui->getMaterialManager()->remove(texture);
+	gui->getTextureManager()->remove(texture);
+	imageSource->freeMemory();
+	destroyPanel();
+	destroyOverlay();
+	imageSource = nullptr;
+}
+
+void Image::createTextureAndMaterialFromImage() {
+	// Cargar imagen
+	imageSource = new Ogre::Image();
+	imageSource->load(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	// Cargar textura a partir de la imagen
+	gui->getTextureManager()->create(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	// Cargar material a partir de la textura
+	gui->getMaterialManager()->create(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
+		->getTechnique(0)->getPass(0)->createTextureUnitState(texture);
+
+	// Anadir al registro
+	gui->addResource(texture);
+}
 
 Image::Image() : UIComponent(),
 	imageSource(nullptr),
@@ -28,32 +63,18 @@ Image::~Image() {
 
 bool Image::initComponent(ComponentData* data) {
 	if (UIComponent::initComponent(data)) {
-		
-		createPanel();
-		
-		setMaterial(texture);
-
-		createOverlay(zOrder);
-
+		createImage();
 		return true;
 	}
 	return false;
 }
 
-void Image::update() {
-	
+void Image::onEnabled() {
+	createImage();
 }
 
-void Image::createTextureAndMaterialFromImage() {
-	imageSource = new Ogre::Image();
-	imageSource->load(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	
-	gui->getTextureManager()->create(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);	
-
-	gui->getMaterialManager()->create(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
-		->getTechnique(0)->getPass(0)->createTextureUnitState(texture);
-	
-	gui->getResourceRegistry().insert(texture);
+void Image::onDisabled() {
+	destroyImage();
 }
 
 forge::Vector2 Image::getSourceSize() {
@@ -82,10 +103,23 @@ unsigned int Image::getHeight() {
 
 void Image::setMaterial(std::string const& mat) {
 	texture = mat;
-	if (gui->getResourceRegistry().count(mat) != 0) {
+	try {
+		// Si la imagen no esta cargada...
+		if (!gui->hasResource(mat)) {
+			// ...la cargo
+			createTextureAndMaterialFromImage();
+		}
+		// Y la asigno
 		overlayPanel->setMaterialName(mat);
 	}
-	else { //ESTO NO VA -> LET ME COOK QUE LE QUEDA NADA
-		createTextureAndMaterialFromImage();
+	catch (Ogre::Exception e) {
+		// Si no se pudo cargar la imagen, error...
+		std::cerr << "ERROR: No se pudo cargar la textura '" << texture << "'.\n";
+		// Asigno la default, cargandola si no lo estaba
+		texture = "default.png";
+		if (!gui->hasResource(mat)) {
+			createTextureAndMaterialFromImage();
+		}
+		overlayPanel->setMaterialName(mat);
 	}
 }

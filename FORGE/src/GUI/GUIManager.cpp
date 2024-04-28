@@ -70,6 +70,16 @@ bool GUIManager::hasFont(std::string font) {
 	return fonts.find(font) != fonts.end();
 }
 
+bool GUIManager::addResource(std::string resource) {
+	int resourceSize = resourceRegistry.size();
+	resourceRegistry.insert(resource);
+	return resourceSize != resourceRegistry.size();
+}
+
+bool GUIManager::hasResource(std::string resource) {
+	return resourceRegistry.count(resource);
+}
+
 bool GUIManager::update() {
 	return true;
 }
@@ -106,10 +116,6 @@ Ogre::TextureManager* GUIManager::getTextureManager() {
 
 Ogre::MaterialManager* GUIManager::getMaterialManager() {
 	return materialManager;
-}
-
-Ogre::ResourceGroupManager* GUIManager::getResourceManager() {
-	return resourceGroupManager;
 }
 
 std::unordered_set<std::string> GUIManager::getIds() {
