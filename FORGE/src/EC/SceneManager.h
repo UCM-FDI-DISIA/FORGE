@@ -5,11 +5,13 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include "Vector3.h"
 #include "ForgeExport.h"
 
 struct EntityData;
 class Scene;
 class Entity;
+class Transform;
 struct lua_State;
 
 class SceneManager {
@@ -60,6 +62,26 @@ public:
 	/// </summary>
 	/// <returns>Puntero al lua_State guardado o nullptr si no se a inicializado</returns>
 	FORGE_API lua_State* getLuaState();
+	/// <summary>
+	/// Instancia un blueprint en escena
+	/// </summary>
+	/// <param name="bluePrintId">Identificador del blueprint</param>
+	/// <returns></returns>
+	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId);
+	/// <summary>
+	/// Instancia un blueprint en escena en la posicion indicada
+	/// </summary>
+	/// <param name="bluePrintId">Identificador del blueprint</param>
+	/// <param name="newPos">Posicion para el blueprint</param>
+	/// <returns></returns>
+	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId, forge::Vector3 newPos);
+	/// <summary>
+	/// Instancia un blueprint en escena en la posicion indicada
+	/// </summary>
+	/// <param name="bluePrintId">Identificador del blueprint</param>
+	/// <param name="parent">Entidad padre del blueprint instanciado</param>
+	/// <returns></returns>
+	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId, Entity* parent);
 	/// <summary>
 	/// Cambia la escena activa a una con el identificador del parametro
 	/// Si no hay ninguna cargada en memoria la crea a traves de su blueprint

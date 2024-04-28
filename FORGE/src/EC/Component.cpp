@@ -1,11 +1,13 @@
 ﻿#include "Component.h"
 #include "Serializer.h"
+#include "SceneManager.h"
 
 Component::Component() : 
     entity(nullptr),
     scene(nullptr),
     enabled(false),
-    serializer(*(new Serializer())) {
+    serializer(*(new Serializer())),
+    sceneManager(*SceneManager::GetInstance()){
 }
 
 Component::~Component() {

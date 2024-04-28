@@ -74,6 +74,9 @@ void TestComponent::update() {
 	if (input.keyDown(K_P)) {
 		audio->restart();
 	}
+	if (input.keyDown(K_O)) {
+		sceneManager->instantiateBlueprint("obstaculo", entity);
+	}
 	if (input.keyDown(K_W)) {
 		//transform->setPositionZ(transform->getPosition().getZ() + movement);
 		rigidBody->setPositionZ(transform->getPosition().getZ() + movement);

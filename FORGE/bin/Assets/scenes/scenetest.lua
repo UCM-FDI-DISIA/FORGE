@@ -26,6 +26,18 @@ local prefabs = {
                 layer = "ALL"
             }
         }
+    },
+    obstaculo = {
+        group = "obstacle",
+        components = {
+            Transform = {
+                position = {100, 0, -100},
+            },
+            ParticleSystem = {
+                particle = "Examples/Smoke",
+                emitting = true
+            }
+        }
     }
 }
 
@@ -33,21 +45,6 @@ local scenes = {
     Test = {
         jugador = {
             blueprint = "player",
-            children = {
-                obstaculo = {
-                    group = "obstacle",
-                    components = {
-                        Transform = {
-                            position = {100, 0, -100},
-                            scale = {10, 10, 10}
-                        },
-                        ParticleSystem = {
-                            particle = "Examples/Smoke",
-                            emitting = true
-                        }
-                    }
-                }
-            }
         },
         cam = {
             components = {

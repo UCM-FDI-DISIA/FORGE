@@ -9,6 +9,7 @@
 class Entity;
 class Scene;
 class ComponentData;
+class SceneManager;
 
 class Component {
 private:
@@ -19,6 +20,7 @@ protected:
 	Serializer& serializer;
 	Entity* entity;
 	Scene* scene;
+	SceneManager& sceneManager;
 
 public:
 	/// <summary>
