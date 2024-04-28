@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "DebugMode.h"
 #include "Collider.h"
+#include "ContactCallback.h"
 
 #define BIT(x) (1<<(x))
 
@@ -121,7 +122,7 @@ void PhysicsManager::handleCollisions() {
                     auxTransformB->second->getEntity()->getComponent<Collider>()->onCollision(auxTransformA->second->getEntity());
                 }
                 else {
-                    auxTransformB->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformB->second->getEntity());
+                    auxTransformB->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformA->second->getEntity());
                 }
             }
         }
@@ -195,4 +196,10 @@ void PhysicsManager::setCollideWith(const std::string layer, const std::vector<s
                 collisionMatrix[aux][layer] = true;
         }
     }
+}
+
+bool PhysicsManager::checkContact(btRigidBody* body1, btRigidBody* body2) {
+    ContactCallback callback;
+    world->contactPairTest(body1, body2, callback);
+    return callback.m_contacting;
 }

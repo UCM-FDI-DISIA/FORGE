@@ -165,7 +165,17 @@ void Collider::onCollision(Entity* other) {
 void Collider::checkCollisionEnd() {
     std::list<Entity*> toDelete;
     for (auto entity : collidedEntities) {
-        if (!hasCollidedWith(entity)) {
+        btRigidBody* otherBody = nullptr;
+        
+        if (entity->hasComponent<RigidBody>()) {
+            otherBody = entity->getComponent<RigidBody>()->getBody();
+        }
+        else if (entity->hasComponent<Collider>()) {
+            otherBody = entity->getComponent<Collider>()->getBody();
+        } //Si no tiene ningun componente de colision, algo va MUY MAL
+
+
+        if (!physicsManager->checkContact(myBody, otherBody)) {
             for (auto cb : oncollisionLeaveCallbacks) {
 				cb(this, entity->getComponent<Collider>());
 			}

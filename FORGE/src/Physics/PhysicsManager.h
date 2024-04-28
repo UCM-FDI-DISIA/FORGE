@@ -116,4 +116,7 @@ public:
     bool addLayer(const std::string layerName);
 
     void setCollideWith(const std::string layer, const std::vector<std::string>& layersToCollide);
+
+
+    bool checkContact(btRigidBody* body1, btRigidBody* body2);
 };
