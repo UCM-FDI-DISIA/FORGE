@@ -201,5 +201,5 @@ void PhysicsManager::setCollideWith(const std::string layer, const std::vector<s
 bool PhysicsManager::checkContact(btRigidBody* body1, btRigidBody* body2) {
     ContactCallback callback;
     world->contactPairTest(body1, body2, callback);
-    return callback.m_contacting;
+    return callback.isContacting;
 }
