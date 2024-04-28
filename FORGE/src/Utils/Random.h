@@ -25,27 +25,27 @@ namespace forge {
 		/// </summary>
 		/// <param name="t">Limite superior del intervalo</param>
 		/// <returns>Numero aleatorio (float)</returns>
-		float generate(double t);
+		FORGE_API float generate(double t);
 		/// <summary>
 		/// Genera un numero aleatorio en el intervalo (0,t)
 		/// </summary>
 		/// <param name="t">Limite superior del intervalo</param>
 		/// <returns>Numero aleatorio (int)</returns>
-		int generate(int t);
+		FORGE_API int generate(int t);
 		/// <summary>
 		/// Genera un numero aleatorio en el intervalo (a,b)
 		/// </summary>
 		/// <param name="a">Limite inferior del intervalo</param>
 		/// <param name="b">Limite superior del intervalo</param>
 		/// <returns>Numero aleatorio (float)</returns>
-		float generateRange(float a, float b);
+		FORGE_API float generateRange(float a, float b);
 		/// <summary>
 		/// Genera un numero aleatorio en el intervalo (a,b)
 		/// </summary>
 		/// <param name="a">Limite inferior del intervalo</param>
 		/// <param name="b">Limite superior del intervalo</param>
 		/// <returns>Numero aleatorio (int)</returns>
-		int generateRange(int a, int b);
+		FORGE_API int generateRange(int a, int b);
 		#pragma endregion
 
 		#pragma region Estructuras de FORGE aleatorias
@@ -53,12 +53,12 @@ namespace forge {
 		/// Genera un Vector3 aleatorio con valores normalizados
 		/// </summary>
 		/// <returns>Vector3 normalizado</returns>
-		Vector3 getRandomVector();
+		FORGE_API Vector3 getRandomVector();
 		/// <summary>
 		///  Genera un Quaternion aleatorio con valores normalizados
 		/// </summary>
 		/// <returns>Quaternion</returns>
-		Quaternion getRandomQuaternion();
+		FORGE_API Quaternion getRandomQuaternion();
 		#pragma endregion
 	};
 }
