@@ -154,6 +154,21 @@ void Transform::setChildNeedsUpdate(bool needed) {
 	}
 }
 
+FORGE_API void Transform::lookAt(forge::Vector3 pos) {
+	forge::Vector3 desiredVector = pos - position;
+	desiredVector.normalize();
+	Quaternion q;
+	// Calculamos el producto vectorial y el escalar
+	forge::Vector3 a = getForward().cross(desiredVector);
+	float dot = getForward().dot(desiredVector);
+	q.setX(a.getX());
+	q.setY(a.getY());
+	q.setZ(a.getZ());
+	q.setAngle(1+dot);
+	q.normalize();
+	setRotation(q);
+}
+
 forge::Quaternion const& Transform::getRotation() const {
 	return rotation;
 }
@@ -206,13 +221,13 @@ bool Transform::getNeedsUpdate() const {
 }
 
 forge::Vector3 Transform::getForward() const {
-	return getGlobalRotation() * Vector3::FORWARD;
+	return (getGlobalRotation() * Vector3::FORWARD).normalize();
 }
 
 forge::Vector3 Transform::getUp() const {
-	return getGlobalRotation() * Vector3::UP;
+	return (getGlobalRotation() * Vector3::UP).normalize();
 }
 
 forge::Vector3 Transform::getRight() const {
-	return getGlobalRotation() * Vector3::RIGHT;
+	return (getGlobalRotation() * Vector3::RIGHT).normalize();
 }

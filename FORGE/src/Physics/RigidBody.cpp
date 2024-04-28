@@ -12,13 +12,15 @@ RigidBody::RigidBody() :
       mass(0)
     , kinematic(false), friction(0), restitution(0)
     , staticBody(false), myGravity(FLT_MAX, FLT_MAX, FLT_MAX) {
-    axisBlocked = std::vector<bool>(6, false);
+    axisBlockedPos = std::vector<bool>(3, false);
+    axisBlockedRot = std::vector<bool>(3, false);
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");
     serializer(staticBody, "static");
     serializer(myGravity, "gravity");
-    serializer(axisBlocked, "axisBlocked");
+    serializer(axisBlockedPos, "axisBlockedPos");
+    serializer(axisBlockedRot, "axisBlockedRot");
 }
 
 
@@ -66,6 +68,14 @@ void RigidBody::createRigidBody(std::string myShapeType) {
 
         btQuaternion quat = forQuat.operator btQuaternion();
         btVector3 vect = forVect.operator btVector3();
+        Transform* aux = entity->getComponent<Transform>();
+        if (aux != nullptr) {
+            forQuat = aux->getRotation();
+            forVect = aux->getGlobalPosition();
+        }
+        else {
+            std::cerr << "ERROR: No se pudo acceder al Transform desde el Collider\n";
+        }
 
         btVector3 bodyInertia;
         getShape()->calculateLocalInertia(getMass(), bodyInertia);
@@ -85,8 +95,8 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         physicsManager->registerBody(myBody, entity->getComponent<Transform>(),(collisionLayer=="")? "ALL" : collisionLayer);
         myBody->setRestitution((btScalar)restitution);
         myBody->setFriction((btScalar)friction);
-        lockPosition(axisBlocked[0], axisBlocked[1], axisBlocked[2]);
-        lockRotation(axisBlocked[3], axisBlocked[4], axisBlocked[5]);
+        lockPosition(axisBlockedPos[0], axisBlockedPos[1], axisBlockedPos[2]);
+        lockRotation(axisBlockedRot[0], axisBlockedRot[1], axisBlockedRot[2]);
         if (myGravity != forge::Vector3(FLT_MAX, FLT_MAX, FLT_MAX)) {
             myBody->setGravity(myGravity);
         }
@@ -107,20 +117,20 @@ void RigidBody::clearForces() {
 }
 
 void RigidBody::lockPosition(bool x, bool y, bool z) {
-    axisBlocked[0] = x;
-    axisBlocked[1] = y;
-    axisBlocked[2] = z;
+    axisBlockedPos[0] = x;
+    axisBlockedPos[1] = y;
+    axisBlockedPos[2] = z;
 
-    btVector3 posConstr = btVector3(!axisBlocked[0], !axisBlocked[1], !axisBlocked[2]);
+    btVector3 posConstr = btVector3(!axisBlockedPos[0], !axisBlockedPos[1], !axisBlockedPos[2]);
     myBody->setLinearFactor(posConstr);
 }
 
 void RigidBody::lockRotation(bool x, bool y, bool z) {
-    axisBlocked[3] = x;
-    axisBlocked[4] = y;
-    axisBlocked[5] = z;
+    axisBlockedRot[0] = x;
+    axisBlockedRot[1] = y;
+    axisBlockedRot[2] = z;
 
-    btVector3 rotConstr = btVector3(!axisBlocked[3], !axisBlocked[4], !axisBlocked[5]);
+    btVector3 rotConstr = btVector3(!axisBlockedRot[0], !axisBlockedRot[1], !axisBlockedRot[2]);
     myBody->setAngularFactor(rotConstr);
 }
 
@@ -250,4 +260,8 @@ btCollisionShape* RigidBody::getShape() {
 
 forge::Vector3 RigidBody::getRigidScale() {
     return myScale;
+}
+
+FORGE_API float RigidBody::getSpeed() {
+    return myBody->getTotalForce().length();
 }

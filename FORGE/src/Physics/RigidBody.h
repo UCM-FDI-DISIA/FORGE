@@ -22,7 +22,8 @@ private:
     bool kinematic;
     bool staticBody;
     forge::Vector3 myGravity;
-    std::vector<bool> axisBlocked;
+    std::vector<bool> axisBlockedPos;
+    std::vector<bool> axisBlockedRot;
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -143,6 +144,12 @@ public:
     /// </summary>
     /// <returns>un Vector3 de FORGE con la escala del rigidbody</returns>
     FORGE_API forge::Vector3 getRigidScale();
+
+    /// <summary>
+    /// Devuelve la velocidad (modulo de la fuerza) del cuerpo rigido
+    /// </summary>
+    /// <returns>un float con la velocidad</returns>
+    FORGE_API float getSpeed();
 
     #pragma endregion
 };
