@@ -74,7 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_FORGE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Input\;$(SolutionDir)src\EC\;$(SolutionDir)src\Load\;$(SolutionDir)src\Audio\;$(SolutionDir)src\Physics\;$(SolutionDir)src\GUI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
