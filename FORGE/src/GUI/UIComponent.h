@@ -68,6 +68,11 @@ public:
     /// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
     bool initComponent(ComponentData* data) override;
 
+    /// <summary>
+    /// Update del UIComponent
+    /// </summary>
+    virtual void update();
+
     #pragma region Getters
     /// <summary>
     /// Devuelve el tamaño actual

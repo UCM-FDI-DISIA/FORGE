@@ -53,7 +53,6 @@ void MainForge::manageFixedUpdates() {
 }
 
 void MainForge::update() {
-	guiManager.update();
 	inputManager.update();
 	sceneManager.update();
 	audioManager.update();
@@ -63,7 +62,7 @@ bool MainForge::render() {
 #ifdef _DEBUG
 	physicsManager.drawDebug();
 #endif // _DEBUG
-	return renderManager.render() && guiManager.render();
+	return renderManager.render();
 }
 
 bool MainForge::shutDown() {

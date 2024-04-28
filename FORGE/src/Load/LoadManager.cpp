@@ -30,6 +30,7 @@
 #include "RigidBody.h"
 #include "Text.h"
 #include "Image.h"
+#include "Button.h"
 
 using namespace luabridge;
 
@@ -236,6 +237,7 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<RigidBody>();
 	factory.registerComponent<Text>();
 	factory.registerComponent<Image>();
+	factory.registerComponent<Button>();
 	return gameLoader->registerComponents(factory);
 }
 

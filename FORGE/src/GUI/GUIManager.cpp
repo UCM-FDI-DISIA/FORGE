@@ -99,6 +99,7 @@ void GUIManager::loadFont(std::string font) {
 }
 
 Ogre::Font* GUIManager::getFont(std::string const& fontName) {
+	// return fontManager->getByName(fontName);
 	return nullptr;
 }
 

@@ -62,7 +62,7 @@ public:
     static const FORGE_API_VAR std::string id;
 
     /// <summary>
-    /// Contructora del componente texto
+    /// Contructora del componente Text
     /// </summary>	
     FORGE_API Text();
 

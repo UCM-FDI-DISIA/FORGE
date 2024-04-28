@@ -37,12 +37,17 @@ private:
 	/// </summary>
 	void createTextureAndMaterialFromImage();
 
+	/// <summary>
+	/// Asigna la imagen al Panel, comprobando si debe o no cargarla antes
+	/// </summary>
+	void loadAndAssign();
+
 public:
 	// Id de componente
 	static const FORGE_API_VAR std::string id;
 
 	/// <summary>
-	/// Crea una imagen a partir de un archivo
+	/// Constructora del componente Image
 	/// </summary>	
 	FORGE_API Image();
 
@@ -52,7 +57,7 @@ public:
 	FORGE_API ~Image();
 
 	/// <summary>
-	/// Inicializa el Image con los parametros adecuados
+	/// Inicializa la Image con los parametros adecuados
 	/// </summary>
 	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
 	FORGE_API bool initComponent(ComponentData* data) override;

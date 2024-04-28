@@ -51,14 +51,24 @@ void Image::createTextureAndMaterialFromImage() {
 	gui->addResource(texture);
 }
 
+void Image::loadAndAssign() {
+	// Si la imagen no esta cargada...
+	if (!gui->hasResource(texture)) {
+		// ...la cargo
+		createTextureAndMaterialFromImage();
+	}
+	// Y la asigno
+	overlayPanel->setMaterialName(texture);
+}
+
 Image::Image() : UIComponent(),
 	imageSource(nullptr),
-	texture("def.png") {
+	texture("default.png") {
 	serializer(texture, "texture");
 }
 
 Image::~Image() {
-	
+	if (imageSource != nullptr) destroyImage();
 }
 
 bool Image::initComponent(ComponentData* data) {
@@ -104,22 +114,14 @@ unsigned int Image::getHeight() {
 void Image::setMaterial(std::string const& mat) {
 	texture = mat;
 	try {
-		// Si la imagen no esta cargada...
-		if (!gui->hasResource(mat)) {
-			// ...la cargo
-			createTextureAndMaterialFromImage();
-		}
-		// Y la asigno
-		overlayPanel->setMaterialName(mat);
+		// Intento cargar y asignar la imagen
+		loadAndAssign();
 	}
 	catch (Ogre::Exception e) {
 		// Si no se pudo cargar la imagen, error...
 		std::cerr << "ERROR: No se pudo cargar la textura '" << texture << "'.\n";
-		// Asigno la default, cargandola si no lo estaba
+		// Y cargo y asigno la default
 		texture = "default.png";
-		if (!gui->hasResource(mat)) {
-			createTextureAndMaterialFromImage();
-		}
-		overlayPanel->setMaterialName(mat);
+		loadAndAssign();
 	}
 }

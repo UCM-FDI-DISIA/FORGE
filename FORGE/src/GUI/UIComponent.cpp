@@ -68,6 +68,10 @@ bool UIComponent::initComponent(ComponentData* data) {
     return false;
 }
 
+void UIComponent::update() {
+
+}
+
 //forge::Vector2 UIComponent::getSize() const {
 //	return size;
 //}
