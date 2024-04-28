@@ -9,6 +9,7 @@
 #pragma warning(disable : 26439)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
+#include "Transform.h"
 #include "ForgeError.h"
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
@@ -89,6 +90,30 @@ void SceneManager::setLuaState(lua_State* L) {
 
 lua_State* SceneManager::getLuaState() {
 	return lua;
+}
+
+Entity* SceneManager::instantiateBlueprint(std::string bluePrintId) {
+	EntityData* data = getEntityBlueprint(bluePrintId);
+	if (data == nullptr) {
+		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado.");
+	}
+	Scene*& scene = activeScene.second;
+	Entity* entity = addEntity(scene, data);
+	if (entity->isAlive()) {
+		return entity;
+	}
+	throwError(nullptr, "La entidad no se ha instanciado correctamente.");
+}
+
+Entity* SceneManager::instantiateBlueprint(std::string bluePrintId, forge::Vector3 newPos) {
+	Entity* entity = instantiateBlueprint(bluePrintId);
+	if (entity != nullptr) {
+		if (entity->hasComponent(Transform::id)) {
+			entity->getComponent<Transform>()->setPosition(newPos);
+		}
+		else reportError("La entidad no tiene Transform.");
+	}
+	return entity;
 }
 
 bool SceneManager::changeScene(std::string const& scene, bool renewScene) {

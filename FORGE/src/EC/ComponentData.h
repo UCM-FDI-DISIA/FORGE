@@ -107,7 +107,7 @@ public:
     template <>
     FORGE_API inline forge::Vector2 get<forge::Vector2>(std::string const& param) {
         std::vector<float> input = getter<std::vector<float>>()(*data, param);
-        int i = 0;
+        size_t i = 0;
         for (float& e : input) {
             if (i > 2) break;
             if (std::isinf(e) || input.size() < i + 1) {
@@ -129,7 +129,7 @@ public:
     template <>
     FORGE_API inline forge::Vector3 get<forge::Vector3>(std::string const& param) {
         std::vector<float> input = getter<std::vector<float>>()(*data,param);
-        int i = 0;
+        size_t i = 0;
         for (float& e : input) {
             if (i > 3) break;
             if (std::isinf(e) || input.size() < i + 1) {
@@ -154,7 +154,7 @@ public:
         if (input.size() == 3) {
             return forge::Quaternion(getter<forge::Vector3>()(*data, param));
         }
-        int i = 0;
+        size_t i = 0;
         for (float& e : input) {
             if (i > 4) break;
             if (std::isinf(e) || input.size() < i + 1) {
