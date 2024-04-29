@@ -155,18 +155,9 @@ void Transform::setChildNeedsUpdate(bool needed) {
 }
 
 FORGE_API void Transform::lookAt(forge::Vector3 pos) {
-	forge::Vector3 desiredVector = pos - position;
-	desiredVector.normalize();
-	Quaternion q;
-	// Calculamos el producto vectorial y el escalar
-	forge::Vector3 a = getForward().cross(desiredVector);
-	float dot = getForward().dot(desiredVector);
-	q.setX(a.getX());
-	q.setY(a.getY());
-	q.setZ(a.getZ());
-	q.setAngle(1+dot);
-	q.normalize();
-	setRotation(q);
+	forge::Quaternion q = forge::Quaternion();
+	q.lookTo(pos, position);
+	setRotation(rotation*q);
 }
 
 forge::Quaternion const& Transform::getRotation() const {

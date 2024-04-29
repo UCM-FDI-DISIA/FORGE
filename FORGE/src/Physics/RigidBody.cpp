@@ -9,7 +9,7 @@
 const std::string RigidBody::id = "RigidBody";
 
 RigidBody::RigidBody() :
-      mass(0)
+      mass(1)
     , kinematic(false), friction(0), restitution(0)
     , staticBody(false), myGravity(FLT_MAX, FLT_MAX, FLT_MAX) {
     axisBlockedPos = std::vector<bool>(3, false);
@@ -66,17 +66,16 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
         forge::Vector3 forVect = forge::Vector3(0, 0, 0);
 
-        btQuaternion quat = forQuat.operator btQuaternion();
-        btVector3 vect = forVect.operator btVector3();
         Transform* aux = entity->getComponent<Transform>();
         if (aux != nullptr) {
             forQuat = aux->getRotation();
             forVect = aux->getGlobalPosition();
         }
         else {
-            std::cerr << "ERROR: No se pudo acceder al Transform desde el Collider\n";
+            std::cerr << "ERROR: No se pudo acceder al Transform desde el RigidBody\n";
         }
-
+        btQuaternion quat = forQuat.operator btQuaternion();
+        btVector3 vect = forVect.operator btVector3();
         btVector3 bodyInertia;
         getShape()->calculateLocalInertia(getMass(), bodyInertia);
         btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));

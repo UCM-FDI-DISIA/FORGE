@@ -154,6 +154,13 @@ namespace forge {
 		FORGE_API void setAngle(float newAngle);
 
 		/// <summary>
+		/// Consigue un cuaternion para mirar de una posición a otro punto
+		/// </summary>
+		/// <param name="lookTo">Punto a mirar</param>
+		/// <param name="pos">Posición actual</param> 
+		FORGE_API void lookTo(forge::Vector3 lookTo, forge::Vector3 pos);
+
+		/// <summary>
 		/// Asigna nuevos valores al cuaternion
 		/// </summary>
 		/// <param name="newX">Valor del par-rotacion en el eje X</param>

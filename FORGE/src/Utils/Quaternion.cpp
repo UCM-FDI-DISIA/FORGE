@@ -170,6 +170,63 @@ void Quaternion::setAngle(float newAngle) {
 	z = (z / prevSin) * newSin;
 }
 
+FORGE_API void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
+	forge::Vector3 forward = pos - lookTo;
+	forward.normalize();
+	forge::Vector3 right = forge::Vector3(0, 1, 0).cross(forward);
+	right.normalize();
+	forge::Vector3 up = forward.cross(right);
+	up.normalize();
+	float _w = 0;
+	float _x = 0;
+	float _y = 0;
+	float _z = 0;
+
+	float trace = right.getX() + up.getY() + forward.getZ(); // I removed + 1.0f; see discussion with Ethan
+	if (trace > 0) {// I changed M_EPSILON to 0
+		float s = 0.5f / sqrtf(trace + 1.0f);
+		_w = 0.25f / s;
+		_x = (forward.getY() - up.getZ()) * s;
+		_y = (right.getZ() - forward.getX()) * s;
+		_z = (up.getX() - right.getY()) * s;
+	}
+	else {
+		if (right.getX() > up.getY() && right.getX() > forward.getZ()) {
+			float s = 2.0f * sqrtf(1.0f + right.getX() + up.getY() + forward.getZ());
+			_w = (forward.getY() - up.getZ()) / s;
+			_x = 0.25f * s;
+			_y = (right.getY() + up.getX()) / s;
+			_z = (right.getZ() + forward.getX()) / s;
+		}
+		else if (up.getY() > forward.getZ()) {
+			float s = 2.0f * sqrtf(1.0f + up.getY() - right.getX() - forward.getZ());
+			_w = (right.getZ() - forward.getX()) / s;
+			_x = (right.getY() + up.getX()) / s;
+			_y = 0.25f * s;
+			_z = (up.getZ() + forward.getY()) / s;
+		}
+		else {
+			float s = 2.0f * sqrtf(1.0f + forward.getZ() - right.getX() - up.getY());
+			_w = (up.getX() - right.getY()) / s;
+			_x = (right.getZ() + forward.getX()) / s;
+			_y = (up.getZ() + forward.getY()) / s;
+			_z = 0.25f * s;
+		}
+	}
+
+	//float _w = sqrt(std::max(0.0f, 1 + right.getX() + up.getY() + forward.getZ())) / 2;
+	//float _x = sqrt(std::max(0.0f, 1 + right.getX() - up.getY() - forward.getZ())) / 2;
+	//float _y = sqrt(std::max(0.0f, 1 - right.getX() + up.getY() - forward.getZ())) / 2;
+	//float _z = sqrt(std::max(0.0f, 1 - right.getX() - up.getY() + forward.getZ())) / 2;
+	//_x = _copysign(_x, (forward.getY() - up.getZ()));
+	//_y = _copysign(_y, (right.getZ() - forward.getX()));
+	//_z = _copysign(_z, (up.getX() - right.getY()));
+	x = _x;
+	y = _y;
+	z = _z;
+	w = _w;
+}
+
 void Quaternion::set(float newX, float newY, float newZ, float newAngle) {
 	float sinWHalf = sinf(newAngle / 2.0f);
 	x = newX * sinWHalf;
