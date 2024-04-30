@@ -182,7 +182,7 @@ void RigidBody::setRigidScale(float radius, float height) {
     }
 }
 
-FORGE_API void RigidBody::setPosition(forge::Vector3 vect) {
+void RigidBody::setPosition(forge::Vector3 vect) {
     btTransform trans;
     btTransform prevTransform = myBody->getWorldTransform();
     trans.setOrigin(btVector3(vect.getX(), vect.getY(), vect.getZ()));

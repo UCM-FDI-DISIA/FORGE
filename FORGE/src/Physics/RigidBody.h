@@ -52,7 +52,6 @@ public:
     FORGE_API void clearForces();
 
     #pragma region setters
-
     /// <summary>
     /// Añade bloqueos para evitar movimiento en los ejes
     /// </summary>
@@ -60,7 +59,6 @@ public:
     /// <param name="y :">True significa bloqueo en el eje</param>
     /// <param name="z :">True significa bloqueo en el eje</param>
     FORGE_API void lockPosition(bool x, bool y, bool z);
-
     /// <summary>
     /// Añade bloqueos para evitar rotación en los ejes
     /// </summary>
@@ -68,36 +66,35 @@ public:
     /// <param name="y :">True significa bloqueo en el eje</param>
     /// <param name="z :">True significa bloqueo en el eje</param>
     FORGE_API void lockRotation(bool x, bool y, bool z);
-
     /// <summary>
     /// Cambia la friccion del objeto
     /// </summary>
     FORGE_API void setFriction(float newFriction);
-
     /// <summary>
     /// Cambia la constante de restitucion
     /// </summary>
     FORGE_API void setRestitution(float newRestitution);
-
     /// <summary>
     /// Actualiza el tamaño del cuerpo para cubos y cilindros
     /// </summary>
     /// <param name="scale">Tamaño nuevo en x,y,z para el cuerpo</param>
     FORGE_API void setRigidScale(forge::Vector3 scale);
-
     /// <summary>
     /// Actualiza el tamaño del cuerpo para esferas
     /// </summary>
     /// <param name="radius">Radio nuevo para la bola</param>
     FORGE_API void setRigidScale(float radius);
-
     /// <summary>
     /// Actualiza el tamaño del cuerpo para capsulas
     /// </summary>
     /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
     /// <param name="height">Altura nueva par ala capsula</param>
     FORGE_API void setRigidScale(float radius, float height);
-
+    /// <summary>
+    /// TODO comentarlo vosotros
+    /// </summary>
+    /// <param name="vect"></param>
+    FORGE_API void setPosition(forge::Vector3 vect);
     /// <summary>
     /// Cambia la posicion en x por el nuevo valor
     /// </summary>

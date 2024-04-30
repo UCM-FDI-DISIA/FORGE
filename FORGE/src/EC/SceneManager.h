@@ -12,6 +12,7 @@ struct EntityData;
 class Scene;
 class Entity;
 class Transform;
+class ComponentData;
 struct lua_State;
 
 class SceneManager {
@@ -32,6 +33,7 @@ private:
     SceneManager();
 
 	Entity* addEntity(Scene* scene, EntityData* data);
+	Entity* initEntity(Entity* entity, std::vector<ComponentData*> componentData);
 
 public:
 	/// <summary>

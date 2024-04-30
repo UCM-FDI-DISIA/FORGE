@@ -33,6 +33,9 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	for (auto& componentData : data->components) {
 		if (componentData != nullptr) {
 			Component* component = entity->addComponent(componentData->getId());
+			if (component == nullptr) {
+				entity->setAlive(false);
+			}
 		}
 	}
 	for (auto& childData : data->children) {
@@ -44,13 +47,16 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 			entity->addChild(child);
 		}
 	}
-	if (!entity->initSerializedComponents(data->components)) {
-		entity->setAlive(false);
-	}
-	if (!entity->initComponents(data->components)) {
-		entity->setAlive(false);
-	}
+	return entity;
+}
 
+Entity* SceneManager::initEntity(Entity* entity, std::vector<ComponentData*> componentData) {
+	if (!entity->initSerializedComponents(componentData)) {
+		entity->setAlive(false);
+	}
+	if (!entity->initComponents(componentData)) {
+		entity->setAlive(false);
+	}
 	return entity;
 }
 
@@ -100,7 +106,10 @@ Entity* SceneManager::instantiateBlueprint(std::string bluePrintId) {
 	Scene*& scene = activeScene.second;
 	Entity* entity = addEntity(scene, data);
 	if (entity->isAlive()) {
-		return entity;
+		initEntity(entity, data->components);
+		if (entity->isAlive()) {
+			return entity;
+		}
 	}
 	throwError(nullptr, "La entidad no se ha instanciado correctamente.");
 }
@@ -165,15 +174,23 @@ void SceneManager::removeScene(std::string const& id) {
 }
 
 Scene* SceneManager::createScene(std::string const& id) {
+	std::unordered_map<Entity*, std::vector<ComponentData*>> initData;
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
 		throwError(nullptr, "Si una escena no aparece en los archivos, no existe.");
 	}
 	Scene* newScene = new Scene();
-	for (EntityData* entity : iter->second) {
-		if (!addEntity(newScene, entity)->isAlive()) {
+	for (EntityData* entityData : iter->second) {
+		Entity* entity = addEntity(newScene, entityData);
+		if (!entity->isAlive()) {
 			reportError("No se ha podido crear la entidad.");
 		}
+		else {
+			initData.insert({ entity,entityData->components });
+		}
+	}
+	for (auto& initPair : initData) {
+		initEntity(initPair.first, initPair.second);
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;
