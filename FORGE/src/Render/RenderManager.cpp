@@ -31,6 +31,7 @@
 #include "ParticleSystem.h"
 #include "Billboard.h"
 #include "ForgeError.h"
+#include "Vector2.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 bool RenderManager::initialised = false;
@@ -248,8 +249,17 @@ void RenderManager::removeCamera(Ogre::Camera* camera) {
 	transforms.erase(node);
 }
 
+void RenderManager::resizeWindow() {
+	forge->getWindow().render->windowMovedOrResized();
+}
+
 Ogre::SceneManager* RenderManager::getSceneManager() {
 	return sceneManager;
+}
+
+forge::Vector2 RenderManager::getResolution() {
+	auto renderer = forge->getWindow().render;
+	return forge::Vector2(renderer->getWidth(), renderer->getHeight());
 }
 
 Ogre::ManualObject* RenderManager::createManualObject(std::string name) {

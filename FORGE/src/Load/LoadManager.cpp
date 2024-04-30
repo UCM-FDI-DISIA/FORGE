@@ -6,13 +6,13 @@
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 #include "LuaForge.h"
+#include "EntityData.h"
 #include "GameLoader.h"
 #include "AudioManager.h"
 #include "SceneManager.h"
-#include "EntityData.h"
-#include "ComponentData.h"
 #include "RenderManager.h"
 #include "PhysicsManager.h"
+#include "ComponentData.h"
 #include "GUIManager.h"
 #include "ForgeError.h"
 #include "Factory.h"

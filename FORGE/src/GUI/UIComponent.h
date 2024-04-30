@@ -73,13 +73,12 @@ public:
     /// </summary>
     virtual void update();
 
-    #pragma region Getters
     /// <summary>
-    /// Devuelve el tamaño actual
-    /// </summary>	
-    /// <returns>El tamaño actual</returns>
-    //FORGE_API forge::Vector2 getSize() const;
+    /// Ajusta el UIComponent al nuevo ajuste de la ventana
+    /// </summary>
+    virtual void resize();
 
+    #pragma region Getters
     /// <summary>
     /// Devuelve la posicion actual
     /// </summary>	
@@ -93,12 +92,6 @@ public:
     /// </summary>
     /// <param name="newPosition">La nueva posicion del componente</param>
     virtual FORGE_API void setPosition(forge::Vector2 const& p);
-
-    /// <summary>
-    /// Asigna un tamaño
-    /// </summary>	
-    /// <param name="data"> Tamaño a asignar</param>
-    //virtual FORGE_API void setSize(forge::Vector2 const& s);
 
     /// <summary>
     /// Devuelve el texto

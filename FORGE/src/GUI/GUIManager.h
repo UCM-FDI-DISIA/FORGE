@@ -23,6 +23,7 @@ namespace forge {
 }
 
 class RenderManager;
+class UIComponent;
 
 class GUIManager {
 private:
@@ -34,6 +35,9 @@ private:
 
 	// Conjunto desordenado de identificadores 
 	std::unordered_set<std::string> ids;
+
+	// Conjunto desordenado de elementos de UI
+	std::unordered_set<UIComponent*> canvas;
 
 	// Conjunto desordenado de recursos
 	std::unordered_set<std::string> resourceRegistry;
@@ -49,7 +53,7 @@ private:
 	// Manager de renderizado
 	RenderManager* renderManager;
 
-	//Generadores de nombres aleatorios
+	// Generadores de nombres aleatorios
 	Ogre::NameGenerator* overlayNames;
 
 	/// <summary>
@@ -87,11 +91,6 @@ public:
 	bool update();
 
 	/// <summary>
-	/// Renderizado
-	/// </summary>	
-	bool render();
-
-	/// <summary>
 	/// Carga una fuente en el manager de la interfaz (OverlayManager)
 	/// </summary>
 	/// <param name="font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
@@ -122,6 +121,22 @@ public:
 	/// Elimina un recurso en el conjunto de recursos
 	/// </summary>
 	void deleteResource(std::string resource);
+
+	/// <summary>
+	/// Inserta un elemento del canvas (UIComponent) en el conjunto de recursos
+	/// </summary>	
+	/// <returns>True si lo ha podido introducir, false si esta repetido</returns>
+	bool addCanvasElement(UIComponent* uic);
+
+	/// <summary>
+	/// Elimina un elemento del canvas (UIComponent) en el conjunto de recursos
+	/// </summary>
+	void deleteCanvasElement(UIComponent* uic);
+
+	/// <summary>
+	/// Actualiza la posicion de los elementos de la interfaz
+	/// </summary>
+	void resizeWindow();
 
 	#pragma region Getters
 	/// <summary>
@@ -165,12 +180,6 @@ public:
 	/// </summary>
 	/// <returns>El nombre generado por el generador de nombres de Ogre</returns>
 	std::string getRandomName();
-
-	/// <summary>
-	/// Devuelve el conjunto desordenado de recursos guardados
-	/// </summary>	
-	/// <returns>El conjunto desordenado de recursos guardados</returns>
-	std::unordered_set<std::string> getResourceRegistry();
 	#pragma endregion
 
 	#pragma region Setters

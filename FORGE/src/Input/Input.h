@@ -93,12 +93,14 @@ private:
 	bool mouseWheelDown;
 	std::array<bool, 3> mouseButtons;
 
+	// Marcadores
 	bool isControllerButtonDownEvent;
 	bool isControllerButtonUpEvent;
 	bool isControllerAxisMotionEvent;
 	bool isControllerDeviceAddedEvent;
 	bool isControllerDeviceRemovedEvent;
 	bool isWindowCloseEvent;
+	bool isWindowResizeEvent;
 
 	/// <summary>
 	/// Traduccion de KeyNames a SDL_Scancodes, el numero es la cantidad de teclas mapeadas (constante de KeyNames.h).
@@ -185,8 +187,22 @@ private:
 	/// <returns>El estado del evento</returns>
 	bool controllerAxisMotionEvent();
 	
+	/// <summary>
+	/// Procesa los eventos de ventana
+	/// </summary>
+	/// <param name="event">Evento al que reaccionar</param>
 	void onWindowEvent(const SDL_Event& event);
+
+	/// <summary>
+	/// Marca que se ha cerrado la ventana
+	/// </summary>
 	void onWindowClose();
+
+	/// <summary>
+	/// Marca que se ha reajustado la ventana
+	/// </summary>
+	void onWindowResize();
+
 public:
 	/// <summary>
 	/// Crea el gestor de entrada
@@ -289,6 +305,14 @@ public:
 	/// </summary>
 	FORGE_API bool isControllerConnected();
 
+	/// <summary>
+	/// Devuelve si se ha cerrado la ventana
+	/// </summary>
 	FORGE_API bool isWindowClosed();
+
+	/// <summary>
+	/// Devuelve si se ha reajustado la ventana
+	/// </summary>
+	FORGE_API bool isWindowResized();
 };
 #endif // !INPUT_H_

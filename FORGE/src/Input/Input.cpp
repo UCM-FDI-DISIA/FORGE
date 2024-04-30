@@ -72,25 +72,35 @@ bool Input::controllerDeviceRemovedEvent() {
 void Input::onControllerButtonDown(const SDL_Event& event) {
 	isControllerButtonDownEvent = true;
 }
+
 void Input::onControllerButtonUp(const SDL_Event& event) {
 	isControllerButtonUpEvent = true;
 }
+
 void Input::onControllerAxisMotion(const SDL_Event& event) {
 	isControllerAxisMotionEvent = true;
 }
+
 void Input::onWindowEvent(const SDL_Event& event) {
 	switch (event.window.event) {
 		case SDL_WINDOWEVENT_CLOSE:
 			onWindowClose();
 			break;
+		case SDL_WINDOWEVENT_RESIZED:
+			onWindowResize();
+			break;
 		default:
 			break;
 	}
 }
+
 void Input::onWindowClose() {
 	isWindowCloseEvent = true;
 }
 
+void Input::onWindowResize() {
+	isWindowResizeEvent = true;
+}
 
 Input::Input() :
 	#define UINT(SCNCD) static_cast<unsigned int>(SCNCD)
@@ -190,6 +200,7 @@ void Input::setDefaultState() {
 	isControllerButtonUpEvent = false;
 	isControllerAxisMotionEvent = false;
 	isWindowCloseEvent = false;
+	isWindowResizeEvent = false;
 }
 
 bool Input::keyDown(KeyNames k) {
@@ -265,4 +276,8 @@ bool Input::isControllerConnected() {
 
 bool Input::isWindowClosed() {
 	return isWindowCloseEvent;
+}
+
+bool Input::isWindowResized() {
+	return isWindowResizeEvent;
 }

@@ -24,8 +24,7 @@ local prefabs = {
                 shapeType = "Cube",
                 static = false,
                 layer = "ALL"
-            },
-            TestComponent = 0
+            }
         }
     },
     obstaculo = {

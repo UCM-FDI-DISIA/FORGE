@@ -92,6 +92,9 @@ bool MainForge::mainLoop() {
 		if (inputManager.isWindowClosed()) {
 			Exit();
 		}
+		else if (inputManager.isWindowResized()) {
+			renderManager.resizeWindow();
+		}
 
 		inputManager.refresh();
 	}

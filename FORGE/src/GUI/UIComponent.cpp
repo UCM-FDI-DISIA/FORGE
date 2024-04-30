@@ -57,11 +57,13 @@ bool UIComponent::initComponent(ComponentData* data) {
     if (entity->hasComponent("RectTransform")) {
         transform = entity->getComponent<RectTransform>();
         gui = GUIManager::GetInstance();
+
         elementID = gui->getRandomName();
         while (gui->getIds().count(elementID) != 0) {
             elementID = gui->getRandomName();
         }
         gui->getIds().insert(elementID);
+        gui->addCanvasElement(this);
         return true;
     }
     else {
@@ -74,9 +76,9 @@ void UIComponent::update() {
 
 }
 
-//forge::Vector2 UIComponent::getSize() const {
-//	return size;
-//}
+void UIComponent::resize() {
+
+}
 
 forge::Vector2 UIComponent::getPosition() const {
     return transform->getPosition();
@@ -86,11 +88,6 @@ void UIComponent::setPosition(forge::Vector2 const& p) {
     transform->setPosition(p);
     overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 }
-
-//void UIComponent::setSize(forge::Vector2 const& s) {
-//	size = s;
-//    overlayPanel->setDimensions(size.getX() * transform->getScale().getX(), size.getY() * transform->getScale().getY());
-//}
 
 void UIComponent::setDepth(int zO) {
     overlay->setZOrder(Ogre::ushort(zO));

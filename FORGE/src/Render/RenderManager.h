@@ -1,7 +1,5 @@
 #pragma once
-/// <summary>
-/// Clase de manejo de los metodos de render
-/// </summary>
+
 #include <memory>
 #include <unordered_map>
 #include <string>
@@ -13,6 +11,10 @@ class Light;
 class ParticleSystem;
 class Transform;
 class Billboard;
+
+namespace forge {
+	class Vector2;
+}
 
 namespace Ogre {
 	class Entity;
@@ -28,9 +30,7 @@ namespace Ogre {
 	class ManualObject;
 }
 
-
 class RenderManager {
-
 private:
 	static std::unique_ptr<RenderManager> instance;
 	static bool initialised;
@@ -135,7 +135,6 @@ public:
 	/// <returns>Devuelve puntero del ParticleSystem de OGRE</returns>
 	Ogre::ParticleSystem* updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem);
 
-
 	/// <summary>
 	/// Elimina un nodo de OGRE de la escena
 	/// </summary>
@@ -147,6 +146,11 @@ public:
 	/// </summary>
 	/// <param name="camera">Camara que queremos eliminar</param>
 	void removeCamera(Ogre::Camera* camera);
+
+	/// <summary>
+	/// Actualiza el renderer para ajustarse al nuevo tamaño de la ventana
+	/// </summary>
+	void resizeWindow();
 	#pragma endregion
 
 	#pragma region Getters
@@ -154,6 +158,11 @@ public:
 	/// Devuelve el sceneManager
 	/// </summary>
 	Ogre::SceneManager* getSceneManager();
+
+	// <summary>
+	/// Devuelve el tamano del renderer (la resolucion)
+	/// </summary>
+	forge::Vector2 getResolution();
 	#pragma endregion
 	
 	#pragma region utils

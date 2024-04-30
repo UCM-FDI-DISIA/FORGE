@@ -16,6 +16,7 @@
 #pragma warning(pop)
 #include "RenderManager.h"
 #include "Vector4.h"
+#include "UIComponent.h"
 
 std::unique_ptr<GUIManager> GUIManager::instance = nullptr;
 bool GUIManager::initialised = false;
@@ -44,6 +45,10 @@ GUIManager* GUIManager::GetInstance() {
 
 GUIManager::~GUIManager() {
 	delete overlayNames;
+	for (UIComponent* uic : canvas) {
+		uic = nullptr;
+	}
+	canvas.clear();
 }
 
 bool GUIManager::setup() {
@@ -73,7 +78,7 @@ bool GUIManager::hasFont(std::string font) {
 }
 
 bool GUIManager::addResource(std::string resource) {
-	int resourceSize = resourceRegistry.size();
+	int resourceSize = static_cast<int>(resourceRegistry.size());
 	resourceRegistry.insert(resource);
 	return resourceSize != resourceRegistry.size();
 }
@@ -86,11 +91,23 @@ void GUIManager::deleteResource(std::string resource) {
 	resourceRegistry.erase(resource);
 }
 
-bool GUIManager::update() {
-	return true;
+bool GUIManager::addCanvasElement(UIComponent* uic) {
+	int canvasSize = static_cast<int>(canvas.size());
+	canvas.insert(uic);
+	return canvasSize != canvas.size();
 }
 
-bool GUIManager::render() {
+void GUIManager::deleteCanvasElement(UIComponent* uic) {
+	canvas.erase(uic);
+}
+
+void GUIManager::resizeWindow() {
+	for (UIComponent* uic : canvas) {
+		uic->resize();
+	}
+}
+
+bool GUIManager::update() {
 	return true;
 }
 
@@ -131,10 +148,6 @@ std::unordered_set<std::string> GUIManager::getIds() {
 
 std::string GUIManager::getRandomName() {
 	return overlayNames->generate();
-}
-
-std::unordered_set <std::string> GUIManager::getResourceRegistry() {
-	return resourceRegistry;
 }
 
 Ogre::ColourValue GUIManager::Vector4ToColorValue(forge::Vector4 const& v) {

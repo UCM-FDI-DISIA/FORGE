@@ -1,8 +1,11 @@
 #pragma once
+
 #ifndef LOAD_MANAGER_H_
 #define LOAD_MANAGER_H_
+
 #include <string>
 #include <vector>
+
 class LuaForge;
 class GameLoader;
 class SceneManager;
@@ -14,6 +17,7 @@ class Factory;
 namespace luabridge {
 	class LuaRef;
 }
+
 class LoadManager {
 private:
 	LuaForge* luaForge;

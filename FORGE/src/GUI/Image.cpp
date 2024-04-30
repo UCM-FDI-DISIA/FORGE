@@ -105,19 +105,19 @@ std::string Image::getTexture() {
 }
 
 unsigned int Image::getSourceWidth() {
-	return (int) imageSource->getWidth();
+	return static_cast<int>(imageSource->getWidth());
 }
 
 unsigned int Image::getWidth() {
-	return (int) transform->getScale().getX();
+	return static_cast<int>(transform->getScale().getX());
 }
 
 unsigned int Image::getSourceHeight() {
-	return (int) imageSource->getHeight();
+	return static_cast<int>(imageSource->getHeight());
 }
 
 unsigned int Image::getHeight() {
-	return (int) transform->getScale().getY();
+	return static_cast<int>(transform->getScale().getY());
 }
 
 void Image::setMaterial(std::string const& mat) {
