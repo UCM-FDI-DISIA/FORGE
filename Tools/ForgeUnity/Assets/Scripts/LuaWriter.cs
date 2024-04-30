@@ -106,7 +106,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     }
 
     /// <summary>
-    ///  Añade los componentes del padre y luego los objetos que tiene como hijo recursivamente
+    ///  Anade los componentes del padre y luego los objetos que tiene como hijo recursivamente
     /// </summary>
     /// <param name="obj">Objeto a escribir en el archivo de Lua</param>
     private void SaveGameObjectAndChildren(GameObject obj)
@@ -122,8 +122,17 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
             data += obj.name + "= {\n";
             i++;
             Tabulate();
-            data += "blueprint = " + "\"" + PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name+ "\"\n";
-            i--;
+            data += "blueprint = " + "\"" + PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name+ "\",\n";                        
+            Tabulate();
+            data += "components = {\n";
+            i++; //= x +2
+            WriteTransform(obj);
+            i--; //= x +1
+            data = data.Remove(data.Length - 2);
+            data += "\n";
+            Tabulate();
+            data += "}\n";
+            i--; //= x
         }
         else
         {
@@ -186,30 +195,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         data += "components = {\n";
         //Transform
         i++;// = x + 2
-
-        var tf = obj.GetComponent<Transform>();
-        Tabulate();
-        data += tf.GetType() + "= {";
-        i++;// = x + 3
-        data += "\n";
-        Tabulate();
-        CultureInfo rightFormat = new CultureInfo("en-US");
-        data += "position = " + "{" + tf.localPosition.x.ToString(rightFormat) +
-            "," + tf.localPosition.y.ToString(rightFormat) +
-            "," + tf.localPosition.z.ToString(rightFormat) + "}" + ",\n";
-        Tabulate();
-        data += "rotation = " + "{" + tf.localRotation.x.ToString(rightFormat) +
-            "," + tf.localRotation.y.ToString(rightFormat) +
-            "," + tf.localRotation.z.ToString(rightFormat) +
-            "," + tf.localRotation.w.ToString(rightFormat) + "}" + ",\n";
-        Tabulate();
-        data += "scale = " + "{" + tf.localScale.x.ToString(rightFormat) +
-            "," + tf.localScale.y.ToString(rightFormat) +
-            "," + tf.localScale.z.ToString(rightFormat) + "}" + "\n";
-
-        i--;// = x + 2
-        Tabulate();
-        data += "},\n";
+        WriteTransform(obj);
 
         foreach (FORGEComponent component in obj.GetComponents(typeof(FORGEComponent)))
         {
@@ -256,5 +242,31 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         data = data.Replace("UnityEngine.", "");
         context.OverrideFolderPath(folderPath);
         context.AddCode(fileName, data);
+    }
+
+    public void WriteTransform(GameObject obj){
+        var tf = obj.GetComponent<Transform>();
+        Tabulate();
+        data += tf.GetType() + "= {";
+        i++;// = x + 3
+        data += "\n";
+        Tabulate();
+        CultureInfo rightFormat = new CultureInfo("en-US");
+        data += "position = " + "{" + tf.localPosition.x.ToString(rightFormat) +
+            "," + tf.localPosition.y.ToString(rightFormat) +
+            "," + tf.localPosition.z.ToString(rightFormat) + "}" + ",\n";
+        Tabulate();
+        data += "rotation = " + "{" + tf.localRotation.x.ToString(rightFormat) +
+            "," + tf.localRotation.y.ToString(rightFormat) +
+            "," + tf.localRotation.z.ToString(rightFormat) +
+            "," + tf.localRotation.w.ToString(rightFormat) + "}" + ",\n";
+        Tabulate();
+        data += "scale = " + "{" + tf.localScale.x.ToString(rightFormat) +
+            "," + tf.localScale.y.ToString(rightFormat) +
+            "," + tf.localScale.z.ToString(rightFormat) + "}" + "\n";
+
+        i--;// = x + 2
+        Tabulate();
+        data += "},\n";
     }
 }
