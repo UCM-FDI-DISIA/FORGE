@@ -6,7 +6,6 @@ namespace Ogre {
 	template <int dims, typename T> class Vector;
 	typedef Vector<3, float> Vector3f;
 }
-class btVector3;
 namespace irrklang{
 	template <class T> class vec3d;
 	typedef vec3d<float> vec3df;
@@ -316,29 +315,6 @@ namespace forge {
 		/// <returns>El vector actualizado</returns>
 		Vector3& operator=(const Ogre::Vector3f& w);
 
-		/// <summary>
-		/// Conversion implicita de forge::Vector3 a btVector3
-		/// </summary>
-		operator btVector3() const;
-
-		/// <summary>
-		/// Constructor por copia de btVector3
-		/// </summary>
-		/// <param name="w">Vector de bullet a copiar</param>
-		Vector3(const btVector3& w);
-
-		/// <summary>
-		/// Constructor por copia de referencia a R value de btVector3
-		/// </summary>
-		/// <param name="w">Vector de bullet a copiar</param>
-		Vector3(btVector3&& w) noexcept;
-
-		/// <summary>
-		/// Asigna la informacion del btVector3 W a este forge::Vector3
-		/// </summary>
-		/// <param name="w">Vector de Ogre a asignar</param>
-		/// <returns>El vector actualizado</returns>
-		Vector3& operator=(const btVector3& w);
 		/// Conversion implicita de forge::Vector3 a irrklang::vec3df
 		/// </summary>
 		operator irrklang::vec3df() const;

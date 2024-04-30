@@ -132,6 +132,11 @@ public:
 	/// </summary>
 	/// <param name="needed">True si lo necesita, falase sita no lo necesita</param>
 	FORGE_API void setChildNeedsUpdate(bool needed);
+	/// <summary>
+	/// Modifica la rotación para mirar a la posición dada
+	/// </summary>
+	/// <param name="pos: ">Posición a la que mirar</param>
+	FORGE_API void lookAt(forge::Vector3 pos);
 
 	#pragma endregion //setters
 	#pragma region getters

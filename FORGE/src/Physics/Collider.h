@@ -93,9 +93,23 @@ public:
     /// </summary>
     FORGE_API bool isTrigger();
 
+    /// <summary>
+    /// Devuelve el cuerpo fisico de bullet
+    /// </summary>
+    /// <returns> El cuerpo fisico</returns>
     FORGE_API btRigidBody* getBody();
 
+    /// <summary>
+    /// Devuelve el nombre de la capa en la que esta el objeto
+    /// </summary>
+    /// <returns> La capa del objeto</returns>
     FORGE_API std::string getLayer();
+
+    /// <summary>
+    /// Devuelve la posición del cuerpo fisico
+    /// </summary>
+    /// <returns> La posición en forge vector</returns>
+    FORGE_API forge::Vector3 getPosition();
 #pragma endregion
 };
 #endif // !COLLIDER_H_

@@ -141,7 +141,7 @@ void PhysicsManager::handleCollisions() {
 }
 
 void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
-    world->setGravity(newGravity.operator btVector3());
+    world->setGravity(fromForgeToBtVect(newGravity));
 }
 
 void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::string layer) {
@@ -202,4 +202,29 @@ bool PhysicsManager::checkContact(btRigidBody* body1, btRigidBody* body2) {
     ContactCallback callback;
     world->contactPairTest(body1, body2, callback);
     return callback.isContacting;
+}
+
+btVector3 PhysicsManager::fromForgeToBtVect(forge::Vector3 vect)
+{
+    return btVector3(vect.getX(),vect.getY(),vect.getZ());
+}
+
+forge::Vector3 PhysicsManager::fromBtVectToForge(btVector3 vect)
+{
+    return forge::Vector3(vect.getX(),vect.getY(),vect.getZ());
+}
+
+btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion quat)
+{
+    return btQuaternion(quat.getAbsX(),quat.getAbsY(),quat.getAbsZ(),quat.getW());
+}
+
+forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion quat)
+{
+    forge::Quaternion q = forge::Quaternion();
+    q.setAbsX(quat.getX());
+    q.setAbsY(quat.getY());
+    q.setAbsZ(quat.getZ());
+    q.setW(quat.getW());
+    return q;
 }

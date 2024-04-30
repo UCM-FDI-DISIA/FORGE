@@ -161,6 +161,18 @@ void Quaternion::setZ(float newZ) {
 	z = newZ * sinf(acos(w));
 }
 
+void forge::Quaternion::setAbsX(float newX) {
+	x = newX;
+}
+
+void forge::Quaternion::setAbsY(float newY) {
+	y = newY;
+}
+
+void forge::Quaternion::setAbsZ(float newZ) {
+	z = newZ;
+}
+
 void Quaternion::setAngle(float newAngle) {
 	float prevSin = sinf(acos(w));
 	float newSin = sinf(newAngle / 2.0f);
@@ -168,6 +180,67 @@ void Quaternion::setAngle(float newAngle) {
 	x = (x / prevSin) * newSin;
 	y = (y / prevSin) * newSin;
 	z = (z / prevSin) * newSin;
+}
+
+FORGE_API void forge::Quaternion::setW(float newW) {
+	w = newW;
+}
+
+FORGE_API void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
+	forge::Vector3 forward = pos - lookTo;
+	forward.normalize();
+	forge::Vector3 right = forge::Vector3(0, 1, 0).cross(forward);
+	right.normalize();
+	forge::Vector3 up = forward.cross(right);
+	up.normalize();
+	float _w = 0;
+	float _x = 0;
+	float _y = 0;
+	float _z = 0;
+
+	float trace = right.getX() + up.getY() + forward.getZ(); // I removed + 1.0f; see discussion with Ethan
+	if (trace > 0) {// I changed M_EPSILON to 0
+		float s = 0.5f / sqrtf(trace + 1.0f);
+		_w = 0.25f / s;
+		_x = (up.getZ() - forward.getY()) * s;
+		_y = (forward.getX() - right.getZ()) * s;
+		_z = (right.getY() - up.getX()) * s;
+	}
+	else {
+		if (right.getX() > up.getY() && right.getX() > forward.getZ()) {
+			float s = 2.0f * sqrtf(1.0f + right.getX() + up.getY() + forward.getZ());
+			_w = (up.getZ() - forward.getY()) / s;
+			_x = 0.25f * s;
+			_y = (up.getX()+ right.getY()) / s;
+			_z = (forward.getX() + right.getZ()) / s;
+		}
+		else if (up.getY() > forward.getZ()) {
+			float s = 2.0f * sqrtf(1.0f + up.getY() - right.getX() - forward.getZ());
+			_w = (forward.getX() - right.getZ()) / s;
+			_x = (up.getX() + right.getY()) / s;
+			_y = 0.25f * s;
+			_z = (forward.getY() + up.getZ()) / s;
+		}
+		else {
+			float s = 2.0f * sqrtf(1.0f + forward.getZ() - right.getX() - up.getY());
+			_w = (right.getY() - up.getX()) / s;
+			_x = (forward.getX() + right.getZ()) / s;
+			_y = (forward.getY() + up.getZ()) / s;
+			_z = 0.25f * s;
+		}
+	}
+
+	//float _w = sqrt(std::max(0.0f, 1 + right.getX() + up.getY() + forward.getZ())) / 2;
+	//float _x = sqrt(std::max(0.0f, 1 + right.getX() - up.getY() - forward.getZ())) / 2;
+	//float _y = sqrt(std::max(0.0f, 1 - right.getX() + up.getY() - forward.getZ())) / 2;
+	//float _z = sqrt(std::max(0.0f, 1 - right.getX() - up.getY() + forward.getZ())) / 2;
+	//_x = _copysign(_x, (forward.getY() - up.getZ()));
+	//_y = _copysign(_y, (right.getZ() - forward.getX()));
+	//_z = _copysign(_z, (up.getX() - right.getY()));
+	x = _x;
+	y = _y;
+	z = _z;
+	w = _w;
 }
 
 void Quaternion::set(float newX, float newY, float newZ, float newAngle) {
@@ -213,8 +286,23 @@ float Quaternion::getZ() const {
 	return z / sinf(acosf(w));
 }
 
+float forge::Quaternion::getAbsX() {
+	return x;
+}
+
+float forge::Quaternion::getAbsY() {
+	return y;
+}
+
+float forge::Quaternion::getAbsZ() {
+	return z;
+}
+
 float Quaternion::getAngle() const {
 	return acosf(w) * 2.0f; 
+}
+FORGE_API float forge::Quaternion::getW() const {
+	return w;
 }
 #pragma endregion
 
@@ -242,30 +330,6 @@ Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
 	y = q.y;
 	z = q.z;
 	w = q.w;
-	return (*this);
-}
-
-Quaternion::operator btQuaternion() const {
-	return btQuaternion(x, y, z, w);
-}
-
-Quaternion::Quaternion(const btQuaternion& q) :
-	x(q.getX()),
-	y(q.getY()),
-	z(q.getZ()),
-	w(q.getW()) {}
-
-Quaternion::Quaternion(btQuaternion&& q) noexcept :
-	x(q.getX()),
-	y(q.getY()),
-	z(q.getZ()),
-	w(q.getW()) {}
-
-Quaternion& Quaternion::operator=(const btQuaternion& q) {
-	x = q.getX();
-	y = q.getY();
-	z = q.getZ();
-	w = q.getW();
 	return (*this);
 }
 #pragma endregion

@@ -22,7 +22,8 @@ private:
     bool kinematic;
     bool staticBody;
     forge::Vector3 myGravity;
-    std::vector<bool> axisBlocked;
+    std::vector<bool> axisBlockedPos;
+    std::vector<bool> axisBlockedRot;
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -97,11 +98,40 @@ public:
     /// <param name="height">Altura nueva par ala capsula</param>
     FORGE_API void setRigidScale(float radius, float height);
 
+    /// <summary>
+    /// Cambia la posicion en x por el nuevo valor
+    /// </summary>
+    /// <param name="newX"> Valor de x nuevo</param>
     FORGE_API void setPositionX(float newX);
+
+    /// <summary>
+    /// Cambia la posicion en y por el nuevo valor
+    /// </summary>
+    /// <param name="newX"> Valor de y nuevo</param>
     FORGE_API void setPositionY(float newY);
+
+    /// <summary>
+    /// Cambia la posicion en z por el nuevo valor
+    /// </summary>
+    /// <param name="newX"> Valor de z nuevo</param>
     FORGE_API void setPositionZ(float newZ);
+
+    /// <summary>
+    /// Rota en el eje x el nuevo valor
+    /// </summary>
+    /// <param name="newAngle"> Valor a rotar en grados</param>
     FORGE_API void rotateX(float newAngle);
+
+    /// <summary>
+    /// Rota en el eje y el nuevo valor
+    /// </summary>
+    /// <param name="newAngle"> Valor a rotar en grados</param>
     FORGE_API void rotateY(float newAngle);
+
+    /// <summary>
+    /// Rota en el eje z el nuevo valor
+    /// </summary>
+    /// <param name="newAngle"> Valor a rotar en grados</param>
     FORGE_API void rotateZ(float newAngle);
     #pragma endregion
 
@@ -143,6 +173,12 @@ public:
     /// </summary>
     /// <returns>un Vector3 de FORGE con la escala del rigidbody</returns>
     FORGE_API forge::Vector3 getRigidScale();
+
+    /// <summary>
+    /// Devuelve la velocidad (modulo de la fuerza) del cuerpo rigido
+    /// </summary>
+    /// <returns>un float con la velocidad</returns>
+    FORGE_API float getSpeed();
 
     #pragma endregion
 };

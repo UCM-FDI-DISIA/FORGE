@@ -14,8 +14,11 @@ class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
 class btRigidBody;
 class Collider;
+class btQuaternion;
+class btVector3;
 namespace forge {
     class Vector3;
+    class Quaternion;
 };
 
 class PhysicsManager {
@@ -119,4 +122,34 @@ public:
 
 
     bool checkContact(btRigidBody* body1, btRigidBody* body2);
+#pragma region Conversores
+    /// <summary>
+    /// Convierte un vector de forge a uno de bullet
+    /// </summary>
+    /// <param name="vect"> Vector de forge</param>
+    /// <returns> Vector de bullet</returns>
+    btVector3 fromForgeToBtVect(forge::Vector3 vect);
+
+    /// <summary>
+    /// Convierte un vector de bullet a uno de forge
+    /// </summary>
+    /// <param name="vect"> Vector de bullet</param>
+    /// <returns> Vector de forge</returns>
+    forge::Vector3 fromBtVectToForge(btVector3 vect);
+
+    /// <summary>
+    /// Convierte un quaternion de forge a bullet
+    /// </summary>
+    /// <param name="quat"> Quaternion de forge</param>
+    /// <returns> Quaternion de bullet</returns>
+    btQuaternion fromForgeToBtQuat(forge::Quaternion quat);
+
+    /// <summary>
+    /// Convierte un quaternion de bullet a forge
+    /// </summary>
+    /// <param name="quat"> Quaternion de bullet</param>
+    /// <returns> Quaternion de forge</returns>
+    forge::Quaternion fromBtQuatToForge(btQuaternion quat);
+#pragma endregion
+
 };
