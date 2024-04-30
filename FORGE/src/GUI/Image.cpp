@@ -1,5 +1,7 @@
 #include "Image.h"
 #pragma warning(push)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
 #pragma warning(disable : 26495)
 #pragma warning(disable : 4251)
 #include <OgreOverlayContainer.h>
@@ -30,6 +32,7 @@ void Image::destroyImage() {
 	gui->getMaterialManager()->remove(texture);
 	gui->getTextureManager()->remove(texture);
 	imageSource->freeMemory();
+	delete imageSource;
 	destroyPanel();
 	destroyOverlay();
 	imageSource = nullptr;
@@ -37,7 +40,9 @@ void Image::destroyImage() {
 
 void Image::createTextureAndMaterialFromImage() {
 	// Cargar imagen
-	imageSource = new Ogre::Image();
+	if (imageSource == nullptr) {
+		imageSource = new Ogre::Image();
+	}
 	imageSource->load(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 	// Cargar textura a partir de la imagen
@@ -68,7 +73,9 @@ Image::Image() : UIComponent(),
 }
 
 Image::~Image() {
-	if (imageSource != nullptr) destroyImage();
+	if (imageSource != nullptr) {
+		destroyImage();
+	}
 }
 
 bool Image::initComponent(ComponentData* data) {

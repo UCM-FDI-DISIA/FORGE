@@ -1,5 +1,7 @@
 #include "Text.h"
 #pragma warning(push)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
 #pragma warning(disable : 26495)
 #pragma warning(disable : 4251)
 #include <OgreSharedPtr.h>
@@ -31,7 +33,9 @@ Text::Text() : UIComponent(),
 }
 
 Text::~Text() {
-    if (textAreaOverlay != nullptr) destroyText();
+    if (textAreaOverlay != nullptr) {
+        destroyText();
+    }
 }
 
 bool Text::initComponent(ComponentData* data) {

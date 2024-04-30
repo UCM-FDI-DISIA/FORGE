@@ -1,6 +1,4 @@
 #include "RenderManager.h"
-#include "RenderForge.h"
-#include <iostream>
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
@@ -24,6 +22,7 @@
 #include <OgreViewport.h>
 #include <OgreNameGenerator.h>
 #pragma warning(pop)
+#include "RenderForge.h"
 #include "Entity.h"
 #include "Transform.h"
 #include "Mesh.h"
@@ -115,8 +114,7 @@ Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
 		transforms.insert({ node, mesh->getEntity()->getComponent<Transform>() });
 		return entity;
 	} catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar un mesh " << mesh->getMesh() << "\n";
-		return nullptr;
+		throwError(nullptr, "No se ha podido cargar un mesh " << mesh->getMesh());
 	}
 }
 
@@ -148,8 +146,7 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 		return set;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar un billboard " << bs->getMaterial() << "\n";
-		return nullptr;
+		throwError(nullptr, "No se ha podido cargar un billboard " << bs->getMaterial());
 	}
 }
 
@@ -175,8 +172,7 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 		return ogreCamera;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar una camara " << cameraNames->generate() << "\n";
-		return nullptr;
+		throwError(nullptr, "No se ha podido cargar una camara " << cameraNames->generate());
 	}
 }
 
@@ -193,8 +189,7 @@ Ogre::Light* RenderManager::addLightNode(Light* light) {
 		return ogreLight;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar una luz " << light->getType() << "\n";
-		return nullptr;
+		throwError(nullptr, "No se ha podido cargar una luz " << light->getType());
 	}
 }
 
@@ -213,8 +208,7 @@ Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* parti
 		return ogreParticleSystem;
 	}
 	catch (std::exception e) {
-		std::cerr << "ERROR: No se ha podido cargar un sistema de particulas " << particleSystem->getParticle() << "\n";
-		return nullptr;
+		throwError(nullptr, "No se ha podido cargar un sistema de particulas " << particleSystem->getParticle());
 	}
 }
 
