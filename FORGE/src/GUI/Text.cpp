@@ -54,6 +54,16 @@ void Text::onDisabled() {
     destroyText();
 }
 
+void Text::resize(forge::Vector2 const& prev, forge::Vector2 const& updated) {
+    UIComponent::resize(prev, updated);
+
+    float factorY = updated.getY() / prev.getY();
+    fontHeight = static_cast<int>(fontHeight * factorY);
+
+    setPosition(transform->getPosition());
+    setHeight(fontHeight);
+}
+
 void Text::createText() {
     // Se crea el panel
     createPanel();

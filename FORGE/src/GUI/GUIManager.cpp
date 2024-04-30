@@ -16,6 +16,7 @@
 #pragma warning(pop)
 #include "RenderManager.h"
 #include "Vector4.h"
+#include "Vector2.h"
 #include "UIComponent.h"
 
 std::unique_ptr<GUIManager> GUIManager::instance = nullptr;
@@ -61,6 +62,7 @@ bool GUIManager::setup() {
 	renderManager = RenderManager::GetInstance();
 	
 	renderManager->getSceneManager()->addRenderQueueListener(overlaySystem);
+	resolution = renderManager->getResolution();
 
 	loadFont("Saeda.ttf");
 
@@ -103,8 +105,9 @@ void GUIManager::deleteCanvasElement(UIComponent* uic) {
 
 void GUIManager::resizeWindow() {
 	for (UIComponent* uic : canvas) {
-		uic->resize();
+		uic->resize(resolution, renderManager->getResolution());
 	}
+	resolution = renderManager->getResolution();
 }
 
 bool GUIManager::update() {
@@ -148,6 +151,14 @@ std::unordered_set<std::string> GUIManager::getIds() {
 
 std::string GUIManager::getRandomName() {
 	return overlayNames->generate();
+}
+
+forge::Vector2 GUIManager::getResolution() {
+	return resolution;
+}
+
+void GUIManager::setResolution(forge::Vector2 newRes) {
+	resolution = newRes;
 }
 
 Ogre::ColourValue GUIManager::Vector4ToColorValue(forge::Vector4 const& v) {

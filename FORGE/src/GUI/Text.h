@@ -88,6 +88,11 @@ public:
     virtual FORGE_API void onDisabled();
 
 	/// <summary>
+	/// Ajusta la imagen al nuevo ajuste de la ventana
+	/// </summary>
+	virtual void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
+
+	/// <summary>
 	/// Cambia la opacidad del fondo
 	/// </summary>	
 	/// <param name = "op">Opacidad</param>

@@ -76,7 +76,7 @@ public:
     /// <summary>
     /// Ajusta el UIComponent al nuevo ajuste de la ventana
     /// </summary>
-    virtual void resize();
+    virtual void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
 
     #pragma region Getters
     /// <summary>

@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_set>
 #include <string>
+#include "Vector2.h"
 
 namespace Ogre {
 	class OverlaySystem;
@@ -38,6 +39,7 @@ private:
 
 	// Conjunto desordenado de elementos de UI
 	std::unordered_set<UIComponent*> canvas;
+	forge::Vector2 resolution;
 
 	// Conjunto desordenado de recursos
 	std::unordered_set<std::string> resourceRegistry;
@@ -108,29 +110,34 @@ public:
 	/// <summary>
 	/// Inserta un recurso en el conjunto de recursos
 	/// </summary>	
+	/// <param name = "resource">Nombre del recurso</param>
 	/// <returns>True si lo ha podido introducir, false si esta repetido</returns>
 	bool addResource(std::string resource);
 
 	/// <summary>
 	/// Devuelve si tiene el recurso o no
 	/// </summary>	
+	/// <param name = "resource">Nombre del recurso</param>
 	/// <returns>True si lo tiene, false si no</returns>
 	bool hasResource(std::string resource);
 
 	/// <summary>
 	/// Elimina un recurso en el conjunto de recursos
 	/// </summary>
+	/// <param name = "resource">Nombre del recurso</param>
 	void deleteResource(std::string resource);
 
 	/// <summary>
 	/// Inserta un elemento del canvas (UIComponent) en el conjunto de recursos
-	/// </summary>	
+	/// </summary>
+	/// <param name = "uic">Puntero al componente de interfaz</param>
 	/// <returns>True si lo ha podido introducir, false si esta repetido</returns>
 	bool addCanvasElement(UIComponent* uic);
 
 	/// <summary>
 	/// Elimina un elemento del canvas (UIComponent) en el conjunto de recursos
 	/// </summary>
+	/// <param name = "uic">Puntero al componente de interfaz</param>
 	void deleteCanvasElement(UIComponent* uic);
 
 	/// <summary>
@@ -141,7 +148,8 @@ public:
 	#pragma region Getters
 	/// <summary>
 	/// Devuelve la fuente consultada
-	/// </summary>	
+	/// </summary>
+	/// <param name = "fontName">Nombre de la fuente</param>
 	/// <returns>La fuente si existe</returns>
 	Ogre::Font* getFont(std::string const& fontName);
 
@@ -180,10 +188,21 @@ public:
 	/// </summary>
 	/// <returns>El nombre generado por el generador de nombres de Ogre</returns>
 	std::string getRandomName();
+
+	/// <summary>
+	/// Devuelve la resolucion guardada en la GUI
+	/// </summary>
+	/// <returns>Resolucion guardada en la GUI</returns>
+	forge::Vector2 getResolution();
 	#pragma endregion
 
 	#pragma region Setters
-
+	/// <summary>
+	/// Guarda la resolucion
+	/// </summary>
+	/// <param name = "newRes">Nueva resolucion</param>
+	/// <returns>Resolucion guardada en la GUI</returns>
+	void setResolution(forge::Vector2 newRes);
 	#pragma endregion
 
 	/// <summary>

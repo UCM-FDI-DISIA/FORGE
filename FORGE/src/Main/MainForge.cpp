@@ -94,6 +94,7 @@ bool MainForge::mainLoop() {
 		}
 		else if (inputManager.isWindowResized()) {
 			renderManager.resizeWindow();
+			guiManager.resizeWindow();
 		}
 
 		inputManager.refresh();
