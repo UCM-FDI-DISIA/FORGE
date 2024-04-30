@@ -148,10 +148,34 @@ namespace forge {
 		FORGE_API void setZ(float newZ);
 
 		/// <summary>
+		/// Asigna un nuevo valor a la componente en X directamente
+		/// </summary>
+		/// <param name="newX">Nuevo valor en X</param>
+		FORGE_API void setAbsX(float newX);
+
+		/// <summary>
+		/// Asigna un nuevo valor a la componente en Y directamente
+		/// </summary>
+		/// <param name="newY">Nuevo valor en Y</param>
+		FORGE_API void setAbsY(float newY);
+
+		/// <summary>
+		/// Asigna un nuevo valor a la componente en Z directamente
+		/// </summary>
+		/// <param name="newZ">Nuevo valor en Z</param>
+		FORGE_API void setAbsZ(float newZ);
+
+		/// <summary>
 		/// Asigna un nuevo angulo
 		/// </summary>
 		/// <param name="newAngle">Nuevo valor del angulo del par rotacion</param>
 		FORGE_API void setAngle(float newAngle);
+
+		/// <summary>
+		/// Asigna un nuevo valor a la componente en W del par-rotacion
+		/// </summary>
+		/// <param name="newW">Nuevo valor en W</param>
+		FORGE_API void setW(float newW);
 
 		/// <summary>
 		/// Consigue un cuaternion para mirar de una posición a otro punto
@@ -208,10 +232,31 @@ namespace forge {
 		FORGE_API float getZ() const;
 
 		/// <summary>
+		/// Devuelve el valor a la componente en X directamente
+		/// </summary>
+		FORGE_API float getAbsX();
+
+		/// <summary>
+		/// Devuelve el valor a la componente en Y directamente
+		/// </summary>
+		FORGE_API float getAbsY();
+
+		/// <summary>
+		/// Devuelve el valor a la componente en Z directamente
+		/// </summary>
+		FORGE_API float getAbsZ();
+
+		/// <summary>
 		/// Acceso al angulo del cuaternion
 		/// </summary>
 		/// <returns>Devuelve el angulo entre 0 y 2PI</returns>
 		FORGE_API float getAngle() const;
+
+		/// <summary>
+		/// Acceso a la componente en W del par-rotacion que representa el cuaternion
+		/// </summary>
+		/// <returns>Devuelve la orientacion en W</returns>
+		FORGE_API float getW() const;
 		#pragma endregion
 
 		#pragma region Conversiones
@@ -238,30 +283,6 @@ namespace forge {
 		/// <param name="q">Cuaternion de Bullet a copiar</param>
 		/// <returns>Cuaternion actualizado</returns>
 		Quaternion& operator=(const Ogre::Quaternion& q);
-
-		/// <summary>
-		/// Conversion implicita de forge::Quaternion a btQuaternion
-		/// </summary>
-		operator btQuaternion() const;
-
-		/// <summary>
-		/// Constructor por copia de Ogre::Quaternion
-		/// </summary>
-		/// <param name="q">Cuaternion de Bullet a copiar</param>
-		Quaternion(const btQuaternion& q);
-
-		/// <summary>
-		/// Constructor por copia de referencia a R value de Ogre::Quaternion
-		/// </summary>
-		/// <param name="q">Cuaternion de Bullet a copiar</param>
-		Quaternion(btQuaternion&& q) noexcept;
-
-		/// <summary>
-		/// Asigna la informacion de Q a este cuaternion
-		/// </summary>
-		/// <param name="q">Cuaternion de Bullet a copiar</param>
-		/// <returns>Cuaternion actualizado</returns>
-		Quaternion& operator=(const btQuaternion& q);
 		#pragma endregion
 
 		static const FORGE_API_VAR Quaternion IDENTITY;

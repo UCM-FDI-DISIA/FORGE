@@ -157,7 +157,7 @@ void Transform::setChildNeedsUpdate(bool needed) {
 FORGE_API void Transform::lookAt(forge::Vector3 pos) {
 	forge::Quaternion q = forge::Quaternion();
 	q.lookTo(pos, position);
-	setRotation(rotation*q);
+	setRotation(q);
 }
 
 forge::Quaternion const& Transform::getRotation() const {

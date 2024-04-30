@@ -246,26 +246,6 @@ Vector3& Vector3::operator=(const Ogre::Vector3f& w) {
 	return *this;
 }
 
-forge::Vector3::operator btVector3() const {
-	return btVector3(x, y, z);
-}
-
-Vector3::Vector3(const btVector3& w) :
-	x(w.getX()),
-	y(w.getY()),
-	z(w.getZ()) {}
-
-Vector3::Vector3(btVector3&& w) noexcept :
-	x(w.getX()),
-	y(w.getY()),
-	z(w.getZ()) {}
-
-Vector3& Vector3::operator=(const btVector3& w) {
-	x = w.getX();
-	y = w.getY();
-	z = w.getZ();
-	return *this;
-}
 forge::Vector3::operator irrklang::vec3df() const {
 	return irrklang::vec3df(x, y, z);
 }

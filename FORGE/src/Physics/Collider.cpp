@@ -24,6 +24,7 @@ Collider::~Collider() {
 bool Collider::initComponent(ComponentData* data) {
     myShapeString = data->get<std::string>("shapeType");
     createRigidBody(myShapeString);
+    setTrigger(trigger);
     return true;
 }
 
@@ -47,7 +48,7 @@ void Collider::createRigidBody(std::string myShapeType) {
         else if (myShapeType == "Cilinder") {
             delete myShape;
             shapeType = cilinderShape;
-            myShape = new btCylinderShape(myScale.operator btVector3());
+            myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale));
         }
 
         //Inicializamos el rigid body
@@ -63,8 +64,8 @@ void Collider::createRigidBody(std::string myShapeType) {
             std::cerr << "ERROR: No se pudo acceder al Transform desde el Collider\n";
         }
 
-        btQuaternion quat = forQuat.operator btQuaternion();
-        btVector3 vect = forVect.operator btVector3();
+        btQuaternion quat = physicsManager->fromForgeToBtQuat(forQuat);
+        btVector3 vect = physicsManager->fromForgeToBtVect(forVect);
 
         btVector3 bodyInertia;
         myShape->calculateLocalInertia(0, bodyInertia);
@@ -98,7 +99,7 @@ void Collider::fixedUpdate() {
         pos.setZ(aux.getOrigin().z());
         bodyTransform->setPosition(pos);
 
-        forge::Quaternion quat = myBody->getOrientation();
+        forge::Quaternion quat = physicsManager->fromBtQuatToForge(myBody->getOrientation());
         bodyTransform->setRotation(quat);
     }
 }
@@ -107,9 +108,9 @@ void Collider::onEnabled() {
     createRigidBody(myShapeString);
     btTransform trans;
     trans.setOrigin(btVector3(lastPosition.getX(),lastPosition.getY(),lastPosition.getZ()));
-    trans.setRotation(lastOrientation.operator btQuaternion());
+    trans.setRotation(physicsManager->fromForgeToBtQuat(lastOrientation));
     myBody->setWorldTransform(trans);
-    myBody->applyCentralForce(lastForce);
+    myBody->applyCentralForce(physicsManager->fromForgeToBtVect(lastForce));
 }
 
 void Collider::onDisabled() {
@@ -207,4 +208,10 @@ btRigidBody* Collider::getBody() {
 
 std::string Collider::getLayer() {
     return collisionLayer;
+}
+
+FORGE_API forge::Vector3 Collider::getPosition()
+{
+
+    return physicsManager->fromBtVectToForge(myBody->getWorldTransform().getOrigin());
 }

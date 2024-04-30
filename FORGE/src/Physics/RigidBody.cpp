@@ -35,6 +35,7 @@ bool RigidBody::initComponent(ComponentData* data) {
     }
 
     createRigidBody(myShapeString);
+    setTrigger(trigger);
 
     return true;
 }
@@ -59,7 +60,7 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         else if (myShapeString == "Cilinder") {
             delete myShape;
             shapeType = cilinderShape;
-            myShape = new btCylinderShape(myScale.operator btVector3());
+            myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale));
         }
 
         //Inicializamos el rigid body
@@ -74,8 +75,8 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         else {
             std::cerr << "ERROR: No se pudo acceder al Transform desde el RigidBody\n";
         }
-        btQuaternion quat = forQuat.operator btQuaternion();
-        btVector3 vect = forVect.operator btVector3();
+        btQuaternion quat = physicsManager->fromForgeToBtQuat(forQuat);
+        btVector3 vect = physicsManager->fromForgeToBtVect(forVect);
         btVector3 bodyInertia;
         getShape()->calculateLocalInertia(getMass(), bodyInertia);
         btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
@@ -97,7 +98,7 @@ void RigidBody::createRigidBody(std::string myShapeType) {
         lockPosition(axisBlockedPos[0], axisBlockedPos[1], axisBlockedPos[2]);
         lockRotation(axisBlockedRot[0], axisBlockedRot[1], axisBlockedRot[2]);
         if (myGravity != forge::Vector3(FLT_MAX, FLT_MAX, FLT_MAX)) {
-            myBody->setGravity(myGravity);
+            myBody->setGravity(physicsManager->fromForgeToBtVect(myGravity));
         }
 	}
 	else {
@@ -135,7 +136,7 @@ void RigidBody::lockRotation(bool x, bool y, bool z) {
 
 void RigidBody::setGravity(forge::Vector3 newGravity) {
     myGravity = newGravity;
-    myBody->setGravity(newGravity.operator btVector3());
+    myBody->setGravity(physicsManager->fromForgeToBtVect(newGravity));
 }
 
 void RigidBody::setFriction(float newFriction) {
