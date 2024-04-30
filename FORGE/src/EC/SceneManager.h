@@ -17,6 +17,13 @@ struct lua_State;
 
 class SceneManager {
 private:
+	struct EntityPair {
+		Entity* entity;
+		EntityData* data;
+		std::vector<EntityPair*> children;
+		~EntityPair();
+	};
+
     static std::unique_ptr<SceneManager> instance;
 	static bool initialised;
 
@@ -32,8 +39,8 @@ private:
 
     SceneManager();
 
-	Entity* addEntity(Scene* scene, EntityData* data);
-	Entity* initEntity(Entity* entity, std::vector<ComponentData*> componentData);
+	EntityPair* addEntity(Scene* scene, EntityData* data);
+	Entity* initEntity(EntityPair* pair);
 
 public:
 	/// <summary>

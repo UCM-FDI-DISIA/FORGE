@@ -12,6 +12,12 @@
 #include "Transform.h"
 #include "ForgeError.h"
 
+SceneManager::EntityPair::~EntityPair() {
+	for (auto& child : children) {
+		delete child;
+	}
+}
+
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
 bool SceneManager::initialised = false;
 
@@ -21,9 +27,13 @@ SceneManager::SceneManager() :
 	groups.insert({"default",0});
 }
 
-Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
-
+SceneManager::EntityPair* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	Entity* entity = scene->addEntity(getGroupId(data->group));
+
+	EntityPair* pair = new EntityPair();
+	pair->entity = entity;
+	pair->data = data;
+
 	if (data->handler != "") {
 		scene->setHandler(data->handler, entity);
 	}
@@ -40,24 +50,29 @@ Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
-			Entity* child = addEntity(scene, childData);
-			if (!child->isAlive()) {
+			EntityPair* child = addEntity(scene, childData);
+			if (!child->entity->isAlive()) {
 				entity->setAlive(false);
 			}
-			entity->addChild(child);
+			entity->addChild(child->entity);
+			pair->children.push_back(child);
 		}
 	}
-	return entity;
+
+	return pair;
 }
 
-Entity* SceneManager::initEntity(Entity* entity, std::vector<ComponentData*> componentData) {
-	if (!entity->initSerializedComponents(componentData)) {
-		entity->setAlive(false);
+Entity* SceneManager::initEntity(EntityPair* pair) {
+	if (!pair->entity->initSerializedComponents(pair->data->components)) {
+		pair->entity->setAlive(false);
 	}
-	if (!entity->initComponents(componentData)) {
-		entity->setAlive(false);
+	if (!pair->entity->initComponents(pair->data->components)) {
+		pair->entity->setAlive(false);
 	}
-	return entity;
+	for (auto& child : pair->children) {
+		initEntity(child);
+	}
+	return pair->entity;
 }
 
 void SceneManager::Init() {
@@ -104,13 +119,16 @@ Entity* SceneManager::instantiateBlueprint(std::string bluePrintId) {
 		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado.");
 	}
 	Scene*& scene = activeScene.second;
-	Entity* entity = addEntity(scene, data);
+	EntityPair* pair = addEntity(scene, data);
+	Entity* entity = pair->entity;
 	if (entity->isAlive()) {
-		initEntity(entity, data->components);
+		initEntity(pair);
 		if (entity->isAlive()) {
+			delete pair;
 			return entity;
 		}
 	}
+	delete pair;
 	throwError(nullptr, "La entidad no se ha instanciado correctamente.");
 }
 
@@ -174,23 +192,26 @@ void SceneManager::removeScene(std::string const& id) {
 }
 
 Scene* SceneManager::createScene(std::string const& id) {
-	std::unordered_map<Entity*, std::vector<ComponentData*>> initData;
+	std::unordered_set<EntityPair*> initData;
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
 		throwError(nullptr, "Si una escena no aparece en los archivos, no existe.");
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* entityData : iter->second) {
-		Entity* entity = addEntity(newScene, entityData);
+		EntityPair* pair = addEntity(newScene, entityData);
+		Entity* entity = pair->entity;
 		if (!entity->isAlive()) {
+			delete pair;
 			reportError("No se ha podido crear la entidad.");
 		}
 		else {
-			initData.insert({ entity,entityData->components });
+			initData.insert(pair);
 		}
 	}
 	for (auto& initPair : initData) {
-		initEntity(initPair.first, initPair.second);
+		initEntity(initPair);
+		delete initPair;
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;
