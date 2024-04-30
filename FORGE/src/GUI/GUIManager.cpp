@@ -82,6 +82,10 @@ bool GUIManager::hasResource(std::string resource) {
 	return resourceRegistry.count(resource);
 }
 
+void GUIManager::deleteResource(std::string resource) {
+	resourceRegistry.erase(resource);
+}
+
 bool GUIManager::update() {
 	return true;
 }

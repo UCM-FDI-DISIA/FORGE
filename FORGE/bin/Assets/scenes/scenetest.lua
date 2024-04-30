@@ -24,7 +24,8 @@ local prefabs = {
                 shapeType = "Cube",
                 static = false,
                 layer = "ALL"
-            }
+            },
+            TestComponent = 0
         }
     },
     obstaculo = {
@@ -139,9 +140,21 @@ local scenes = {
                     scale = {200, 200}
                 },
                 Image = {
-                    depth = 2,
-                    id = "imagen3",
+                    depth = 1,
                     texture = "dinoocat.png"
+                }
+            }
+        },
+        button = {
+            components = {
+                RectTransform = {
+                    position = {50, 300},
+                    scale = {100, 100}
+                },
+                Button = {
+                    out = "out.png",
+                    hover = "over.png",
+                    clicked = "clicked.png"
                 }
             }
         }

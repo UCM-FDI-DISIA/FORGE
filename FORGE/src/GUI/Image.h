@@ -14,7 +14,7 @@ namespace forge {
 };
 
 class Image : public UIComponent {
-private:
+protected:
 	// Textura
 	std::string texture;
 

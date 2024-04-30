@@ -4,32 +4,31 @@
 #define BUTTON_H_
 
 #include <functional>
-#include "UIComponent.h"
+#include "Image.h"
 
 class Image;
 class Input;
 
 namespace forge {
-	enum ButtonState { IDLE, HOVER };
+	enum ButtonState { OUT_STATE, HOVER_STATE, CLICKED_STATE };
 }
 
-class Button : public UIComponent {
+class Button : public Image {
 private:
 	// Control de estados
 	forge::ButtonState state;
+	forge::ButtonState newState;
 
 	// Texturas
-	std::string idleTexture;
+	std::string outTexture;
 	std::string hoverTexture;
-
-	// Puntero al componente de Imagen (obligatorio)
-	Image* image;
+	std::string clickedTexture;
 
 	// Manager de input
 	Input* input;
 
 	// Control de pulsado
-	bool pressed;
+	bool clicked;
 
 	// Callbacks
 	static std::function<void(void)> mainFunc;
@@ -39,6 +38,11 @@ private:
 	///// Cambia la imagen del boton por la del estado correspondiente
 	///// </summary>
 	void changeButtonImage();
+
+	/// <summary>
+	/// Comprueba la posicion del raton para actualizar el estado
+	/// </summary>
+	void checkMousePosition();
 
 public:
     // Id de componente
@@ -59,6 +63,16 @@ public:
 	///// </summary>
 	///// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
 	FORGE_API bool initComponent(ComponentData* data) override;
+
+	/// <summary>
+	/// Activa el componente (llama a crear la imagen)
+	/// </summary>	
+	virtual FORGE_API void onEnabled();
+
+	/// <summary>
+	/// Desactiva el componente (llama a destruir la imagen)
+	/// </summary>	
+	virtual FORGE_API void onDisabled();
 
 	/// <summary>
 	/// Update del UIComponent

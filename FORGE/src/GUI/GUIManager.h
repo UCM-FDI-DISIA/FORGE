@@ -118,6 +118,11 @@ public:
 	/// <returns>True si lo tiene, false si no</returns>
 	bool hasResource(std::string resource);
 
+	/// <summary>
+	/// Elimina un recurso en el conjunto de recursos
+	/// </summary>
+	void deleteResource(std::string resource);
+
 	#pragma region Getters
 	/// <summary>
 	/// Devuelve la fuente consultada

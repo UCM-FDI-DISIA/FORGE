@@ -75,7 +75,7 @@ void TestComponent::update() {
 		audio->restart();
 	}
 	if (input.keyDown(K_O)) {
-		sceneManager->instantiateBlueprint("obstaculo", entity);
+		//sceneManager->instantiateBlueprint("obstaculo", entity);
 	}
 	if (input.keyDown(K_W)) {
 		//transform->setPositionZ(transform->getPosition().getZ() + movement);
@@ -109,6 +109,7 @@ void TestComponent::update() {
 	}
 
 	if (input.keyDown(K_R)) {
+		std::cout << "\nHOLA\n";
 		if (sceneManager->getActiveSceneId() == "Test") {
 			sceneManager->changeScene("Play");
 		}

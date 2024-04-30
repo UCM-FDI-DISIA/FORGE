@@ -25,6 +25,7 @@ void Input::onMouseButton(const SDL_Event& event, bool down) {
 			break;
 		case SDL_BUTTON_MIDDLE:
 			mouseButtons[1] = down;
+
 			break;
 		case SDL_BUTTON_RIGHT:
 			mouseButtons[2] = down;
@@ -182,10 +183,6 @@ void Input::refresh() {
 void Input::setDefaultState() {
 	mouseWheelUp = false;
 	mouseWheelDown = false;
-
-	for (int i = 0; i < 3; i++) {
-		mouseButtons[i] = false;
-	}
 
 	isControllerDeviceAddedEvent = false;
 	isControllerDeviceRemovedEvent = false;

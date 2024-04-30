@@ -1,6 +1,5 @@
 #include "Button.h"
 #include "Serializer.h"
-#include "Entity.h"
 #include "GUIManager.h"
 #include "Input.h"
 #include "RectTransform.h"
@@ -10,23 +9,48 @@ const std::string Button::id = "Button";
 std::function<void(void)> Button::mainFunc = nullptr;
 
 void Button::changeButtonImage() {
-	if (state == forge::IDLE && image->getTexture() != idleTexture) {
-		image->setMaterial(idleTexture);
+	switch (state) {
+		case forge::OUT_STATE:
+			setMaterial(outTexture);
+			break;
+		case forge::HOVER_STATE:
+			setMaterial(hoverTexture);
+			break;
+		case forge::CLICKED_STATE:
+			setMaterial(clickedTexture);
+			break;
 	}
-	else if (state == forge::HOVER && image->getTexture() != hoverTexture) {
-		image->setMaterial(hoverTexture);
+}
+
+void Button::checkMousePosition() {
+	forge::Vector2 mousePosition = input->getMousePosition();
+
+	if (mousePosition.getX() > transform->getPosition().getX() 
+		&& mousePosition.getX() < transform->getPosition().getX() + transform->getScale().getX()
+		&& mousePosition.getY() > transform->getPosition().getY()
+		&& mousePosition.getY() < transform->getPosition().getY() + transform->getScale().getY()) {
+		newState = forge::HOVER_STATE;
+		if (input->isMouseButtonPressed(M_LEFT)) {
+			newState = forge::CLICKED_STATE;
+			clicked = true;
+		};
+	}
+	else {
+		newState = forge::OUT_STATE;
 	}
 }
 
 Button::Button() :
-	pressed(false),
+	Image(),
+	clicked(false),
 	function(nullptr),
-	image(nullptr),
 	input(nullptr),
-	state(forge::ButtonState::IDLE),
+	state(forge::ButtonState::OUT_STATE),
+	newState(forge::ButtonState::OUT_STATE),
 	hoverTexture("default.png") {
+	serializer(outTexture, "out");
 	serializer(hoverTexture, "hover");
-	// Ver como cargar una funcion desde Lua
+	serializer(clickedTexture, "clicked");
 }
 
 Button::~Button() {
@@ -34,18 +58,26 @@ Button::~Button() {
 }
 
 bool Button::initComponent(ComponentData* data) {
-	if (UIComponent::initComponent(data)) {
-		if (entity->hasComponent("Image")) {
-			input = Input::GetInstance();
-			image = entity->getComponent<Image>();
-			idleTexture = image->getTexture();
-			return true;
-		}
-		else {
-			std::cerr << "ERROR: Una entidad con componente Button debe contar con un componente Image tambien";
-		}
+	if (Image::initComponent(data)) {
+		input = Input::GetInstance();
+		setMaterial(outTexture);
+		return true;
 	}
 	return false;
+}
+
+void Button::onEnabled() {
+	Image::onEnabled();
+	state = forge::OUT_STATE;
+	newState = forge::OUT_STATE;
+	texture = outTexture;
+	setMaterial(outTexture);
+}
+
+void Button::onDisabled() {
+	Image::onDisabled();
+	clicked = false;
+	//TODO : BORRAR TODAS LAS TEXTURAS
 }
 
 void Button::update() {
@@ -60,6 +92,15 @@ void Button::update() {
 	// Button::resetFunction(); button->update(); Button::mainFunctionCall(); - la idea deberia ser parecida
 	// Para comprobar si se esta pulsando el raton: InputManager.isMouseButtonPressed(MouseNames button);
 	// Los MouseNames estan en el .h del input
+	checkMousePosition();
+	if (state == forge::CLICKED_STATE && newState == forge::HOVER_STATE) {
+		// callback
+
+	}
+	if (state != newState) {
+		state = newState;
+		changeButtonImage();
+	}
 }
 
 void Button::resetFunction() {
@@ -73,5 +114,5 @@ bool Button::mainFunctionCall() {
 }
 
 bool Button::isPressed() {
-	return pressed;
+	return clicked;
 }

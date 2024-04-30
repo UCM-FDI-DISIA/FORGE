@@ -33,6 +33,7 @@ void Image::destroyImage() {
 	gui->getTextureManager()->remove(texture);
 	imageSource->freeMemory();
 	delete imageSource;
+	gui->deleteResource(texture);
 	destroyPanel();
 	destroyOverlay();
 	imageSource = nullptr;
@@ -58,6 +59,7 @@ void Image::createTextureAndMaterialFromImage() {
 
 void Image::loadAndAssign() {
 	// Si la imagen no esta cargada...
+
 	if (!gui->hasResource(texture)) {
 		// ...la cargo
 		createTextureAndMaterialFromImage();
