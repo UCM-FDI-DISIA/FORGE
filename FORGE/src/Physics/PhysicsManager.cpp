@@ -64,7 +64,7 @@ bool PhysicsManager::setup() {
         world->setDebugDrawer(debugger);
 #endif // DEBUG
         
-        world->setGravity(btVector3(0.9f, -9.8f, 0.0f));
+        world->setGravity(btVector3(0.0f, -98.0f, 0.0f));
         collisionLayers["NOTHING"] = 0;
         collisionLayers["ALL"] = BIT(1);
         collisionMatrix["ALL"]["ALL"] = true;
