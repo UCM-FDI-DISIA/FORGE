@@ -1,13 +1,10 @@
 #include "PhysicsManager.h"
-#include <lua.hpp>
-#include <LuaBridge/LuaBridge.h>
+#pragma warning(push)
+#pragma warning(disable : 26495)
 #include <btBulletDynamicsCommon.h>
-#include "Scene.h"
-#include "SceneManager.h"
+#pragma warning(pop)
 #include "RenderManager.h"
 #include "Entity.h"
-#include "Component.h"
-#include "EntityData.h"
 #include "RigidBody.h"
 #include "Transform.h"
 #include "DebugMode.h"
@@ -19,15 +16,16 @@
 std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
 bool PhysicsManager::initialised = false;
 
-PhysicsManager::PhysicsManager() {
-    broadphase = nullptr;
-    collisionConfiguration = nullptr;
-    dispatcher = nullptr;
-    solver = nullptr;
-    world = nullptr;
-    debugger = nullptr;
-    debugMode = true;
-    collisionMatrix = std::unordered_map<std::string, std::unordered_map<std::string, bool>>();
+PhysicsManager::PhysicsManager() :
+    broadphase(nullptr),
+    collisionConfiguration(nullptr),
+    dispatcher(nullptr),
+    solver(nullptr),
+    world(nullptr),
+    debugger(nullptr),
+    debugMode(true),
+    collisionMatrix(),
+    numberOfLayers(0) {
 }
 
 PhysicsManager::~PhysicsManager() {
@@ -66,7 +64,7 @@ bool PhysicsManager::setup() {
         world->setDebugDrawer(debugger);
 #endif // DEBUG
         
-        world->setGravity(btVector3((btScalar)0, (btScalar)-9.8, (btScalar)0));
+        world->setGravity(btVector3(0.9f, -9.8f, 0.0f));
         collisionLayers["NOTHING"] = 0;
         collisionLayers["ALL"] = BIT(1);
         collisionMatrix["ALL"]["ALL"] = true;
@@ -85,7 +83,7 @@ void PhysicsManager::drawDebug() {
 }
 
 void PhysicsManager::updatePhysics() {
-    world->stepSimulation(1 / 50.f, 20);    
+    world->stepSimulation(1.0f / 50.f, 20);    
     handleCollisions();    
 }
 
@@ -129,7 +127,7 @@ void PhysicsManager::handleCollisions() {
     }
 
     //Iteramos en todos los colliders para manejar los fines de colision
-    for (auto t : transforms) {
+    for (auto& t : transforms) {
         if (t.second->getEntity()->hasComponent("Collider")) {
             t.second->getEntity()->getComponent<Collider>()->checkCollisionEnd();
         }
@@ -164,9 +162,9 @@ void  PhysicsManager::deleteBody(btRigidBody* body) {
     auto auxTransform = transforms.find(body);
     if (auxTransform != transforms.end()) {
         world->removeRigidBody((*auxTransform).first);
-        delete(*auxTransform).first->getMotionState();
-        delete(*auxTransform).first->getCollisionShape();
-        delete (*auxTransform).first;
+        delete auxTransform->first->getMotionState();
+        delete auxTransform->first->getCollisionShape();
+        delete auxTransform->first;
         transforms.erase(auxTransform);
     }
 }
@@ -179,7 +177,7 @@ bool PhysicsManager::isDebugModeEnabled() {
     return debugMode;
 }
 
-bool PhysicsManager::addLayer(const std::string layerName) {
+bool PhysicsManager::addLayer(std::string const& layerName) {
     if (collisionLayers.count(layerName) == 0) {
         numberOfLayers++;
         collisionLayers[layerName] = BIT(numberOfLayers);
@@ -189,9 +187,9 @@ bool PhysicsManager::addLayer(const std::string layerName) {
     return false;
 }
 
-void PhysicsManager::setCollideWith(const std::string layer, const std::vector<std::string>& layersToCollide) {
+void PhysicsManager::setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide) {
     if (collisionLayers.count(layer) > 0) {
-        for (std::string aux : layersToCollide) {
+        for (std::string const& aux : layersToCollide) {
                 collisionMatrix[layer][aux] = true;
                 collisionMatrix[aux][layer] = true;
         }
@@ -201,26 +199,22 @@ void PhysicsManager::setCollideWith(const std::string layer, const std::vector<s
 bool PhysicsManager::checkContact(btRigidBody* body1, btRigidBody* body2) {
     ContactCallback callback;
     world->contactPairTest(body1, body2, callback);
-    return callback.isContacting;
+    return callback.contacting();
 }
 
-btVector3 PhysicsManager::fromForgeToBtVect(forge::Vector3 vect)
-{
+btVector3 PhysicsManager::fromForgeToBtVect(forge::Vector3 const& vect) {
     return btVector3(vect.getX(),vect.getY(),vect.getZ());
 }
 
-forge::Vector3 PhysicsManager::fromBtVectToForge(btVector3 vect)
-{
+forge::Vector3 PhysicsManager::fromBtVectToForge(btVector3 const& vect) {
     return forge::Vector3(vect.getX(),vect.getY(),vect.getZ());
 }
 
-btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion quat)
-{
+btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion const& quat) {
     return btQuaternion(quat.getAbsX(),quat.getAbsY(),quat.getAbsZ(),quat.getW());
 }
 
-forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion quat)
-{
+forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion const& quat) {
     forge::Quaternion q = forge::Quaternion();
     q.setAbsX(quat.getX());
     q.setAbsY(quat.getY());

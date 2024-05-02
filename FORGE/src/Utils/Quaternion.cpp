@@ -182,11 +182,11 @@ void Quaternion::setAngle(float newAngle) {
 	z = (z / prevSin) * newSin;
 }
 
-FORGE_API void forge::Quaternion::setW(float newW) {
+void forge::Quaternion::setW(float newW) {
 	w = newW;
 }
 
-FORGE_API void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
+void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
 	forge::Vector3 forward = pos - lookTo;
 	forward.normalize();
 	forge::Vector3 right = forge::Vector3(0, 1, 0).cross(forward);
@@ -286,15 +286,15 @@ float Quaternion::getZ() const {
 	return z / sinf(acosf(w));
 }
 
-float forge::Quaternion::getAbsX() {
+float forge::Quaternion::getAbsX() const {
 	return x;
 }
 
-float forge::Quaternion::getAbsY() {
+float forge::Quaternion::getAbsY() const {
 	return y;
 }
 
-float forge::Quaternion::getAbsZ() {
+float forge::Quaternion::getAbsZ() const {
 	return z;
 }
 

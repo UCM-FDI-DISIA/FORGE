@@ -1,5 +1,8 @@
 #include "Collider.h"
+#pragma warning(push)
+#pragma warning(disable : 26495)
 #include <btBulletDynamicsCommon.h>
+#pragma warning(pop)
 #include "PhysicsManager.h"
 #include "Entity.h"
 #include "Serializer.h"
@@ -9,9 +12,13 @@
 const std::string Collider::id = "Collider";
 
 Collider::Collider() :
-    physicsManager(nullptr), myBody(nullptr)
-    , myShape(nullptr),shapeType(boxShape), 
-    trigger(false),collisionLayer("") {
+    physicsManager(nullptr),
+    myBody(nullptr),
+    myShape(nullptr),
+    shapeType(boxShape), 
+    trigger(false),
+    collisionLayer(""),
+    bodyTransform(nullptr) {
     serializer(myScale, "scale");
     serializer(trigger, "trigger");
     serializer(collisionLayer, "layer");
@@ -28,7 +35,7 @@ bool Collider::initComponent(ComponentData* data) {
     return true;
 }
 
-void Collider::createRigidBody(std::string myShapeType) {
+void Collider::createRigidBody(std::string const& myShapeType) {
     if (entity->hasComponent<Transform>()) {
         physicsManager = PhysicsManager::GetInstance();
         // De forma predeterminada, el rigid es una caja
@@ -61,7 +68,7 @@ void Collider::createRigidBody(std::string myShapeType) {
             forVect = aux->getGlobalPosition();
         }
         else {
-            std::cerr << "ERROR: No se pudo acceder al Transform desde el Collider\n";
+            reportError("No se pudo acceder al Transform desde el Collider");
         }
 
         btQuaternion quat = physicsManager->fromForgeToBtQuat(forQuat);
@@ -151,13 +158,13 @@ void Collider::onCollision(Entity* other) {
 
     //Si la entidad no esta en la lista de colisiones, se llama a los OnCollisionEnterCallbacks
     if (std::find(collidedEntities.begin(), collidedEntities.end(), other) == collidedEntities.end()) {
-        for (auto cb : onCollisionEnterCallbacks) {
+        for (auto& cb : onCollisionEnterCallbacks) {
 			cb(this, other->getComponent<Collider>());
 		}
 		collidedEntities.push_back(other);
 	}
 	else { //Si la entidad esta en la lista de colisiones, se llama a los OnCollisionStayCallbacks
-        for (auto cb : oncollisionStayCallbacks) {
+        for (auto& cb : oncollisionStayCallbacks) {
 			cb(this, other->getComponent<Collider>());
 		}
 	}
@@ -177,7 +184,7 @@ void Collider::checkCollisionEnd() {
 
 
         if (!physicsManager->checkContact(myBody, otherBody)) {
-            for (auto cb : oncollisionLeaveCallbacks) {
+            for (auto& cb : oncollisionLeaveCallbacks) {
 				cb(this, entity->getComponent<Collider>());
 			}
 			toDelete.push_back(entity);
@@ -210,8 +217,6 @@ std::string Collider::getLayer() {
     return collisionLayer;
 }
 
-FORGE_API forge::Vector3 Collider::getPosition()
-{
-
+forge::Vector3 Collider::getPosition() {
     return physicsManager->fromBtVectToForge(myBody->getWorldTransform().getOrigin());
 }

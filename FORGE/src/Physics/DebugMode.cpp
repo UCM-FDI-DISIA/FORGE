@@ -1,6 +1,9 @@
 #include "DebugMode.h"
 #include "RenderManager.h"
+#pragma warning(push)
+#pragma warning(disable : 26495)
 #include <LinearMath/btIDebugDraw.h>
+#pragma warning(pop)
 
 using namespace Ogre;
 

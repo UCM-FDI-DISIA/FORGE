@@ -234,17 +234,17 @@ namespace forge {
 		/// <summary>
 		/// Devuelve el valor a la componente en X directamente
 		/// </summary>
-		FORGE_API float getAbsX();
+		FORGE_API float getAbsX() const;
 
 		/// <summary>
 		/// Devuelve el valor a la componente en Y directamente
 		/// </summary>
-		FORGE_API float getAbsY();
+		FORGE_API float getAbsY() const;
 
 		/// <summary>
 		/// Devuelve el valor a la componente en Z directamente
 		/// </summary>
-		FORGE_API float getAbsZ();
+		FORGE_API float getAbsZ() const;
 
 		/// <summary>
 		/// Acceso al angulo del cuaternion

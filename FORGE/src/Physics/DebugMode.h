@@ -1,8 +1,17 @@
 #ifndef DebugDrawer_h__
 #define DebugDrawer_h__
 #include <vector>
+#pragma warning(push)
+#pragma warning(disable : 4251)
+#pragma warning(disable : 26439)
+#pragma warning(disable : 26451)
+#pragma warning(disable : 26495)
 #include <Ogre.h>
+#pragma warning(pop)
+#pragma warning(push)
+#pragma warning(disable : 26495)
 #include <btBulletCollisionCommon.h>
+#pragma warning(pop)
 
 /// <summary>
 /// Struct para guardar los puntos de cintacto entre bodies

@@ -1,13 +1,12 @@
 #pragma once
 #ifndef COLLIDER_H_
 #define COLLIDER_H_
-#include <string>
-#include <Component.h>
-#include <Vector3.h>
-#include <Quaternion.h>
+#include "Component.h"
 #include <functional>
 #include <list>
 #include <vector>
+#include "Vector3.h"
+#include "Quaternion.h"
 
 class PhysicsManager;
 class btRigidBody;
@@ -26,9 +25,9 @@ protected:
     btCollisionShape* myShape;
     collisionShape shapeType;
     forge::Vector3 myScale;
-    std::vector< std::function<void(Collider*, Collider*)>> onCollisionEnterCallbacks;
-    std::vector< std::function<void(Collider*, Collider*)>> oncollisionStayCallbacks;
-    std::vector< std::function<void(Collider*, Collider*)>> oncollisionLeaveCallbacks;
+    std::vector<std::function<void(Collider*, Collider*)>> onCollisionEnterCallbacks;
+    std::vector<std::function<void(Collider*, Collider*)>> oncollisionStayCallbacks;
+    std::vector<std::function<void(Collider*, Collider*)>> oncollisionLeaveCallbacks;
     Transform* bodyTransform;
     std::string myShapeString;
     forge::Vector3 lastPosition;
@@ -49,13 +48,13 @@ public:
 
     FORGE_API bool initComponent(ComponentData* data) override;
 
-    virtual FORGE_API void createRigidBody(std::string myShapeType);
+    FORGE_API void fixedUpdate() override;
 
-    virtual FORGE_API void fixedUpdate();
+    FORGE_API void onEnabled() override;
 
-    virtual FORGE_API void onEnabled();
+    FORGE_API void onDisabled() override;
 
-    virtual FORGE_API void onDisabled();
+    FORGE_API virtual void createRigidBody(std::string const& myShapeType);
 
     /// <summary>
     /// Metodo para comprobar si han colisionado dos colliders

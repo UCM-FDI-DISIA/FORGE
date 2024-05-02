@@ -1,19 +1,26 @@
 #include "RigidBody.h"
+#pragma warning(push)
+#pragma warning(disable : 26495)
+#include <btBulletDynamicsCommon.h>
+#pragma warning(pop)
 #include "PhysicsManager.h"
 #include "Entity.h"
 #include "Transform.h"
 #include "Serializer.h"
-#include "btBulletDynamicsCommon.h"
+
 #define PI 3.14159265358979323846264338327950288
 
 const std::string RigidBody::id = "RigidBody";
 
 RigidBody::RigidBody() :
-      mass(1)
-    , kinematic(false), friction(0), restitution(0)
-    , staticBody(false), myGravity(FLT_MAX, FLT_MAX, FLT_MAX) {
-    axisBlockedPos = std::vector<bool>(3, false);
-    axisBlockedRot = std::vector<bool>(3, false);
+    mass(1),
+    kinematic(false),
+    friction(0),
+    restitution(0),
+    staticBody(false),
+    myGravity(FLT_MAX, FLT_MAX, FLT_MAX),
+    axisBlockedPos(3, false),
+    axisBlockedRot(3, false) {
     serializer(mass, "mass");
     serializer(friction, "friction");
     serializer(restitution, "restitution");

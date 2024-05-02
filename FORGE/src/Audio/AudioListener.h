@@ -8,7 +8,6 @@ class AudioListener : public Component {
 private:
     Transform* transform;
     AudioManager& manager;
-	bool isListenerActive = false;
 public:
 	static const FORGE_API_VAR std::string id;
     /// <summary>

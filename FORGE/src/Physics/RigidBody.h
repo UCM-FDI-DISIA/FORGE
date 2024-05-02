@@ -2,9 +2,8 @@
 #ifndef RIGIDBODY_H_
 #define RIGIDBODY_H_
 #include <string>
-#include "Component.h"
-#include "Vector3.h"
 #include "Collider.h"
+#include "Vector3.h"
 
 enum collisionShape {
     ballShape, boxShape , capsuleShape, cilinderShape, planeShape

@@ -12,7 +12,7 @@ bool AudioManager::initialized = false;
 
 AudioManager::AudioManager() :
 	engine(createIrrKlangDevice()),
-	isListenerOnScene(false) {
+	currentListener(nullptr) {
 }
 
 bool AudioManager::Init() {
@@ -78,14 +78,18 @@ void AudioManager::setListenerPosition(Vector3 const& position, Vector3 const& l
 	engine->setListenerPosition(position, lookAt, Vector3::ZERO, Vector3::UP);
 }
 
-bool AudioManager::getListenerOnScene() {
-	return isListenerOnScene;
+bool AudioManager::registerListener(AudioListener* listener) {
+	if (currentListener != nullptr) {
+		return false;
+	}
+	currentListener = listener;
+	return true;
 }
 
-void AudioManager::registerListenerOnScene() {
-	isListenerOnScene = true;
-}
-
-void AudioManager::clearListenerOnScene() {
-	isListenerOnScene = false;
+bool AudioManager::deregisterListener(AudioListener* listener) {
+	if (currentListener != listener) {
+		return false;
+	}
+	currentListener = nullptr;
+	return true;
 }
