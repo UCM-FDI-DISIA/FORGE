@@ -17,7 +17,7 @@ class Collider: public Component {
     
 protected:
     enum collisionShape {
-        ballShape, boxShape, capsuleShape, cilinderShape, planeShape
+        ballShape, boxShape, capsuleShape, cylinderShape, planeShape
     };
     PhysicsManager* physicsManager;
     bool trigger;
@@ -54,7 +54,7 @@ public:
 
     FORGE_API void onDisabled() override;
 
-    FORGE_API virtual bool createRigidBody(std::string const& myShapeType);
+    FORGE_API virtual bool createRigidBody(std::string const& myShapeType, float mass, bool isStatic, bool disableDeactivation);
 
     /// <summary>
     /// Metodo para comprobar si han colisionado dos colliders

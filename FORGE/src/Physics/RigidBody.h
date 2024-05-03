@@ -6,7 +6,7 @@
 #include "Vector3.h"
 
 enum collisionShape {
-    ballShape, boxShape , capsuleShape, cilinderShape, planeShape
+    ballShape, boxShape , capsuleShape, cylinderShape, planeShape
 };
 namespace forge {
     class Vector3;
@@ -31,7 +31,9 @@ public:
 
     FORGE_API bool initComponent(ComponentData* data) override;
 
-    virtual FORGE_API void createRigidBody(std::string myShapeType);
+    FORGE_API bool createRigidBody(std::string const& myShapeType, float mass, bool isStatic, bool disableDeactivation) override;
+
+    FORGE_API void onEnabled() override;
 
     /// <summary>
     /// Metodo para aplicar fuerzas a un rigidbody

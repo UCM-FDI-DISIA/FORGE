@@ -77,6 +77,11 @@ public:
     /// </summary>
     void changeGravity(forge::Vector3 newGravity);
     /// <summary>
+    /// Devuelve la gravedad del mundo
+    /// </summary>
+    /// <returns>Vector3 con la gravedad del mundo</returns>
+    forge::Vector3 getGravity() const;
+    /// <summary>
     /// Registra un btRigidbody y su transform asociado para busquedas y tratamiento de colisiones
     /// </summary>
     /// <param name="body">El btRigidbody a registrar</param>
@@ -116,28 +121,28 @@ public:
     /// </summary>
     /// <param name="vect"> Vector de forge</param>
     /// <returns> Vector de bullet</returns>
-    btVector3 fromForgeToBtVect(forge::Vector3 const& vect);
+    btVector3 fromForgeToBtVect(forge::Vector3 const& vect) const;
 
     /// <summary>
     /// Convierte un vector de bullet a uno de forge
     /// </summary>
     /// <param name="vect"> Vector de bullet</param>
     /// <returns> Vector de forge</returns>
-    forge::Vector3 fromBtVectToForge(btVector3 const& vect);
+    forge::Vector3 fromBtVectToForge(btVector3 const& vect) const;
 
     /// <summary>
     /// Convierte un quaternion de forge a bullet
     /// </summary>
     /// <param name="quat"> Quaternion de forge</param>
     /// <returns> Quaternion de bullet</returns>
-    btQuaternion fromForgeToBtQuat(forge::Quaternion const& quat);
+    btQuaternion fromForgeToBtQuat(forge::Quaternion const& quat) const;
 
     /// <summary>
     /// Convierte un quaternion de bullet a forge
     /// </summary>
     /// <param name="quat"> Quaternion de bullet</param>
     /// <returns> Quaternion de forge</returns>
-    forge::Quaternion fromBtQuatToForge(btQuaternion const& quat);
+    forge::Quaternion fromBtQuatToForge(btQuaternion const& quat) const;
 #pragma endregion
 
 };

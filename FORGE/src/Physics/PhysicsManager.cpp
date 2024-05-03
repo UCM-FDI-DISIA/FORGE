@@ -142,6 +142,10 @@ void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
     world->setGravity(fromForgeToBtVect(newGravity));
 }
 
+forge::Vector3 PhysicsManager::getGravity() const {
+    return fromBtVectToForge(world->getGravity());
+}
+
 void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::string layer) {
     transforms.insert({ body,transform });
     int bitmask = 0;
@@ -202,18 +206,18 @@ bool PhysicsManager::checkContact(btRigidBody* body1, btRigidBody* body2) {
     return callback.contacting();
 }
 
-btVector3 PhysicsManager::fromForgeToBtVect(forge::Vector3 const& vect) {
+btVector3 PhysicsManager::fromForgeToBtVect(forge::Vector3 const& vect) const {
     return btVector3(vect.getX(),vect.getY(),vect.getZ());
 }
 
-forge::Vector3 PhysicsManager::fromBtVectToForge(btVector3 const& vect) {
+forge::Vector3 PhysicsManager::fromBtVectToForge(btVector3 const& vect) const {
     return forge::Vector3(vect.getX(),vect.getY(),vect.getZ());
 }
 
-btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion const& quat) {
+btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion const& quat) const {
     return btQuaternion(quat.getAbsX(),quat.getAbsY(),quat.getAbsZ(),quat.getW());
 }
 
-forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion const& quat) {
+forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion const& quat) const {
     return forge::Quaternion(quat.getX(), quat.getY(), quat.getZ(), quat.getW());
 }
