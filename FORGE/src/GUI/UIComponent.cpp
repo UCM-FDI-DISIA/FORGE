@@ -76,11 +76,11 @@ void UIComponent::update() {
 
 }
 
-FORGE_API void UIComponent::onEnabled() {
+void UIComponent::onEnabled() {
     gui->addCanvasElement(this);
 }
 
-FORGE_API void UIComponent::onDisabled() {
+void UIComponent::onDisabled() {
     gui->deleteCanvasElement(this);
 }
 

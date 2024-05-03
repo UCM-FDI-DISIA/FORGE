@@ -1,4 +1,7 @@
 ﻿#include "TestComponent.h"
+#include "lua.hpp"
+#include "LuaBridge/LuaBridge.h"
+#include "LuaForge.h"
 #include "Input.h"
 #include "Transform.h"
 #include "ComponentData.h"
@@ -115,4 +118,8 @@ void TestComponent::update() {
 		}
 		else sceneManager->changeScene("Test");
 	}
+}
+
+void TestComponent::Poto() {
+	std::cout << "SE LLAMO AL CALLBACK\n";
 }

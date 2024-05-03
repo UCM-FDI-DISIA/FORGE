@@ -2,7 +2,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 set INCLUDEDIR=.\include\
-set INCLUDEVER=0.9.7
+set INCLUDEVER=1.0
 set INCLUDE=1
 
 ::Se compilan las dependencias
@@ -68,10 +68,19 @@ if !INCLUDE! equ 1 (
     xcopy /y "Transform.h" "!RELATIVEINCLUDEDIR!"
     cd ..
 
-    echo PONER AQUI LA COPIA DE LOS INCLUDES DE GUI
+    cd GUI
+    xcopy /y "UIComponent.h" "!RELATIVEINCLUDEDIR!"
+    xcopy /y "Image.h" "!RELATIVEINCLUDEDIR!"
+    xcopy /y "Button.h" "!RELATIVEINCLUDEDIR!"
+    xcopy /y "Text.h" "!RELATIVEINCLUDEDIR!"
+    cd ..
 
     cd Input
     xcopy /y "Input.h" "!RELATIVEINCLUDEDIR!"
+    cd ..
+
+    cd Load
+    xcopy /y "LuaForge.h" "!RELATIVEINCLUDEDIR!"
     cd ..
 
     cd Main

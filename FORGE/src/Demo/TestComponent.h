@@ -29,6 +29,7 @@ public:
 	bool initComponent(ComponentData* data) override;
 	void update() override;
 
+	void Poto();
 };
 
 #endif // !TEST_MOVEMENT_H_

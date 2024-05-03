@@ -90,7 +90,7 @@ public:
 	/// <summary>
 	/// Ajusta la imagen al nuevo ajuste de la ventana
 	/// </summary>
-	virtual void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
+	virtual FORGE_API void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
 
 	/// <summary>
 	/// Cambia la opacidad del fondo

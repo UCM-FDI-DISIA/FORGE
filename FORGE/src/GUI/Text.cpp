@@ -47,10 +47,12 @@ bool Text::initComponent(ComponentData* data) {
 }
 
 void Text::onEnabled() {
+    UIComponent::onEnabled();
     createText();
 }
 
 void Text::onDisabled() {
+    UIComponent::onDisabled();
     destroyText();
 }
 
@@ -59,7 +61,7 @@ void Text::resize(forge::Vector2 const& prev, forge::Vector2 const& updated) {
 
     float factorY = updated.getY() / prev.getY();
     fontHeight = static_cast<int>(fontHeight * factorY);
-
+    overlayPanel->setPosition(0, 0);
     setPosition(transform->getPosition());
     setHeight(fontHeight);
 }

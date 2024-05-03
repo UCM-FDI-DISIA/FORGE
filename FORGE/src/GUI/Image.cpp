@@ -89,10 +89,12 @@ bool Image::initComponent(ComponentData* data) {
 }
 
 void Image::onEnabled() {
+	UIComponent::onEnabled();
 	createImage();
 }
 
 void Image::onDisabled() {
+	UIComponent::onDisabled();
 	destroyImage();
 }
 

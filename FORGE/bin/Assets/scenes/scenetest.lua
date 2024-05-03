@@ -24,7 +24,8 @@ local prefabs = {
                 shapeType = "Cube",
                 static = false,
                 layer = "ALL"
-            }
+            },
+            TestComponent = 0
         }
     },
     obstaculo = {
@@ -82,19 +83,6 @@ local scenes = {
                 }
             }
         },
-        texto1 = {
-            components = {
-                RectTransform = {
-                    position = {0, 0},
-                    scale = {5, 5}
-                },
-                Text = {
-                    text = "texto1",
-                    fontName = "Willow.ttf",
-                    fontHeight = 100
-                }
-            }
-        },
         texto2 = {
             components = {
                 RectTransform = {
@@ -105,55 +93,6 @@ local scenes = {
                     text = "texto2",
                     fontName = "Willow.ttf",
                     fontHeight = 100
-                }
-            }
-        },
-        imagen1 = {
-            components = {
-                RectTransform = {
-                    position = {20, 100},
-                    scale = {200, 200}
-                },
-                Image = {
-                    depth = 0,
-                    texture = "panko.png"
-                }
-            }
-        },
-        imagen2 = {
-            components = {
-                RectTransform = {
-                    position = {420, 100},
-                    scale = {200, 300}
-                },
-                Image = {
-                    depth = 1,
-                    texture = "dinocat.png"
-                }
-            }
-        },
-        imagen3 = {
-            components = {
-                RectTransform = {
-                    position = {220, 100},
-                    scale = {200, 200}
-                },
-                Image = {
-                    depth = 1,
-                    texture = "dinoocat.png"
-                }
-            }
-        },
-        button = {
-            components = {
-                RectTransform = {
-                    position = {50, 300},
-                    scale = {100, 100}
-                },
-                Button = {
-                    out = "out.png",
-                    hover = "over.png",
-                    clicked = "clicked.png"
                 }
             }
         }
@@ -216,6 +155,19 @@ local scenes = {
                 Light = {
                     type = 0 
                 },
+            }
+        },
+        texto1 = {
+            components = {
+                RectTransform = {
+                    position = {0, 0},
+                    scale = {5, 5}
+                },
+                Text = {
+                    text = "texto1",
+                    fontName = "Willow.ttf",
+                    fontHeight = 100
+                }
             }
         }
     }
