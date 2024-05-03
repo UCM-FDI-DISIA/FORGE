@@ -59,8 +59,8 @@ void Collider::createRigidBody(std::string const& myShapeType) {
         }
 
         //Inicializamos el rigid body
-        forge::Quaternion forQuat = forge::Quaternion(0, 0, 0, 0);
-        forge::Vector3 forVect = forge::Vector3(0, 0, 0);
+        forge::Quaternion forQuat = forge::Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+        forge::Vector3 forVect = forge::Vector3(0.0f, 0.0f, 0.0f);
         // En caso de que no se pueda acceder al transform, se usa un default
         Transform* aux = entity->getComponent<Transform>();
         if (aux != nullptr) {

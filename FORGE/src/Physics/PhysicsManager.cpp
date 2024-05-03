@@ -190,8 +190,8 @@ bool PhysicsManager::addLayer(std::string const& layerName) {
 void PhysicsManager::setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide) {
     if (collisionLayers.count(layer) > 0) {
         for (std::string const& aux : layersToCollide) {
-                collisionMatrix[layer][aux] = true;
-                collisionMatrix[aux][layer] = true;
+            collisionMatrix[layer][aux] = true;
+            collisionMatrix[aux][layer] = true;
         }
     }
 }
@@ -215,10 +215,5 @@ btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion const& quat) {
 }
 
 forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion const& quat) {
-    forge::Quaternion q = forge::Quaternion();
-    q.setAbsX(quat.getX());
-    q.setAbsY(quat.getY());
-    q.setAbsZ(quat.getZ());
-    q.setW(quat.getW());
-    return q;
+    return forge::Quaternion(quat.getX(), quat.getY(), quat.getZ(), quat.getW());
 }

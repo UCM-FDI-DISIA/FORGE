@@ -17,8 +17,15 @@ Quaternion::Quaternion() :
 	w(1.0f) {
 }
 
-Quaternion::Quaternion(float _x, float _y, float _z, float _angle) {
-	set(_x, _y, _z, _angle);
+Quaternion::Quaternion(float _x, float _y, float _z, float _w) :
+	x(_x), 
+	y(_y),
+	z(_z),
+	w(_w) {
+}
+
+Quaternion::Quaternion(Vector3 const& vec, float angle) {
+	set(vec.getX(), vec.getY(), vec.getZ(), angle);
 }
 
 Quaternion::Quaternion(const Quaternion& q) :

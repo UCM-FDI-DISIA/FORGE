@@ -19,19 +19,26 @@ namespace forge {
 	public:
 		#pragma region Constructores
 		/// <summary>
-		/// Constructor predeterminado: Quaternion(0,0,0,0)
+		/// Constructor predeterminado: Quaternion(0,0,0,1)
 		/// </summary>
 		FORGE_API Quaternion();
 
 		/// <summary>
-		/// Constructor completo
+		/// Constructor completo a partir de valores de Quaternion
 		/// </summary>
 		/// <param name="_x">Valor en la componente X</param>
 		/// <param name="_y">Valor en la componente Y</param>
 		/// <param name="_z">Valor en la componente Z</param>
-		/// <param name="_angle">Valor del angulo del par rotacion</param>
-		FORGE_API Quaternion(float _x, float _y, float _z, float _angle);
+		/// <param name="_w">Valor en la componente W</param>
+		FORGE_API Quaternion(float _x, float _y, float _z, float _w);
 
+		/// <summary>
+		/// Constructor a partir de un par rotacion
+		/// </summary>
+		/// <param name="vec">Direccion a la que miraria la rotacion del objeto</param>
+		/// <param name="angle">Rotacion alrededor del vector introducido</param>
+		/// <returns></returns>
+		FORGE_API Quaternion(Vector3 const& vec, float angle);
 		/// <summary>
 		/// Constructor por copia
 		/// </summary>

@@ -46,7 +46,6 @@ Vector3 Random::getRandomVector() {
 }
 
 Quaternion forge::Random::getRandomQuaternion() {
-	std::uniform_real_distribution<float> uni(-1, 1);
-	return Quaternion(uni(gen), uni(gen), uni(gen), generateRange(0.0f, 360.0f));
+	return Quaternion(getRandomVector(), generateRange(0.0f, 360.0f));
 }
 #pragma endregion

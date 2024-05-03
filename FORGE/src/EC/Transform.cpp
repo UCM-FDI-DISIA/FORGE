@@ -73,19 +73,19 @@ void Transform::rotateZ(float zRot) {
 }
 
 void Transform::rotateXRad(float xRot) {
-	rotation *= Quaternion(1, 0, 0, xRot);
+	rotation *= Quaternion(Vector3(1.0f, 0.0f, 0.0f), xRot);
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
 }
 
 void Transform::rotateYRad(float yRot) {
-	rotation *= Quaternion(0, 1, 0, yRot);
+	rotation *= Quaternion(Vector3(0.0f, 1.0f, 0.0f), yRot);
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
 }
 
 void Transform::rotateZRad(float zRot) {
-	rotation *= Quaternion(0, 0, 1, zRot);
+	rotation *= Quaternion(Vector3(0.0f, 0.0f, 1.0f), zRot);
 	needsUpdate = true;	
 	setChildNeedsUpdate(true);
 }
@@ -212,13 +212,13 @@ bool Transform::getNeedsUpdate() const {
 }
 
 forge::Vector3 Transform::getForward() const {
-	return (getGlobalRotation() * Vector3::FORWARD).normalize();
+	return (getGlobalRotation() * Vector3::FORWARD).normalized();
 }
 
 forge::Vector3 Transform::getUp() const {
-	return (getGlobalRotation() * Vector3::UP).normalize();
+	return (getGlobalRotation() * Vector3::UP).normalized();
 }
 
 forge::Vector3 Transform::getRight() const {
-	return (getGlobalRotation() * Vector3::RIGHT).normalize();
+	return (getGlobalRotation() * Vector3::RIGHT).normalized();
 }
