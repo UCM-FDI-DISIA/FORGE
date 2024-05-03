@@ -12,16 +12,18 @@
 const std::string Collider::id = "Collider";
 
 Collider::Collider() :
-    physicsManager(nullptr),
+    physicsManager(PhysicsManager::GetInstance()),
     myBody(nullptr),
     myShape(nullptr),
     shapeType(boxShape), 
     trigger(false),
     collisionLayer(""),
-    bodyTransform(nullptr) {
+    bodyTransform(nullptr),
+    myScale(1.0f) {
     serializer(myScale, "scale");
     serializer(trigger, "trigger");
     serializer(collisionLayer, "layer");
+    serializer(myShapeString, "shapeType");
 }
 
 Collider::~Collider() {
@@ -29,86 +31,71 @@ Collider::~Collider() {
 }
 
 bool Collider::initComponent(ComponentData* data) {
-    myShapeString = data->get<std::string>("shapeType");
-    createRigidBody(myShapeString);
+    if (!createRigidBody(myShapeString)) {
+        throwError(false, "No se pudo crear el componente Collider.");
+    }
     setTrigger(trigger);
     return true;
 }
 
-void Collider::createRigidBody(std::string const& myShapeType) {
-    if (entity->hasComponent<Transform>()) {
-        physicsManager = PhysicsManager::GetInstance();
+bool Collider::createRigidBody(std::string const& myShapeType) {
+    if (!entity->hasComponent<Transform>()) {
+        throwError(false, "Se requiere un componente Transform para generar un Collider");
+    }
+
+    if (myShapeType == "Sphere") {
+        shapeType = ballShape;
+        myShape = new btSphereShape(myScale.getX() / 2);
+    }
+    else if (myShapeType == "Capsule") {
+        shapeType = capsuleShape;
+        myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
+    }
+    else if (myShapeType == "Cilinder") {
+        shapeType = cilinderShape;
+        myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale));
+    }
+    else /*Box*/ {
         // De forma predeterminada, el rigid es una caja
         shapeType = boxShape;
         myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
-
-        if (myShapeType == "Sphere") {
-            delete myShape;
-            shapeType = ballShape;
-            myShape = new btSphereShape(myScale.getX() / 2);
-        }
-        else if (myShapeType == "Capsule") {
-            delete myShape;
-            shapeType = capsuleShape;
-            myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
-        }
-        else if (myShapeType == "Cilinder") {
-            delete myShape;
-            shapeType = cilinderShape;
-            myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale));
-        }
-
-        //Inicializamos el rigid body
-        forge::Quaternion forQuat = forge::Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-        forge::Vector3 forVect = forge::Vector3(0.0f, 0.0f, 0.0f);
-        // En caso de que no se pueda acceder al transform, se usa un default
-        Transform* aux = entity->getComponent<Transform>();
-        if (aux != nullptr) {
-            forQuat = aux->getRotation();
-            forVect = aux->getGlobalPosition();
-        }
-        else {
-            reportError("No se pudo acceder al Transform desde el Collider");
-        }
-
-        btQuaternion quat = physicsManager->fromForgeToBtQuat(forQuat);
-        btVector3 vect = physicsManager->fromForgeToBtVect(forVect);
-
-        btVector3 bodyInertia;
-        myShape->calculateLocalInertia(0, bodyInertia);
-        btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
-
-        btRigidBody::btRigidBodyConstructionInfo bodyCI =
-            btRigidBody::btRigidBodyConstructionInfo(0, motionState, myShape, bodyInertia);
-
-
-        btRigidBody* rigidBody = new btRigidBody(bodyCI);
-        rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
-
-        bodyTransform = entity->getComponent<Transform>();
-
-        myBody = rigidBody;
-
-        physicsManager->registerBody(rigidBody, entity->getComponent<Transform>(), collisionLayer==""? "ALL":collisionLayer);
     }
-    else{
-        reportError("Se requiere un componente Transform para generar un Collider");
-    }
+
+    //Inicializamos el rigid body
+    bodyTransform = entity->getComponent<Transform>();
+    forge::Quaternion forQuat = bodyTransform->getGlobalRotation();
+    forge::Vector3 forVect = bodyTransform->getGlobalPosition();
+
+    btQuaternion quat = physicsManager->fromForgeToBtQuat(forQuat);
+    btVector3 vect = physicsManager->fromForgeToBtVect(forVect);
+
+    btVector3 bodyInertia;
+    myShape->calculateLocalInertia(0, bodyInertia);
+    btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(quat, vect));
+
+    btRigidBody::btRigidBodyConstructionInfo bodyCI =
+        btRigidBody::btRigidBodyConstructionInfo(0, motionState, myShape, bodyInertia);
+
+
+    myBody = new btRigidBody(bodyCI);
+    myBody->setCollisionFlags(myBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+
+    physicsManager->registerBody(myBody, bodyTransform, collisionLayer==""? "ALL":collisionLayer);
+
+    return true;
 }
 
 void Collider::fixedUpdate() {
-    if (bodyTransform != nullptr) {
-        btTransform aux;
-        myBody->getMotionState()->getWorldTransform(aux);
-        forge::Vector3 pos;
-        pos.setX(aux.getOrigin().x());
-        pos.setY(aux.getOrigin().y());
-        pos.setZ(aux.getOrigin().z());
-        bodyTransform->setPosition(pos);
+    btTransform aux;
+    myBody->getMotionState()->getWorldTransform(aux);
+    forge::Vector3 pos;
+    pos.setX(aux.getOrigin().x());
+    pos.setY(aux.getOrigin().y());
+    pos.setZ(aux.getOrigin().z());
+    bodyTransform->setGlobalPosition(pos);
 
-        forge::Quaternion quat = physicsManager->fromBtQuatToForge(myBody->getOrientation());
-        bodyTransform->setRotation(quat);
-    }
+    forge::Quaternion quat = physicsManager->fromBtQuatToForge(myBody->getOrientation());
+    bodyTransform->setGlobalRotation(quat);
 }
 
 void Collider::onEnabled() {
@@ -123,8 +110,8 @@ void Collider::onEnabled() {
 void Collider::onDisabled() {
     lastForce = forge::Vector3(myBody->getTotalForce().x(), myBody->getTotalForce().y(), myBody->getTotalForce().z());
     physicsManager->deleteBody(myBody);
-    lastPosition = bodyTransform->getPosition();
-    lastOrientation = bodyTransform->getRotation();
+    lastPosition = bodyTransform->getGlobalPosition();
+    lastOrientation = bodyTransform->getGlobalRotation();
 }
 
 bool Collider::hasCollidedWith(Entity* other) {
@@ -172,26 +159,27 @@ void Collider::onCollision(Entity* other) {
 
 void Collider::checkCollisionEnd() {
     std::list<Entity*> toDelete;
-    for (auto entity : collidedEntities) {
+    for (auto& otherEntity : collidedEntities) {
         btRigidBody* otherBody = nullptr;
+        Collider* otherCollider = nullptr;
         
-        if (entity->hasComponent<RigidBody>()) {
-            otherBody = entity->getComponent<RigidBody>()->getBody();
+        if (otherEntity->hasComponent<RigidBody>()) {
+            otherCollider = otherEntity->getComponent<RigidBody>();
         }
-        else if (entity->hasComponent<Collider>()) {
-            otherBody = entity->getComponent<Collider>()->getBody();
+        else if (otherEntity->hasComponent<Collider>()) {
+            otherCollider = otherEntity->getComponent<Collider>();
         } //Si no tiene ningun componente de colision, algo va MUY MAL
-
+        otherBody = otherCollider->getBody();
 
         if (!physicsManager->checkContact(myBody, otherBody)) {
             for (auto& cb : oncollisionLeaveCallbacks) {
-				cb(this, entity->getComponent<Collider>());
+				cb(this, otherCollider);
 			}
-			toDelete.push_back(entity);
+			toDelete.push_back(otherEntity);
 		}
 	}
-    for (auto entity : toDelete) {
-		collidedEntities.remove(entity);
+    for (auto& otherEntity : toDelete) {
+		collidedEntities.remove(otherEntity);
 	}
 }
 

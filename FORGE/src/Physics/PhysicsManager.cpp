@@ -153,8 +153,8 @@ void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::
 
 
 void PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
-    registerBody(body->getRigidBody(), body->getEntity()->getComponent<Transform>());
-    importantObjects.insert({ name,body->getRigidBody()});
+    registerBody(body->getBody(), body->getEntity()->getComponent<Transform>());
+    importantObjects.insert({ name,body->getBody()});
     
 }
 

@@ -41,6 +41,11 @@ public:
 	/// <param name="newRot">Nueva rotacion del Transform.</param>
 	FORGE_API void setRotation(forge::Quaternion const& newRot);
 	/// <summary>
+	/// Establece la rotacion global al Quaternion pasado.
+	/// </summary>
+	/// <param name="newRot">Nueva rotacion del Transform.</param>
+	FORGE_API void setGlobalRotation(forge::Quaternion const& newRot);
+	/// <summary>
 	/// Establece la rotacion al Vector3 pasado interpretado como angulos de Euler.
 	/// </summary>
 	/// <param name="newRot">Nueva rotacion del Transform.</param>
@@ -81,6 +86,11 @@ public:
 	/// </summary>
 	/// <param name="newPos">Nueva posicion del Transform.</param>
 	FORGE_API void setPosition(forge::Vector3 const& newPos);
+	/// <summary>
+	/// Establece la posicion global del Transform.
+	/// </summary>
+	/// <param name="newPos">Nueva posicion del Transform.</param>
+	FORGE_API void setGlobalPosition(forge::Vector3 const& newPos);
 	/// <summary>
 	/// Mueve la posicion en la cantidad indicada.
 	/// </summary>

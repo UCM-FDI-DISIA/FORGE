@@ -119,6 +119,10 @@ Vector3 Vector3::operator*(const Vector3& w)  const {
 	return Vector3(x * w.x, y * w.y, z * w.z);
 }
 
+Vector3 forge::Vector3::operator/(const Vector3& w) const {
+	return Vector3(x / w.x, y / w.y, z / w.z);
+}
+
 Vector3 Vector3::operator*=(const Vector3& w) {
 	x *= w.x;
 	y *= w.y;

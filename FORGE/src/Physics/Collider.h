@@ -54,7 +54,7 @@ public:
 
     FORGE_API void onDisabled() override;
 
-    FORGE_API virtual void createRigidBody(std::string const& myShapeType);
+    FORGE_API virtual bool createRigidBody(std::string const& myShapeType);
 
     /// <summary>
     /// Metodo para comprobar si han colisionado dos colliders

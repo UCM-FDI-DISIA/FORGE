@@ -48,6 +48,15 @@ void Transform::setRotation(forge::Quaternion const& newRot) {
 	setChildNeedsUpdate(true);
 }
 
+void Transform::setGlobalRotation(forge::Quaternion const& newRot) {
+	if (parent != nullptr) {
+		setRotation(newRot * parent->getGlobalRotation().inversed());
+	}
+	else {
+		setRotation(newRot);
+	}
+}
+
 void Transform::setRotation(forge::Vector3 const& newRot) {
 	rotation = Quaternion(newRot);
 	needsUpdate = true;
@@ -94,6 +103,15 @@ void Transform::setPosition(forge::Vector3 const& newPos) {
 	position = newPos;
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
+}
+
+void Transform::setGlobalPosition(forge::Vector3 const& newPos) {
+	if (parent != nullptr) {
+		setPosition((parent->getGlobalRotation().inversed()*(newPos - parent->getGlobalPosition()))/parent->getGlobalScale());
+	}
+	else {
+		setPosition(newPos);
+	}
 }
 
 void Transform::movePosition(forge::Vector3 const& offset) {

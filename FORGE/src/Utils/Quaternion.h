@@ -133,7 +133,9 @@ namespace forge {
 		/// <summary>
 		/// Normaliza el vector del quaternion
 		/// </summary>
-		void normalize();
+		FORGE_API void normalize();
+
+		FORGE_API Quaternion inversed() const;
 
 		#pragma region Setters
 		/// <summary>

@@ -148,12 +148,6 @@ public:
     FORGE_API float getRestitution();
 
     /// <summary>
-    /// Devuelve el cuerpo rigido de Bullet del objeto
-    /// </summary>
-    /// <returns>El btRigidbody asociado al objeto</returns>
-    FORGE_API btRigidBody* getRigidBody();
-
-    /// <summary>
     /// Devuelve true si es un objeto estatico
     /// </summary>
     FORGE_API bool isStatic();

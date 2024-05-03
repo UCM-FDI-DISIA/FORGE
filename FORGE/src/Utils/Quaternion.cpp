@@ -155,6 +155,15 @@ void Quaternion::normalize() {
 	w /= num;
 }
 
+Quaternion Quaternion::inversed() const {
+	Quaternion q(this);
+	q.normalize();
+	q.x = -q.x;
+	q.y = -q.y;
+	q.z = -q.z;
+	return q;
+}
+
 #pragma region Setters
 void Quaternion::setX(float newX) {
 	x = newX * sinf(acos(w));

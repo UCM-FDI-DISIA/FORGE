@@ -165,6 +165,13 @@ namespace forge {
 		FORGE_API Vector3 operator*(const Vector3& w) const;
 
 		/// <summary>
+		/// Devision por componentes
+		/// </summary>
+		/// <param name="w">Vector divisor</param>
+		/// <returns>El vector resultante</returns>
+		FORGE_API Vector3 operator/(const Vector3& w) const;
+
+		/// <summary>
 		/// Multiplicacion por componentes (Hadamard) y asignacion
 		/// </summary>
 		/// <param name="w">Vector producto</param>

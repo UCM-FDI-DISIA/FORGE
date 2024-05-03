@@ -261,10 +261,6 @@ float RigidBody::getRestitution() {
     return restitution;
 }
 
-btRigidBody* RigidBody::getRigidBody() {
-    return myBody;
-}
-
 bool RigidBody::isStatic() {
     return staticBody;
 }
