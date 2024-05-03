@@ -32,12 +32,6 @@ protected:
 	void destroyImage();
 
 	/// <summary>
-	/// Carga y guarda la imagen del componente en imageSource, creando tambien una textura y un material, y
-	/// registrandola en el registro de recursos del GUIManager
-	/// </summary>
-	void createTextureAndMaterialFromImage();
-
-	/// <summary>
 	/// Asigna la imagen al Panel, comprobando si debe o no cargarla antes
 	/// </summary>
 	void loadAndAssign();
@@ -59,7 +53,7 @@ public:
 	/// <summary>
 	/// Inicializa la Image con los parametros adecuados
 	/// </summary>
-	/// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	/// <param name="data">Parametros necesarios para la iniciacion del componente</param>
 	FORGE_API bool initComponent(ComponentData* data) override;
 
 	/// <summary>
@@ -79,7 +73,7 @@ public:
 	FORGE_API forge::Vector2 getSourceSize();
 
 	/// <summary>
-	/// Devuelve la textura de SDL
+	/// Devuelve la textura
 	/// </summary>	
 	FORGE_API std::string getTexture();
 
@@ -108,7 +102,7 @@ public:
 	/// <summary>
 	/// Asigna un material (textura)
 	/// </summary>
-	/// <param name="mat"> Nombre del nuevo material</param>
+	/// <param name="mat">Nombre del nuevo material</param>
 	FORGE_API void setMaterial(std::string const& mat);
 	#pragma endregion
 

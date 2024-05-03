@@ -15,28 +15,28 @@
 
 const std::string UIComponent::id = "UIComponent";
 
-void UIComponent::createPanel() {
-    overlayPanel = static_cast<Ogre::OverlayContainer*>(
+Ogre::OverlayContainer* UIComponent::createPanel() {
+    Ogre::OverlayContainer* panel = static_cast<Ogre::OverlayContainer*>(
         gui->getOverlayManager()->createOverlayElement("Panel", elementID));
-    overlayPanel->setMetricsMode(Ogre::GMM_PIXELS);
+    panel->setMetricsMode(Ogre::GMM_PIXELS);
+    return panel;
 }
 
-void UIComponent::createOverlay(int depth) {
-    overlay = gui->getOverlayManager()->create("over" + elementID);
-    overlay->add2D(overlayPanel);
-    setDepth(depth);
+Ogre::Overlay* UIComponent::createOverlay(Ogre::OverlayContainer* panel, int depth) {
+    Ogre::Overlay* over = gui->getOverlayManager()->create("over" + elementID);
+    over->add2D(panel);
+    over->setZOrder(Ogre::ushort(depth));
 
-    overlay->show();
+    over->show();
+    return over;
 }
 
-void UIComponent::destroyPanel() {
-    gui->getOverlayManager()->destroyOverlayElement(overlayPanel);
-    overlayPanel = nullptr;
+void UIComponent::destroyPanel(Ogre::OverlayContainer* _panel) {
+    gui->getOverlayManager()->destroyOverlayElement(_panel);
 }
 
-void UIComponent::destroyOverlay() {
-    gui->getOverlayManager()->destroy("over" + elementID);
-    overlay = nullptr;
+void UIComponent::destroyOverlay(Ogre::Overlay* _over) {
+    gui->getOverlayManager()->destroy(_over);
 }
 
 UIComponent::UIComponent() :
@@ -51,6 +51,8 @@ UIComponent::UIComponent() :
 
 UIComponent::~UIComponent() {
     gui->deleteCanvasElement(this);
+    overlay = nullptr;
+    overlayPanel = nullptr;
 }
 
 bool UIComponent::initComponent(ComponentData* data) {

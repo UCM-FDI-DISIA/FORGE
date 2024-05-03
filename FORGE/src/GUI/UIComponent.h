@@ -31,23 +31,23 @@ protected:
     /// <summary>
     /// Crea un panel el cual será el contenedor del elemento de la UI
     /// </summary>	
-    void createPanel();
+    Ogre::OverlayContainer* createPanel();
 
     /// <summary>
     /// Crea el Overlay correspondiente a este componente
     /// </summary>
     /// <param name="depth"> Capa en la que se crea la Overlay</param>	
-    void createOverlay(int depth);
+    Ogre::Overlay* createOverlay(Ogre::OverlayContainer* panel, int depth);
 
     /// <summary>
     /// Destruye el panel contenedor del elemento de la UI
     /// </summary>	
-    void destroyPanel();
+    void destroyPanel(Ogre::OverlayContainer* _panel);
 
     /// <summary>
     /// Destruye el Overlay correspondiente a este componente
     /// </summary>
-    void destroyOverlay();
+    void destroyOverlay(Ogre::Overlay* _over);
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -86,7 +86,7 @@ public:
     /// <summary>
     /// Ajusta el UIComponent al nuevo ajuste de la ventana
     /// </summary>
-    FORGE_API virtual void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
+    FORGE_API virtual void resize(forge::Vector2 const& prev, forge::Vector2 const& updated);
 
     #pragma region Getters
     /// <summary>

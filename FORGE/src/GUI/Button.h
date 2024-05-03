@@ -61,7 +61,7 @@ public:
 	///// <summary>
 	///// Inicializa el Button con los parametros adecuados
 	///// </summary>
-	///// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+	///// <param name="data">Parametros necesarios para la iniciacion del componente</param>
 	FORGE_API bool initComponent(ComponentData* data) override;
 
 	/// <summary>

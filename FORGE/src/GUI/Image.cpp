@@ -9,7 +9,6 @@
 #include <OgreTextureManager.h>
 #include <OgreTexture.h>
 #include <OgreMaterialManager.h>
-#include <OgreTechnique.h>
 #include <OgreException.h>
 #pragma warning(pop)
 #include "Serializer.h"
@@ -20,11 +19,11 @@
 const std::string Image::id = "Image";
 
 void Image::createImage() {
-	createPanel();
+	overlayPanel = createPanel();
 	overlayPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
 	overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 	setMaterial(texture);
-	createOverlay(zOrder);
+	overlay = createOverlay(overlayPanel, zOrder);
 }
 
 void Image::destroyImage() {
@@ -34,35 +33,19 @@ void Image::destroyImage() {
 	imageSource->freeMemory();
 	delete imageSource;
 	gui->deleteResource(texture);
-	destroyPanel();
-	destroyOverlay();
+	destroyPanel(overlayPanel);
+	destroyOverlay(overlay);
 	imageSource = nullptr;
-}
-
-void Image::createTextureAndMaterialFromImage() {
-	// Cargar imagen
-	if (imageSource == nullptr) {
-		imageSource = new Ogre::Image();
-	}
-	imageSource->load(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-	// Cargar textura a partir de la imagen
-	gui->getTextureManager()->create(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-	// Cargar material a partir de la textura
-	gui->getMaterialManager()->create(texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
-		->getTechnique(0)->getPass(0)->createTextureUnitState(texture);
-
-	// Anadir al registro
-	gui->addResource(texture);
 }
 
 void Image::loadAndAssign() {
 	// Si la imagen no esta cargada...
-
 	if (!gui->hasResource(texture)) {
 		// ...la cargo
-		createTextureAndMaterialFromImage();
+		if (imageSource == nullptr) {
+			imageSource = new Ogre::Image();
+		}
+		gui->createTextureAndMaterialFromImage(imageSource, texture);
 	}
 	// Y la asigno
 	overlayPanel->setMaterialName(texture);

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef GUIMANAGER_H_
+#define GUIMANAGER_H_
+
 #include <memory>
 #include <unordered_set>
 #include <string>
@@ -12,10 +15,11 @@ namespace Ogre {
 	class OverlayContainer;
 	class FontManager;
 	class Font;
-	class ColourValue;
+	class Image;
 	class TextureManager;
 	class MaterialManager;
 	class ResourceGroupManager;
+	class ColourValue;
 	class NameGenerator;
 }
 
@@ -106,6 +110,12 @@ public:
 	/// <param name = "font">Nombre de la fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
 	/// <returns>True si la fuente ya esta anadida, false si no lo esta</returns>
 	bool hasFont(std::string font);
+
+	/// <summary>
+	/// Carga y guarda la imagen del componente en imageSource, creando tambien una textura y un material, y
+	/// registrandola en el registro de recursos del GUIManager
+	/// </summary>
+	void createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture);
 
 	/// <summary>
 	/// Inserta un recurso en el conjunto de recursos
@@ -212,3 +222,5 @@ public:
 	/// <returns>Un Ogre::ColorValue equivalente al Vector4</returns>
 	Ogre::ColourValue Vector4ToColorValue(forge::Vector4 const& v);
 };
+
+#endif // !GUIMANAGER_H_

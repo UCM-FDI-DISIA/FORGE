@@ -13,6 +13,7 @@
 #include <OgreTextureManager.h>
 #include <OgreMaterialManager.h>
 #include <OgreNameGenerator.h>
+#include <OgreTechnique.h>
 #pragma warning(pop)
 #include "RenderManager.h"
 #include "Vector4.h"
@@ -65,6 +66,11 @@ bool GUIManager::setup() {
 	resolution = renderManager->getResolution();
 
 	loadFont("Saeda.ttf");
+	// TO-DO: CARGAR DEFAULT SIEMPRE
+	/*Ogre::Image* img = new Ogre::Image();
+	createTextureAndMaterialFromImage(img, "default.png");
+	img->freeMemory();
+	delete img;*/
 
 	return true;
 }
@@ -77,6 +83,21 @@ void GUIManager::cleanUp() const {
 
 bool GUIManager::hasFont(std::string font) {
 	return fonts.find(font) != fonts.end();
+}
+
+void GUIManager::createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture) {
+	// Cargar imagen
+	img->load(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	// Cargar textura a partir de la imagen
+	textureManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+	// Cargar material a partir de la textura
+	materialManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
+		->getTechnique(0)->getPass(0)->createTextureUnitState(_texture);
+
+	// Anadir al registro
+	addResource(_texture);
 }
 
 bool GUIManager::addResource(std::string resource) {

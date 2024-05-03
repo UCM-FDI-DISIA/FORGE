@@ -74,7 +74,7 @@ public:
     /// <summary>
     /// Inicializa el UIComponent con los parametros adecuados
     /// </summary>
-    /// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
+    /// <param name="data">Parametros necesarios para la iniciacion del componente</param>
     FORGE_API bool initComponent(ComponentData* data) override;
 
 	/// <summary>
@@ -90,7 +90,7 @@ public:
 	/// <summary>
 	/// Ajusta la imagen al nuevo ajuste de la ventana
 	/// </summary>
-	virtual FORGE_API void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
+	FORGE_API void resize(forge::Vector2  const& prev, forge::Vector2  const& updated) override;
 
 	/// <summary>
 	/// Cambia la opacidad del fondo

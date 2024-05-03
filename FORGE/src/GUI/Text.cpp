@@ -68,7 +68,7 @@ void Text::resize(forge::Vector2 const& prev, forge::Vector2 const& updated) {
 
 void Text::createText() {
     // Se crea el panel
-    createPanel();
+    overlayPanel = createPanel();
     // Se crea el texto y se le setean los parametros: fuente, texto, altura de la letra, color, alineacion y posicion
     textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID + "textArea"));
     textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
@@ -80,14 +80,14 @@ void Text::createText() {
     setPosition(transform->getPosition());
     // Se adjunta al panel y se crea el Overlay
     overlayPanel->addChild(textAreaOverlay);
-    createOverlay(zOrder);
+    overlay = createOverlay(overlayPanel, zOrder);
 }
 
 void Text::destroyText() {
     // Destruye de menor a mayor (texto < panel < Overlay)
     gui->getOverlayManager()->destroyOverlayElement(textAreaOverlay);
-    destroyPanel();
-    destroyOverlay();
+    destroyPanel(overlayPanel);
+    destroyOverlay(overlay);
     textAreaOverlay = nullptr;
 }
 

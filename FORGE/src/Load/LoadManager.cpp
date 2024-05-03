@@ -31,6 +31,7 @@
 #include "Text.h"
 #include "Image.h"
 #include "Button.h"
+#include "ProgressBar.h"
 
 using namespace luabridge;
 
@@ -238,6 +239,7 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<Text>();
 	factory.registerComponent<Image>();
 	factory.registerComponent<Button>();
+	factory.registerComponent<ProgressBar>();
 	return gameLoader->registerComponents(factory);
 }
 
