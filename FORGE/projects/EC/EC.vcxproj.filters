@@ -77,5 +77,8 @@
     <ClInclude Include="..\..\src\EC\RectTransform.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\EC\ForgeFunction.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

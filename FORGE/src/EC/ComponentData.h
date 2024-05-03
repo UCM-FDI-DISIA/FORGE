@@ -14,12 +14,19 @@
 #include "Vector3.h"
 #include "Quaternion.h"
 #include "ForgeError.h"
+#include "ForgeFunction.h"
 
 class ComponentData {
 private:
     template <typename T>
     struct getter {
-        T operator()(luabridge::LuaRef& data, std::string const& param) {
+        getter() = delete;
+        getter(getter const&) = delete;
+        getter(getter &&) = delete;
+        getter operator=(getter const&) = delete;
+        getter operator=(getter &&) = delete;
+
+        static T get(luabridge::LuaRef& data, std::string const& param) {
             luabridge::LuaRef p = data[param];
             if (!p.isNil() && p.isInstance<T>()) {
                 return p.cast<T>();
@@ -29,7 +36,7 @@ private:
     };
     template <typename U>
     struct getter<std::vector<U>> {
-        std::vector<U> operator()(luabridge::LuaRef& data, std::string const& param) {
+        static std::vector<U> get(luabridge::LuaRef& data, std::string const& param) {
             luabridge::LuaRef table = data[param];
             std::vector<U> vec;
             if (table.isTable()) {
@@ -42,7 +49,7 @@ private:
     };
     template <typename U>
     struct getter<std::unordered_set<U>> {
-        std::unordered_set<U> operator()(luabridge::LuaRef& data, std::string const& param) {
+        static std::unordered_set<U> get(luabridge::LuaRef& data, std::string const& param) {
             luabridge::LuaRef table = data[param];
             std::unordered_set<U> set;
             if (table.isTable()) {
@@ -51,6 +58,20 @@ private:
                 }
             }
             return set;
+        }
+    };
+    template <typename U>
+    struct getter<ForgeFunction<U>> {
+        static ForgeFunction<U> get(luabridge::LuaRef& data, std::string const& param) {
+            luabridge::LuaRef e = data[param];
+            return ForgeFunction<U>(e);
+        }
+    };
+    template <typename U>
+    struct getter<ForgeFunction<U>*> {
+        static ForgeFunction<U>* get(luabridge::LuaRef& data, std::string const& param) {
+            luabridge::LuaRef e = data[param];
+            return new ForgeFunction<U>(e);
         }
     };
 protected:
@@ -96,7 +117,7 @@ public:
     /// </returns>
     template <typename T>
     FORGE_API inline T get(std::string const& param) {
-        return getter<T>()(*data, param);
+        return getter<T>::get(*data, param);
     } 
 
     /// <summary>
@@ -106,7 +127,7 @@ public:
     /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector2</returns>
     template <>
     FORGE_API inline forge::Vector2 get<forge::Vector2>(std::string const& param) {
-        std::vector<float> input = getter<std::vector<float>>()(*data, param);
+        std::vector<float> input = getter<std::vector<float>>::get(*data, param);
         size_t i = 0;
         for (float& e : input) {
             if (i > 2) break;
@@ -128,7 +149,7 @@ public:
     /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector3</returns>
     template <>
     FORGE_API inline forge::Vector3 get<forge::Vector3>(std::string const& param) {
-        std::vector<float> input = getter<std::vector<float>>()(*data,param);
+        std::vector<float> input = getter<std::vector<float>>::get(*data,param);
         size_t i = 0;
         for (float& e : input) {
             if (i > 3) break;
@@ -150,9 +171,9 @@ public:
     /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Quaternion</returns>
     template <>
     FORGE_API inline forge::Quaternion get<forge::Quaternion>(std::string const& param) {
-        std::vector<float> input = getter<std::vector<float>>()(*data, param);
+        std::vector<float> input = getter<std::vector<float>>::get(*data, param);
         if (input.size() == 3) {
-            return forge::Quaternion(getter<forge::Vector3>()(*data, param));
+            return forge::Quaternion(getter<forge::Vector3>::get(*data, param));
         }
         size_t i = 0;
         for (float& e : input) {

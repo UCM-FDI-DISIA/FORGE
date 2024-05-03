@@ -112,6 +112,10 @@
     <ClInclude Include="..\..\src\EC\Entity.h" />
     <ClInclude Include="..\..\src\EC\EntityData.h" />
     <ClInclude Include="..\..\src\EC\Factory.h" />
+    <ClInclude Include="..\..\src\EC\ForgeFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="..\..\src\EC\RectTransform.h" />
     <ClInclude Include="..\..\src\EC\Scene.h" />
     <ClInclude Include="..\..\src\EC\SceneManager.h" />

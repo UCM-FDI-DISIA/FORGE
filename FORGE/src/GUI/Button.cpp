@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "RectTransform.h"
 #include "Image.h"
+#include "ForgeFunction.h"
 
 const std::string Button::id = "Button";
 std::function<void(void)> Button::mainFunc = nullptr;
@@ -33,28 +34,59 @@ void Button::checkMousePosition() {
 		if (input->isMouseButtonPressed(M_LEFT)) {
 			newState = forge::CLICKED_STATE;
 			clicked = true;
-		};
+		}
 	}
 	else {
 		newState = forge::OUT_STATE;
 	}
 }
 
+void Button::checkCallbacks() {
+	if (newState == forge::HOVER_STATE && state == forge::OUT_STATE) {
+		if (onOver != nullptr) {
+			(*onOver)();
+		}
+	}
+	if (newState == forge::CLICKED_STATE && state == forge::HOVER_STATE) {
+		if (onClick != nullptr) {
+			(*onClick)();
+		}
+	}
+	if (newState == forge::HOVER_STATE && state == forge::CLICKED_STATE) {
+		if (onRelease != nullptr) {
+			(*onRelease)();
+		}
+	}
+}
+
 Button::Button() :
 	Image(),
 	clicked(false),
-	function(nullptr),
+	onOver(nullptr),
+	onClick(nullptr),
+	onRelease(nullptr),
 	input(nullptr),
 	state(forge::ButtonState::OUT_STATE),
 	newState(forge::ButtonState::OUT_STATE),
 	hoverTexture("default.png") {
+	serializer(onOver, "onOver");
+	serializer(onClick, "onClick");
+	serializer(onRelease, "onRelease");
 	serializer(outTexture, "out");
 	serializer(hoverTexture, "hover");
 	serializer(clickedTexture, "clicked");
 }
 
 Button::~Button() {
-
+	if (onOver != nullptr) {
+		delete onOver;
+	}
+	if (onClick != nullptr) {
+		delete onClick;
+	}
+	if (onRelease != nullptr) {
+		delete onRelease;
+	}
 }
 
 bool Button::initComponent(ComponentData* data) {
@@ -93,10 +125,7 @@ void Button::update() {
 	// Para comprobar si se esta pulsando el raton: InputManager.isMouseButtonPressed(MouseNames button);
 	// Los MouseNames estan en el .h del input
 	checkMousePosition();
-	if (state == forge::CLICKED_STATE && newState == forge::HOVER_STATE) {
-		// callback
-
-	}
+	checkCallbacks();
 	if (state != newState) {
 		state = newState;
 		changeButtonImage();

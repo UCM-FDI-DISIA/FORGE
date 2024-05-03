@@ -6,8 +6,9 @@
 #include <functional>
 #include "Image.h"
 
-class Image;
-class Input;
+class Input; 
+template <typename T>
+class ForgeFunction;
 
 namespace forge {
 	enum ButtonState { OUT_STATE, HOVER_STATE, CLICKED_STATE };
@@ -32,7 +33,9 @@ private:
 
 	// Callbacks
 	static std::function<void(void)> mainFunc;
-	std::function<void(void)> function;
+	ForgeFunction<void>* onOver;
+	ForgeFunction<void>* onClick;
+	ForgeFunction<void>* onRelease;
 
 	///// <summary>
 	///// Cambia la imagen del boton por la del estado correspondiente
@@ -43,6 +46,8 @@ private:
 	/// Comprueba la posicion del raton para actualizar el estado
 	/// </summary>
 	void checkMousePosition();
+
+	void checkCallbacks();
 
 public:
     // Id de componente
