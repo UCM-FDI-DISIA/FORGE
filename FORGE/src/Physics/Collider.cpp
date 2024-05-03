@@ -51,7 +51,7 @@ bool Collider::createRigidBody(std::string const& myShapeType) {
         shapeType = capsuleShape;
         myShape = new btCapsuleShape(myScale.getX() / 2.0f, myScale.getY());
     }
-    else if (myShapeType == "Cilinder") {
+    else if (myShapeType == "Cylinder") {
         shapeType = cilinderShape;
         myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale / 2.0f));
     }
