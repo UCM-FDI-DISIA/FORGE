@@ -50,7 +50,7 @@ UIComponent::UIComponent() :
 }
 
 UIComponent::~UIComponent() {
-
+    gui->deleteCanvasElement(this);
 }
 
 bool UIComponent::initComponent(ComponentData* data) {
@@ -74,6 +74,14 @@ bool UIComponent::initComponent(ComponentData* data) {
 
 void UIComponent::update() {
 
+}
+
+FORGE_API void UIComponent::onEnabled() {
+    gui->addCanvasElement(this);
+}
+
+FORGE_API void UIComponent::onDisabled() {
+    gui->deleteCanvasElement(this);
 }
 
 void UIComponent::resize(forge::Vector2  const& prev, forge::Vector2 const& updated) {

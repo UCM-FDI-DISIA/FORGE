@@ -55,28 +55,38 @@ public:
     /// <summary>
     /// Contructora de un componente de interfaz
     /// </summary>	
-    UIComponent();
+    FORGE_API UIComponent();
 
     /// <summary>
     /// Destructora
     /// </summary>	
-    ~UIComponent();
+    FORGE_API ~UIComponent();
 
     /// <summary>
     /// Inicializa el UIComponent con los parametros adecuados
     /// </summary>
     /// <param name="data"> Parametros necesarios para la iniciacion del componente</param>
-    bool initComponent(ComponentData* data) override;
+    FORGE_API bool initComponent(ComponentData* data) override;
 
     /// <summary>
     /// Update del UIComponent
     /// </summary>
-    virtual void update();
+    FORGE_API virtual void update();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    FORGE_API void onEnabled() override;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    FORGE_API void onDisabled() override;
 
     /// <summary>
     /// Ajusta el UIComponent al nuevo ajuste de la ventana
     /// </summary>
-    virtual void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
+    FORGE_API virtual void resize(forge::Vector2  const& prev, forge::Vector2  const& updated);
 
     #pragma region Getters
     /// <summary>
@@ -91,7 +101,7 @@ public:
     /// Cambiar la posicion del componente
     /// </summary>
     /// <param name="newPosition">La nueva posicion del componente</param>
-    virtual FORGE_API void setPosition(forge::Vector2 const& p);
+    FORGE_API virtual void setPosition(forge::Vector2 const& p);
 
     /// <summary>
     /// Devuelve el texto
