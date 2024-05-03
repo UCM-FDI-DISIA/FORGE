@@ -45,20 +45,20 @@ bool Collider::createRigidBody(std::string const& myShapeType) {
 
     if (myShapeType == "Sphere") {
         shapeType = ballShape;
-        myShape = new btSphereShape(myScale.getX() / 2);
+        myShape = new btSphereShape(myScale.getX() / 2.0f);
     }
     else if (myShapeType == "Capsule") {
         shapeType = capsuleShape;
-        myShape = new btCapsuleShape(myScale.getX() / 2, myScale.getY());
+        myShape = new btCapsuleShape(myScale.getX() / 2.0f, myScale.getY());
     }
     else if (myShapeType == "Cilinder") {
         shapeType = cilinderShape;
-        myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale));
+        myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(myScale / 2.0f));
     }
     else /*Box*/ {
         // De forma predeterminada, el rigid es una caja
         shapeType = boxShape;
-        myShape = new btBoxShape(btVector3(myScale.getX(), myScale.getY(), myScale.getZ()));
+        myShape = new btBoxShape(btVector3(myScale.getX() / 2.0f, myScale.getY() / 2.0f, myScale.getZ() / 2.0f));
     }
 
     //Inicializamos el rigid body
