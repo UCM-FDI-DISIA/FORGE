@@ -14,12 +14,12 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     private string fileName = "luaTest.lua";
     private string folderPath = "Assets/FORGE Data";
 
-    Dictionary<string, int> prefabData = new Dictionary<string, int> ();
-    HashSet<string> hashData = new HashSet<string> ();
+    Dictionary<string, int> prefabData = new Dictionary<string, int>();
+    HashSet<string> hashData = new HashSet<string>();
     string data = "";
 
     // Contador para las tabulaciones
-    private int i=0;
+    private int i = 0;
     private bool firstSearch = false;
     //Saves relevant data from all scenes except for bootscene using playerprefs
     public void SaveAll()
@@ -28,7 +28,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         data += "local prefabs = {\n";
         i++;
 #pragma warning disable
-        foreach(Scene scene in SceneManager.GetAllScenes())
+        foreach (Scene scene in SceneManager.GetAllScenes())
         {
 #pragma warning restore
 
@@ -51,29 +51,29 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         foreach (Scene scene in SceneManager.GetAllScenes())
         {
 #pragma warning restore
-           Tabulate();
-            
-           //Escribimos el nombre de la escena
-           data += scene.name+" = {\n";
+            Tabulate();
 
-           //Incrementamos el contador de tabulacion
-           i++; // = 2
-           foreach (GameObject obj in scene.GetRootGameObjects())
-           {
+            //Escribimos el nombre de la escena
+            data += scene.name + " = {\n";
+
+            //Incrementamos el contador de tabulacion
+            i++; // = 2
+            foreach (GameObject obj in scene.GetRootGameObjects())
+            {
                 //Sacar componentes del padre components
                 SaveGameObjectAndChildren(obj);
-           }
-           data = data.Remove(data.Length - 2);
+            }
+            data = data.Remove(data.Length - 2);
             data += "\n";
-           //Decrementamos
+            //Decrementamos
             i--; // = 1
-           Tabulate();
-           data += "},\n";
-           
+            Tabulate();
+            data += "},\n";
+
         }
 
         //Se quita la ultima coma
-        data = data.Remove(data.Length-2);
+        data = data.Remove(data.Length - 2);
         Tabulate();
         data += "\n";
         //Aqui se cierra con una llave "}"
@@ -90,7 +90,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         bool found = false;
         if (PrefabUtility.IsPartOfAnyPrefab(obj))
         {
-            found =true;
+            found = true;
             string prefabName = PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name;
             if (!prefabData.ContainsKey(prefabName))
             {
@@ -98,7 +98,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
                 SaveGameObjectAndChildren(obj);
             }
         }
-        while(j < obj.transform.childCount&&!found)
+        while (j < obj.transform.childCount && !found)
         {
             LookForPrefab(obj.transform.GetChild(j).gameObject);
             j++;
@@ -122,7 +122,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
             data += obj.name + "= {\n";
             i++;
             Tabulate();
-            data += "blueprint = " + "\"" + PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name+ "\",\n";                        
+            data += "blueprint = " + "\"" + PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name + "\",\n";
             Tabulate();
             data += "components = {\n";
             i++; //= x +2
@@ -140,9 +140,12 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
             //Objetos hijos
             // = x + 1
             bool children = false;
-            if(obj.transform.childCount > 0)
+            if (obj.transform.childCount > 0)
             {
                 children = true;
+                Tabulate();
+                data += "children = {\n";
+                i++; // = x + 2
             }
             else
             {
@@ -159,8 +162,10 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
             {
                 data = data.Remove(data.Length - 2);
                 data += "\n";
-            }
-            i--; // = x + 1
+                i--; // = x + 1
+                Tabulate();
+                data += "}\n";            }
+            i--; // = x + 0/1
         }
         Tabulate();
         data += "},\n";
@@ -171,7 +176,15 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         //Nombre del GameObject
         data += "\n";
         Tabulate();
-        string name = String.Concat(obj.name.Where(c => !Char.IsWhiteSpace(c)));
+        string name;
+        if (PrefabUtility.IsPartOfAnyPrefab(obj))
+        {
+            name = PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name;
+        }
+        else
+        {
+            name = String.Concat(obj.name.Where(c => !Char.IsWhiteSpace(c)));
+        }
         data += name + "= {\n";
 
         //Componentes
@@ -244,7 +257,8 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         context.AddCode(fileName, data);
     }
 
-    public void WriteTransform(GameObject obj){
+    public void WriteTransform(GameObject obj)
+    {
         var tf = obj.GetComponent<Transform>();
         Tabulate();
         data += tf.GetType() + "= {";
