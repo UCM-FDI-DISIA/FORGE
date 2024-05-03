@@ -124,13 +124,13 @@ void Collider::onDisabled() {
 bool Collider::hasCollidedWith(Entity* other) {
 
     if (other->hasComponent<RigidBody>()) {
-        return myBody->checkCollideWith(other->getComponent<RigidBody>()->getBody());
+        return physicsManager->checkContact(myBody, other->getComponent<RigidBody>()->getBody());   
     }
     if (other->hasComponent<Collider>()) {
-        return myBody->checkCollideWith(other->getComponent<Collider>()->getBody());
+        return physicsManager->checkContact(myBody, other->getComponent<Collider>()->getBody());
     }
     //Si no tiene ningun componente de colision, no ha colisionado.
-    //Posiblemente haya algun problema aqui, si un componente sin collider ha llegado hasta aqui
+    //Posiblemente haya algun problema aqui, si un componente sin collider/rigidbody ha llegado hasta aqui
     return false;
 }
 
