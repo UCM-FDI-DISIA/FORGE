@@ -88,7 +88,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     {
         int j = 0;
         bool found = false;
-        if (PrefabUtility.IsPartOfAnyPrefab(obj))
+        if (PrefabUtility.IsPartOfAnyPrefab(obj)&&!PrefabUtility.HasPrefabInstanceAnyOverrides(obj, false))
         {
             found = true;
             string prefabName = PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name;
@@ -96,6 +96,10 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
             {
                 prefabData[prefabName] = 0;
                 SaveGameObjectAndChildren(obj);
+            }
+            else
+            {
+                prefabData[prefabName]++;
             }
         }
         while (j < obj.transform.childCount && !found)

@@ -1,0 +1,52 @@
+#pragma once
+#ifndef LUA_FORGE_H_
+#define LUA_FORGE_H_
+
+#include <string>
+#include <vector>
+#include <functional>
+#include <ForgeExport.h>
+struct lua_State;
+namespace luabridge {
+	class LuaRef;
+}
+
+class LuaForge {
+private:
+	lua_State* lua;
+	std::vector<std::function<void(lua_State*)>> userClassesToImport;
+	/// <summary>
+	/// Se encarga de crear en Lua todas las clases esenciales que se vayan a usar dentro de los archivos a leer
+	/// </summary>
+	void importForgeClassesToLua();
+	/// <summary>
+	/// Llama a todas las funciones de creacion de clases que haya creado el usuario
+	/// </summary>
+	void importUserClassesToLua();
+public:
+	/// <summary>
+	/// Constructor, crea un lua_State, abre las libs e importa a Lua las clases queridas de FORGE y las pedidas por el usuario
+	/// </summary>
+	FORGE_API LuaForge();
+	/// <summary>
+	/// Vacia la pila de lua
+	/// </summary>
+	FORGE_API ~LuaForge();
+	/// <summary>
+	/// Devuelve el lua_State contenido
+	/// </summary>
+	/// <returns>Un puntero al lua_State contenido en la clase</returns>
+	FORGE_API lua_State* getState() const;
+	/// <summary>
+	/// Llama a lua_dofile para el  lua_State contenido
+	/// </summary>
+	/// <param name="path">Ruta del archivo .lua que se quiere ejecutar</param>
+	FORGE_API bool doFile(std::string const& path);
+	/// <summary>
+	/// Permite agregar una clase propia al lua_State contenido a traves de LuaBridge.
+	/// </summary>
+	/// <param name="classCreation">Funcion que recibe lua_State* y que agrega una clase al lua_State recibido.</param>
+	FORGE_API void importClassToLua(std::function<void(lua_State*)> classCreation);
+};
+
+#endif // !LUA_FORGE_H_
