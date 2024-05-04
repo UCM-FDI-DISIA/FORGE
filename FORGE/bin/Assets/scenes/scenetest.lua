@@ -4,10 +4,10 @@ local prefabs = {
         components = {
             Transform = {
                 position = {0, -20, 0},
-                scale = {0.25, 0.25, 0.25}
+                scale = {0.05, 0.05, 0.05}
             },
             Animator = {
-                 mesh = "ninja.mesh",
+                mesh = "ninja.mesh",
                 activeAnimations = {
                    "Walk"
                 }
@@ -17,13 +17,13 @@ local prefabs = {
                 playOnAwake = true
             },
             RigidBody = {
-                scale = {10, 15, 10},
                 mass = 1,
                 friction = 5,
                 restitution = 1,
                 shapeType = "Cube",
                 static = false,
-                layer = "ALL"
+                layer = "ALL",
+                scale = {20, 20, 20}
             },
             TestComponent = 0
         }
@@ -50,7 +50,7 @@ local scenes = {
         cam = {
             components = {
                 Transform = {
-                    position = {0, 0, 140}
+                    position = {0, -50, 20}
                 },
                 Camera = {
                     nearClipDistance = 1,
@@ -154,7 +154,17 @@ local scenes = {
                 Button = {
                     out = "out.png",
                     hover = "over.png",
-                    clicked = "clicked.png"
+                    clicked = "clicked.png",
+                    onOver = function ()
+                            print("Estoy sobre el boton");
+                        end,
+                    onClick = function ()
+                            print("Estoy clickando el boton");
+                        end,
+                    onRelease = function ()
+                        print("He soltado el boton");
+                    end
+
                 }
             }
         },
@@ -164,12 +174,12 @@ local scenes = {
                     position = {125, 350},
                     scale = {300, 100}
                 },
-                ProgressBar = {
-                    front = "angry.png",
-                    back = "angryB.png",
-                    value = 200,
-                    depth = 3
-                }
+                --ProgressBar = {
+                  --  front = "angry.png",
+                  --  back = "angryB.png",
+                  --  value = 200,
+                  --  depth = 3
+                --}
             }
         }
     },

@@ -10,6 +10,7 @@
 #include "DebugMode.h"
 #include "Collider.h"
 #include "ContactCallback.h"
+#include "TimeForge.h"
 
 #define BIT(x) (1<<(x))
 
@@ -64,7 +65,7 @@ bool PhysicsManager::setup() {
         world->setDebugDrawer(debugger);
 #endif // DEBUG
         
-        world->setGravity(btVector3(0.0f, -98.0f, 0.0f));
+        world->setGravity(btVector3(0.0f, -9.8f, 0.0f));
         collisionLayers["NOTHING"] = 0;
         collisionLayers["ALL"] = BIT(1);
         collisionMatrix["ALL"]["ALL"] = true;
@@ -83,8 +84,8 @@ void PhysicsManager::drawDebug() {
 }
 
 void PhysicsManager::updatePhysics() {
-    world->stepSimulation(1.0f / 50.f, 20);    
-    handleCollisions();    
+    world->stepSimulation(static_cast<btScalar>(forge::Time::deltaTime), 20, static_cast<btScalar>(forge::Time::fixedDeltaTime));
+    handleCollisions();
 }
 
 void PhysicsManager::handleCollisions() {
@@ -165,7 +166,7 @@ void PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
 void  PhysicsManager::deleteBody(btRigidBody* body) {
     auto auxTransform = transforms.find(body);
     if (auxTransform != transforms.end()) {
-        world->removeRigidBody((*auxTransform).first);
+        world->removeRigidBody(auxTransform->first);
         delete auxTransform->first->getMotionState();
         delete auxTransform->first->getCollisionShape();
         delete auxTransform->first;

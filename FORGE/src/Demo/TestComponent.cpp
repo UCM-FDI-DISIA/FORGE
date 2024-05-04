@@ -1,7 +1,6 @@
 ﻿#include "TestComponent.h"
 #include "lua.hpp"
 #include "LuaBridge/LuaBridge.h"
-#include "LuaForge.h"
 #include "Input.h"
 #include "Transform.h"
 #include "ComponentData.h"
