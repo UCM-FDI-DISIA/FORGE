@@ -68,7 +68,7 @@ void RigidBody::onEnabled() {
     myBody->applyCentralForce(physicsManager->fromForgeToBtVect(lastForce));
 }
 
-void RigidBody::applyForce(forge::Vector3 force) {
+void RigidBody::applyForce(forge::Vector3 const& force) {
     myBody->applyCentralForce({force.getX(), force.getY(), force.getZ()});
 }
 
@@ -94,9 +94,9 @@ void RigidBody::lockRotation(bool x, bool y, bool z) {
     myBody->setAngularFactor(rotConstr);
 }
 
-void RigidBody::setGravity(forge::Vector3 newGravity) {
+void RigidBody::setGravity(forge::Vector3 const& newGravity) {
     myGravity = newGravity;
-    myBody->setGravity(physicsManager->fromForgeToBtVect(newGravity));
+    myBody->setGravity(physicsManager->fromForgeToBtVect(newGravity * physicsManager->getGravity()));
 }
 
 void RigidBody::setFriction(float newFriction) {
@@ -109,37 +109,9 @@ void RigidBody::setRestitution(float newRestitution) {
     myBody->setRestitution(restitution);
 }
 
-void RigidBody::setRigidScale(forge::Vector3 scale) {
-    // Ninguna escala puede ser 0
-    if (scale.getX() > 0 && scale.getY() > 0 && scale.getZ() > 0 
-        && (shapeType==boxShape||shapeType==cylinderShape)) { 
-        delete myShape;
-        if (shapeType == boxShape) {
-            myShape= myShape = new btBoxShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
-        }
-        else if (shapeType == cylinderShape) {
-            myShape = myShape = new btCylinderShape(btVector3(scale.getX(), scale.getY(), scale.getZ()));
-        }
-        myBody->setCollisionShape(myShape);
-    }
-}
-
-void RigidBody::setRigidScale(float radius) {
-    // Ninguna escala puede ser 0
-    if (shapeType == ballShape && radius > 0) {
-        delete myShape;
-        myShape = new btSphereShape(radius);
-        myBody->setCollisionShape(myShape);
-    }
-}
-
-void RigidBody::setRigidScale(float radius, float height) {
-    // Ninguna escala puede ser 0
-    if (shapeType == capsuleShape && radius > 0 && height > 0) {
-        delete myShape;
-        myShape = new btCapsuleShape(radius,height);
-        myBody->setCollisionShape(myShape);
-    }
+void RigidBody::setRigidScale(forge::Vector3 const& scale) {
+    myScale = scale;
+    myShape->setLocalScaling(physicsManager->fromForgeToBtVect(bodyTransform->getGlobalScale() * myScale));
 }
 
 void RigidBody::setPosition(forge::Vector3 vect) {

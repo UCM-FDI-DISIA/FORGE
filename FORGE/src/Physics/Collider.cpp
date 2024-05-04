@@ -43,25 +43,27 @@ bool Collider::createRigidBody(std::string const& myShapeType, float mass, bool 
         throwError(false, "Se requiere un componente Transform para generar un Collider");
     }
     bodyTransform = entity->getComponent<Transform>();
-    forge::Vector3 scale = bodyTransform->getGlobalScale() * myScale;
 
     if (myShapeType == "Sphere") {
         shapeType = ballShape;
-        myShape = new btSphereShape(scale.getX() / 2.0f);
+        myShape = new btSphereShape(0.5f);
     }
     else if (myShapeType == "Capsule") {
         shapeType = capsuleShape;
-        myShape = new btCapsuleShape(scale.getX() / 2.0f, scale.getY());
+        myShape = new btCapsuleShape(0.5f, 1.0f);
     }
     else if (myShapeType == "Cylinder") {
         shapeType = cylinderShape;
-        myShape = new btCylinderShape(physicsManager->fromForgeToBtVect(scale / 2.0f));
+        myShape = new btCylinderShape(btVector3(0.5f, 0.5f, 0.5f));
     }
     else /*Box*/ {
         // De forma predeterminada, el rigid es una caja
         shapeType = boxShape;
-        myShape = new btBoxShape(btVector3(scale.getX() / 2.0f, scale.getY() / 2.0f, scale.getZ() / 2.0f));
+        myShape = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     }
+
+    forge::Vector3 scale = bodyTransform->getGlobalScale() * myScale;
+    myShape->setLocalScaling(physicsManager->fromForgeToBtVect(scale));
 
     //Inicializamos el rigid body
     forge::Quaternion forQuat = bodyTransform->getGlobalRotation();

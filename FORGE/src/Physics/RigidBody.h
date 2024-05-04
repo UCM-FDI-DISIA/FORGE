@@ -39,13 +39,13 @@ public:
     /// Metodo para aplicar fuerzas a un rigidbody
     /// </summary>
     /// <param name="force: ">Fuerza en vector 3 a aplicar al objeto</param>
-    FORGE_API void applyForce(forge::Vector3 force);
+    FORGE_API void applyForce(forge::Vector3 const& force);
 
     /// <summary>
     /// Metodo para aplicar gravedad nueva a un objeto
     /// </summary>
     /// <param name="newGravity: ">La gravedad nueva a aplicar</param>
-    FORGE_API void setGravity(forge::Vector3 newGravity);
+    FORGE_API void setGravity(forge::Vector3 const& newGravity);
 
     /// <summary>
     /// Limpia las fuerzas aplicadas al objeto, devolviendolo a un estado sin fuerzas aplicadas
@@ -76,21 +76,10 @@ public:
     /// </summary>
     FORGE_API void setRestitution(float newRestitution);
     /// <summary>
-    /// Actualiza el tamaño del cuerpo para cubos y cilindros
+    /// Actualiza la escala del cuerpo
     /// </summary>
-    /// <param name="scale">Tamaño nuevo en x,y,z para el cuerpo</param>
-    FORGE_API void setRigidScale(forge::Vector3 scale);
-    /// <summary>
-    /// Actualiza el tamaño del cuerpo para esferas
-    /// </summary>
-    /// <param name="radius">Radio nuevo para la bola</param>
-    FORGE_API void setRigidScale(float radius);
-    /// <summary>
-    /// Actualiza el tamaño del cuerpo para capsulas
-    /// </summary>
-    /// <param name="radius">Radio nuevo para la circunferencia de la capsula</param>
-    /// <param name="height">Altura nueva par ala capsula</param>
-    FORGE_API void setRigidScale(float radius, float height);
+    /// <param name="scale">Escala nueva en x,y,z para el cuerpo</param>
+    FORGE_API void setRigidScale(forge::Vector3 const& scale);
     /// <summary>
     /// TODO comentarlo vosotros
     /// </summary>

@@ -84,7 +84,7 @@ void PhysicsManager::drawDebug() {
 }
 
 void PhysicsManager::updatePhysics() {
-    world->stepSimulation(static_cast<btScalar>(forge::Time::deltaTime), 20, static_cast<btScalar>(forge::Time::fixedDeltaTime));
+    world->stepSimulation(static_cast<btScalar>(forge::Time::fixedDeltaTime), 0, static_cast<btScalar>(forge::Time::fixedDeltaTime));
     handleCollisions();
 }
 
