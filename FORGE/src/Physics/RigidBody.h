@@ -3,7 +3,6 @@
 #define RIGIDBODY_H_
 #include <string>
 #include "Collider.h"
-#include "Vector3.h"
 
 enum collisionShape {
     ballShape, boxShape , capsuleShape, cylinderShape, planeShape
@@ -84,7 +83,7 @@ public:
     /// TODO comentarlo vosotros
     /// </summary>
     /// <param name="vect"></param>
-    FORGE_API void setPosition(forge::Vector3 vect);
+    FORGE_API void setPosition(forge::Vector3 const& vect);
     /// <summary>
     /// Cambia la posicion en x por el nuevo valor
     /// </summary>

@@ -75,7 +75,7 @@ public:
     /// <summary>
     /// Cambia la gravedad del mundo fisico
     /// </summary>
-    void changeGravity(forge::Vector3 newGravity);
+    void changeGravity(forge::Vector3 const& newGravity);
     /// <summary>
     /// Devuelve la gravedad del mundo
     /// </summary>
@@ -86,11 +86,11 @@ public:
     /// </summary>
     /// <param name="body">El btRigidbody a registrar</param>
     /// <param name="transform">El transform asociado al btRigidbody</param>
-    void registerBody(btRigidBody* body, Transform* transform, std::string layer = "ALL");
+    void registerBody(btRigidBody* body, Transform* transform, std::string const& layer = "ALL");
     /// <summary>
     /// Registra una instancia de rigidBody y la guarda en un mapa por nombre
     /// </summary>
-    void createImportantBody(RigidBody* body, std::string name);
+    void createImportantBody(RigidBody* body, std::string const& name);
     /// <summary>
     /// Borra un rigidBody
     /// </summary>

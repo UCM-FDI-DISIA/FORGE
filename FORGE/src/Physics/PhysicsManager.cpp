@@ -139,7 +139,7 @@ void PhysicsManager::handleCollisions() {
 
 }
 
-void PhysicsManager::changeGravity(forge::Vector3 newGravity) {
+void PhysicsManager::changeGravity(forge::Vector3 const& newGravity) {
     world->setGravity(fromForgeToBtVect(newGravity));
 }
 
@@ -147,7 +147,7 @@ forge::Vector3 PhysicsManager::getGravity() const {
     return fromBtVectToForge(world->getGravity());
 }
 
-void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::string layer) {
+void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::string const& layer) {
     transforms.insert({ body,transform });
     int bitmask = 0;
     for (auto& layersToCollide : collisionMatrix[layer]) {
@@ -157,7 +157,7 @@ void PhysicsManager::registerBody(btRigidBody* body, Transform* transform, std::
 }
 
 
-void PhysicsManager::createImportantBody(RigidBody* body, std::string name) {
+void PhysicsManager::createImportantBody(RigidBody* body, std::string const& name) {
     registerBody(body->getBody(), body->getEntity()->getComponent<Transform>());
     importantObjects.insert({ name,body->getBody()});
     

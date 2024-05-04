@@ -114,7 +114,7 @@ void RigidBody::setRigidScale(forge::Vector3 const& scale) {
     myShape->setLocalScaling(physicsManager->fromForgeToBtVect(bodyTransform->getGlobalScale() * myScale));
 }
 
-void RigidBody::setPosition(forge::Vector3 vect) {
+void RigidBody::setPosition(forge::Vector3 const& vect) {
     btTransform trans;
     btTransform prevTransform = myBody->getWorldTransform();
     trans.setOrigin(btVector3(vect.getX(), vect.getY(), vect.getZ()));
