@@ -77,7 +77,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
         Tabulate();
         data += "\n";
         //Aqui se cierra con una llave "}"
-        data += "}";
+        //data += "}";
         i--; // = 0
 
         //y se escribe al final del archivo "return prefabs, scenes"
@@ -116,7 +116,7 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
     private void SaveGameObjectAndChildren(GameObject obj)
     {
         bool prefab = PrefabUtility.IsPartOfAnyPrefab(obj);
-        if (prefab && firstSearch)
+        if (prefab && firstSearch&& !PrefabUtility.HasPrefabInstanceAnyOverrides(obj, false))
         {
             //Nombre del GameObject
             data += "\n";
@@ -190,6 +190,15 @@ public class LuaWriter : MonoBehaviour, ICodeGenerator
             name = String.Concat(obj.name.Where(c => !Char.IsWhiteSpace(c)));
         }
         data += name + "= {\n";
+
+        //Es un prefab cambiado????
+        if(PrefabUtility.HasPrefabInstanceAnyOverrides(obj, false))
+        {
+            i++;
+            Tabulate();
+            i--;
+            data += "blueprint = " + "\"" + PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj).name + "\",\n";
+        }
 
         //Componentes
         i++; // = x + 1
