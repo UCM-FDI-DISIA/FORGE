@@ -100,6 +100,11 @@
     <ClCompile Include="..\..\src\EC\Entity.cpp" />
     <ClCompile Include="..\..\src\EC\EntityData.cpp" />
     <ClCompile Include="..\..\src\EC\Factory.cpp" />
+    <ClCompile Include="..\..\src\EC\Invoker.cpp" />
+    <ClCompile Include="..\..\src\EC\InvokingForge.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="..\..\src\EC\RectTransform.cpp" />
     <ClCompile Include="..\..\src\EC\Scene.cpp" />
     <ClCompile Include="..\..\src\EC\SceneManager.cpp" />
@@ -113,6 +118,11 @@
     <ClInclude Include="..\..\src\EC\EntityData.h" />
     <ClInclude Include="..\..\src\EC\Factory.h" />
     <ClInclude Include="..\..\src\EC\ForgeFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="..\..\src\EC\Invoker.h" />
+    <ClInclude Include="..\..\src\EC\InvokingForge.h">
       <SubType>
       </SubType>
     </ClInclude>

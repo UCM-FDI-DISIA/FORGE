@@ -9,6 +9,7 @@
 #include "GameLoader.h"
 #include "PhysicsManager.h"
 #include "GUIManager.h"
+#include "InvokingForge.h"
 #include "ForgeError.h"
 
 using namespace forge;
@@ -28,8 +29,8 @@ MainForge::MainForge() :
 	audioManager(*AudioManager::GetInstance()),
 	loadManager(*(new LoadManager())),
 	physicsManager(*PhysicsManager::GetInstance()),
-	guiManager(*GUIManager::GetInstance())
-	{
+	guiManager(*GUIManager::GetInstance()),
+	invokingForge(*InvokingForge::GetInstance()) {
 }
 
 bool MainForge::init(std::string const& configPath) {
@@ -67,6 +68,7 @@ bool MainForge::render() {
 
 bool MainForge::shutDown() {
 	bool result = true;
+	invokingForge.shutDown();
 	sceneManager.cleanUp();
 	guiManager.cleanUp();
 	result = loadManager.cleanUp();
@@ -108,6 +110,7 @@ bool MainForge::Init(std::string const& configPath) {
 		if (!AudioManager::Init()) {
 			throwError(false, "No se pudo iniciar el sistema de audio.");
 		}
+		InvokingForge::Init();
 		RenderManager::Init();
 		SceneManager::Init();
 		PhysicsManager::Init();

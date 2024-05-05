@@ -14,6 +14,7 @@ class LoadManager;
 class Input;
 class PhysicsManager;
 class GUIManager;
+class InvokingForge;
 
 class MainForge {
 private:
@@ -30,6 +31,7 @@ private:
 	Input& inputManager;
 	PhysicsManager& physicsManager;
 	GUIManager& guiManager;
+	InvokingForge& invokingForge;
 
 	static std::unique_ptr<MainForge> instance;
 	

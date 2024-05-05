@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include <ForgeExport.h>
+#include "ForgeExport.h"
 struct lua_State;
 namespace luabridge {
 	class LuaRef;
@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	/// <param name="classCreation">Funcion que recibe lua_State* y que agrega una clase al lua_State recibido.</param>
 	FORGE_API void importClassToLua(std::function<void(lua_State*)> classCreation);
+
+
 };
 
 #endif // !LUA_FORGE_H_

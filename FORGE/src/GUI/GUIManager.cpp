@@ -76,8 +76,12 @@ bool GUIManager::setup() {
 }
 
 void GUIManager::cleanUp() const {
-	renderManager->getSceneManager()->removeRenderQueueListener(overlaySystem);
-	delete overlaySystem;
+	if (renderManager != nullptr) {
+		renderManager->getSceneManager()->removeRenderQueueListener(overlaySystem);
+	}
+	if (overlaySystem != nullptr) {
+		delete overlaySystem;
+	}
 	initialised = false;
 }
 

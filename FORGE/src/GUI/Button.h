@@ -9,6 +9,7 @@
 class Input; 
 template <typename T>
 class ForgeFunction;
+class Invoker;
 
 namespace forge {
 	enum ButtonState { OUT_STATE, HOVER_STATE, CLICKED_STATE };
@@ -36,6 +37,9 @@ private:
 	ForgeFunction<void>* onOver;
 	ForgeFunction<void>* onClick;
 	ForgeFunction<void>* onRelease;
+	Invoker* onOverInvoker;
+	Invoker* onClickInvoker;
+	Invoker* onReleaseInvoker;
 
 	///// <summary>
 	///// Cambia la imagen del boton por la del estado correspondiente
@@ -47,7 +51,19 @@ private:
 	/// </summary>
 	void checkMousePosition();
 
+	/// <summary>
+	/// Comprueba el estado del boton y llama a los callbacks correspondientes si es necesario
+	/// </summary>
 	void checkCallbacks();
+
+	/// <summary>
+	/// Inicializa el invocadores de un callback
+	/// </summary>
+	/// <param name="data">ComponentData del que se esta leyendo la informacion</param>
+	/// <param name="invoker">Invocador que se quiere inicializar</param>
+	/// <param name="name">Nombre del invocador en Lua</param>
+	/// <returns></returns>
+	bool initInvoker(ComponentData* data, Invoker*& invoker, std::string const& name);
 
 public:
     // Id de componente
@@ -72,28 +88,28 @@ public:
 	/// <summary>
 	/// Activa el componente (llama a crear la imagen)
 	/// </summary>	
-	virtual FORGE_API void onEnabled();
+	FORGE_API void onEnabled() override;
 
 	/// <summary>
 	/// Desactiva el componente (llama a destruir la imagen)
 	/// </summary>	
-	virtual FORGE_API void onDisabled();
+	FORGE_API void onDisabled() override;
 
 	/// <summary>
 	/// Update del UIComponent
 	/// </summary>
-	void update() override;
+	FORGE_API void update() override;
 
 	/// <summary>
 	/// Resetea la funcion principal de los botones, asignandola como nula
 	/// </summary>	
-	static void resetFunction();
+	FORGE_API static void resetFunction();
 
 	/// <summary>
 	/// Llama a la funcion principal de los botones en caso de no ser nula, devolviendo si se ha ejecutado
 	/// </summary>	
 	/// <returns>Si habia una funcion asignada y se ha podido ejecutar</returns>
-	static bool mainFunctionCall();
+	FORGE_API static bool mainFunctionCall();
 
 	#pragma region Getters
 	/// <summary>

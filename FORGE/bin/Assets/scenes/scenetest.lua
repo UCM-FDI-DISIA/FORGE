@@ -3,15 +3,15 @@ local prefabs = {
         handler = "player",
         components = {
             Transform = {
-                position = {0, -20, 0},
-                scale = {0.05, 0.05, 0.05}
+                position = Vector3(0, -20, 0),
+                scale = Vector3(0.05, 0.05, 0.05)
             },
             Animator = {
                 mesh = "ninja.mesh",
                 activeAnimations = {
                    "Walk"
                 }
-            },
+            }, 
             AudioSource = {
                 sound = "Test",
                 playOnAwake = true
@@ -155,13 +155,15 @@ local scenes = {
                     out = "out.png",
                     hover = "over.png",
                     clicked = "clicked.png",
-                    onOver = function ()
-                            print("Estoy sobre el boton");
-                        end,
-                    onClick = function ()
-                            print("Estoy clickando el boton");
-                        end,
-                    onRelease = function ()
+                    onOverInvoker = "player",
+                    onOver = function (inv)
+                        print("Poto en Lua");
+                        inv:invoke("Poto");
+                    end,
+                    onClick = function (inv)
+                        print("Estoy clickando el boton");
+                    end,
+                    onRelease = function (inv)
                         print("He soltado el boton");
                     end
 

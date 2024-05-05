@@ -7,6 +7,7 @@
 #pragma warning(disable : 26439)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
+#include "Invoker.h"
 
 template <typename T>
 class ForgeFunction {
@@ -24,9 +25,9 @@ public:
 	/// Llamada a la funcion
 	/// </summary>
 	/// <returns>Valor devuelto por la funcion</returns>
-	inline T invoke() {
+	inline T invoke(Invoker const& invoker) {
 		if (functionRef.isFunction()) {
-			luabridge::LuaRef ret = functionRef();
+			luabridge::LuaRef ret = functionRef(invoker);
 			if (ret.isInstance<T>()) {
 				return ret.cast<T>();
 			}
@@ -37,8 +38,8 @@ public:
 	/// Llamada a la funcion
 	/// </summary>
 	/// <returns>Valor devuelto por la funcion</returns>
-	inline T operator()() {
-		return invoke();
+	inline T operator()(Invoker const& invoker) {
+		return invoke(invoker);
 	}
 };
 
@@ -57,17 +58,17 @@ public:
 	/// <summary>
 	/// Llamada a la funcion si era una
 	/// </summary>
-	inline void invoke() {
+	inline void invoke(Invoker const& invoker) {
 		if (functionRef.isFunction()) {
-			luabridge::LuaRef ret = functionRef();
+			luabridge::LuaRef ret = functionRef(invoker);
 		}
 	}
 	/// <summary>
 	/// Llamada a la funcion
 	/// </summary>
 	/// <returns>Valor devuelto por la funcion</returns>
-	inline void operator()() {
-		invoke();
+	inline void operator()(Invoker const& invoker) {
+		invoke(invoker);
 	}
 };
 

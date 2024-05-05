@@ -104,6 +104,10 @@ public:
     /// </returns>
     FORGE_API std::string const& getId();
 
+    /// <summary>
+    /// Comprueba si existe un elemento con el nombre pasado en el ComponentData
+    /// </summary>
+    /// <returns>Booleano que indica si existe el elemento</returns>
     FORGE_API bool has(std::string const& param);
 
     /// <summary>
@@ -127,6 +131,10 @@ public:
     /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector2</returns>
     template <>
     FORGE_API inline forge::Vector2 get<forge::Vector2>(std::string const& param) {
+        if ((*data)[param].isInstance<forge::Vector2>()) {
+            return (*data)[param].cast<forge::Vector2>();
+        }
+
         std::vector<float> input = getter<std::vector<float>>::get(*data, param);
         size_t i = 0;
         for (float& e : input) {
@@ -149,6 +157,10 @@ public:
     /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector3</returns>
     template <>
     FORGE_API inline forge::Vector3 get<forge::Vector3>(std::string const& param) {
+        if ((*data)[param].isInstance<forge::Vector3>()) {
+            return (*data)[param].cast<forge::Vector3>();
+        }
+
         std::vector<float> input = getter<std::vector<float>>::get(*data,param);
         size_t i = 0;
         for (float& e : input) {
@@ -171,6 +183,10 @@ public:
     /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Quaternion</returns>
     template <>
     FORGE_API inline forge::Quaternion get<forge::Quaternion>(std::string const& param) {
+        if ((*data)[param].isInstance<forge::Quaternion>()) {
+            return (*data)[param].cast<forge::Quaternion>();
+        }
+
         std::vector<float> input = getter<std::vector<float>>::get(*data, param);
         if (input.size() == 3) {
             return forge::Quaternion(getter<forge::Vector3>::get(*data, param));

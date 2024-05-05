@@ -10,6 +10,8 @@
 #include "AudioSource.h"
 #include "RigidBody.h"
 #include "Collider.h"
+#include "Invoker.h"
+
 const std::string TestComponent::id = "TestComponent";
 
 TestComponent::TestComponent() :
@@ -25,6 +27,9 @@ TestComponent::TestComponent() :
 }
 
 bool TestComponent::initComponent(ComponentData* data) {
+	entity->getInvoker().registerFunction("Poto", [&] () {
+		Poto();
+		});
 	if (entity->hasComponent<Transform>() && entity->hasComponent<AudioSource>() 
 		&& entity->hasComponent<Animator>() && entity->hasComponent<RigidBody>()) {
 		transform = entity->getComponent<Transform>();	
@@ -49,6 +54,7 @@ bool TestComponent::initComponent(ComponentData* data) {
 			animator->setLoop(anims, true);
 			return true;
 		}
+
 	}
 	std::cerr << "ERROR: Se necesita un componente Transform, RigidBody, AudioSource y Animator para generar un TestComponent\n";
 	return false;
@@ -120,5 +126,5 @@ void TestComponent::update() {
 }
 
 void TestComponent::Poto() {
-	std::cout << "SE LLAMO AL CALLBACK\n";
+	std::cout << "Poto en C++\n";
 }

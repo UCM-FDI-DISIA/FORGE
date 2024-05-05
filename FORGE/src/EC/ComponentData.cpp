@@ -25,7 +25,6 @@ std::string const& ComponentData::getId() {
     return id;
 }
 
-bool ComponentData::has(std::string const& param)
-{
+bool ComponentData::has(std::string const& param) {
     return !(*data)[param].isNil();
 }

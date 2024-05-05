@@ -5,6 +5,9 @@
 #include "RectTransform.h"
 #include "Image.h"
 #include "ForgeFunction.h"
+#include "Scene.h"
+#include "Entity.h"
+#include "Invoker.h"
 
 const std::string Button::id = "Button";
 std::function<void(void)> Button::mainFunc = nullptr;
@@ -44,18 +47,32 @@ void Button::checkMousePosition() {
 void Button::checkCallbacks() {
 	if (newState == forge::HOVER_STATE && state == forge::OUT_STATE) {
 		if (onOver != nullptr) {
-			(*onOver)();
+			(*onOver)(*onOverInvoker);
 		}
 	}
 	if (newState == forge::CLICKED_STATE && state == forge::HOVER_STATE) {
 		if (onClick != nullptr) {
-			(*onClick)();
+			(*onClick)(*onClickInvoker);
 		}
 	}
 	if (newState == forge::HOVER_STATE && state == forge::CLICKED_STATE) {
 		if (onRelease != nullptr) {
-			(*onRelease)();
+			(*onRelease)(*onReleaseInvoker);
 		}
+	}
+}
+
+bool Button::initInvoker(ComponentData* data, Invoker*& invoker, std::string const& name) {
+	if (data->has(name)) {
+		std::string handler = data->get<std::string>(name);
+		Entity* other = scene->getEntityByHandler(handler);
+		if (other == nullptr) {
+			throwError(false, "Invoker \"" << handler << "\" de Button::" << name << " no valido.");
+		}
+		invoker = &other->getInvoker();
+	}
+	else {
+		invoker = &entity->getInvoker();
 	}
 }
 
@@ -65,7 +82,10 @@ Button::Button() :
 	onOver(nullptr),
 	onClick(nullptr),
 	onRelease(nullptr),
-	input(nullptr),
+	onOverInvoker(nullptr),
+	onClickInvoker(nullptr),
+	onReleaseInvoker(nullptr),
+	input(Input::GetInstance()),
 	state(forge::ButtonState::OUT_STATE),
 	newState(forge::ButtonState::OUT_STATE),
 	hoverTexture("default.png") {
@@ -90,12 +110,16 @@ Button::~Button() {
 }
 
 bool Button::initComponent(ComponentData* data) {
-	if (Image::initComponent(data)) {
-		input = Input::GetInstance();
-		setMaterial(outTexture);
-		return true;
+	if (!Image::initComponent(data)) {
+		return false;
 	}
-	return false;
+	setMaterial(outTexture);
+
+	initInvoker(data, onOverInvoker, "onOverInvoker");
+	initInvoker(data, onClickInvoker, "onClickInvoker");
+	initInvoker(data, onReleaseInvoker, "onReleaseInvoker");
+
+	return true;
 }
 
 void Button::onEnabled() {

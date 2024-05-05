@@ -3,8 +3,10 @@
 #include "Factory.h"
 #include "ComponentData.h"
 #include "Transform.h"
+#include "Invoker.h"
 
 Entity::Entity() : 
+    inv(new Invoker()),
     fact(*Factory::GetInstance()),
     scene(nullptr),
     components(),
@@ -27,6 +29,7 @@ Entity::~Entity() {
     if (parent != nullptr) {
        // parent->removeChild(this);
     }
+    delete inv;
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
@@ -62,7 +65,7 @@ Component* Entity::addComponent(ComponentData* data) {
     return component;
 }
 
-FORGE_API bool Entity::initComponents(std::vector<ComponentData*> data) {
+bool Entity::initComponents(std::vector<ComponentData*> data) {
     for (auto& componentData : data) {
         if (componentData != nullptr) {
             auto component = componentMap.find(componentData->getId());
@@ -74,7 +77,7 @@ FORGE_API bool Entity::initComponents(std::vector<ComponentData*> data) {
     return true;
 }
 
-FORGE_API bool Entity::initSerializedComponents(std::vector<ComponentData*> data) {
+bool Entity::initSerializedComponents(std::vector<ComponentData*> data) {
     for (auto& componentData : data) {
         if (componentData != nullptr) {
             auto component = componentMap.find(componentData->getId());
@@ -137,7 +140,7 @@ int Entity::getGroup() {
     return groupId;
 }
 
-FORGE_API const std::unordered_set<Entity*>& Entity::getChildren() const {
+const std::unordered_set<Entity*>& Entity::getChildren() const {
     return children;
 }
 
@@ -163,17 +166,21 @@ void Entity::setEnabled(bool enabled) {
     }
 }
 
-FORGE_API bool Entity::isKeepBetweenScenes() {
+bool Entity::isKeepBetweenScenes() {
     return keepBetweenScenes;
 }
 
-FORGE_API void Entity::setKeepBetweenScenes(bool ddol) {
+void Entity::setKeepBetweenScenes(bool ddol) {
     keepBetweenScenes = ddol;
 }
 
-FORGE_API void Entity::changeScene(Scene* newScene) {
+void Entity::changeScene(Scene* newScene) {
     scene = this->scene;
     for (auto& component : components) {
         component->setContext(this, scene);
     }
+}
+
+Invoker& Entity::getInvoker() {
+    return *inv;
 }

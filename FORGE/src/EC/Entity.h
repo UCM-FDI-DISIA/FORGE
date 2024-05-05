@@ -11,9 +11,11 @@ class Component;
 class Entity;
 class Factory;
 class ComponentData;
+class Invoker;
 
 class Entity {
 private:
+	Invoker* inv;
 	Factory& fact;
 	Scene* scene;
 	std::vector<Component*> components;
@@ -168,6 +170,10 @@ public:
 	/// </summary>
 	/// <param name="newScene">Puntero a la nueva Scene</param>
 	FORGE_API void changeScene(Scene* newScene);
-
+	/// <summary>
+	/// Devuelve una referencia al invocador de la entidad
+	/// </summary>
+	/// <returns>Referencia al invocador de la entidad</returns>
+	FORGE_API Invoker& getInvoker();
 };
 #endif
