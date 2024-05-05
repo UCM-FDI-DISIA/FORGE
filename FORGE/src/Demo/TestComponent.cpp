@@ -87,12 +87,14 @@ void TestComponent::update() {
 	}
 	if (input.keyDown(K_W)) {
 		//transform->setPositionZ(transform->getPosition().getZ() + movement);
-		rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
+		//rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
+		rigidBody->setLinearVelocity(forge::Vector3(0,1,0));
 	}
 
 	if (input.keyPressed(K_W)) {
 		//transform->setPositionZ(transform->getPosition().getZ() + movement);
-		rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
+		//rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
+		rigidBody->setLinearVelocity(forge::Vector3(0, 1, 0));
 	}
 	if (input.keyPressed(K_S)) {
 		//transform->setPositionZ(transform->getPosition().getZ() - movement);

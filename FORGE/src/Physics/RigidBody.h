@@ -41,17 +41,20 @@ public:
     FORGE_API void applyForce(forge::Vector3 const& force);
 
     /// <summary>
-    /// Metodo para aplicar gravedad nueva a un objeto
-    /// </summary>
-    /// <param name="newGravity: ">La gravedad nueva a aplicar</param>
-    FORGE_API void setGravity(forge::Vector3 const& newGravity);
-
-    /// <summary>
     /// Limpia las fuerzas aplicadas al objeto, devolviendolo a un estado sin fuerzas aplicadas
     /// </summary>
     FORGE_API void clearForces();
 
     #pragma region setters
+    /// <summary>
+    /// Metodo para aplicar gravedad nueva a un objeto
+    /// </summary>
+    /// <param name="newGravity: ">La gravedad nueva a aplicar</param>
+    FORGE_API void setGravity(forge::Vector3 const& newGravity);
+    /// <summary>
+    /// Metodo para devolver un objeto a su estado de reposo
+    /// </summary>
+    FORGE_API void rest();
     /// <summary>
     /// Añade bloqueos para evitar movimiento en los ejes
     /// </summary>
@@ -80,9 +83,19 @@ public:
     /// <param name="scale">Escala nueva en x,y,z para el cuerpo</param>
     FORGE_API void setRigidScale(forge::Vector3 const& scale);
     /// <summary>
-    /// TODO comentarlo vosotros
+    /// Actualiza la velocidad lineal del objeto
     /// </summary>
-    /// <param name="vect"></param>
+    /// <param name="vect">vector 3 de forge con la velocidad a aplicar</param>
+    FORGE_API void setLinearVelocity(forge::Vector3 const& vect);
+    /// <summary>
+    /// Actualiza la velocidad Angular del objeto
+    /// </summary>
+    /// <param name="vect">vector 3 de forge con la velocidad a aplicar</param>
+    FORGE_API void setAngularVelocity(forge::Vector3 const& vect);
+    /// <summary>
+    /// Metodo para actualizar la posicion a partir de otro vector
+    /// </summary>
+    /// <param name="vect">Vector 3 de forge</param>
     FORGE_API void setPosition(forge::Vector3 const& vect);
     /// <summary>
     /// Cambia la posicion en x por el nuevo valor

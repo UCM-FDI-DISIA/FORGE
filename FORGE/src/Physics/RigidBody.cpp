@@ -76,6 +76,16 @@ void RigidBody::clearForces() {
     myBody->clearForces();
 }
 
+void RigidBody::setGravity(forge::Vector3 const& newGravity) {
+    myGravity = newGravity;
+    myBody->setGravity(physicsManager->fromForgeToBtVect(newGravity * physicsManager->getGravity()));
+}
+
+void RigidBody::rest() {
+	myBody->setLinearVelocity(btVector3(0, 0, 0));
+	myBody->setAngularVelocity(btVector3(0, 0, 0));
+}
+
 void RigidBody::lockPosition(bool x, bool y, bool z) {
     axisBlockedPos[0] = x;
     axisBlockedPos[1] = y;
@@ -94,11 +104,6 @@ void RigidBody::lockRotation(bool x, bool y, bool z) {
     myBody->setAngularFactor(rotConstr);
 }
 
-void RigidBody::setGravity(forge::Vector3 const& newGravity) {
-    myGravity = newGravity;
-    myBody->setGravity(physicsManager->fromForgeToBtVect(newGravity * physicsManager->getGravity()));
-}
-
 void RigidBody::setFriction(float newFriction) {
     friction = newFriction;
     myBody->setFriction(friction);
@@ -112,6 +117,14 @@ void RigidBody::setRestitution(float newRestitution) {
 void RigidBody::setRigidScale(forge::Vector3 const& scale) {
     myScale = scale;
     myShape->setLocalScaling(physicsManager->fromForgeToBtVect(bodyTransform->getGlobalScale() * myScale));
+}
+
+void RigidBody::setLinearVelocity(forge::Vector3 const& newVelocity) {
+	myBody->setLinearVelocity(physicsManager->fromForgeToBtVect(newVelocity));
+}
+
+void RigidBody::setAngularVelocity(forge::Vector3 const& newVelocity) {
+	myBody->setAngularVelocity(physicsManager->fromForgeToBtVect(newVelocity));
 }
 
 void RigidBody::setPosition(forge::Vector3 const& vect) {
