@@ -1,15 +1,11 @@
 #include "RenderManager.h"
-#include "Mesh.h"
-#include "Camera.h"
-#include "Light.h"
-#include "Entity.h"
-#include "Transform.h"
 #pragma warning(push)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
 #pragma warning(disable : 26451)
 #pragma warning(disable : 26495)
 #include <OgreRoot.h>
+#include <SDL.h>
 #include <OgreFileSystemLayer.h>
 #include <OgreBuildSettings.h>
 #include <OgreLogManager.h>
@@ -17,208 +13,40 @@
 #include <OgreFileSystemLayer.h>
 #include <OgreFrameListener.h>
 #include <OgreRTShaderConfig.h>
-#include <OgreRTShaderExports.h>
-
 #include <OgreGpuProgramManager.h>
 #include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
-#include <OgreViewport.h>
-#include <OgreDataStream.h>
 #include <OgreEntity.h>
+#include <OgreParticleSystem.h>
+#include <OgreBillboardSet.h>
+#include <OgreViewport.h>
+#include <OgreNameGenerator.h>
 #pragma warning(pop)
-
-#include <SDL.h>
-#include <SDL_video.h>
-
+#include "RenderForge.h"
+#include "Entity.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Camera.h"
+#include "Light.h"
+#include "ParticleSystem.h"
+#include "Billboard.h"
+#include "ForgeError.h"
+#include "Vector2.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
-
+bool RenderManager::initialised = false;
 
 RenderManager::RenderManager() : 
-	myRoot(nullptr),
-	myWindow({nullptr, nullptr}),
-	myFileSystemLayer(nullptr),
-	myAppName(),
-	mySolutionPath(),
-	myRTShaderLibPath(),
-	mySceneManager(nullptr),
-	transforms() {
+	forge(nullptr),
+	root(nullptr),
+	sceneManager(nullptr),
+	transforms(),
+	cameraNames(new Ogre::NameGenerator("Camera")),
+	particleSystemsNames(new Ogre::NameGenerator("ParticleSystem")) {
 
 }
 
-RenderManager::~RenderManager() {
-	delete myFileSystemLayer;
-	delete myRoot;
-}
-
-
-Ogre::Root* RenderManager::createRoot() {
-	myFileSystemLayer = new Ogre::FileSystemLayer(myAppName);
-
-	Ogre::String pluginsPath;
-	pluginsPath = myFileSystemLayer->getConfigFilePath("plugins.cfg");
-
-	if (!Ogre::FileSystemLayer::fileExists(pluginsPath)) {
-		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "RenderManager::createRoot");
-	}
-
-	mySolutionPath = pluginsPath;
-	mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
-	myFileSystemLayer->setHomePath(mySolutionPath);
-	//mySolutionPath.erase(mySolutionPath.find_last_of("\\") + 1, mySolutionPath.size() - 1);
-
-	// Creamos la raíz de OGRE 
-	return new Ogre::Root(pluginsPath, myFileSystemLayer->getWritablePath("ogre.cfg"), myFileSystemLayer->getWritablePath("ogre.log"));
-}
-
-NativeWindowPair RenderManager::createWindow() {
-	uint32_t w, h;
-	Ogre::NameValuePairList miscParams;
-
-	Ogre::ConfigOptionMap ropts = myRoot->getRenderSystem()->getConfigOptions();
-
-	std::istringstream mode(ropts["Video Mode"].currentValue);
-	Ogre::String token;
-	mode >> w;
-	mode >> token;
-	mode >> h;
-
-	miscParams["FSAA"] = ropts["FSAA"].currentValue;
-	miscParams["vsync"] = ropts["VSync"].currentValue;
-	miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
-
-	if (!SDL_WasInit(SDL_INIT_VIDEO)) SDL_InitSubSystem(SDL_INIT_VIDEO);
-
-	// Establecemos la ventana como redimensionable por defecto
-	Uint32 flags = SDL_WINDOW_RESIZABLE;
-
-	// Si la opción de pantalla completa está activada, la ventana se establece como pantalla completa
-	if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
-
-	// Creamos la ventana nativa de SDL
-	myWindow.native = SDL_CreateWindow(myAppName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
-
-	// Establecemos los parámetros de la ventana de render y la creamos
-	SDL_SysWMinfo wmInfo;
-	SDL_VERSION(&wmInfo.version);
-	SDL_GetWindowWMInfo(myWindow.native, &wmInfo);
-	miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
-	myWindow.render = myRoot->createRenderWindow(myAppName, w, h, false, &miscParams);
-	return myWindow;
-}
-
-void RenderManager::locateResources() {
-	// Cargamos los recursos del archivo resources.cfg
-	Ogre::ConfigFile cf;
-
-	Ogre::String resourcesPath = myFileSystemLayer->getConfigFilePath("resources.cfg");
-	if (Ogre::FileSystemLayer::fileExists(resourcesPath)) {
-		cf.load(resourcesPath);
-	}
-	else {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-			Ogre::FileSystemLayer::resolveBundlePath(mySolutionPath + "\\media"),
-			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	}
-
-	Ogre::String sec, type, arch;
-	// go through all specified resource groups
-	Ogre::ConfigFile::SettingsBySection_::const_iterator seci;
-	for (seci = cf.getSettingsBySection().begin(); seci != cf.getSettingsBySection().end(); ++seci) {
-		// Esto sirve para dividir los recursos en secciones. Al comentarlo se van todos a "General"
-		// sec = seci->first;
-		const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
-		Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
-
-		// go through all resource paths
-		for (i = settings.begin(); i != settings.end(); i++) {
-			type = i->first;
-			arch = i->second;
-			if (arch[0] == '.' && (arch[1] == '/' || arch[1] == '\\')) {
-				arch = arch.substr(2);
-				arch = myFileSystemLayer->getWritablePath(arch);
-			}
-			arch = Ogre::FileSystemLayer::resolveBundlePath(arch);
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type); // El tercer parámetro sería "sec" si dividieramos en secciones
-		}
-	}
-
-	sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
-	const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);
-
-	// Aun no tenemos las excepciones de Ogre
-	// OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
-
-	arch = genLocs.front().archive->getName();
-	type = genLocs.front().archive->getType();
-
-	// Add locations for supported shader languages
-	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles")) {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSLES", type, sec);
-	}
-	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl")) {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL120", type, sec);
-
-		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl150")) {
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL150", type, sec);
-		}
-		else {
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL", type, sec);
-		}
-
-		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl400")) {
-			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL400", type, sec);
-		}
-	}
-	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl")) {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/HLSL", type, sec);
-	}
-
-	myRTShaderLibPath = arch + "/RTShaderLib";
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(myRTShaderLibPath + "/materials", type, sec);
-
-	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles")) {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(myRTShaderLibPath + "/GLSL", type, sec);
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(myRTShaderLibPath + "/GLSLES", type, sec);
-	}
-	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl")) {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(myRTShaderLibPath + "/GLSL", type, sec);
-	}
-	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl")) {
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(myRTShaderLibPath + "/HLSL", type, sec);
-	}
-
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-}
-
-RenderManager* RenderManager::getInstance() {
-	if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<RenderManager>(new RenderManager())).get();
-}
-
-void RenderManager::setup(std::string appName) {
-	myAppName = appName;
-	myRoot = createRoot();
-	// Creamos el sistema de renderizado a partir del sistema de renderizado por defecto
-	Ogre::RenderSystem* rs = myRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
-	myRoot->setRenderSystem(rs);
-
-	// Inicializamos el sistema de renderizado
-	myRoot->initialise(false);
-
-	// Creamos la ventana
-	myWindow = createWindow();
-	setWindowGrab(false);
-
-	// Inicializamos los recursos
-	locateResources();
-
-	// Creamos la escena
-	mySceneManager = myRoot->createSceneManager();
-	mySceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
-}
-
-bool RenderManager::render() {
+void RenderManager::updateNodePositions() {
 	for (auto&& pair : transforms) {
 		if (pair.second->getNeedsUpdate()) {
 			const forge::Vector3& position = pair.second->getGlobalPosition();
@@ -230,34 +58,74 @@ bool RenderManager::render() {
 			pair.second->setNeedsUpdate(false);
 		}
 	}
-	return myRoot->renderOneFrame();
 }
 
+RenderManager::~RenderManager() {
+	delete cameraNames;
+	delete particleSystemsNames;
+	delete forge;
+}
 
-void RenderManager::setWindowGrab(bool _grab) {
-	// Establecemos el ratón como libre o no
-	SDL_bool grab = SDL_bool(_grab);
-	SDL_SetWindowGrab(myWindow.native, grab);
-	SDL_ShowCursor(grab);
+void RenderManager::Init() {
+	instance = std::unique_ptr<RenderManager>(new RenderManager());
+	initialised = true;
+}
+
+RenderManager* RenderManager::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
+}
+
+bool RenderManager::setup(std::string const& appName) {
+	// Verificacion de nombre de ventana valido	
+	for (char c : appName) {
+		if (c == '?') {
+			throwError(false, "Nombre de ventana no valido");
+		}
+	}
+	forge = new RenderForge(appName);
+	if (!forge->getInitialitation()) return false;
+	root = forge->getRoot();
+	// Creamos la escena
+	try {
+		sceneManager = root->createSceneManager();
+		sceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+	}
+	catch (std::exception e) {
+		return false;
+	}
+	return true;
+}
+
+bool RenderManager::render() {
+	if(root == nullptr) return false;
+	updateNodePositions();
+	return root->renderOneFrame();
 }
 
 Ogre::Entity* RenderManager::addMeshNode(Mesh* mesh) {
-	Ogre::Entity* entity = mySceneManager->createEntity(mesh->getMesh());
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
-	if (mesh->getMaterial() != "") {
-		entity->setMaterialName(mesh->getMaterial());
+	if (root == nullptr) return nullptr;
+	try {
+		Ogre::Entity* entity = sceneManager->createEntity(mesh->getMesh());
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		if (mesh->getMaterial() != "") {
+			entity->setMaterialName(mesh->getMaterial());
+		}
+		node->attachObject(entity);
+		transforms.insert({ node, mesh->getEntity()->getComponent<Transform>() });
+		return entity;
+	} catch (std::exception e) {
+		throwError(nullptr, "No se ha podido cargar un mesh " << mesh->getMesh());
 	}
-	node->attachObject(entity);
-	transforms.insert({node, mesh->getEntity()->getComponent<Transform>()});
-	return entity;
 }
 
-
 Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
+	// Se busca el nodo asociado a la entidad y se desvincula la entidad de ï¿½l
 	Ogre::SceneNode* node = entity->getParentSceneNode();
 	node->detachObject(entity);
-	mySceneManager->destroyEntity(entity);
-	Ogre::Entity* newEntity = mySceneManager->createEntity(mesh->getMesh());
+	sceneManager->destroyEntity(entity);
+	// Se crea una nueva malla con o sin material y se vincula al nodo ya existente
+	Ogre::Entity* newEntity = sceneManager->createEntity(mesh->getMesh());
 	if (mesh->getMaterial() != "") {
 		newEntity->setMaterialName(mesh->getMaterial());
 	}
@@ -265,37 +133,137 @@ Ogre::Entity* RenderManager::updateMeshNode(Ogre::Entity* entity, Mesh* mesh) {
 	return newEntity;
 }
 
-Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
+Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
+	if (root == nullptr) return nullptr;
+	try {
+		Ogre::BillboardSet* set = sceneManager->createBillboardSet(bs->getSize());
+		set->setDefaultDimensions(bs->getBillboardWidth(), bs->getBillboardHeight());
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		if (bs->getMaterial() != "") {
+			set->setMaterialName(bs->getMaterial());
+		}
+		node->attachObject(set);
+		transforms.insert({ node, bs->getEntity()->getComponent<Transform>() });
+		return set;
+	}
+	catch (std::exception e) {
+		throwError(nullptr, "No se ha podido cargar un billboard " << bs->getMaterial());
+	}
+}
 
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Camera* ogreCamera = mySceneManager->createCamera(camera->getName());
-	ogreCamera->setNearClipDistance(camera->getNearClipDistance());
-	ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
-	node->attachObject(ogreCamera);
-	Ogre::Viewport* viewport = myWindow.render->addViewport(ogreCamera);
-	Ogre::ColourValue value = Ogre::ColourValue(
-		camera->getBackgroundColor().getX(),
-		camera->getBackgroundColor().getY(),
-		camera->getBackgroundColor().getZ());
-	viewport->setBackgroundColour(value);
-	transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
-	return ogreCamera;
+Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
+	
+	if (root == nullptr) return nullptr;
+	try {
+		// Se crea un nodo para la camara
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		// Se crea la camara con las caracteristicas especificadas
+		Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
+		ogreCamera->setNearClipDistance(camera->getNearClipDistance());
+		ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
+		node->attachObject(ogreCamera);
+		Ogre::Viewport* viewport = forge->getWindow().render->addViewport(ogreCamera);
+		Ogre::ColourValue value = Ogre::ColourValue(
+			camera->getBackgroundColor().getX(),
+			camera->getBackgroundColor().getY(),
+			camera->getBackgroundColor().getZ());
+		viewport->setBackgroundColour(value);
+		// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
+		transforms.insert({ node, camera->getEntity()->getComponent<Transform>() });
+		return ogreCamera;
+	}
+	catch (std::exception e) {
+		throwError(nullptr, "No se ha podido cargar una camara " << cameraNames->generate());
+	}
 }
 
 Ogre::Light* RenderManager::addLightNode(Light* light) {
-	Ogre::SceneNode* node = mySceneManager->getRootSceneNode()->createChildSceneNode();
-	Ogre::Light* ogreLight = mySceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
-	node->attachObject(ogreLight);
-	transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
-	return ogreLight;
+	if (root == nullptr) return nullptr;
+	try {
+		// Se crea una luz del tipo requerido
+		Ogre::Light* ogreLight = sceneManager->createLight(Ogre::Light::LightTypes(light->getType()));
+		// Se vincula la luz a un nodo de OGRE que cuelga del nodo raiz
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		node->attachObject(ogreLight);
+		// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
+		transforms.insert({ node, light->getEntity()->getComponent<Transform>() });
+		return ogreLight;
+	}
+	catch (std::exception e) {
+		throwError(nullptr, "No se ha podido cargar una luz " << light->getType());
+	}
 }
 
+Ogre::ParticleSystem* RenderManager::addParticleSystemNode(ParticleSystem* particleSystem) {
+	if (root == nullptr) return nullptr;
+	try {
+		// Se vincula el sistema de particulas a un nodo de OGRE que cuelga del nodo raiz
+		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
+		// Se crea el sistema de particulas
+		std::string name = particleSystemsNames->generate();
+		Ogre::ParticleSystem* ogreParticleSystem = sceneManager->createParticleSystem(name, particleSystem->getParticle());
+		ogreParticleSystem->setEmitting(particleSystem->getEmitting());
+		node->attachObject(ogreParticleSystem);
+		// Se aï¿½ade el nodo al mapa de objetos de la escena de OGRE
+		transforms.insert({ node, particleSystem->getEntity()->getComponent<Transform>() });
+		return ogreParticleSystem;
+	}
+	catch (std::exception e) {
+		throwError(nullptr, "No se ha podido cargar un sistema de particulas " << particleSystem->getParticle());
+	}
+}
+
+
+Ogre::ParticleSystem* RenderManager::updateParticleSystemNode(Ogre::ParticleSystem* ogreParticleSystem, ParticleSystem* particleSystem) {
+	// Se busca el nodo del que cuelga el sistema de particulas que queremos borrar
+	Ogre::SceneNode* node = ogreParticleSystem->getParentSceneNode();
+	node->detachObject(ogreParticleSystem);
+	sceneManager->destroyEntity(ogreParticleSystem);
+	// Se crea el nuevo sistema y se vincula al nodo ya existente
+	Ogre::ParticleSystem* newParticleSystem = sceneManager->createParticleSystem(particleSystem->getParticle());
+	newParticleSystem->setEmitting(particleSystem->getEmitting());
+	node->attachObject(newParticleSystem);
+	return newParticleSystem;	
+}
+
+
 void RenderManager::removeNode(Ogre::MovableObject* object) {
+	// Se busca el nodo asociado y se elimina de la escena de OGRE y del mapa de objetos de esta
+	if(root == nullptr || object == nullptr) return;
 	Ogre::SceneNode* node = object->getParentSceneNode();
 	node->detachObject(object);
-	mySceneManager->destroyEntity(object);
-	mySceneManager->destroySceneNode(node);
+	sceneManager->destroyEntity(object);
+	sceneManager->destroySceneNode(node);
 	transforms.erase(node);
 }
 
+void RenderManager::removeCamera(Ogre::Camera* camera) {
+	// Se busca el nodo asociado a la camara que queremos eliminar
+	Ogre::SceneNode* node = camera->getParentSceneNode();
+	node->detachObject(camera);
+	// MUY IMPORTANTE: se elimina el viewport de la camara
+	forge->getWindow().render->removeViewport(camera->getViewport()->getZOrder());
+	// Se destruyen la camara, el nodo de OGRE y la referencia a el en el mapa de la escena
+	sceneManager->destroyCamera(camera);
+	sceneManager->destroySceneNode(node);
+	transforms.erase(node);
+}
 
+void RenderManager::resizeWindow() {
+	forge->getWindow().render->windowMovedOrResized();
+}
+
+Ogre::SceneManager* RenderManager::getSceneManager() {
+	return sceneManager;
+}
+
+forge::Vector2 RenderManager::getResolution() {
+	auto renderer = forge->getWindow().render;
+	return forge::Vector2(renderer->getWidth(), renderer->getHeight());
+}
+
+Ogre::ManualObject* RenderManager::createManualObject(std::string name) {
+	Ogre::ManualObject* newManualObject = sceneManager->createManualObject(name);
+	sceneManager->getRootSceneNode()->attachObject(newManualObject);
+	return newManualObject;
+}

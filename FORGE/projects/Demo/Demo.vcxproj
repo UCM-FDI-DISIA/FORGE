@@ -19,13 +19,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -58,14 +58,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)Dependencies\irrKlang\include;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Load\;$(SolutionDir)src\Input\;$(SolutionDir)src\Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FORGE_d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -76,50 +75,45 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies\Ogre\src\OgreMain\include\;$(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;$(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\LuaBridge\Source\;$(SolutionDir)Dependencies\irrKlang\include;$(SolutionDir)src\EC\;$(SolutionDir)src\Utils\;$(SolutionDir)src\Render\;$(SolutionDir)src\Load\;$(SolutionDir)src\Input\;$(SolutionDir)src\Audio\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      $(SolutionDir)dependencies\Ogre\src\OgreMain\include\;
+      $(SolutionDir)dependencies\Ogre\build\$(Platform)\include\;
+      $(SolutionDir)Dependencies\SDL2\build\$(Platform)\include\SDL2\;
+      $(SolutionDir)Dependencies\SDL2\build\$(Platform)\include-config-$(Configuration)\SDL2\;
+      $(SolutionDir)Dependencies\Lua\src\;
+      $(SolutionDir)Dependencies\LuaBridge\Source\;
+      $(SolutionDir)Dependencies\irrKlang\include;
+      $(SolutionDir)src\EC\;
+      $(SolutionDir)src\Utils\;
+      $(SolutionDir)src\Render\;
+      $(SolutionDir)src\Load\;
+      $(SolutionDir)src\Input\;
+      $(SolutionDir)src\Audio\;
+      $(SolutionDir)src\Main\;
+      $(SolutionDir)src\Physics\;
+      $(SolutionDir)Dependencies\Bullet\src\src;
+      %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FORGE.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Demo\prueba.cpp" />
-    <ClCompile Include="..\..\src\Demo\TestMovement.cpp" />
+    <ClCompile Include="..\..\src\Demo\ComponentRegistrier.cpp" />
+    <ClCompile Include="..\..\src\Demo\TestComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Demo\TestMovement.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Audio\Audio.vcxproj">
-      <Project>{a5aa2fa6-a50f-49eb-94e5-42297dc3ff20}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\EC\EC.vcxproj">
-      <Project>{f752bc2b-d1fe-4348-a9bf-75afd852de70}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Input\Input.vcxproj">
-      <Project>{b5c0fcf0-3753-4906-bf1c-20044e9fc4ba}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Load\Load.vcxproj">
-      <Project>{a25433b1-436f-4bff-904a-a7b1de4e99bb}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Main\Main.vcxproj">
-      <Project>{4ef5fd19-2c0e-47a0-b8ff-a921240ff6aa}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Render\Render.vcxproj">
-      <Project>{7e3fdd0f-bdad-490e-b98d-91cce20821f6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Utils\Utils.vcxproj">
-      <Project>{8087e473-2fbf-46fc-ba2e-801ddbfa00f7}</Project>
-    </ProjectReference>
+    <ClInclude Include="..\..\src\Demo\TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin\Assets\assets.forge.lua" />
+    <None Include="..\..\bin\Assets\config.forge.lua" />
     <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

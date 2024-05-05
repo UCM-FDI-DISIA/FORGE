@@ -6,7 +6,10 @@
 #pragma warning(pop)
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Vector4.h"
 #include "Quaternion.h"
+#include "Invoker.h"
+#include "ForgeError.h"
 
 void LuaForge::importForgeClassesToLua() {
 	luabridge::getGlobalNamespace(lua)
@@ -16,10 +19,16 @@ void LuaForge::importForgeClassesToLua() {
 		.beginClass<forge::Vector3>("Vector3")
 			.addConstructor<void(*)(double, double, double)>()
 		.endClass()
+		.beginClass<forge::Vector4>("Vector4")
+			.addConstructor<void(*)(double, double, double, double)>()
+		.endClass()
 		.beginClass<forge::Quaternion>("Quaternion")
 			.addConstructor<void(*)(double, double, double, double)>()
 		.endClass()
-	;
+		.beginClass<Invoker>("Invoker")
+			.addConstructor<void(*)(void)>()
+			.addFunction("invoke", &Invoker::invoke)
+		.endClass();
 }
 
 void LuaForge::importUserClassesToLua() {
@@ -43,8 +52,12 @@ lua_State* LuaForge::getState() const {
 	return lua;
 }
 
-void LuaForge::doFile(std::string path) {
-	luaL_dofile(lua, path.c_str());
+bool LuaForge::doFile(std::string const& path) {
+	bool fileNotFound = luaL_dofile(lua, path.c_str());
+	if (fileNotFound) {
+		reportError("Archivo " << path << " no encontrado o contiene un error de sintaxis.");
+	}
+	return !fileNotFound;
 }
 
 void LuaForge::importClassToLua(std::function<void(lua_State*)> classCreation) {

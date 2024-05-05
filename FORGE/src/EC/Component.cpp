@@ -1,11 +1,13 @@
 ﻿#include "Component.h"
 #include "Serializer.h"
+#include "SceneManager.h"
 
 Component::Component() : 
     entity(nullptr),
     scene(nullptr),
     enabled(false),
-    serializer(*(new Serializer())) {
+    serializer(*(new Serializer())),
+    sceneManager(*SceneManager::GetInstance()){
 }
 
 Component::~Component() {
@@ -15,14 +17,22 @@ Component::~Component() {
 void Component::setContext(Entity* _entity, Scene* _scene) {
     entity = _entity;
     scene = _scene;
-    enabled = true;
 }
 
-void Component::initSerialized(ComponentData* data) {
-    serializer.initialize(*data);
+bool Component::initSerialized(ComponentData* data) {
+    try {
+        serializer.initialize(*data);
+        enabled = true;
+        return true;
+    }
+    catch (std::exception e) {
+        std::cerr << "ERROR: Fallo en el serializado de lua\n";
+        return false;
+    }
+    
 }
 
-void Component::initComponent(ComponentData* data) {}
+bool Component::initComponent(ComponentData* data) { return true; }
 
 void Component::update() {}
 

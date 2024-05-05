@@ -5,7 +5,11 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include "ForgeExport.h"
 struct lua_State;
+namespace luabridge {
+	class LuaRef;
+}
 
 class LuaForge {
 private:
@@ -23,26 +27,28 @@ public:
 	/// <summary>
 	/// Constructor, crea un lua_State, abre las libs e importa a Lua las clases queridas de FORGE y las pedidas por el usuario
 	/// </summary>
-	LuaForge();
+	FORGE_API LuaForge();
 	/// <summary>
 	/// Vacia la pila de lua
 	/// </summary>
-	~LuaForge();
+	FORGE_API ~LuaForge();
 	/// <summary>
 	/// Devuelve el lua_State contenido
 	/// </summary>
 	/// <returns>Un puntero al lua_State contenido en la clase</returns>
-	lua_State* getState() const;
+	FORGE_API lua_State* getState() const;
 	/// <summary>
 	/// Llama a lua_dofile para el  lua_State contenido
 	/// </summary>
 	/// <param name="path">Ruta del archivo .lua que se quiere ejecutar</param>
-	void doFile(std::string path);
+	FORGE_API bool doFile(std::string const& path);
 	/// <summary>
 	/// Permite agregar una clase propia al lua_State contenido a traves de LuaBridge.
 	/// </summary>
 	/// <param name="classCreation">Funcion que recibe lua_State* y que agrega una clase al lua_State recibido.</param>
-	void importClassToLua(std::function<void(lua_State*)> classCreation);
+	FORGE_API void importClassToLua(std::function<void(lua_State*)> classCreation);
+
+
 };
 
 #endif // !LUA_FORGE_H_

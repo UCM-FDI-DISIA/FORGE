@@ -1,0 +1,48 @@
+material practica1/smile
+{
+    technique
+    {
+        pass
+        {
+            diffuse 0.5 0.5 0.5
+
+            texture_unit
+            {
+                texture smile.png
+                colour_op add
+                env_map spherical
+            }
+        }
+    }
+}
+
+material practica1/points
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            texture_unit
+            {
+                texture 10points.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+material Examples/Ninja
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture nskingr.jpg
+			}
+		}
+	}
+}

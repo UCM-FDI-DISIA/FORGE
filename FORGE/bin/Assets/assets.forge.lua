@@ -1,5 +1,3 @@
 Audio = {
-	Test = {
-		path = "Assets/sounds/AllObjectivesComp.wav"
-	}
+	Test = "Assets/sounds/AllObjectivesComp.wav"
 }

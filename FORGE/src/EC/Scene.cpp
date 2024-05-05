@@ -3,11 +3,8 @@
 #include "SceneManager.h"
 
 Scene::Scene() :
-    entitiesByGroup(SceneManager::getInstance()->getMaxGroupId()),
+    entitiesByGroup(SceneManager::GetInstance()->getMaxGroupId()),
     handlers() {
-    for (auto & group : entitiesByGroup) {
-        group.reserve(500); //Reserva espacio para cada lista @TODO: Leer el maximo de entidades por grupo a un parametro en un archivo de configuracion
-    }
 }
 
 Scene::~Scene() {
@@ -62,14 +59,20 @@ Entity* Scene::addEntity(int groupId) {
     return entity;
 }
 
-const std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
-    if(groupId < 0 || groupId > SceneManager::getInstance()->getMaxGroupId()){
+FORGE_API Entity* Scene::addEntity(Entity* entity) {
+    entitiesByGroup[entity->getGroup()].push_back(entity);
+    entity->changeScene(this);
+    return entity;
+}
+
+std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
+    if(groupId < 0 || groupId > SceneManager::GetInstance()->getMaxGroupId()){
         return entitiesByGroup[0];
     }
     return entitiesByGroup[groupId];
 }
 
-const Entity* Scene::getEntityByHandler(std::string handler) {
+Entity* Scene::getEntityByHandler(std::string const& handler) {
     auto iter = handlers.find(handler);
     if (iter == handlers.end()) {
         return nullptr;
@@ -77,6 +80,33 @@ const Entity* Scene::getEntityByHandler(std::string handler) {
     return iter->second;
 }
 
-bool Scene::setHandler(std::string handler, Entity* entity) {
+bool Scene::setHandler(std::string const& handler, Entity* entity) {
     return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
+}
+
+
+std::vector<Entity*> Scene::disableScene() {
+    std::vector<Entity*> keptEntities;
+    for (auto& group : entitiesByGroup) {
+        for (auto iterator = group.begin(); iterator != group.end();) {
+            Entity* entity = *iterator;
+            if (entity->isKeepBetweenScenes()) {
+                keptEntities.push_back(entity);
+                iterator = group.erase(iterator);
+            }
+            else {
+                entity->setEnabled(false);
+                ++iterator;
+            }
+        }
+    }
+    return keptEntities;
+}
+
+void Scene::enableScene() {
+    for (auto& group : entitiesByGroup) {
+        for (auto& entity : group) {
+            entity->setEnabled(true);
+        }
+    }
 }

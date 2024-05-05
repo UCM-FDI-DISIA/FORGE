@@ -2,42 +2,87 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "Component.h"
+#include "ComponentData.h"
 #include "EntityData.h"
 #include <lua.hpp>
 #pragma warning(push)
 #pragma warning(disable : 26439)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
+#include "Transform.h"
+#include "ForgeError.h"
+
+SceneManager::EntityPair::~EntityPair() {
+	for (auto& child : children) {
+		delete child;
+	}
+}
 
 std::unique_ptr<SceneManager> SceneManager::instance = nullptr;
+bool SceneManager::initialised = false;
 
 SceneManager::SceneManager() : 
-	activeScene(nullptr),
+	activeScene("",nullptr),
 	lua(nullptr) {
 	groups.insert({"default",0});
 }
 
-Entity* SceneManager::addEntity(Scene* scene, EntityData* data) {
-	std::unordered_map<Component*, ComponentData*> initData;
+SceneManager::EntityPair* SceneManager::addEntity(Scene* scene, EntityData* data) {
 	Entity* entity = scene->addEntity(getGroupId(data->group));
+
+	EntityPair* pair = new EntityPair();
+	pair->entity = entity;
+	pair->data = data;
+
 	if (data->handler != "") {
-		scene->setHandler(data->handler,entity);
+		scene->setHandler(data->handler, entity);
+	}
+	if (data->keepBetweenScenes) {
+		entity->setKeepBetweenScenes(true);
 	}
 	for (auto& componentData : data->components) {
-		Component* component = entity->addComponent(componentData.first);
-		initData.insert({ component, componentData.second });
+		if (componentData != nullptr) {
+			Component* component = entity->addComponent(componentData->getId());
+			if (component == nullptr) {
+				entity->setAlive(false);
+			}
+		}
 	}
 	for (auto& childData : data->children) {
 		if (childData != nullptr) {
-			Entity* child = addEntity(scene, childData);
-			entity->addChild(child);
+			EntityPair* child = addEntity(scene, childData);
+			if (!child->entity->isAlive()) {
+				entity->setAlive(false);
+			}
+			entity->addChild(child->entity);
+			pair->children.push_back(child);
 		}
 	}
-	for (auto& componentInit : initData) {
-		componentInit.first->initSerialized(componentInit.second);
-		componentInit.first->initComponent(componentInit.second);
+
+	return pair;
+}
+
+Entity* SceneManager::initEntity(EntityPair* pair) {
+	if (!pair->entity->initSerializedComponents(pair->data->components)) {
+		pair->entity->setAlive(false);
 	}
-	return entity;
+	if (!pair->entity->initComponents(pair->data->components)) {
+		pair->entity->setAlive(false);
+	}
+	for (auto& child : pair->children) {
+		initEntity(child);
+	}
+	return pair->entity;
+}
+
+void SceneManager::Init() {
+	instance = std::unique_ptr<SceneManager>(new SceneManager());
+	initialised = true;
+}
+
+SceneManager* SceneManager::GetInstance() {
+	if (initialised) return instance.get();
+	return nullptr;
 }
 
 SceneManager::~SceneManager() {
@@ -60,11 +105,6 @@ void SceneManager::cleanUp() {
 	}
 }
 
-SceneManager* SceneManager::getInstance() {
-    if (instance.get() != nullptr) return instance.get();
-	return (instance = std::unique_ptr<SceneManager>(new SceneManager())).get();
-}
-
 void SceneManager::setLuaState(lua_State* L) {
 	lua = L;
 }
@@ -73,24 +113,77 @@ lua_State* SceneManager::getLuaState() {
 	return lua;
 }
 
-void SceneManager::changeScene(std::string scene, bool renewScene) {
+Entity* SceneManager::instantiateBlueprint(std::string bluePrintId) {
+	EntityData* data = getEntityBlueprint(bluePrintId);
+	if (data == nullptr) {
+		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado.");
+	}
+	Scene*& scene = activeScene.second;
+	EntityPair* pair = addEntity(scene, data);
+	Entity* entity = pair->entity;
+	if (entity->isAlive()) {
+		initEntity(pair);
+		if (entity->isAlive()) {
+			delete pair;
+			return entity;
+		}
+	}
+	delete pair;
+	throwError(nullptr, "La entidad no se ha instanciado correctamente.");
+}
+
+Entity* SceneManager::instantiateBlueprint(std::string bluePrintId, forge::Vector3 newPos) {
+	Entity* entity = instantiateBlueprint(bluePrintId);
+	if (entity != nullptr) {
+		if (entity->hasComponent(Transform::id)) {
+			entity->getComponent<Transform>()->setPosition(newPos);
+		}
+		else reportError("La entidad no tiene Transform.");
+	}
+	return entity;
+}
+
+FORGE_API Entity* SceneManager::instantiateBlueprint(std::string bluePrintId, Entity* parent) {
+	Entity* entity = instantiateBlueprint(bluePrintId);
+	if (entity != nullptr) {
+		parent->addChild(entity);
+	}
+	return entity;
+}
+
+bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
+	Scene*& activeScenePointer = activeScene.second;
+	Scene* newScene;
+	std::vector<Entity*> keptEntities;
+	if (activeScenePointer != nullptr) {
+		keptEntities = activeScenePointer->disableScene();
+	}
 	auto iter = loadedScenes.find(scene);
 	if (iter == loadedScenes.end()) {
-		activeScene = createScene(scene);
+		newScene = createScene(scene);
 	}
 	else {
 		if (renewScene) {
 			delete iter->second;
 			loadedScenes.erase(iter);
-			activeScene = createScene(scene);
+			newScene = createScene(scene);
 		}
 		else {
-			activeScene = iter->second;
+			newScene = iter->second;
+			newScene->enableScene();
 		}
 	}
+	if (newScene != nullptr) {
+		for (Entity* entity : keptEntities) {
+			newScene->addEntity(entity);
+		}
+		activeScene = { scene, newScene };
+		return true;
+	}
+	throwError(false, "La escena no se ha encontrado o no se ha podido iniciar correctamente.");
 }
 
-void SceneManager::removeScene(std::string id) {
+void SceneManager::removeScene(std::string const& id) {
 	auto iter = loadedScenes.find(id);
 	if (iter != loadedScenes.end()) {
 		delete iter->second;
@@ -98,21 +191,33 @@ void SceneManager::removeScene(std::string id) {
 	}
 }
 
-Scene* SceneManager::createScene(std::string id)
-{
+Scene* SceneManager::createScene(std::string const& id) {
+	std::unordered_set<EntityPair*> initData;
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
-		return nullptr;
+		throwError(nullptr, "Si una escena no aparece en los archivos, no existe.");
 	}
 	Scene* newScene = new Scene();
-	for (EntityData* entity : iter->second) {
-		addEntity(newScene, entity);
+	for (EntityData* entityData : iter->second) {
+		EntityPair* pair = addEntity(newScene, entityData);
+		Entity* entity = pair->entity;
+		if (!entity->isAlive()) {
+			delete pair;
+			reportError("No se ha podido crear la entidad.");
+		}
+		else {
+			initData.insert(pair);
+		}
+	}
+	for (auto& initPair : initData) {
+		initEntity(initPair);
+		delete initPair;
 	}
 	loadedScenes.insert({ id, newScene });
 	return newScene;
 }
 
-Scene* SceneManager::getScene(std::string id) {
+Scene* SceneManager::getScene(std::string const& id) {
 	auto iter = loadedScenes.find(id);
 	if (iter != loadedScenes.end()) {
 		return loadedScenes[id];
@@ -120,31 +225,47 @@ Scene* SceneManager::getScene(std::string id) {
 	return nullptr;
 }
 
+Scene* SceneManager::getActiveScene() {
+	return activeScene.second;
+}
+
+const std::string& SceneManager::getActiveSceneId() const{
+	return activeScene.first;
+}
+
 int SceneManager::getMaxGroupId() {
 	return static_cast<int>(groups.size());
 }
 
-void SceneManager::update() {
-	activeScene->update();
+bool SceneManager::update() {
+	if (activeScene.second != nullptr) {
+		activeScene.second->update();
+		return true;
+	}
+	return false;
+}
+
+void SceneManager::fixedUpdate() {
+	activeScene.second->fixedUpdate();
 }
 
 void SceneManager::refresh() {
-	activeScene->refresh();
+	activeScene.second->refresh();
 }
 
-int SceneManager::getGroupId(std::string group) {
+int SceneManager::getGroupId(std::string const& group) {
 	return groups[group];
 }
 
-void SceneManager::addSceneBlueprint(std::string id, std::vector<EntityData*> scene) {
+void SceneManager::addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene) {
 	sceneBlueprints.insert({ id,scene });
 }
 
-void SceneManager::addEntityBlueprint(std::string id, EntityData* entity) {
+void SceneManager::addEntityBlueprint(std::string const& id, EntityData* entity) {
 	entityBlueprints.insert({ id,entity });
 }
 
-EntityData* SceneManager::getEntityBlueprint(std::string id) {
+EntityData* SceneManager::getEntityBlueprint(std::string const& id) {
 	auto iter = entityBlueprints.find(id);
 	if (iter != entityBlueprints.end()) {
 		return entityBlueprints[id];
@@ -153,6 +274,6 @@ EntityData* SceneManager::getEntityBlueprint(std::string id) {
 }
 
 
-void SceneManager::addGroup(std::string group) {
+void SceneManager::addGroup(std::string const& group) {
 	groups.insert({ group, getMaxGroupId()});
 }

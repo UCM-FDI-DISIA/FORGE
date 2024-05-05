@@ -20,120 +20,120 @@ private:
 	bool resumeOnEnable;
 
 public:
-	static const std::string id;
+	static const FORGE_API_VAR std::string id;
 	/// <summary>
 	/// Constructora por defecto del component AudioSource
 	/// </summary>
-	AudioSource();
+	FORGE_API AudioSource();
 	/// <summary>
 	/// Elimina su sonido del gestor
 	/// </summary>
-	virtual ~AudioSource();
+	FORGE_API ~AudioSource() override;
 	/// <summary>
 	/// Se llama en la creacion del componente AudioSource
 	/// </summary>
 	/// <param name="data">Bloque con la informacion guardada para el componente</param>
-	void initComponent(ComponentData* data) override;
+	FORGE_API bool initComponent(ComponentData* data) override;
 	/// <summary>
 	/// Actualiza la logica del componente, llamandose en cada iteracion del bucle principal
 	/// </summary>
-	void update() override;
+	FORGE_API void update() override;
 	/// <summary>
 	/// Reanuda la reproduccion del sonido si se estaba reproduciendo cuando se desactivo el componente
 	/// </summary>
-	void onEnabled() override;
+	FORGE_API void onEnabled() override;
 	/// <summary>
 	/// Pausa la reproduccion del sonido
 	/// </summary>
-	void onDisabled() override;
+	FORGE_API void onDisabled() override;
 	/// <summary>
 	/// Pausa el sonido si esta sonando
 	/// </summary>
 	/// <returns>Si se ha podido pausar</returns>
-	bool pause();
+	FORGE_API bool pause();
 	/// <summary>
 	/// Reanuda el sonido desde donde se habia pausado
 	/// </summary>
 	/// <returns>Si se ha podido reanudar</returns>
-	bool resume();	
+	FORGE_API bool resume();
 	/// <summary>
 	/// Devuelve si la reproduccion del sonido esta en pausa
 	/// </summary>
 	/// <returns>Booleano que indica si la reproduccion esta en pausa</returns>
-	bool isPaused();
+	FORGE_API bool isPaused();
 	/// <summary>
 	/// Detiene por completo el sonido
 	/// </summary>
 	/// <returns>Si se ha podido detener</returns>
-	bool stop();
+	FORGE_API bool stop();
 	/// <summary>
 	/// Comienza a reproducir el sonido
 	/// </summary>
 	/// <returns>Si se ha podido reproducir</returns>
-	bool play();
+	FORGE_API bool play();
 	/// <summary>
 	/// Reinicia el sonido. Detiene el sonido y lo vuelve a reproducir desde el principio
 	/// </summary>
 	/// <returns>Si se ha podido reiniciar el sonido</returns>
-	bool restart();
+	FORGE_API bool restart();
 	/// <summary>
 	/// Establece el volumen con el que se reproduce el sonido
 	/// </summary>
 	/// <param name="volume">Valor entre 0 y 1</param>
-	void setVolume(float volume);
+	FORGE_API void setVolume(float volume);
 	/// <summary>
 	/// Devuelve el volumen con el que se reproduce el sonido
 	/// </summary>
 	/// <returns>Valor entre 0 y 1</returns>
-	void getVolume() const;
+	FORGE_API void getVolume() const;
 	/// <summary>
 	/// Establece el valor del paneo
 	/// </summary>
 	/// <param name="pan">Valor del paneo entre -1 y 1</param>
-	void setPan(float pan);
+	FORGE_API void setPan(float pan);
 	/// <summary>
 	/// Devuelve el valor del paneo
 	/// </summary>
 	/// <returns>Valor del paneo actual entre -1 y 1</returns>
-	void getPan() const;
+	FORGE_API void getPan() const;
 	/// <summary>
 	/// Cambia el estado de bucle del sonido
 	/// </summary>
-	void loopedToggle();
+	FORGE_API void loopedToggle();
 	/// <summary>
 	/// Establece el estado de bucle del sonido
 	/// </summary>
 	/// <param name="looped">Nuevo estado de bucle del sonido</param>
-	void setLooped(bool looped);
+	FORGE_API void setLooped(bool looped);
 	/// <summary>
 	/// Devuelve el estado de bucle del sonido
 	/// </summary>
 	/// <returns>Booleano que indica que el audio esta en bucle o no</returns>
-	bool isLooped() const;
+	FORGE_API bool isLooped() const;
 	/// <summary>
 	/// Comprueba si el sonido se esta reproduciendo
 	/// </summary>
 	/// <returns>Si el sonido se esta reproduciendo</returns>
-	bool isPlaying() const;
+	FORGE_API bool isPlaying() const;
 	/// <summary>
 	/// Establece el radio alrededor del objeto desde el que se escuchara el sonido con su maximo volumen
 	/// </summary>
 	/// <param name="value">Nuevo radio de escucha a maximo volumen</param>
-	void setFullVolumeRadious(float value);
+	FORGE_API void setFullVolumeRadious(float value);
 	/// <summary>
 	/// Devuelve el valor del radio alrededor del objeto desde el que se escuchara el sonido con su maximo volumen
 	/// </summary>
 	/// <returns>El radio de escucha a maximo volumen</returns>
-	float getFullVolumeRadious() const;
+	FORGE_API float getFullVolumeRadious() const;
 	/// <summary>
 	/// Establece el radio alrededor del objeto a partir del que se empieza a escuchar
 	/// </summary>
 	/// <param name="value">El nuevo radio dentro del que se escucha el sonido</param>
-	void setHearingRadious(float value);
+	FORGE_API void setHearingRadious(float value);
 	/// <summary>
 	/// Devuelve el radio alrededor del objeto a partir del que se empieza a escuchar
 	/// </summary>
 	/// <returns>El radio dentro del que se escucha el sonido</returns>
-	float getHearingRadious() const;
+	FORGE_API float getHearingRadious() const;
 };
 #endif // AUDIO_SOURCE_H_

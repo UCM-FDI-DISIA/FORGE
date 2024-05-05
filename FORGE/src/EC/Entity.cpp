@@ -3,21 +3,33 @@
 #include "Factory.h"
 #include "ComponentData.h"
 #include "Transform.h"
+#include "Invoker.h"
 
 Entity::Entity() : 
-    fact(*Factory::getInstance()),
+    inv(new Invoker()),
+    fact(*Factory::GetInstance()),
     scene(nullptr),
     components(),
+    componentMap(),
     parent(nullptr),
     children(),
     groupId(0),
-    alive(false) {
+    alive(false),
+    keepBetweenScenes(false) {
 }
 
-Entity::~Entity() { 
+Entity::~Entity() {
     for (auto& component : components) {
-        delete component.second;
+        delete component;
     }
+    for (auto& child : children) {
+        child->removeParent();
+        child->setAlive(false);
+    }
+    if (parent != nullptr) {
+       // parent->removeChild(this);
+    }
+    delete inv;
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
@@ -34,10 +46,14 @@ void Entity::setAlive(bool _alive) {
     alive = _alive;
 }
 
-Component* Entity::addComponent(std::string id) {
+Component* Entity::addComponent(std::string const& id) {
     Component* component = fact.generateComponent(id);
+    if (component == nullptr) {
+        throwError(nullptr, "No existe un componente \"" << id << "\".\n");
+    }
     removeComponent(id);
-    components.insert(std::pair<std::string, Component*>(id, component));
+    components.push_back(component);
+    componentMap.insert(std::pair<std::string, Component*>(id, component));
     component->setContext(this, scene);
     return component;
 }
@@ -47,6 +63,30 @@ Component* Entity::addComponent(ComponentData* data) {
     component->initSerialized(data);
     component->initComponent(data);
     return component;
+}
+
+bool Entity::initComponents(std::vector<ComponentData*> data) {
+    for (auto& componentData : data) {
+        if (componentData != nullptr) {
+            auto component = componentMap.find(componentData->getId());
+            if (component == componentMap.end() || !component->second->initComponent(componentData)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Entity::initSerializedComponents(std::vector<ComponentData*> data) {
+    for (auto& componentData : data) {
+        if (componentData != nullptr) {
+            auto component = componentMap.find(componentData->getId());
+            if (component == componentMap.end() || !component->second->initSerialized(componentData)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 Entity* Entity::addChild(Entity* child) {
@@ -65,42 +105,82 @@ Entity* Entity::setParent(Entity* newParent) {
         parent->removeChild(this);
     }
     parent = newParent;
-    if (hasComponent("Transform") && parent->hasComponent("Transform")) {
-        getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+    if (hasComponent(Transform::id)) {
+        if (parent->hasComponent(Transform::id)) {
+            getComponent<Transform>()->setParent(parent->getComponent<Transform>());
+        }
+        else {
+            getComponent<Transform>()->setParent(nullptr);
+        }
     }
     return parent;
 }
 
-void Entity::removeComponent(std::string id) {
-    auto iter = components.find(id);
-    if (iter != components.end()) {
-        delete iter->second;
-        components.erase(iter);
+
+void Entity::removeParent() {
+    parent = nullptr;
+    if (hasComponent(Transform::id)) {
+        getComponent<Transform>()->setParent(nullptr);
     }
 }
 
-bool Entity::hasComponent(std::string id) {
-    return components.count(id);
+void Entity::removeComponent(std::string const& id) {
+    auto iter = componentMap.find(id);
+    if (iter != componentMap.end()) {
+        delete iter->second;
+        componentMap.erase(iter);
+    }
+}
+
+bool Entity::hasComponent(std::string const& id) {
+    return componentMap.count(id);
 }
 
 int Entity::getGroup() {
     return groupId;
 }
 
+const std::unordered_set<Entity*>& Entity::getChildren() const {
+    return children;
+}
+
 void Entity::update() {
-	for (auto& componentPair : components) {
-        Component* component = componentPair.second;
-        if(component->isEnabled()) {
+    for (auto& component : components) {
+        if (component->isEnabled()) {
 		    component->update();
         }
 	}
 }
 
 void Entity::fixedUpdate() {
-	for (auto& componentPair : components) {
-		Component* component = componentPair.second;
+    for (auto& component : components) {
 		if (component->isEnabled()) {
 			component->fixedUpdate();
 		}
 	}
+}
+
+void Entity::setEnabled(bool enabled) {
+    for (auto& component : components) {
+        component->setEnabled(enabled);
+    }
+}
+
+bool Entity::isKeepBetweenScenes() {
+    return keepBetweenScenes;
+}
+
+void Entity::setKeepBetweenScenes(bool ddol) {
+    keepBetweenScenes = ddol;
+}
+
+void Entity::changeScene(Scene* newScene) {
+    scene = this->scene;
+    for (auto& component : components) {
+        component->setContext(this, scene);
+    }
+}
+
+Invoker& Entity::getInvoker() {
+    return *inv;
 }
