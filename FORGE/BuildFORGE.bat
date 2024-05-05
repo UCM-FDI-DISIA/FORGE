@@ -2,7 +2,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 set INCLUDEDIR=.\include\
-set INCLUDEVER=1.1
+set INCLUDEVER=1.1.1
 set INCLUDE=1
 
 ::Se compilan las dependencias
@@ -63,6 +63,7 @@ if !INCLUDE! equ 1 (
     xcopy /y "Entity.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Factory.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "ForgeFunction.h" "!RELATIVEINCLUDEDIR!"
+    xcopy /y "Invoker.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Scene.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "SceneManager.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Serializer.h" "!RELATIVEINCLUDEDIR!"
