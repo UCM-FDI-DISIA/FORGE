@@ -39,7 +39,13 @@ void ProgressBar::createProgressBar() {
 	}
 	catch (Ogre::Exception e) {
 		reportError("No se pudo cargar la textura '" << backTexture << "'");
-		//overlayPanel->setMaterialName("default.png"); -> GESTIÓN DE ERRORES
+		overlay = createOverlay(overlayPanel, zOrder - 1);
+
+		overlayPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
+		overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
+
+		backTexture = "default.png";
+		overlayPanel->setMaterialName(backTexture);
 	}
 
 	try {
@@ -56,7 +62,13 @@ void ProgressBar::createProgressBar() {
 	}
 	catch (Ogre::Exception e) {
 		reportError("No se pudo cargar la textura '" << frontTexture << "'");
-		// GESTIÓN DE ERRORES
+		frontOverlay = createOverlay(frontPanel, zOrder);
+
+		frontPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
+		frontPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
+
+		frontTexture = "default.png";
+		frontPanel->setMaterialName(frontTexture);
 	}
 
 	maxValue = transform->getScale().getX();
@@ -64,23 +76,19 @@ void ProgressBar::createProgressBar() {
 }
 
 void ProgressBar::destroyProgressBar() {
-	// Destruye de menor a mayor (material < textura < imagen < panel < Overlay)
-	gui->getMaterialManager()->remove(backTexture);
-	gui->getMaterialManager()->remove(frontTexture);
-	gui->getTextureManager()->remove(backTexture);
-	gui->getTextureManager()->remove(frontTexture);
+	// Destruye de menor a mayor (imagen < panel < Overlay)
 	backImage->freeMemory();
 	frontImage->freeMemory();
 	delete backImage;
 	delete frontImage;
+	backImage = nullptr;
+	frontImage = nullptr;
 	gui->deleteResource(backTexture);
 	gui->deleteResource(frontTexture);
 	destroyPanel(overlayPanel);
 	destroyPanel(frontPanel);
 	destroyOverlay(overlay);
 	destroyOverlay(frontOverlay);
-	backImage = nullptr;
-	frontImage = nullptr;
 }
 
 ProgressBar::ProgressBar() :

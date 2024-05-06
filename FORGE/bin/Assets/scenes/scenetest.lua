@@ -166,7 +166,6 @@ local scenes = {
                     onRelease = function (inv)
                         print("He soltado el boton");
                     end
-
                 }
             }
         },
@@ -176,12 +175,12 @@ local scenes = {
                     position = {125, 350},
                     scale = {300, 100}
                 },
-                --ProgressBar = {
-                  --  front = "angry.png",
-                  --  back = "angryB.png",
-                  --  value = 200,
-                  --  depth = 3
-                --}
+                ProgressBar = {
+                    front = "angry.png",
+                    back = "angryB.png",
+                    value = 200,
+                    depth = 3
+                }
             }
         }
     },

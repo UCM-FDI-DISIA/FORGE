@@ -66,11 +66,11 @@ bool GUIManager::setup() {
 	resolution = renderManager->getResolution();
 
 	loadFont("Saeda.ttf");
-	// TO-DO: CARGAR DEFAULT SIEMPRE
-	/*Ogre::Image* img = new Ogre::Image();
+
+	Ogre::Image* img = new Ogre::Image();
 	createTextureAndMaterialFromImage(img, "default.png");
 	img->freeMemory();
-	delete img;*/
+	delete img;
 
 	return true;
 }

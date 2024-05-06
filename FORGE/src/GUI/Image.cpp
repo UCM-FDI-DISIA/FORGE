@@ -27,15 +27,13 @@ void Image::createImage() {
 }
 
 void Image::destroyImage() {
-	// Destruye de menor a mayor (material < textura < imagen < panel < Overlay)
-	gui->getMaterialManager()->remove(texture);
-	gui->getTextureManager()->remove(texture);
+	// Destruye de menor a mayor (imagen < panel < Overlay)
 	imageSource->freeMemory();
 	delete imageSource;
+	imageSource = nullptr;
 	gui->deleteResource(texture);
 	destroyPanel(overlayPanel);
 	destroyOverlay(overlay);
-	imageSource = nullptr;
 }
 
 void Image::loadAndAssign() {
