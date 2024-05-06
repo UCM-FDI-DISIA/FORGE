@@ -205,7 +205,13 @@ void forge::Quaternion::setW(float newW) {
 void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
 	forge::Vector3 forward = pos - lookTo;
 	forward.normalize();
-	forge::Vector3 right = forge::Vector3(0, 1, 0).cross(forward);
+	forge::Vector3 right;
+	if (forward.getY() != (- 1) && forward.getY() != (1)) {
+		right = forge::Vector3(0, 1, 0).cross(forward);
+	}
+	else {
+		right = forge::Vector3(0, 0, 1).cross(forward);
+	}
 	right.normalize();
 	forge::Vector3 up = forward.cross(right);
 	up.normalize();

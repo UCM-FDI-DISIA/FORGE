@@ -43,9 +43,12 @@ void Transform::onEnabled() {
 }
 
 void Transform::setRotation(forge::Quaternion const& newRot) {
-	rotation = newRot;
-	needsUpdate = true;
-	setChildNeedsUpdate(true);
+	if (!isnan(newRot.getAbsX()) && !isnan(newRot.getAbsY()) && !isnan(newRot.getAbsZ()) && !isnan(newRot.getZ())) {
+		rotation = newRot;
+		needsUpdate = true;
+		setChildNeedsUpdate(true);
+	}
+	else std::cout << "ERROR: El cuaternion introducido tiene parametros inválidos\n";
 }
 
 void Transform::setGlobalRotation(forge::Quaternion const& newRot) {
