@@ -11,6 +11,7 @@ InvokingForge::InvokingForge() :
 bool InvokingForge::Init() {
 	if (!initialised) {
 		instance = std::unique_ptr<InvokingForge>(new InvokingForge());
+		initialised = true;
 		return true;
 	}
 	return false;

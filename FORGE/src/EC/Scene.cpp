@@ -1,11 +1,13 @@
 ﻿#include "Scene.h"
 #include "Entity.h"
 #include "SceneManager.h"
+#include "ForgeError.h"
 
 Scene::Scene() :
     entitiesByGroup(SceneManager::GetInstance()->getMaxGroupId()),
     handlers() {
-}
+
+    }
 
 Scene::~Scene() {
     for (auto& group : entitiesByGroup) {
@@ -52,6 +54,9 @@ void Scene::refresh() {
 }
 
 Entity* Scene::addEntity(int groupId) {
+    if (groupId >= SceneManager::GetInstance()->getMaxGroupId()) {
+        throwError(nullptr, "No se pudo agregar la entidad, groupId no valida");
+    }
     Entity* entity = new Entity();
     entity->setAlive(true);
     entity->setContext(this, groupId);
@@ -59,7 +64,7 @@ Entity* Scene::addEntity(int groupId) {
     return entity;
 }
 
-FORGE_API Entity* Scene::addEntity(Entity* entity) {
+Entity* Scene::addEntity(Entity* entity) {
     entitiesByGroup[entity->getGroup()].push_back(entity);
     entity->changeScene(this);
     return entity;
@@ -75,7 +80,7 @@ std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
 Entity* Scene::getEntityByHandler(std::string const& handler) {
     auto iter = handlers.find(handler);
     if (iter == handlers.end()) {
-        return nullptr;
+        throwError(nullptr, "No existe la entidad con ese handler en la escena");
     }
     return iter->second;
 }

@@ -37,7 +37,7 @@ public:
     /// Inserta una nueva Entity a la escena con el grupo indicado
     /// </summary>
     /// <param name="groupId">Id del grupo que se le da a la Entity</param>
-    /// <returns>La Entity creada</returns>
+    /// <returns>La Entity creada. nullptr si no se pudo agregar</returns>
     FORGE_API Entity* addEntity(int groupId);
     /// <summary>
     /// Inserta una Entity ya existente a la escena
@@ -50,14 +50,14 @@ public:
     /// </returns>
     FORGE_API std::vector<Entity*>& getEntitiesByGroup(int groupId);
     /// <returns>
-    /// Una entidad en escena a partir de su handler
+    /// Una entidad en escena a partir de su handler. nullptr si no se encuentra
     /// </returns>
     FORGE_API Entity* getEntityByHandler(std::string const& handler);
     /// <summary>
     /// </summary>
     /// <param name="handler">Nombre que se le va a dar al Handler</param>
-    /// <param name="ent">Entidad que se asocia al Handler</param>
-    /// <returns>Si se ha podido agregar el Handler</returns>
+    /// <param name="entity">Entidad que se asocia al Handler</param>
+    /// <returns>Booleano que indica si se ha podido agregar el Handler</returns>
     FORGE_API bool setHandler(std::string const& handler, Entity* entity);
     /// <summary>
     /// Desactiva la escena para cuando esta deja de estar activa

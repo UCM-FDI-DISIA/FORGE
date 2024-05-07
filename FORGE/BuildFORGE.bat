@@ -113,7 +113,7 @@ if !INCLUDE! equ 1 (
     xcopy /y "TimeForge.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Vector2.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Vector3.h" "!RELATIVEINCLUDEDIR!"
-    ::xcopy /y "Vector4.h" "!RELATIVEINCLUDEDIR!"
+    xcopy /y "Vector4.h" "!RELATIVEINCLUDEDIR!"
     cd ..
 
     cd ..

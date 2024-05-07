@@ -113,7 +113,7 @@ lua_State* SceneManager::getLuaState() {
 	return lua;
 }
 
-Entity* SceneManager::instantiateBlueprint(std::string bluePrintId) {
+Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId) {
 	EntityData* data = getEntityBlueprint(bluePrintId);
 	if (data == nullptr) {
 		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado.");
@@ -132,7 +132,7 @@ Entity* SceneManager::instantiateBlueprint(std::string bluePrintId) {
 	throwError(nullptr, "La entidad no se ha instanciado correctamente.");
 }
 
-Entity* SceneManager::instantiateBlueprint(std::string bluePrintId, forge::Vector3 newPos) {
+Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos) {
 	Entity* entity = instantiateBlueprint(bluePrintId);
 	if (entity != nullptr) {
 		if (entity->hasComponent(Transform::id)) {
@@ -143,7 +143,7 @@ Entity* SceneManager::instantiateBlueprint(std::string bluePrintId, forge::Vecto
 	return entity;
 }
 
-FORGE_API Entity* SceneManager::instantiateBlueprint(std::string bluePrintId, Entity* parent) {
+FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, Entity* parent) {
 	Entity* entity = instantiateBlueprint(bluePrintId);
 	if (entity != nullptr) {
 		parent->addChild(entity);

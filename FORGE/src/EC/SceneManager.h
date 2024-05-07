@@ -46,12 +46,11 @@ public:
 	/// <summary>
 	/// Crea una instancia del SceneManager
 	/// </summary>
-	/// <returns>Si la inicializacion fue correcta</returns>
 	FORGE_API static void Init();
 	/// <summary>
 	/// Devuelve la instancia de SceneManager y si no existe devuelve un puntero a nulo
 	/// </summary>
-	/// <returns>Instancia singleton a SceneManager</returns>
+	/// <returns>Instancia singleton a SceneManager. nullptr si no se ha inicializado</returns>
 	FORGE_API static SceneManager* GetInstance();
 	/// <summary>
 	/// Destruye la instancia
@@ -75,22 +74,22 @@ public:
 	/// Instancia un blueprint en escena
 	/// </summary>
 	/// <param name="bluePrintId">Identificador del blueprint</param>
-	/// <returns></returns>
-	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId);
+	/// <returns>Un puntero a la entidad instanciada. nullptr si no existia el blueprint o era invalido</returns>
+	FORGE_API Entity* instantiateBlueprint(std::string const& bluePrintId);
 	/// <summary>
 	/// Instancia un blueprint en escena en la posicion indicada
 	/// </summary>
 	/// <param name="bluePrintId">Identificador del blueprint</param>
 	/// <param name="newPos">Posicion para el blueprint</param>
-	/// <returns></returns>
-	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId, forge::Vector3 newPos);
+	/// <returns>Un puntero a la entidad instanciada. nullptr si no existia el blueprint o era invalido</returns>
+	FORGE_API Entity* instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos);
 	/// <summary>
 	/// Instancia un blueprint en escena en la posicion indicada
 	/// </summary>
 	/// <param name="bluePrintId">Identificador del blueprint</param>
 	/// <param name="parent">Entidad padre del blueprint instanciado</param>
-	/// <returns></returns>
-	FORGE_API Entity* instantiateBlueprint(std::string bluePrintId, Entity* parent);
+	/// <returns>Un puntero a la entidad instanciada. nullptr si no existia el blueprint o era invalido</returns>
+	FORGE_API Entity* instantiateBlueprint(std::string const& bluePrintId, Entity* parent);
 	/// <summary>
 	/// Cambia la escena activa a una con el identificador del parametro
 	/// Si no hay ninguna cargada en memoria la crea a traves de su blueprint
@@ -99,6 +98,7 @@ public:
 	/// <param name="renewScene">
 	/// Elimina la escena cargada en memoria y la crea de nuevo desde el blueprint
 	/// </param>
+	/// <returns>Booleano que indica si se cambia de escena correctamente</returns>
 	FORGE_API bool changeScene(std::string const& scene, bool renewScene = false);
 	/// <summary>
 	/// Elimina una escena cargada en memoria
@@ -115,14 +115,14 @@ public:
 	/// Una escena a partir de su Identificador
 	/// </returns>
 	FORGE_API Scene* getScene(std::string const& id);
-	/// <returns> String con el identificador de la escena activa</returns>
+	/// <returns>
 	/// Devuelve la escena en ejecucion
-	/// </summary>
+	/// </returns>
 	FORGE_API Scene* getActiveScene();
 	/// <summary>
 	/// Devuelve el identificador de la escena activa
 	/// </summary>
-	const FORGE_API std::string& getActiveSceneId() const;
+	FORGE_API std::string const& getActiveSceneId() const;
 	/// <returns>
 	/// Cantidad total de grupos
 	/// </returns>
