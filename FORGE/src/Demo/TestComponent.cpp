@@ -37,15 +37,15 @@ bool TestComponent::initComponent(ComponentData* data) {
 		animator = entity->getComponent<Animator>();
 		rigidBody = entity->getComponent<RigidBody>();
 
-		rigidBody->registerCallback(Collider::onCollisionEnter, [this] (Collider* me, Collider* other) {
+		rigidBody->registerCallback(forge::onCollisionEnter, [this] (Collider* me, Collider* other) {
 			std::cerr << "Colision Iniciada" << std::endl;
 		});
 
-		rigidBody->registerCallback(Collider::onCollisionStay, [this] (Collider* me, Collider* other) {
+		rigidBody->registerCallback(forge::onCollisionStay, [this] (Collider* me, Collider* other) {
 			std::cerr << "Colision Continuada" << std::endl;
 		});
 
-		rigidBody->registerCallback(Collider::onCollisionLeave, [this] (Collider* me, Collider* other) {
+		rigidBody->registerCallback(forge::onCollisionLeave, [this] (Collider* me, Collider* other) {
 			std::cerr << "Colision Finalizada" << std::endl;
 		});
 

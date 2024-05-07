@@ -52,6 +52,8 @@ public:
 	/// </summary>
 	/// <returns>Instancia singleton a SceneManager. nullptr si no se ha inicializado</returns>
 	FORGE_API static SceneManager* GetInstance();
+	SceneManager(SceneManager const&) = delete;
+	void operator=(SceneManager const&) = delete;
 	/// <summary>
 	/// Destruye la instancia
 	/// </summary>

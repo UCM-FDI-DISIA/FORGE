@@ -257,7 +257,7 @@ void SceneManager::refresh() {
 int SceneManager::getGroupId(std::string const& group) {
 	auto iter = groups.find(group);
 	if (iter == groups.end()) {
-		throwError(-1, "No se encontro la id del grupo");
+		return groups["default"];
 	}
 	return iter->second;
 }

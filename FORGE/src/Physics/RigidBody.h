@@ -4,16 +4,12 @@
 #include <string>
 #include "Collider.h"
 
-enum collisionShape {
-    ballShape, boxShape , capsuleShape, cylinderShape, planeShape
-};
 namespace forge {
     class Vector3;
 };
 
 class RigidBody : public Collider {
-
-private:
+protected:
     float mass;
     float friction;
     float restitution;
@@ -37,7 +33,7 @@ public:
     /// <summary>
     /// Metodo para aplicar fuerzas a un rigidbody
     /// </summary>
-    /// <param name="force: ">Fuerza en vector 3 a aplicar al objeto</param>
+    /// <param name="force">Fuerza en vector 3 a aplicar al objeto</param>
     FORGE_API void applyForce(forge::Vector3 const& force);
 
     /// <summary>
@@ -49,7 +45,7 @@ public:
     /// <summary>
     /// Metodo para aplicar gravedad nueva a un objeto
     /// </summary>
-    /// <param name="newGravity: ">La gravedad nueva a aplicar</param>
+    /// <param name="newGravity">La gravedad nueva a aplicar</param>
     FORGE_API void setGravity(forge::Vector3 const& newGravity);
     /// <summary>
     /// Metodo para devolver un objeto a su estado de reposo
@@ -58,16 +54,16 @@ public:
     /// <summary>
     /// Añade bloqueos para evitar movimiento en los ejes
     /// </summary>
-    /// <param name="x :">True significa bloqueo en el eje</param>
-    /// <param name="y :">True significa bloqueo en el eje</param>
-    /// <param name="z :">True significa bloqueo en el eje</param>
+    /// <param name="x">True significa bloqueo en el eje</param>
+    /// <param name="y">True significa bloqueo en el eje</param>
+    /// <param name="z">True significa bloqueo en el eje</param>
     FORGE_API void lockPosition(bool x, bool y, bool z);
     /// <summary>
     /// Añade bloqueos para evitar rotación en los ejes
     /// </summary>
-    /// <param name="x :">True significa bloqueo en el eje</param>
-    /// <param name="y :">True significa bloqueo en el eje</param>
-    /// <param name="z :">True significa bloqueo en el eje</param>
+    /// <param name="x">True significa bloqueo en el eje</param>
+    /// <param name="y">True significa bloqueo en el eje</param>
+    /// <param name="z">True significa bloqueo en el eje</param>
     FORGE_API void lockRotation(bool x, bool y, bool z);
     /// <summary>
     /// Cambia la friccion del objeto
@@ -85,12 +81,12 @@ public:
     /// <summary>
     /// Actualiza la velocidad lineal del objeto
     /// </summary>
-    /// <param name="vect">vector 3 de forge con la velocidad a aplicar</param>
+    /// <param name="vect">Vector 3 de forge con la velocidad a aplicar</param>
     FORGE_API void setLinearVelocity(forge::Vector3 const& vect);
     /// <summary>
     /// Actualiza la velocidad Angular del objeto
     /// </summary>
-    /// <param name="vect">vector 3 de forge con la velocidad a aplicar</param>
+    /// <param name="vect">Vector 3 de forge con la velocidad a aplicar</param>
     FORGE_API void setAngularVelocity(forge::Vector3 const& vect);
     /// <summary>
     /// Metodo para actualizar la posicion a partir de otro vector
@@ -100,19 +96,19 @@ public:
     /// <summary>
     /// Cambia la posicion en x por el nuevo valor
     /// </summary>
-    /// <param name="newX"> Valor de x nuevo</param>
+    /// <param name="newX">Valor de x nuevo</param>
     FORGE_API void setPositionX(float newX);
 
     /// <summary>
     /// Cambia la posicion en y por el nuevo valor
     /// </summary>
-    /// <param name="newX"> Valor de y nuevo</param>
+    /// <param name="newY">Valor de y nuevo</param>
     FORGE_API void setPositionY(float newY);
 
     /// <summary>
     /// Cambia la posicion en z por el nuevo valor
     /// </summary>
-    /// <param name="newX"> Valor de z nuevo</param>
+    /// <param name="newZ"> Valor de z nuevo</param>
     FORGE_API void setPositionZ(float newZ);
 
     /// <summary>
@@ -134,7 +130,7 @@ public:
     FORGE_API void rotateZ(float newAngle);
     #pragma endregion
 
-    #pragma region getters
+    #pragma region Getters
     /// <summary>
     /// Devuelve la masa del objeto
     /// </summary>
@@ -188,7 +184,6 @@ public:
     /// </summary>
     /// <returns>un vector 3 con la velocidad</returns>
     FORGE_API forge::Vector3 getAngularVelocity();
-
     #pragma endregion
 };
 

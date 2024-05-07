@@ -63,6 +63,8 @@ public:
 	static void Init();
 	/// <returns>Devuelve una instancia al RenderManager si existe, si no existe devuelve un puntero a nulo</returns>
 	static RenderManager* GetInstance();
+	RenderManager(RenderManager const&) = delete;
+	void operator=(RenderManager const&) = delete;
 	/// <summary>
 	/// Destructora del RenderManager
 	/// </summary>

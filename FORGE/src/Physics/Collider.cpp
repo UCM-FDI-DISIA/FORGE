@@ -136,22 +136,21 @@ bool Collider::hasCollidedWith(Entity* other) {
     return false;
 }
 
-void Collider::registerCallback(callbackType type, std::function<void(Collider*, Collider*)> callback) {   
+void Collider::registerCallback(forge::callbackType type, std::function<void(Collider*, Collider*)> callback) {   
     switch (type) {
-        case Collider::onCollisionEnter:
+        case forge::onCollisionEnter:
                 onCollisionEnterCallbacks.push_back(callback);
             break;
-        case Collider::onCollisionStay:
+        case forge::onCollisionStay:
                 oncollisionStayCallbacks.push_back(callback);
             break;
-        case Collider::onCollisionLeave:
+        case forge::onCollisionLeave:
         		oncollisionLeaveCallbacks.push_back(callback);
             break;
     }
 }
 
 void Collider::onCollision(Entity* other) {
-
     //Si la entidad no esta en la lista de colisiones, se llama a los OnCollisionEnterCallbacks
     if (std::find(collidedEntities.begin(), collidedEntities.end(), other) == collidedEntities.end()) {
         for (auto& cb : onCollisionEnterCallbacks) {

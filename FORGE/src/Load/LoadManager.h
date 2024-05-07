@@ -35,19 +35,21 @@ private:
 	/// <param name="keepBetweenScenes">Entrada en lua con el la informacion si se mantiene entre escenas.</param>
 	/// <param name="group">Entrada en lua con el la informacion de group.</param>
 	/// <param name="components">Entrada en lua con la informacion de los componentes.</param>
+	/// <returns>Booleano que indica si los valores de la entidad eran validos</returns>
 	bool extractEntityValues(EntityData& entityData, luabridge::LuaRef& handler, luabridge::LuaRef& keepBetweenScenes, luabridge::LuaRef& group, luabridge::LuaRef& components);
-	/// <summary>
-	/// Modifica una entidad hija en una copia de un blueprint.
-	/// </summary>
-	/// <param name="childData">Estructura donde se guardan los parametros del hijo.</param>
-	/// <param name="data">Entrada en lua con los datos de modificacion de la entidad.</param>
-	void modifyChildrenData(EntityData& childData, luabridge::LuaRef& data);
 	/// <summary>
 	/// Agrega al EntityData los hijos asignados en Lua.
 	/// </summary>
 	/// <param name="entityData">Estructura donde se guardan los parametros.</param>
 	/// <param name="children">Entrada en lua con los hijos de la entidad.</param>
-	void extractChildren(EntityData& entityData, luabridge::LuaRef& children);
+	/// <returns>Booleano que indica si se han extraido los hijos correctamente</returns>
+	bool extractChildren(EntityData& entityData, luabridge::LuaRef& children);
+	/// <summary>
+	/// Modifica una entidad hija en una copia de un blueprint.
+	/// </summary>
+	/// <param name="childData">Estructura donde se guardan los parametros del hijo.</param>
+	/// <param name="data">Entrada en lua con los datos de modificacion de la entidad.</param>
+	bool modifyChildrenData(EntityData& childData, luabridge::LuaRef& data);
 	/// <summary>
 	/// Lee una entidad de lua y la introduce en el SceneManager.
 	/// </summary>

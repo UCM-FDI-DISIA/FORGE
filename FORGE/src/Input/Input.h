@@ -214,6 +214,9 @@ public:
 	/// <returns>Instancia singleton del Input</returns>
 	static FORGE_API Input* GetInstance();
 
+	Input(Input const&) = delete;
+	void operator=(Input const&) = delete;
+
 	/// <summary>
 	/// Lee los eventos y llama a los metodos correspondientes de cada uno de ellos
 	/// </summary>

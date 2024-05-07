@@ -67,63 +67,86 @@ bool LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 	return true;
 }
 
-void LoadManager::extractChildren(EntityData& entityData, LuaRef& children) {
-	if (!children.isNil()) {
-		if (!entityData.isBlueprint) {
-			for (auto&& child : pairs(children)) {
-				entityData.children.push_back(parseEntityData(child.second));
+bool LoadManager::extractChildren(EntityData& entityData, LuaRef& children) {
+	if (!children.isTable()) {
+		return true;
+	}
+	if (!entityData.isBlueprint) {
+		for (auto&& child : pairs(children)) {
+			EntityData* ed = parseEntityData(child.second);
+			if (ed == nullptr) {
+				throwError(false, "No se pudo crear correctamente el hijo de la entidad");
 			}
+			entityData.children.push_back(ed);
+		}
+		return true;
+	}
+	for (auto&& child : pairs(children)) {
+		LuaRef index = child.second["index"];
+		// Si index no es una tabla con dos elementos, un numero y un string,
+		bool aux = index.isTable() && index.length() == 2 && index[0].isNumber() && index[1].isString();
+		int i = -1;
+		if (aux) {
+			i = index[0].cast<int>();
+			// si el index es un entero no valido
+			aux = aux && (i >= 0 && i < entityData.children.size());
+		}
+		// Si se cumplen las condiciones anteriores se agrega el hijo como nuevo elemento
+		if (!aux) {
+			EntityData* ed = parseEntityData(child.second);
+			if (ed == nullptr) {
+				throwError(false, "No se pudo crear correctamente el hijo de la entidad basada en blueprint");
+			}
+			entityData.children.push_back(ed);
 		}
 		else {
-			for (auto&& child : pairs(children)) {
-				LuaRef index = child.second["index"];
-				if (index.isNil()) {
-					entityData.children.push_back(parseEntityData(child.second));
+			std::string mode = index[1].tostring();
+			EntityData*& childData = entityData.children[i];
+			if (mode == "modify") {
+				// si estas modificando un blueprint lo copias
+				if (childData->isBlueprint) {
+					childData = new EntityData(*childData);
 				}
-				else {
-					int i = index[0].cast<int>();
-					if (i < 0 || i >= entityData.children.size()) {
-						entityData.children.push_back(parseEntityData(child.second));
+				if (!modifyChildrenData(*childData, child.second)) {
+					throwError(false, "No se pudo modificar correctamente el hijo de la entidad basada en blueprint");
+				}
+			}
+			else /*if (delete || replace)*/ {
+				if (childData != nullptr && !childData->isBlueprint) {
+					delete childData;
+				}
+				childData = nullptr;
+				//Modo por defecto "replace", si no se ha especificado modo o el modo es incorrecto
+				if (mode != "delete") {
+					childData = parseEntityData(child.second);
+					if (childData == nullptr) {
+						throwError(false, "No se pudo reemplazar correctamente el hijo de la entidad basada en blueprint");
 					}
-					else {
-						std::string mode = index[1].cast<std::string>();
-						EntityData*& childData = entityData.children[i];
-						if (mode == "modify") {
-							// si estas modificando un blueprint lo copias
-							if (childData->isBlueprint) {
-								childData = new EntityData(*childData);
-							}
-							modifyChildrenData(*childData, child.second);
-						}
-						else {
-							if (childData && !childData->isBlueprint) {
-								delete childData;
-							}
-							childData = nullptr;
-							//Modo por defecto "replace", si no se ha especificado modo o el modo es incorrecto
-							if (mode != "delete") {
-								childData = parseEntityData(child.second);
-							}
-						}
-					}
+					entityData.children.push_back(childData);
 				}
 			}
 		}
 	}
+	return true;
 }
 
-void LoadManager::modifyChildrenData(EntityData& childData, LuaRef& data) {
+bool LoadManager::modifyChildrenData(EntityData& childData, LuaRef& data) {
 	LuaRef
 		group = data["group"],
 		handler = data["handler"],
 		keepBetweenScenes = data["keepBetweenScenes"],
 		components = data["components"],
 		children = data["children"];
-	extractEntityValues(childData, handler, keepBetweenScenes, group, components);
+	if (!extractEntityValues(childData, handler, keepBetweenScenes, group, components)) {
+		throwError(false, "No se pudo leer correctamente la modificacion del hijo de la entidad basada en blueprint");
+	}
 	bool wasBlueprint = childData.isBlueprint;
 	childData.isBlueprint = true;
-	extractChildren(childData, children);
+	if (!extractChildren(childData, children)) {
+		throwError(false, "No se pudo leer correctamente la modificacion de los hijos del hijo de la entidad basada en blueprint");
+	}
 	childData.isBlueprint = wasBlueprint;
+	return true;
 }
 
 
@@ -137,18 +160,24 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 		children = luaEntity["children"];
 
 	EntityData* entityData;
-	if (blueprint.isNil()) {
+	if (!blueprint.isString()) {
 		entityData = new EntityData();
-		extractEntityValues(*entityData, handler, keepBetweenScenes, group, components);
-		extractChildren(*entityData, children);
+		if (!extractEntityValues(*entityData, handler, keepBetweenScenes, group, components) || 
+			!extractChildren(*entityData, children)) {
+			delete entityData;
+			throwError(nullptr, "No se pudo crear correctamente la entidad");
+		}
 	}
 	else {
-		entityData = sceneManager.getEntityBlueprint(blueprint.cast<std::string>());
-		if (!(handler.isNil() && keepBetweenScenes.isNil() && group.isNil() && components.isNil() && children.isNil())) {
+		entityData = sceneManager.getEntityBlueprint(blueprint.tostring());
+		if (handler.isString() || keepBetweenScenes.isBool() || group.isString() || components.isTable() || children.isTable()) {
 			entityData = new EntityData(*entityData);
 			entityData->isBlueprint = true;
-			extractEntityValues(*entityData, handler, keepBetweenScenes, group, components);
-			extractChildren(*entityData, children);
+			if (!extractEntityValues(*entityData, handler, keepBetweenScenes, group, components) ||
+				!extractChildren(*entityData, children)) {
+				delete entityData;
+				throwError(nullptr, "No se pudo crear correctamente la entidad basada en blueprint");
+			}
 			entityData->isBlueprint = false;
 		}
 	}
@@ -157,9 +186,16 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 }
 
 std::vector<EntityData*> LoadManager::parseScene(LuaRef& luaScene) {
+	if (!luaScene.isTable()) {
+		throwError(std::vector<EntityData*>(), "No se pudo parsear la escena correctamente");
+	}
 	std::vector<EntityData*> scene;
 	for (auto&& entity : pairs(luaScene)) {
-		scene.push_back(parseEntityData(entity.second));
+		EntityData* entityData = parseEntityData(entity.second);
+		if (entityData == nullptr) {
+			throwError(std::vector<EntityData*>(), "No se pudo parsear la escena correctamente");
+		}
+		scene.push_back(entityData);
 	}
 	return scene;
 }
@@ -170,8 +206,8 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 		throwError(false, "No se proporciono un archivo de escenas o no es un string.");
 	}
 
-	std::string realPath = scenes.cast<std::string>();
-	if (!luaForge->doFile(realPath)) {
+	std::string path = scenes.tostring();
+	if (!luaForge->doFile(path)) {
 		throwError(false, "No se pudo abrir el archivo de escenas.");
 	}
 	lua_State* lua = luaForge->getState();
@@ -180,16 +216,29 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 	LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);
 	LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
 
-	if (!entityBlueprints.isNil()) {
+	if (entityBlueprints.isTable()) {
 		for (auto&& entity : pairs(entityBlueprints)) {
+			if (entity.second.isString()) {
+				throwError(false, "Nombre de blueprint no valido");
+			}
 			EntityData* blueprint = parseEntityData(entity.second);
+			if (blueprint == nullptr) {
+				throwError(false, "No se pudo crear correctamente el blueprint");
+			}
 			blueprint->isBlueprint = true;
-			sceneManager.addEntityBlueprint(entity.first.cast<std::string>(), blueprint);
+			sceneManager.addEntityBlueprint(entity.first.tostring(), blueprint);
 		}
 	}
-	if (!sceneBlueprints.isNil()) {
+	if (sceneBlueprints.isTable()) {
 		for (auto&& scene : pairs(sceneBlueprints)) {
-			sceneManager.addSceneBlueprint(scene.first.cast<std::string>(), parseScene(scene.second));
+			if (scene.second.isString()) {
+				throwError(false, "Nombre de escena no valido");
+			}
+			std::vector<EntityData*> parsedScene = parseScene(scene.second);
+			if (parsedScene.size() <= 0) {
+				throwError(false, "Escena no valida");
+			}
+			sceneManager.addSceneBlueprint(scene.first.tostring(), parsedScene);
 		}
 	}
 	return true;

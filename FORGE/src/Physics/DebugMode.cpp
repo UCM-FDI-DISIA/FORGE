@@ -6,7 +6,7 @@
 #pragma warning(pop)
 
 using namespace Ogre;
-
+#ifdef _DEBUG
 DebugMode::DebugMode(SceneManager* scm) {
     mContactPoints = &mContactPoints1;
     mLines = RenderManager::GetInstance()->createManualObject("physics lines");
@@ -120,3 +120,4 @@ void DebugMode::setDebugMode(int debugMode) {
 int DebugMode::getDebugMode() const {
     return mDebugModes;
 }
+#endif // _DEBUG

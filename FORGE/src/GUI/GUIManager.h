@@ -76,6 +76,9 @@ public:
 	/// <returns>Devuelve una instancia al UIManager si existe, si no existe devuelve un puntero a nulo</returns>
 	static GUIManager* GetInstance();
 
+	GUIManager(GUIManager const&) = delete;
+	void operator=(GUIManager const&) = delete;
+
 	/// <summary>
 	/// Destructora por defecto de la clase GUI
 	/// </summary>	

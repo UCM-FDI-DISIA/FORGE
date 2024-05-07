@@ -23,6 +23,7 @@ struct ContactPoint {
     size_t dieTime;
 };
 
+#ifdef _DEBUG
 class DebugMode : public btIDebugDraw, public Ogre::FrameListener {
 private:
 
@@ -61,5 +62,5 @@ public:
     virtual void setDebugMode(int debugMode);
     virtual int getDebugMode() const;
 };
-
+#endif // _DEBUG
 #endif // DebugDrawer_h__

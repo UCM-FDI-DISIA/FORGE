@@ -13,9 +13,12 @@ class Factory : private std::unordered_map<std::string, std::function<Component*
 private:
     static std::unique_ptr<Factory> instance;
     std::unordered_map<std::string, int> componentOrder;
+    Factory();
 public:
     /// <returns>Devuelve un puntero a la unica instancia de la clase</returns>
     FORGE_API static Factory* GetInstance();
+    Factory(Factory const&) = delete;
+    void operator=(Factory const&) = delete;
     /// <summary>
     /// Almacena el nombre de un Component y una funcion que genera una instancia de ese Component para que se pueda crear desde el motor
     /// </summary>

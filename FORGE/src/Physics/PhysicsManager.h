@@ -3,18 +3,18 @@
 #include <unordered_map>
 #include <string>
 
-class Transform;
-class RigidBody;
-class DebugMode;
 class btBroadphaseInterface;
 class btDefaultCollisionConfiguration;
 class btCollisionDispatcher;
 class btSequentialImpulseConstraintSolver;
 class btDiscreteDynamicsWorld;
 class btRigidBody;
-class Collider;
 class btQuaternion;
 class btVector3;
+class Transform;
+class RigidBody;
+class DebugMode;
+class Collider;
 namespace forge {
     class Vector3;
     class Quaternion;
@@ -35,19 +35,22 @@ private:
     std::unordered_map<std::string, int> collisionLayers;
     std::unordered_map<std::string, std::unordered_map<std::string,bool>> collisionMatrix;
     DebugMode* debugger;
-    bool debugMode;
     int numberOfLayers;
 
     std::list<Collider*> collisionedObjects;
 
+    #ifdef _DEBUG
+    bool debugMode;
+    #endif // _DEBUG
+
     /// <summary>
-    /// Constructora del physics manager.
+    /// Constructora del manager de fisicas.
     /// </summary>
     PhysicsManager();
 
 public:
     /// <summary>
-    /// Destructora del physics manager.
+    /// Destructora del manager de fisicas.
     /// </summary>
     ~PhysicsManager();
     /// <summary>
@@ -56,14 +59,12 @@ public:
     static void Init();
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* GetInstance();
+    PhysicsManager(PhysicsManager const&) = delete;
+    void operator=(PhysicsManager const&) = delete;
     /// <summary>
     /// Inicializa el mundo de fisicas y pone una gravedad default (9.8)
     /// </summary>
     bool setup();
-    /// <summary>
-    /// Dibuja los wireframes de los cuerpos fisicos en el mundo de fisicas
-    /// </summary>
-    void drawDebug();
     /// <summary>
     /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
     /// </summary>
@@ -86,6 +87,7 @@ public:
     /// </summary>
     /// <param name="body">El btRigidbody a registrar</param>
     /// <param name="transform">El transform asociado al btRigidbody</param>
+    /// <param name="layer">La capa en la que se registra el btRigidBody</param>
     void registerBody(btRigidBody* body, Transform* transform, std::string const& layer = "ALL");
     /// <summary>
     /// Registra una instancia de rigidBody y la guarda en un mapa por nombre
@@ -95,6 +97,11 @@ public:
     /// Borra un rigidBody
     /// </summary>
     void deleteBody(btRigidBody* body);
+    #ifdef _DEBUG
+    /// <summary>
+    /// Dibuja los wireframes de los cuerpos fisicos en el mundo de fisicas
+    /// </summary>
+    void drawDebug();
     /// <summary>
     /// Activa o desactiva la visibilidad de cuerpos
     /// </summary>
@@ -105,17 +112,18 @@ public:
     /// </summary>
     /// <returns>Si el modo depuracion esta activo</returns>
     bool isDebugModeEnabled();
+    #endif // _DEBUG    
     /// <summary>
     /// Devuelve true si puede añadir la capa de colision al registro y false si ya estaba
     /// </summary>
-    /// <param name="layerName: ">El nombre de la capa a añadir</param>
+    /// <param name="layerName">El nombre de la capa a añadir</param>
     /// <returns></returns>
     bool addLayer(std::string const& layerName);
 
     void setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide);
 
     bool checkContact(btRigidBody* body1, btRigidBody* body2);
-#pragma region Conversores
+    #pragma region Conversores
     /// <summary>
     /// Convierte un vector de forge a uno de bullet
     /// </summary>
@@ -143,6 +151,5 @@ public:
     /// <param name="quat"> Quaternion de bullet</param>
     /// <returns> Quaternion de forge</returns>
     forge::Quaternion fromBtQuatToForge(btQuaternion const& quat) const;
-#pragma endregion
-
+    #pragma endregion
 };

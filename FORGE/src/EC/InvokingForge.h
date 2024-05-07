@@ -31,6 +31,8 @@ public:
 	/// </summary>
 	/// <returns>Puntero a la fragua de invocacion. nullptr si no se ha inicializado</returns>
 	static InvokingForge* GetInstance();
+	InvokingForge(InvokingForge const&) = delete;
+	void operator=(InvokingForge const&) = delete;
 	/// <summary>
 	/// Elimina todos los invocadores de la fragua
 	/// </summary>

@@ -2,6 +2,8 @@
 
 std::unique_ptr<Factory> Factory::instance = nullptr;
 
+Factory::Factory() {}
+
 Factory* Factory::GetInstance() {
     if (instance.get() != nullptr) return instance.get();
     return (instance = std::unique_ptr<Factory>(new Factory())).get();
@@ -20,7 +22,7 @@ void Factory::cleanUp() {
 }
 
 int Factory::getComponentAmount() {
-    return componentOrder.size();
+    return static_cast<int>(componentOrder.size());
 }
 
 int Factory::getComponentOrder(std::string const& componentId) {

@@ -24,7 +24,9 @@ PhysicsManager::PhysicsManager() :
     solver(nullptr),
     world(nullptr),
     debugger(nullptr),
+    #ifdef _DEBUG
     debugMode(true),
+    #endif // _DEBUG
     collisionMatrix(),
     numberOfLayers(0) {
 }
@@ -58,12 +60,12 @@ bool PhysicsManager::setup() {
         solver = new btSequentialImpulseConstraintSolver();
         world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-#ifdef _DEBUG
+        #ifdef _DEBUG
         debugger = new DebugMode(RenderManager::GetInstance()->getSceneManager());
         // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
         debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
         world->setDebugDrawer(debugger);
-#endif // DEBUG
+        #endif // DEBUG
         
         world->setGravity(btVector3(0.0f, -9.8f, 0.0f));
         collisionLayers["NOTHING"] = 0;
@@ -74,12 +76,6 @@ bool PhysicsManager::setup() {
     }
     catch (std::exception e) {
         return false;
-    }
-}
-
-void PhysicsManager::drawDebug() {
-    if (debugMode) {
-        world->debugDrawWorld();
     }
 }
 
@@ -174,6 +170,13 @@ void  PhysicsManager::deleteBody(btRigidBody* body) {
     }
 }
 
+#ifdef _DEBUG
+void PhysicsManager::drawDebug() {
+    if (debugMode) {
+        world->debugDrawWorld();
+    }
+}
+
 void PhysicsManager::setDebug(bool enabled) {
     debugMode = enabled;
 }
@@ -181,6 +184,7 @@ void PhysicsManager::setDebug(bool enabled) {
 bool PhysicsManager::isDebugModeEnabled() {
     return debugMode;
 }
+#endif // _DEBUG
 
 bool PhysicsManager::addLayer(std::string const& layerName) {
     if (collisionLayers.count(layerName) == 0) {

@@ -136,8 +136,8 @@ bool Entity::hasComponent(std::string const& id) {
     return componentMap.count(id);
 }
 
-FORGE_API int Entity::getNumberOfComponents() {
-    return components.size();
+int Entity::getNumberOfComponents() {
+    return static_cast<int>(components.size());
 }
 
 int Entity::getGroup() {
