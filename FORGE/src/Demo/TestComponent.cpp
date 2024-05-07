@@ -67,7 +67,7 @@ void TestComponent::update() {
 	}
 	if (input.keyPressed(K_Q)) {
 		if (activeAnim <= 0) {
-			activeAnim = anims.size();
+			activeAnim = static_cast<int>(anims.size());
 		}
 		activeAnim--;
 		animator->changeActive(anims[activeAnim]);

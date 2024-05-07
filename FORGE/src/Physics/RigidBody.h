@@ -134,56 +134,56 @@ public:
     /// <summary>
     /// Devuelve la masa del objeto
     /// </summary>
-    FORGE_API float getMass();
+    FORGE_API float getMass() const;
 
     /// <summary>
     /// Devuelve la gravedad del objeto
     /// </summary>
-    FORGE_API forge::Vector3 getGravity();
+    FORGE_API forge::Vector3 getGravity() const;
     /// <summary>
     /// Devuelve la friccion del objeto
     /// </summary>
-    FORGE_API float getFriction();
+    FORGE_API float getFriction() const;
 
     /// <summary>
     /// Devuelve la constante de restitución del objeto
     /// </summary>
-    FORGE_API float getRestitution();
+    FORGE_API float getRestitution() const;
 
     /// <summary>
     /// Devuelve true si es un objeto estatico
     /// </summary>
-    FORGE_API bool isStatic();
+    FORGE_API bool isStatic() const;
 
     /// <summary>
     /// Devuelve el shape del objeto
     /// </summary>
     /// <returns>la figura de colision del objeto</returns>
-    FORGE_API btCollisionShape* getShape();
+    FORGE_API btCollisionShape* getShape() const;
 
     /// <summary>
     /// Devuelve la escala del cuerpo rigido
     /// </summary>
     /// <returns>un Vector3 de FORGE con la escala del rigidbody</returns>
-    FORGE_API forge::Vector3 getRigidScale();
+    FORGE_API forge::Vector3 getRigidScale() const;
 
     /// <summary>
     /// Devuelve la velocidad (modulo de la fuerza) del cuerpo rigido
     /// </summary>
     /// <returns>un float con la velocidad</returns>
-    FORGE_API float getSpeed();
+    FORGE_API float getSpeed() const;
 
     /// <summary>
     /// Devuelve la velocidad lineal del cuerpo rigido
     /// </summary>
     /// <returns>un vector 3 con la velocidad</returns>
-    FORGE_API forge::Vector3 getLinearVelocity();
+    FORGE_API forge::Vector3 getLinearVelocity() const;
 
     /// <summary>
     /// Devuelve la velocidad angular del cuerpo rigido
     /// </summary>
     /// <returns>un vector 3 con la velocidad</returns>
-    FORGE_API forge::Vector3 getAngularVelocity();
+    FORGE_API forge::Vector3 getAngularVelocity() const;
     #pragma endregion
 };
 

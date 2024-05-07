@@ -155,10 +155,8 @@ void ProgressBar::resize(forge::Vector2 const& prev, forge::Vector2 const& updat
 	float factorX = updated.getX() / prev.getX();
 	float factorY = updated.getY() / prev.getY();
 
-	transform->setScale(forge::Vector2(static_cast<int>(scale.getX() * factorX),
-		static_cast<int>(scale.getY() * factorY)));
-	transform->setPosition(forge::Vector2(static_cast<int>(position.getX() * factorX),
-		static_cast<int>(position.getY() * factorY)));
+	transform->setScale(forge::Vector2(scale.getX() * factorX,scale.getY() * factorY));
+	transform->setPosition(forge::Vector2(position.getX() * factorX, position.getY() * factorY));
 
 	overlayPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
 	overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());

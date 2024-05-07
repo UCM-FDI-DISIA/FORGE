@@ -259,7 +259,7 @@ Ogre::SceneManager* RenderManager::getSceneManager() {
 
 forge::Vector2 RenderManager::getResolution() {
 	auto renderer = forge->getWindow().render;
-	return forge::Vector2(renderer->getWidth(), renderer->getHeight());
+	return forge::Vector2(static_cast<float>(renderer->getWidth()), static_cast<float>(renderer->getHeight()));
 }
 
 Ogre::ManualObject* RenderManager::createManualObject(std::string name) {

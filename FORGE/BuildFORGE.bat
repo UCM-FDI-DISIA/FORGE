@@ -2,7 +2,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 set INCLUDEDIR=.\include\
-set INCLUDEVER=1.1.4
+set INCLUDEVER=1.1.5
 set INCLUDE=1
 
 ::Se compilan las dependencias
@@ -80,10 +80,6 @@ if !INCLUDE! equ 1 (
 
     cd Input
     xcopy /y "Input.h" "!RELATIVEINCLUDEDIR!"
-    cd ..
-
-    cd Load
-    xcopy /y "LuaForge.h" "!RELATIVEINCLUDEDIR!"
     cd ..
 
     cd Main

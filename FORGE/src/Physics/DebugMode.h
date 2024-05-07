@@ -2,6 +2,7 @@
 #define DebugDrawer_h__
 #include <vector>
 #pragma warning(push)
+#pragma warning(disable : 4244)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 26439)
 #pragma warning(disable : 26451)

@@ -221,7 +221,7 @@ void Collider::setTrigger(bool isTrigger) {
     }
 }
 
-bool Collider::isTrigger() {
+bool Collider::isTrigger() const {
     return trigger;
 }
 
@@ -229,10 +229,10 @@ btRigidBody* Collider::getBody() {
     return myBody;
 }
 
-std::string Collider::getLayer() {
+std::string Collider::getLayer() const {
     return collisionLayer;
 }
 
-forge::Vector3 Collider::getPosition() {
+forge::Vector3 Collider::getPosition() const {
     return physicsManager->fromBtVectToForge(myBody->getWorldTransform().getOrigin());
 }

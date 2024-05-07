@@ -181,7 +181,7 @@ void PhysicsManager::setDebug(bool enabled) {
     debugMode = enabled;
 }
 
-bool PhysicsManager::isDebugModeEnabled() {
+bool PhysicsManager::isDebugModeEnabled() const {
     return debugMode;
 }
 #endif // _DEBUG

@@ -1,7 +1,10 @@
 ﻿#include "LuaForge.h"
 #include <lua.hpp>
 #pragma warning(push)
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4267)
 #pragma warning(disable : 26439)
+#pragma warning(disable : 26495)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 #include "Vector2.h"
@@ -31,17 +34,10 @@ void LuaForge::importForgeClassesToLua() {
 		.endClass();
 }
 
-void LuaForge::importUserClassesToLua() {
-	for (auto& importCallback : userClassesToImport) {
-		importCallback(lua);
-	}
-}
-
 LuaForge::LuaForge() :
 	lua(luaL_newstate()) {
 	luaL_openlibs(lua);
 	importForgeClassesToLua();
-	importUserClassesToLua();
 }
 
 LuaForge::~LuaForge() {
@@ -58,8 +54,4 @@ bool LuaForge::doFile(std::string const& path) {
 		reportError("Archivo " << path << " no encontrado o contiene un error de sintaxis.");
 	}
 	return !fileNotFound;
-}
-
-void LuaForge::importClassToLua(std::function<void(lua_State*)> classCreation) {
-	userClassesToImport.push_back(classCreation);
 }

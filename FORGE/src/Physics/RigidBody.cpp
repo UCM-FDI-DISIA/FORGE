@@ -186,42 +186,42 @@ void RigidBody::rotateZ(float newAngle) {
     myBody->setWorldTransform(trans);
 }
 
-float RigidBody::getMass() {
+float RigidBody::getMass() const {
     return mass;
 }
 
-forge::Vector3 RigidBody::getGravity() {
+forge::Vector3 RigidBody::getGravity() const {
     return physicsManager->fromBtVectToForge(myBody->getGravity());
 }
 
-float RigidBody::getFriction() {
+float RigidBody::getFriction() const {
     return friction;
 }
 
-float RigidBody::getRestitution() {
+float RigidBody::getRestitution() const {
     return restitution;
 }
 
-bool RigidBody::isStatic() {
+bool RigidBody::isStatic() const {
     return staticBody;
 }
 
-btCollisionShape* RigidBody::getShape() {
+btCollisionShape* RigidBody::getShape() const {
     return myShape;
 }
 
-forge::Vector3 RigidBody::getRigidScale() {
+forge::Vector3 RigidBody::getRigidScale() const {
     return myScale;
 }
 
-float RigidBody::getSpeed() {
+float RigidBody::getSpeed() const {
     return myBody->getTotalForce().length();
 }
 
-forge::Vector3 RigidBody::getLinearVelocity() {
+forge::Vector3 RigidBody::getLinearVelocity() const {
     return physicsManager->fromBtVectToForge(myBody->getLinearVelocity());
 }
 
-forge::Vector3 RigidBody::getAngularVelocity() {
+forge::Vector3 RigidBody::getAngularVelocity() const {
     return physicsManager->fromBtVectToForge(myBody->getAngularVelocity());
 }

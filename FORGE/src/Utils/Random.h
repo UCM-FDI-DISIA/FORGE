@@ -25,7 +25,7 @@ namespace forge {
 		/// </summary>
 		/// <param name="t">Limite superior del intervalo</param>
 		/// <returns>Numero aleatorio (float)</returns>
-		FORGE_API float generate(double t);
+		FORGE_API float generate(float t);
 		/// <summary>
 		/// Genera un numero aleatorio en el intervalo (0,t)
 		/// </summary>

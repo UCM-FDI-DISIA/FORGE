@@ -87,7 +87,7 @@ public:
     /// <returns>
     /// Devuelve true si es un objeto que detecta colisiones pero no choca
     /// </returns>
-    FORGE_API bool isTrigger();
+    FORGE_API bool isTrigger() const;
 
     /// <returns>
     /// El cuerpo fisico
@@ -97,12 +97,12 @@ public:
     /// <returns>
     /// El nombre la capa del objeto
     /// </returns>
-    FORGE_API std::string getLayer();
+    FORGE_API std::string getLayer() const;
 
     ///<returns>
     ///La posición en forge vector
     ///</returns>
-    FORGE_API forge::Vector3 getPosition();
+    FORGE_API forge::Vector3 getPosition() const;
     #pragma endregion
 
     #pragma region Setters

@@ -111,7 +111,7 @@ public:
     /// Devuelve si el modo depuracion esta activo
     /// </summary>
     /// <returns>Si el modo depuracion esta activo</returns>
-    bool isDebugModeEnabled();
+    bool isDebugModeEnabled() const;
     #endif // _DEBUG    
     /// <summary>
     /// Devuelve true si puede añadir la capa de colision al registro y false si ya estaba

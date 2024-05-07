@@ -67,7 +67,7 @@ void Animator::onEnabled() {
 
 void Animator::update() {
 	for (std::string animation : activeAnimations) {
-		ogreAnimations->getAnimationState(animation)->addTime(Time::deltaTime);
+		ogreAnimations->getAnimationState(animation)->addTime(static_cast<float>(Time::deltaTime));
 	}
 }
 

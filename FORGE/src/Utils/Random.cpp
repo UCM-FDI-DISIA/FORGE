@@ -18,8 +18,8 @@ Random* Random::GetInstance() {
 #pragma endregion
 
 #pragma region Numeros aleatorios
-float Random::generate(double t) {
-	std::uniform_real_distribution<float> uni(0, t);
+float Random::generate(float t) {
+	std::uniform_real_distribution<float> uni(0.0f, t);
 	return uni(gen);
 }
 

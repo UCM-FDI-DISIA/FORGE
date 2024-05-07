@@ -20,7 +20,7 @@ DebugMode::DebugMode(SceneManager* scm) {
     MaterialPtr mtl = MaterialManager::getSingleton().getDefaultSettings()->clone(matName);
     mtl->setReceiveShadows(false);
     mtl->setSceneBlending(SBT_TRANSPARENT_ALPHA);
-    mtl->setDepthBias(0.1, 0);
+    mtl->setDepthBias(0.1f, 0.0f);
     TextureUnitState* tu = mtl->getTechnique(0)->getPass(0)->createTextureUnitState();
     assert(tu);
     tu->setColourOperationEx(LBX_SOURCE1, LBS_DIFFUSE);

@@ -2,7 +2,10 @@
 #include <set>
 #include <lua.hpp>
 #pragma warning(push)
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4267)
 #pragma warning(disable : 26439)
+#pragma warning(disable : 26495)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 #include "LuaForge.h"
@@ -320,12 +323,12 @@ bool LoadManager::loadPhysics() {
 			throwError(false, "Nombre de capa de colision no valido.");
 		}
 		if (!layer.second.isTable()) {
-			throwError(false, "No se pudieron leer las interacciones con capas de \"" << layer.first.cast<std::string>() << "\".");
+			throwError(false, "No se pudieron leer las interacciones con capas de \"" << layer.first.tostring() << "\".");
 		}
 		std::vector<bool> layerVector;
 		for (auto&& interaction : pairs(layer.second)) {
 			if (!interaction.second.isBool()) {
-				throwError(false, "Valor de interaccion con la capa \"" << layer.first.cast<std::string>() << "\" no valido.");
+				throwError(false, "Valor de interaccion con la capa \"" << layer.first.tostring() << "\" no valido.");
 			}
 			layerVector.push_back(interaction.second.cast<bool>());
 		}
