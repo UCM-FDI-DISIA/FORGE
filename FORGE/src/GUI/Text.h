@@ -78,19 +78,19 @@ public:
     FORGE_API bool initComponent(ComponentData* data) override;
 
 	/// <summary>
-	/// Activa el componente (llama a crear el texto)
+	/// Crea el texto
 	/// </summary>	
-    virtual FORGE_API void onEnabled();
+    FORGE_API void onEnabled() override;
 
 	/// <summary>
-	/// Desactiva el componente (llama a destruir el texto)
+	/// Destruye el texto
 	/// </summary>	
-    virtual FORGE_API void onDisabled();
+    FORGE_API void onDisabled() override;
 
 	/// <summary>
-	/// Ajusta la imagen al nuevo ajuste de la ventana
+	/// Ajusta el texto al nuevo ajuste de la ventana
 	/// </summary>
-	FORGE_API void resize(forge::Vector2  const& prev, forge::Vector2  const& updated) override;
+	FORGE_API void resize(forge::Vector2 const& prev, forge::Vector2 const& updated) override;
 
 	/// <summary>
 	/// Cambia la opacidad del fondo
@@ -99,17 +99,15 @@ public:
 	FORGE_API void changeBackgroundOpacity(float op = 1.0f);
 
 	#pragma region Getters
-	/// <summary>
-	/// Devuelve el texto
-	/// </summary>	
-	/// <returns>El texto</returns>
-	FORGE_API std::string getText() const;
+	/// <returns>
+	/// El texto
+	/// </returns>
+	FORGE_API std::string const& getText() const;
 
-	/// <summary>
-	/// Devuelve el color del texto
-	/// </summary>
-	/// <returns>El vector 4 que representa el color</returns>
-	FORGE_API forge::Vector4 getColor() const;
+	/// <returns>
+	/// El vector 4 que representa el color
+	/// </returns>
+	FORGE_API forge::Vector4 const& getColor() const;
 	#pragma endregion
 
 	#pragma region Setters
@@ -141,7 +139,7 @@ public:
 	/// Cambia el color del texto
 	/// </summary>
 	/// <param name="c">El nuevo color en formato Vector4</param>
-	FORGE_API void setColor(forge::Vector4 c);
+	FORGE_API void setColor(forge::Vector4 const& c);
 
 	/// <summary>
 	/// Cambia la opacidad del texto
@@ -152,8 +150,8 @@ public:
 	/// <summary>
 	/// Coloca el texto con distinta alineacion
 	/// </summary>
-	/// <param name="a">La nueva alineacion del texto</param>
-	FORGE_API void setTextAligment(forge::Alignment a);
+	/// <param name="aligment">La nueva alineacion del texto</param>
+	FORGE_API void setTextAligment(forge::Alignment aligment);
 	#pragma endregion
 };
 

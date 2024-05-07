@@ -221,7 +221,7 @@ Scene* SceneManager::createScene(std::string const& id) {
 Scene* SceneManager::getScene(std::string const& id) {
 	auto iter = loadedScenes.find(id);
 	if (iter != loadedScenes.end()) {
-		return loadedScenes[id];
+		return iter->second;
 	}
 	return nullptr;
 }
@@ -230,7 +230,7 @@ Scene* SceneManager::getActiveScene() {
 	return activeScene.second;
 }
 
-const std::string& SceneManager::getActiveSceneId() const{
+std::string const& SceneManager::getActiveSceneId() const{
 	return activeScene.first;
 }
 
@@ -255,7 +255,11 @@ void SceneManager::refresh() {
 }
 
 int SceneManager::getGroupId(std::string const& group) {
-	return groups[group];
+	auto iter = groups.find(group);
+	if (iter == groups.end()) {
+		throwError(-1, "No se encontro la id del grupo");
+	}
+	return iter->second;
 }
 
 void SceneManager::addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene) {
@@ -268,10 +272,10 @@ void SceneManager::addEntityBlueprint(std::string const& id, EntityData* entity)
 
 EntityData* SceneManager::getEntityBlueprint(std::string const& id) {
 	auto iter = entityBlueprints.find(id);
-	if (iter != entityBlueprints.end()) {
-		return entityBlueprints[id];
+	if (iter == entityBlueprints.end()) {
+		throwError(nullptr, "No existe el blueprint \"" << id << "\"");
 	}
-	return nullptr;
+	return iter->second;
 }
 
 

@@ -31,25 +31,27 @@ void Image::destroyImage() {
 	imageSource->freeMemory();
 	delete imageSource;
 	imageSource = nullptr;
-	gui->deleteResource(texture);
+	gui.deleteResource(texture);
 	destroyPanel(overlayPanel);
 	destroyOverlay(overlay);
 }
 
 void Image::loadAndAssign() {
 	// Si la imagen no esta cargada...
-	if (!gui->hasResource(texture)) {
+	if (!gui.hasResource(texture)) {
 		// ...la cargo
 		if (imageSource == nullptr) {
 			imageSource = new Ogre::Image();
 		}
-		gui->createTextureAndMaterialFromImage(imageSource, texture);
+		if (!gui.createTextureAndMaterialFromImage(imageSource, texture)) {
+			texture = "default.png";
+		}
 	}
 	// Y la asigno
 	overlayPanel->setMaterialName(texture);
 }
 
-Image::Image() : UIComponent(),
+Image::Image() :
 	imageSource(nullptr),
 	texture("default.png") {
 	serializer(texture, "texture");
@@ -80,10 +82,10 @@ void Image::onDisabled() {
 }
 
 forge::Vector2 Image::getSourceSize() {
-	return forge::Vector2((float) imageSource->getWidth(), (float) imageSource->getHeight());
+	return forge::Vector2(static_cast<float>(imageSource->getWidth()), static_cast<float>(imageSource->getHeight()));
 }
 
-std::string Image::getTexture() {
+std::string const& Image::getTexture() {
 	return texture;
 }
 
@@ -105,15 +107,6 @@ unsigned int Image::getHeight() {
 
 void Image::setMaterial(std::string const& mat) {
 	texture = mat;
-	try {
-		// Intento cargar y asignar la imagen
-		loadAndAssign();
-	}
-	catch (Ogre::Exception e) {
-		// Si no se pudo cargar la imagen, error...
-		std::cerr << "ERROR: No se pudo cargar la textura '" << texture << "'.\n";
-		// Y cargo y asigno la default
-		texture = "default.png";
-		loadAndAssign();
-	}
+	// Intento cargar y asignar la imagen
+	loadAndAssign();
 }

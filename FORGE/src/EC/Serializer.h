@@ -4,10 +4,10 @@
 
 #include <string>
 #include <vector>
+#include <type_traits>
 #include "Component.h"
 #include "ComponentData.h"
 #include "ForgeExport.h"
-#include <type_traits>
 
 
 /// <summary>
@@ -105,7 +105,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	FORGE_API inline void addField(T& var, std::string name) {
+	FORGE_API inline void addField(T& var, std::string const& name) {
 		serializations.push_back(new Serialized<T>(var, name));
 	}
 	/// <summary>
@@ -132,7 +132,7 @@ public:
 	/// </code>
 	/// </example>
 	template <typename T>
-	FORGE_API inline void operator()(T& var, std::string name) {
+	FORGE_API inline void operator()(T& var, std::string const& name) {
 		addField<T>(var, name);
 	}
 	/// <summary>

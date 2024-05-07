@@ -8,13 +8,6 @@
 #include "Vector2.h"
 #include "ForgeExport.h"
 
-#define CONTROLLER_AXIS_MAX 32767.0f
-#define CONTROLLER_AXIS_MIN -32768.0f
-#define CONTROLLER_AXIS_POS_DEADZONE (CONTROLLER_AXIS_MAX * 0.3f)
-#define CONTROLLER_AXIS_NEG_DEADZONE (CONTROLLER_AXIS_MIN * 0.3f)
-
-const int KEYNAMES_SIZE = 62;
-
 #pragma region predeclaraciones
 union SDL_Event;
 struct _SDL_GameController;
@@ -106,7 +99,7 @@ private:
 	/// Traduccion de KeyNames a SDL_Scancodes, el numero es la cantidad de teclas mapeadas (constante de KeyNames.h).
 	/// 5 Scancodes por linea, si se agregan mas hacerlo por el final.
 	/// </summary>
-	const unsigned int SCANCODE[KEYNAMES_SIZE];
+	const unsigned int SCANCODE[62];
 
 	SDL_GameController* controller;
 
@@ -142,7 +135,7 @@ private:
 	bool controllerButtonUpEvent();
 
 	/// <summary>
-	/// A�ade un nuevo mando
+	/// Agrega un nuevo mando
 	/// </summary>
 	void onControllerDeviceAdded();
 
@@ -152,7 +145,7 @@ private:
 	void onControllerDeviceRemoved();
 
 	/// <summary>
-	/// Evento de mando a�adido
+	/// Evento de mando agregado
 	/// </summary>
 	/// <returns>El estado del evento</returns>
 	bool controllerDeviceAddedEvent();
@@ -240,25 +233,25 @@ public:
 	/// Devuelve si se ha pulsado la tecla correspondiente
 	/// </summary>
 	/// <param name="k">Tecla a comprobar</param>
-	FORGE_API bool keyDown(KeyNames k);
+	FORGE_API bool keyDown(KeyNames const& k);
 
 	/// <summary>
 	/// Devuelve si se esta manteniendo la tecla correspondiente
 	/// </summary>
 	/// <param name="k">Tecla a comprobar</param>
-	FORGE_API bool keyPressed(KeyNames k);
+	FORGE_API bool keyPressed(KeyNames const& k);
 
 	/// <summary>
 	/// Devuelve si se ha soltado la tecla correspondiente
 	/// </summary>
 	/// <param name="k">Tecla a comprobar</param>
-	FORGE_API bool keyUp(KeyNames k);
+	FORGE_API bool keyUp(KeyNames const& k);
 
 	/// <summary>
 	/// Obtiene la posicion actual del raton
 	/// </summary>
 	/// <returns>first = x, second = y</returns>
-	FORGE_API forge::Vector2 getMousePosition();
+	FORGE_API forge::Vector2 const& getMousePosition();
 
 	/// <summary>
 	/// Devuelve si la rueda del raton se ha movido hacia arriba
@@ -274,31 +267,31 @@ public:
 	/// Devuelve si el boton del raton indicado se esta pulsando
 	/// </summary>
 	/// <param name="button">- indice del boton del raton</param>
-	FORGE_API bool isMouseButtonPressed(MouseNames button);
+	FORGE_API bool isMouseButtonPressed(MouseNames const& button);
 
 	/// <summary>
 	/// Devuelve si se ha pulsado el boton del mando
 	/// </summary>
 	/// <param name="button">Indice del boton del mando</param>
-	FORGE_API bool isControllerButtonDown(ControllerButtonNames button);
+	FORGE_API bool isControllerButtonDown(ControllerButtonNames const& button);
 
 	/// <summary>
 	/// Devuelve si se ha soltado el boton del mando
 	/// </summary>
 	/// <param name="button">Indice del boton del mando</param>
-	FORGE_API bool isControllerButtonUp(ControllerButtonNames button);
+	FORGE_API bool isControllerButtonUp(ControllerButtonNames const& button);
 
 	/// <summary>
 	/// Devuelve el valor del eje del joystick del mando
 	/// </summary>
 	/// <param name="ax">Eje del mando</param>
-	FORGE_API int getControllerAxis(ControllerAxisNames ax);
+	FORGE_API int getControllerAxis(ControllerAxisNames const& ax);
 
 	/// <summary>
 	/// Devuelve el valor normalizado del eje del joystick del mando
 	/// </summary>
 	/// <param name="ax">Eje del mando</param>
-	FORGE_API float getNormalizedControllerAxis(ControllerAxisNames ax);
+	FORGE_API float getNormalizedControllerAxis(ControllerAxisNames const& ax);
 
 	/// <summary>
 	/// Devuelve si hay un mando conectado

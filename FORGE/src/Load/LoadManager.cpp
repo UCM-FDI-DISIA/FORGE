@@ -35,20 +35,26 @@
 
 using namespace luabridge;
 
-void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& keepBetweenScenes, LuaRef& group, LuaRef& components) {
-	if (!handler.isNil()) {
-		entityData.handler = handler.cast<std::string>();
+bool LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& keepBetweenScenes, LuaRef& group, LuaRef& components) {
+	if (handler.isString()) {
+		entityData.handler = handler.tostring();
 	}
-	if (!keepBetweenScenes.isNil()) {
+	if (keepBetweenScenes.isBool()) {
 		entityData.keepBetweenScenes = keepBetweenScenes.cast<bool>();
 	}
-	if (!group.isNil()) {
-		entityData.group = group.cast<std::string>();
+	if (group.isString()) {
+		entityData.group = group.tostring();
 		sceneManager.addGroup(entityData.group);
 	}
-	if (!components.isNil()) {
+	if (components.isTable()) {
 		for (auto&& component : pairs(components)) {
-			std::string id = component.first.cast<std::string>();
+			if (!component.first.isString()) {
+				throwError(false, "Nombre de componente no valido");
+			}
+			std::string id = component.first.tostring();
+			if (!component.second.isTable() && !(component.second.isNumber() && component.second.cast<int>() == 0)) {
+				throwError(false, "Datos de componente \"" << id << "\" no validos");
+			}
 			// Crear copias de los LuaRef para no perder las referencias de los datos en la pila
 			LuaRef* data = new LuaRef(component.second);
 			ComponentData*& comp = entityData.components[Factory::GetInstance()->getComponentOrder(id)];
@@ -58,6 +64,7 @@ void LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, L
 			comp = new ComponentData(id, data);
 		}
 	}
+	return true;
 }
 
 void LoadManager::extractChildren(EntityData& entityData, LuaRef& children) {

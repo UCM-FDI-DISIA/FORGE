@@ -61,12 +61,12 @@ public:
 	/// <summary>
 	/// Constructora del componente de barra de progreso
 	/// </summary>	
-	ProgressBar();
+	FORGE_API ProgressBar();
 
 	/// <summary>
 	/// Destructora del componente de barra de progreso
 	/// </summary>	
-	~ProgressBar();
+	FORGE_API ~ProgressBar();
 
 	/// <summary>
 	/// Inicializa la Image con los parametros adecuados
@@ -82,12 +82,12 @@ public:
 	/// <summary>
 	/// Activa el componente (llama a crear la imagen)
 	/// </summary>	
-	virtual FORGE_API void onEnabled();
+	FORGE_API void onEnabled() override;
 
 	/// <summary>
 	/// Desactiva el componente (llama a destruir la imagen)
 	/// </summary>	
-	virtual FORGE_API void onDisabled();
+	FORGE_API void onDisabled() override;
 
 	#pragma region Getters
 	/// <summary>

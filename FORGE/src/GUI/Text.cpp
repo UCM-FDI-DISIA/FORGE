@@ -18,12 +18,12 @@
 
 const std::string Text::id = "Text";
 
-Text::Text() : UIComponent(),
+Text::Text() :
     textAreaOverlay(nullptr),
     fontName(""),
     fontHeight(50),
-    color(forge::Vector4({ 1.0, 1.0, 1.0, 1.0 })),
-    bgColor(forge::Vector4({ 0.0, 0.0, 0.0, 1.0 })),
+    color(1.0f, 1.0f, 1.0f, 1.0f),
+    bgColor(0.0f, 0.0f, 0.0f, 1.0f),
     fixedPosition() {
     serializer(fontName, "fontName");
     serializer(fontHeight, "fontHeight");
@@ -43,7 +43,7 @@ bool Text::initComponent(ComponentData* data) {
         createText();
         return true;
     }
-    return false;
+    throwError(false, "No se pudo crear el componente Text");
 }
 
 void Text::onEnabled() {
@@ -60,8 +60,8 @@ void Text::resize(forge::Vector2 const& prev, forge::Vector2 const& updated) {
     UIComponent::resize(prev, updated);
 
     float factorY = updated.getY() / prev.getY();
-    fontHeight = static_cast<int>(fontHeight * factorY);
-    overlayPanel->setPosition(0, 0);
+    fontHeight *= static_cast<int>(factorY);
+    overlayPanel->setPosition(0.0f, 0.0f);
     setPosition(transform->getPosition());
     setHeight(fontHeight);
 }
@@ -70,7 +70,7 @@ void Text::createText() {
     // Se crea el panel
     overlayPanel = createPanel();
     // Se crea el texto y se le setean los parametros: fuente, texto, altura de la letra, color, alineacion y posicion
-    textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui->getOverlayManager()->createOverlayElement("TextArea", elementID + "textArea"));
+    textAreaOverlay = static_cast<Ogre::TextAreaOverlayElement*>(gui.getOverlayManager()->createOverlayElement("TextArea", elementID + "textArea"));
     textAreaOverlay->setMetricsMode(Ogre::GMM_PIXELS);
     setFont(fontName);
     setText(text);
@@ -85,7 +85,7 @@ void Text::createText() {
 
 void Text::destroyText() {
     // Destruye de menor a mayor (texto < panel < Overlay)
-    gui->getOverlayManager()->destroyOverlayElement(textAreaOverlay);
+    gui.getOverlayManager()->destroyOverlayElement(textAreaOverlay);
     destroyPanel(overlayPanel);
     destroyOverlay(overlay);
     textAreaOverlay = nullptr;
@@ -93,7 +93,7 @@ void Text::destroyText() {
 
 float Text::calculateTextWidth() {
     float w = 0;
-    Ogre::FontPtr font = gui->getFontManager()->getByName(fontName, "General");
+    Ogre::FontPtr font = gui.getFontManager()->getByName(fontName, "General");
     // Sumamos la anchura de cada caracter del texto 
     // ...getGlynphAspectRatio -> devuelve la relacion entre anchura y altura de una letra
     for (char& l : text) {
@@ -104,7 +104,7 @@ float Text::calculateTextWidth() {
 
 void Text::fixPosition() {
     fixedPosition = 
-        forge::Vector2(transform->getPosition().getX() + (calculateTextWidth() / 2), transform->getPosition().getY());
+        forge::Vector2(transform->getPosition().getX() + (calculateTextWidth() / 2.0f), transform->getPosition().getY());
     textAreaOverlay->setPosition(fixedPosition.getX(), fixedPosition.getY());
 }
 
@@ -112,11 +112,11 @@ void Text::changeBackgroundOpacity(float op) {
     bgColor.setW(op);
 }
 
-std::string Text::getText() const {
+std::string const& Text::getText() const {
     return text;
 }
 
-forge::Vector4 Text::getColor() const {
+forge::Vector4 const& Text::getColor() const {
     return color;
 }
 
@@ -134,8 +134,8 @@ void Text::setFont(std::string const& fontName_) {
     // Si se ha especificado una fuente...
     if (fontName_ != "") {
         // Si no estaba cargada...
-        if (!gui->hasFont(fontName_)) {
-            gui->loadFont(fontName);
+        if (!gui.hasFont(fontName_)) {
+            gui.loadFont(fontName);
         }
         fontName = fontName_;
     }
@@ -151,18 +151,18 @@ void Text::setText(std::string const& text_) {
     textAreaOverlay->setCaption(text);
 }
 
-void Text::setColor(forge::Vector4 color_) {
+void Text::setColor(forge::Vector4 const& color_) {
     color = color_;
-    textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
+    textAreaOverlay->setColour(gui.Vector4ToColorValue(color));
 }
 
 void Text::setTextOpacity(float op) {
     color.setW(op);
-    textAreaOverlay->setColour(gui->Vector4ToColorValue(color));
+    textAreaOverlay->setColour(gui.Vector4ToColorValue(color));
 }
 
-void Text::setTextAligment(forge::Alignment a) {
-    switch (a) {
+void Text::setTextAligment(forge::Alignment alignment) {
+    switch (alignment) {
         case forge::CENTER:
             textAreaOverlay->setAlignment(Ogre::TextAreaOverlayElement::Alignment::Center);
             break;

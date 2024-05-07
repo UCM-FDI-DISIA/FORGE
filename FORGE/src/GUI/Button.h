@@ -27,13 +27,12 @@ private:
 	std::string clickedTexture;
 
 	// Manager de input
-	Input* input;
+	Input& input;
 
 	// Control de pulsado
 	bool clicked;
 
 	// Callbacks
-	static std::function<void(void)> mainFunc;
 	ForgeFunction<void>* onOver;
 	ForgeFunction<void>* onClick;
 	ForgeFunction<void>* onRelease;
@@ -100,23 +99,12 @@ public:
 	/// </summary>
 	FORGE_API void update() override;
 
-	/// <summary>
-	/// Resetea la funcion principal de los botones, asignandola como nula
-	/// </summary>	
-	FORGE_API static void resetFunction();
-
-	/// <summary>
-	/// Llama a la funcion principal de los botones en caso de no ser nula, devolviendo si se ha ejecutado
-	/// </summary>	
-	/// <returns>Si habia una funcion asignada y se ha podido ejecutar</returns>
-	FORGE_API static bool mainFunctionCall();
-
 	#pragma region Getters
 	/// <summary>
 	/// Devuelve true si el boton esta pulsado
 	/// </summary>
 	/// <returns>True si el boton esta pulsado, false si no</returns>
-	FORGE_API bool isPressed();
+	FORGE_API bool isPressed() const;
 	#pragma endregion
 };
 

@@ -37,7 +37,7 @@ bool RigidBody::initComponent(ComponentData* data) {
         mass = 0.0f;
     }
     if (!createRigidBody(myShapeString, mass, staticBody, true)) {
-        throwError(false, "No se pudo crear el componente Collider.");
+        throwError(false, "No se pudo crear el componente RigidBody.");
     }
     setTrigger(trigger);
 

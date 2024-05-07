@@ -59,12 +59,12 @@ public:
 	/// <summary>
 	/// Activa el componente (llama a crear la imagen)
 	/// </summary>	
-	virtual FORGE_API void onEnabled();
+	FORGE_API void onEnabled() override;
 
 	/// <summary>
 	/// Desactiva el componente (llama a destruir la imagen)
 	/// </summary>	
-	virtual FORGE_API void onDisabled();
+	FORGE_API void onDisabled() override;
 
 	#pragma region Getters
 	/// <summary>
@@ -75,7 +75,7 @@ public:
 	/// <summary>
 	/// Devuelve la textura
 	/// </summary>	
-	FORGE_API std::string getTexture();
+	FORGE_API std::string const& getTexture();
 
 	/// <summary>
 	/// Devuelve el ancho de la imagen original

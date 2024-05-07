@@ -10,7 +10,6 @@
 #include "Invoker.h"
 
 const std::string Button::id = "Button";
-std::function<void(void)> Button::mainFunc = nullptr;
 
 void Button::changeButtonImage() {
 	switch (state) {
@@ -27,14 +26,16 @@ void Button::changeButtonImage() {
 }
 
 void Button::checkMousePosition() {
-	forge::Vector2 mousePosition = input->getMousePosition();
+	forge::Vector2 const& mousePosition = input.getMousePosition();
+	forge::Vector2 const& transformPos = transform->getPosition();
+	forge::Vector2 const& transformScale = transform->getScale();
 
-	if (mousePosition.getX() > transform->getPosition().getX() 
-		&& mousePosition.getX() < transform->getPosition().getX() + transform->getScale().getX()
-		&& mousePosition.getY() > transform->getPosition().getY()
-		&& mousePosition.getY() < transform->getPosition().getY() + transform->getScale().getY()) {
+	if (mousePosition.getX() > transformPos.getX() 
+		&& mousePosition.getX() < transformPos.getX() + transformScale.getX()
+		&& mousePosition.getY() > transformPos.getY()
+		&& mousePosition.getY() < transformPos.getY() + transformScale.getY()) {
 		newState = forge::HOVER_STATE;
-		if (input->isMouseButtonPressed(M_LEFT)) {
+		if (input.isMouseButtonPressed(M_LEFT)) {
 			newState = forge::CLICKED_STATE;
 			clicked = true;
 		}
@@ -74,10 +75,10 @@ bool Button::initInvoker(ComponentData* data, Invoker*& invoker, std::string con
 	else {
 		invoker = &entity->getInvoker();
 	}
+	return true;
 }
 
 Button::Button() :
-	Image(),
 	clicked(false),
 	onOver(nullptr),
 	onClick(nullptr),
@@ -85,7 +86,7 @@ Button::Button() :
 	onOverInvoker(nullptr),
 	onClickInvoker(nullptr),
 	onReleaseInvoker(nullptr),
-	input(Input::GetInstance()),
+	input(*Input::GetInstance()),
 	state(forge::ButtonState::OUT_STATE),
 	newState(forge::ButtonState::OUT_STATE),
 	hoverTexture("default.png") {
@@ -133,21 +134,9 @@ void Button::onEnabled() {
 void Button::onDisabled() {
 	Image::onDisabled();
 	clicked = false;
-	//TODO : BORRAR TODAS LAS TEXTURAS
 }
 
 void Button::update() {
-	// IDEA:
-	// Comprobar si el raton esta dentro de los limites del boton llamando al InputManager.getMousePosition().
-	// Si lo está, entonces setear la imagen de hover:
-	// state = forge::HOVER; changeButtonImage()
-	// Si no lo esta, entonces setear la imagen de idle:
-	// state = forge::IDLE; changeButtonImage()
-	// Si se presiona el raton a la vez que se esta en el estado de hover entonces hacer todo el tema de callbacks
-	// que antes haciamos en el bucle principal del GUITest de la rama de UI asi:
-	// Button::resetFunction(); button->update(); Button::mainFunctionCall(); - la idea deberia ser parecida
-	// Para comprobar si se esta pulsando el raton: InputManager.isMouseButtonPressed(MouseNames button);
-	// Los MouseNames estan en el .h del input
 	checkMousePosition();
 	checkCallbacks();
 	if (state != newState) {
@@ -156,16 +145,6 @@ void Button::update() {
 	}
 }
 
-void Button::resetFunction() {
-	mainFunc = nullptr;
-}
-
-bool Button::mainFunctionCall() {
-	if (mainFunc == nullptr) return false;
-	mainFunc();
-	return true;
-}
-
-bool Button::isPressed() {
+bool Button::isPressed() const {
 	return clicked;
 }

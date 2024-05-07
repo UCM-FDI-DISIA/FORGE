@@ -80,7 +80,6 @@ public:
 	/// </summary>
 	/// <param name="zRot">Rotacion a aplicar en el eje z.</param>
 	FORGE_API void rotateZRad(float zRot);
-
 	/// <summary>
 	/// Establece la posicion del Transform.
 	/// </summary>
@@ -111,7 +110,6 @@ public:
 	/// </summary>
 	/// <param name="newZ">Nueva posicion en el eje z.</param>
 	FORGE_API void setPositionZ(float newZ);
-
 	/// <summary>
 	/// Establece la escala del Transform.
 	/// </summary>
@@ -120,7 +118,7 @@ public:
 	/// <summary>
 	/// Establece los tres valores de la escala del Transform.
 	/// </summary>
-	/// <param name="newScale">Nueva escala del Transform.</param>
+	/// <param name="scale">Nueva escala del Transform.</param>
 	FORGE_API void setScale(float scale);
 	/// <summary>
 	/// Escala el Transform.
@@ -130,7 +128,7 @@ public:
 	/// <summary>
 	/// Escala en los tres valores el Transform.
 	/// </summary>
-	/// <param name="newScale">Escala a aplicar al Transform.</param>
+	/// <param name="scale">Escala a aplicar al Transform.</param>
 	FORGE_API void doScale(float scale);
 	/// <summary>
 	/// Establece si requiere actualizarse la instancia del transform
@@ -145,9 +143,8 @@ public:
 	/// <summary>
 	/// Modifica la rotación para mirar a la posición dada
 	/// </summary>
-	/// <param name="pos: ">Posición a la que mirar</param>
-	FORGE_API void lookAt(forge::Vector3 pos);
-
+	/// <param name="pos">Posición a la que mirar</param>
+	FORGE_API void lookAt(forge::Vector3 const& pos);
 	#pragma endregion //setters
 	#pragma region getters
 	/// <returns>Rotacion local.</returns>

@@ -92,50 +92,43 @@ public:
 	void cleanUp() const;
 
 	/// <summary>
-	/// Actualiza los frames
-	/// </summary>	
-	bool update();
-
-	/// <summary>
 	/// Carga una fuente en el manager de la interfaz (OverlayManager)
 	/// </summary>
 	/// <param name="font">Nombre de la nueva fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
-	/// <param name="size">Altura de la fuente nueva</param>
-	/// <param name="resolution">Resolucion de la fuente nueva</param>
-	void loadFont(std::string font);
+	void loadFont(std::string const& font);
 
 	/// <summary>
 	/// Comprueba si la fuente ya se a cargado (si ya existe en el conjunto (set))
 	/// </summary>
 	/// <param name = "font">Nombre de la fuente (acabado en .ttf -> "Ejemplo.ttf")</param>
 	/// <returns>True si la fuente ya esta anadida, false si no lo esta</returns>
-	bool hasFont(std::string font);
+	bool hasFont(std::string const& font);
 
 	/// <summary>
 	/// Carga y guarda la imagen del componente en imageSource, creando tambien una textura y un material, y
 	/// registrandola en el registro de recursos del GUIManager
 	/// </summary>
-	void createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture);
+	bool createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture);
 
 	/// <summary>
 	/// Inserta un recurso en el conjunto de recursos
 	/// </summary>	
 	/// <param name = "resource">Nombre del recurso</param>
 	/// <returns>True si lo ha podido introducir, false si esta repetido</returns>
-	bool addResource(std::string resource);
+	bool addResource(std::string const& resource);
 
 	/// <summary>
 	/// Devuelve si tiene el recurso o no
 	/// </summary>	
 	/// <param name = "resource">Nombre del recurso</param>
 	/// <returns>True si lo tiene, false si no</returns>
-	bool hasResource(std::string resource);
+	bool hasResource(std::string const& resource);
 
 	/// <summary>
 	/// Elimina un recurso en el conjunto de recursos
 	/// </summary>
 	/// <param name = "resource">Nombre del recurso</param>
-	void deleteResource(std::string resource);
+	void deleteResource(std::string const& resource);
 
 	/// <summary>
 	/// Inserta un elemento del canvas (UIComponent) en el conjunto de recursos
@@ -156,12 +149,6 @@ public:
 	void resizeWindow();
 
 	#pragma region Getters
-	/// <summary>
-	/// Devuelve la fuente consultada
-	/// </summary>
-	/// <param name = "fontName">Nombre de la fuente</param>
-	/// <returns>La fuente si existe</returns>
-	Ogre::Font* getFont(std::string const& fontName);
 
 	/// <summary>
 	/// Devuelve el manager del overlay
@@ -191,7 +178,7 @@ public:
 	/// Devuelve el conjunto desordenado de identificadores guardados
 	/// </summary>	
 	/// <returns>El conjunto desordenado de identificadores guardados</returns>
-	std::unordered_set<std::string> getIds();
+	std::unordered_set<std::string>& getIds();
 
 	/// <summary>
 	/// Devuelve un nombre aleatorio nuevo generado por Ogre
@@ -203,7 +190,7 @@ public:
 	/// Devuelve la resolucion guardada en la GUI
 	/// </summary>
 	/// <returns>Resolucion guardada en la GUI</returns>
-	forge::Vector2 getResolution();
+	forge::Vector2 const& getResolution();
 	#pragma endregion
 
 	#pragma region Setters
@@ -212,7 +199,7 @@ public:
 	/// </summary>
 	/// <param name = "newRes">Nueva resolucion</param>
 	/// <returns>Resolucion guardada en la GUI</returns>
-	void setResolution(forge::Vector2 newRes);
+	void setResolution(forge::Vector2 const& newRes);
 	#pragma endregion
 
 	/// <summary>

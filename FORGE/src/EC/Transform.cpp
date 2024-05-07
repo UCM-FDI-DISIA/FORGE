@@ -3,7 +3,7 @@
 #include "Entity.h"
 using namespace forge;
 
-#define PI 3.14159265358979323846264338327950288
+#define PI 3.14159265358979323846264338327950288f
 
 void Transform::setParent(Transform* newParent) {
 	parent = newParent;
@@ -14,7 +14,7 @@ const std::string Transform::id = "Transform";
 Transform::Transform() :
 	position(),
 	rotation(),
-	scale(1,1,1),
+	scale(1.0f, 1.0f, 1.0f),
 	parent(nullptr),
 	needsUpdate(true) {
 	serializer(position, "position");
@@ -49,12 +49,8 @@ void Transform::setRotation(forge::Quaternion const& newRot) {
 		setChildNeedsUpdate(true);
 	}
 	else { 
-		reportError("ERROR: El cuaternion introducido tiene parametros invalidos\n"); 
+		reportError("El cuaternion introducido tiene parametros invalidos"); 
 	}
-
-	/*rotation = newRot;
-	needsUpdate = true;
-	setChildNeedsUpdate(true);*/
 }
 
 void Transform::setGlobalRotation(forge::Quaternion const& newRot) {
@@ -73,19 +69,19 @@ void Transform::setRotation(forge::Vector3 const& newRot) {
 }
 
 void Transform::rotateX(float xRot) {
-	float rad = xRot * (float)PI / 180;
+	float rad = xRot * PI / 180;
 	rotateXRad(rad);
 	setChildNeedsUpdate(true);
 }
 
 void Transform::rotateY(float yRot) {
-	float rad = yRot * (float)PI / 180;
+	float rad = yRot * PI / 180;
 	rotateYRad(rad);
 	setChildNeedsUpdate(true);
 }
 
 void Transform::rotateZ(float zRot) {
-	float rad = zRot * (float)PI / 180;
+	float rad = zRot * PI / 180;
 	rotateZRad(rad);
 	setChildNeedsUpdate(true);
 }
@@ -181,7 +177,7 @@ void Transform::setChildNeedsUpdate(bool needed) {
 	}
 }
 
-FORGE_API void Transform::lookAt(forge::Vector3 pos) {
+FORGE_API void Transform::lookAt(forge::Vector3 const& pos) {
 	forge::Quaternion q = forge::Quaternion();
 	q.lookTo(pos, position);
 	setRotation(q);

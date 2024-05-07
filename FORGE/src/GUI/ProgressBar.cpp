@@ -46,7 +46,7 @@ void ProgressBar::createProgressBar() {
 	try {
 		overlayPanel = createPanel();
 		backImage = new Ogre::Image();
-		gui->createTextureAndMaterialFromImage(backImage, backTexture);
+		gui.createTextureAndMaterialFromImage(backImage, backTexture);
 		overlay = createOverlay(overlayPanel, zOrder - 1);
 
 		overlayPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
@@ -66,10 +66,10 @@ void ProgressBar::createProgressBar() {
 	}
 
 	try {
-		elementID = gui->getRandomName();
+		elementID = gui.getRandomName();
 		frontPanel = createPanel();
 		frontImage = new Ogre::Image();
-		gui->createTextureAndMaterialFromImage(frontImage, frontTexture);
+		gui.createTextureAndMaterialFromImage(frontImage, frontTexture);
 		frontOverlay = createOverlay(frontPanel, zOrder);
 
 		frontPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY());
@@ -99,8 +99,8 @@ void ProgressBar::destroyProgressBar() {
 	delete frontImage;
 	backImage = nullptr;
 	frontImage = nullptr;
-	gui->deleteResource(backTexture);
-	gui->deleteResource(frontTexture);
+	gui.deleteResource(backTexture);
+	gui.deleteResource(frontTexture);
 	destroyPanel(overlayPanel);
 	destroyPanel(frontPanel);
 	destroyOverlay(overlay);

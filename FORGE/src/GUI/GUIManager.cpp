@@ -15,6 +15,7 @@
 #include <OgreNameGenerator.h>
 #include <OgreTechnique.h>
 #pragma warning(pop)
+#include "ForgeError.h"
 #include "RenderManager.h"
 #include "Vector4.h"
 #include "Vector2.h"
@@ -35,6 +36,9 @@ GUIManager::GUIManager() :
 }
 
 bool GUIManager::Init() {
+	if (initialised) {
+		throwError(false, "Ya se habia inicializado el GUIManager");
+	}
 	instance = std::unique_ptr<GUIManager>(new GUIManager());
 	initialised = true;
 	return true;
@@ -85,13 +89,18 @@ void GUIManager::cleanUp() const {
 	initialised = false;
 }
 
-bool GUIManager::hasFont(std::string font) {
+bool GUIManager::hasFont(std::string const& font) {
 	return fonts.find(font) != fonts.end();
 }
 
-void GUIManager::createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture) {
+bool GUIManager::createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture) {
 	// Cargar imagen
-	img->load(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	try {
+		img->load(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	}
+	catch (Ogre::Exception e) {
+		throwError(false, "No se pudo encontrar la imagen para crear la textura");
+	}
 
 	// Cargar textura a partir de la imagen
 	textureManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -102,19 +111,20 @@ void GUIManager::createTextureAndMaterialFromImage(Ogre::Image* img, std::string
 
 	// Anadir al registro
 	addResource(_texture);
+	return true;
 }
 
-bool GUIManager::addResource(std::string resource) {
+bool GUIManager::addResource(std::string const& resource) {
 	int resourceSize = static_cast<int>(resourceRegistry.size());
 	resourceRegistry.insert(resource);
 	return resourceSize != resourceRegistry.size();
 }
 
-bool GUIManager::hasResource(std::string resource) {
+bool GUIManager::hasResource(std::string const& resource) {
 	return resourceRegistry.count(resource);
 }
 
-void GUIManager::deleteResource(std::string resource) {
+void GUIManager::deleteResource(std::string const& resource) {
 	resourceRegistry.erase(resource);
 }
 
@@ -135,11 +145,7 @@ void GUIManager::resizeWindow() {
 	resolution = renderManager->getResolution();
 }
 
-bool GUIManager::update() {
-	return true;
-}
-
-void GUIManager::loadFont(std::string font) {
+void GUIManager::loadFont(std::string const& font) {
 	Ogre::FontPtr mFont = fontManager->create(font, "General");
 	mFont->setType(Ogre::FT_TRUETYPE);
 	mFont->setSource(font);
@@ -147,11 +153,6 @@ void GUIManager::loadFont(std::string font) {
 	mFont->setParameter("resolution", "250");
 	mFont->load();
 	fonts.insert(font);
-}
-
-Ogre::Font* GUIManager::getFont(std::string const& fontName) {
-	// return fontManager->getByName(fontName);
-	return nullptr;
 }
 
 Ogre::OverlayManager* GUIManager::getOverlayManager() {
@@ -170,7 +171,7 @@ Ogre::MaterialManager* GUIManager::getMaterialManager() {
 	return materialManager;
 }
 
-std::unordered_set<std::string> GUIManager::getIds() {
+std::unordered_set<std::string>& GUIManager::getIds() {
 	return ids;
 }
 
@@ -178,11 +179,11 @@ std::string GUIManager::getRandomName() {
 	return overlayNames->generate();
 }
 
-forge::Vector2 GUIManager::getResolution() {
+forge::Vector2 const& GUIManager::getResolution() {
 	return resolution;
 }
 
-void GUIManager::setResolution(forge::Vector2 newRes) {
+void GUIManager::setResolution(forge::Vector2 const& newRes) {
 	resolution = newRes;
 }
 

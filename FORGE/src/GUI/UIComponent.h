@@ -13,7 +13,7 @@ class RectTransform;
 class UIComponent : public Component {
 protected:
     // Referencia al GuiManager
-    GUIManager* gui;
+    GUIManager& gui;
 
     // Nombre del elemento (para los nodos de Ogre)
     std::string elementID;
@@ -69,17 +69,12 @@ public:
     FORGE_API bool initComponent(ComponentData* data) override;
 
     /// <summary>
-    /// Update del UIComponent
-    /// </summary>
-    FORGE_API virtual void update();
-
-    /// <summary>
-    /// 
+    /// Agrega el elemento al canvas
     /// </summary>
     FORGE_API void onEnabled() override;
 
     /// <summary>
-    /// 
+    /// Quita el elemento del canvas
     /// </summary>
     FORGE_API void onDisabled() override;
 
@@ -89,11 +84,10 @@ public:
     FORGE_API virtual void resize(forge::Vector2 const& prev, forge::Vector2 const& updated);
 
     #pragma region Getters
-    /// <summary>
-    /// Devuelve la posicion actual
-    /// </summary>	
-    /// <returns>La posicion actual</returns>
-    FORGE_API forge::Vector2 getPosition() const;
+    /// <returns>
+    /// La posicion actual
+    /// </returns>
+    FORGE_API forge::Vector2 const& getPosition() const;
     #pragma endregion
 
     #pragma region Setter
@@ -101,13 +95,13 @@ public:
     /// Cambiar la posicion del componente
     /// </summary>
     /// <param name="newPosition">La nueva posicion del componente</param>
-    FORGE_API virtual void setPosition(forge::Vector2 const& p);
+    FORGE_API virtual void setPosition(forge::Vector2 const& newPosition);
 
     /// <summary>
     /// Devuelve el texto
     /// </summary>	
-    /// <param name="zO"> Profundidad</param>
-    FORGE_API void setDepth(int zO);
+    /// <param name="_zOrder">Profundidad</param>
+    FORGE_API void setDepth(int _zOrder);
     #pragma endregion
 
 };
