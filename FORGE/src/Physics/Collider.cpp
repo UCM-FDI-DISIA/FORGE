@@ -179,26 +179,31 @@ void Collider::onCollision(Entity* other) {
 void Collider::checkCollisionEnd() {
     std::list<Entity*> toDelete;
     for (auto& otherEntity : collidedEntities) {
-        btRigidBody* otherBody = nullptr;
-        Collider* otherCollider = nullptr;
-        
-        if (otherEntity->hasComponent<RigidBody>()) {
-            otherCollider = otherEntity->getComponent<RigidBody>();
-        }
-        else if (otherEntity->hasComponent<Collider>()) {
-            otherCollider = otherEntity->getComponent<Collider>();
-        } //Si no tiene ningun componente de colision, algo va MUY MAL
-        otherBody = otherCollider->getBody();
+        if (otherEntity->getNumberOfComponents() > 0) {
+            btRigidBody* otherBody = nullptr;
+            Collider* otherCollider = nullptr;
 
-        if (!physicsManager->checkContact(myBody, otherBody)) {
-            for (auto& cb : oncollisionLeaveCallbacks) {
-				cb(this, otherCollider);
-			}
-			toDelete.push_back(otherEntity);
-		}
+            if (otherEntity->hasComponent<RigidBody>()) {
+                otherCollider = otherEntity->getComponent<RigidBody>();
+            }
+            else if (otherEntity->hasComponent<Collider>()) {
+                otherCollider = otherEntity->getComponent<Collider>();
+            }
+            //Si no tiene ningun componente de colision, algo va MUY MAL
+            otherBody = otherCollider->getBody();
+
+            if (!physicsManager->checkContact(myBody, otherBody)) {
+                for (auto& cb : oncollisionLeaveCallbacks) {
+                    cb(this, otherCollider);
+                }
+                toDelete.push_back(otherEntity);
+            }
+       }
 	}
     for (auto& otherEntity : toDelete) {
-		collidedEntities.remove(otherEntity);
+        if (otherEntity->getNumberOfComponents() > 0) {
+			collidedEntities.remove(otherEntity);
+		}
 	}
 }
 

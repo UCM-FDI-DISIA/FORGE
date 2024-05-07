@@ -137,6 +137,8 @@ public:
 	FORGE_API inline bool hasComponent() {
 		return hasComponent(ComponentType::id);
 	}
+
+	FORGE_API int getNumberOfComponents();
 	/// <returns>
 	/// El grupo al que pertenece la Entity
 	/// </returns>
