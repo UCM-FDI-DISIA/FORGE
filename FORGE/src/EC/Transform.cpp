@@ -177,9 +177,19 @@ void Transform::setChildNeedsUpdate(bool needed) {
 	}
 }
 
-FORGE_API void Transform::lookAt(forge::Vector3 const& pos) {
+void Transform::lookAt(forge::Vector3 const& pos) {
 	forge::Quaternion q = forge::Quaternion();
 	q.lookTo(pos, position);
+	setRotation(q);
+}
+
+void Transform::lookAtInterpolated(forge::Vector3 const& pos, float t) {
+	forge::Quaternion q = forge::Quaternion();
+	forge::Vector3 interpolatedPos = forge::Vector3(
+		(pos.getX() - position.getX()) * t + position.getX(),
+		(pos.getY() - position.getY()) * t + position.getY(),
+		(pos.getZ() - position.getZ()) * t + position.getZ());
+	q.lookTo(interpolatedPos, position);
 	setRotation(q);
 }
 

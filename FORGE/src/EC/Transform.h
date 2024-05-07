@@ -145,6 +145,12 @@ public:
 	/// </summary>
 	/// <param name="pos">Posición a la que mirar</param>
 	FORGE_API void lookAt(forge::Vector3 const& pos);
+	/// <summary>
+	/// Modifica la rotacion para mirar a la posicion dada con interpolacion lineal
+	/// </summary>
+	/// <param name="pos">posicion a recibir</param>
+	/// <param name="t">valor entre 0 y 1 para interpolar el movimiento,0 provocara que la camara no se mueva y 1 que no haya interpolacion lineal</param>
+	FORGE_API void lookAtInterpolated(forge::Vector3 const& pos, float t);
 	#pragma endregion //setters
 	#pragma region getters
 	/// <returns>Rotacion local.</returns>
