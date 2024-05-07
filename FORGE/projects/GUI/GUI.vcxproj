@@ -14,9 +14,7 @@
     <ClCompile Include="..\..\src\GUI\Button.cpp" />
     <ClCompile Include="..\..\src\GUI\GUIManager.cpp" />
     <ClCompile Include="..\..\src\GUI\Image.cpp" />
-    <ClCompile Include="..\..\src\GUI\InputText.cpp" />
     <ClCompile Include="..\..\src\GUI\ProgressBar.cpp" />
-    <ClCompile Include="..\..\src\GUI\Slider.cpp" />
     <ClCompile Include="..\..\src\GUI\Text.cpp" />
     <ClCompile Include="..\..\src\GUI\UIComponent.cpp" />
   </ItemGroup>
@@ -24,9 +22,7 @@
     <ClInclude Include="..\..\src\GUI\Button.h" />
     <ClInclude Include="..\..\src\GUI\GUIManager.h" />
     <ClInclude Include="..\..\src\GUI\Image.h" />
-    <ClInclude Include="..\..\src\GUI\InputText.h" />
     <ClInclude Include="..\..\src\GUI\ProgressBar.h" />
-    <ClInclude Include="..\..\src\GUI\Slider.h" />
     <ClInclude Include="..\..\src\GUI\Text.h" />
     <ClInclude Include="..\..\src\GUI\UIComponent.h" />
   </ItemGroup>

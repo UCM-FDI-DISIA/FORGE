@@ -30,12 +30,6 @@
     <ClCompile Include="..\..\src\GUI\Button.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GUI\InputText.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GUI\Slider.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GUI\ProgressBar.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -54,12 +48,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GUI\Button.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GUI\InputText.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GUI\Slider.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GUI\ProgressBar.h">
