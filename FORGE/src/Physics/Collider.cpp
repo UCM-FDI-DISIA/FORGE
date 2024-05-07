@@ -179,7 +179,7 @@ void Collider::onCollision(Entity* other) {
 void Collider::checkCollisionEnd() {
     std::list<Entity*> toDelete;
     //Limpiamos de entidades nulas antes de comprobar.
-    collidedEntities.remove(nullptr);
+    collidedEntities.remove_if([](Entity* e) { return e->getNumberOfComponents() == 0; });
     for (auto& otherEntity : collidedEntities) {
         if (otherEntity != nullptr) {
             btRigidBody* otherBody = nullptr;
