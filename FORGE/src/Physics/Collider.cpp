@@ -155,13 +155,23 @@ void Collider::onCollision(Entity* other) {
     //Si la entidad no esta en la lista de colisiones, se llama a los OnCollisionEnterCallbacks
     if (std::find(collidedEntities.begin(), collidedEntities.end(), other) == collidedEntities.end()) {
         for (auto& cb : onCollisionEnterCallbacks) {
-			cb(this, other->getComponent<Collider>());
+            if (other->hasComponent(Collider::id)) {
+                cb(this, other->getComponent<Collider>());
+            }
+            else if (other->hasComponent(RigidBody::id)) {
+                cb(this, other->getComponent<RigidBody>());
+            }
 		}
 		collidedEntities.push_back(other);
 	}
 	else { //Si la entidad esta en la lista de colisiones, se llama a los OnCollisionStayCallbacks
         for (auto& cb : oncollisionStayCallbacks) {
-			cb(this, other->getComponent<Collider>());
+            if (other->hasComponent(Collider::id)) {
+                cb(this, other->getComponent<Collider>());
+            }
+            else if (other->hasComponent(RigidBody::id)) {
+                cb(this, other->getComponent<RigidBody>());
+            }
 		}
 	}
 }

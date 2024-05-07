@@ -15,19 +15,20 @@ namespace forge {
 class Sound {
 private:
 	irrklang::ISoundEngine& engine;
-	irrklang::ISoundSource* source;
+	irrklang::ISoundSource& source;
 	irrklang::ISound* sound;
 	bool loop;
 	float pan;
 	float fullVolumeRadious;
 	float hearingRadious;
+	float volume;
 public:
 	/// <summary>
 	/// Crea una nueva instancia de Sound
 	/// </summary>
 	/// <param name="_engine">Engine de irrklang desde el que sonara el audio</param>
 	/// <param name="_source">ISoundSource de irrklang con el sonido que sonara</param>
-	Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource* _source);
+	Sound(irrklang::ISoundEngine& _engine, irrklang::ISoundSource& _source);
 	/// <summary>
 	/// Detiene el sonido y lo destruye
 	/// </summary>
@@ -35,12 +36,12 @@ public:
 	/// <summary>
 	/// Pausa el sonido si esta sonando
 	/// </summary>
-	/// <returns>Si se ha podido pausar</returns>
+	/// <returns>Booleano que indica si se ha podido pausar</returns>
 	bool pause();
 	/// <summary>
 	/// Reanuda el sonido desde donde se habia pausado
 	/// </summary>
-	/// <returns>Si se ha podido reanudar</returns>
+	/// <returns>Booleano que indica si se ha podido reanudar</returns>
 	bool resume();
 	/// <summary>
 	/// Devuelve si la reproduccion del sonido esta en pausa
@@ -50,20 +51,18 @@ public:
 	/// <summary>
 	/// Detiene por completo el sonido
 	/// </summary>
-	/// <returns>Si se ha podido detener</returns>
+	/// <returns>Booleano que indica si se ha podido detener</returns>
 	bool stop();
 	/// <summary>
 	/// Comienza a reproducir el sonido
 	/// </summary>
-	/// <param name="looped">Si se quiere reproducir en bucle</param>
-	/// <returns>Si se ha podido reproducir</returns>
+	/// <returns>Booleano que indica si se ha podido reproducir</returns>
 	bool play();
 	/// <summary>
 	/// Comienza a reproducir el sonido en un punto en concreto
 	/// </summary>
 	/// <param name="position">Posicion desde la que se quiere que se reproduzca</param>
-	/// <param name="looped">Si se quiere reproducir en bucle</param>
-	/// <returns>Si se ha podido reproducir</returns>
+	/// <returns>Booleano que indica si se ha podido reproducir</returns>
 	bool play(forge::Vector3 const& position);
 	/// <summary>
 	/// Actualiza el estado del sonido segun se haya terminado o no de reproducir
@@ -72,7 +71,7 @@ public:
 	/// <summary>
 	/// Reinicia el sonido. Detiene el sonido y lo vuelve a reproducir desde el principio
 	/// </summary>
-	/// <returns>Si se ha podido reiniciar el sonido</returns>
+	/// <returns>Booleano que indica si se ha podido reiniciar el sonido</returns>
 	bool restart();
 	/// <summary>
 	/// Reinicia el sonido teniendo en cuenta la posicion. Detiene el sonido y lo vuelve a reproducir desde el principio en la posicion indicada
@@ -84,7 +83,7 @@ public:
 	/// Establece el volumen con el que se reproduce el sonido
 	/// </summary>
 	/// <param name="volume">Valor entre 0 y 1</param>
-	void setVolume(float volume);
+	void setVolume(float value);
 	/// <summary>
 	/// Devuelve el volumen con el que se reproduce el sonido
 	/// </summary>
@@ -117,13 +116,13 @@ public:
 	/// <summary>
 	/// Comprueba si el sonido ha terminado de reproducirse
 	/// </summary>
-	/// <returns>Si el sonido ha terminado o se ha detenido</returns>
+	/// <returns>Booleano que indica si el sonido ha terminado o se ha detenido</returns>
 	bool isFinished() const;
 	/// <summary>
 	/// Establece la posicion desde la que se reproduce el sonido
 	/// </summary>
 	/// <param name="position">Posicion desde la que se reproducira el sonido</param>
-	/// <returns>Si se ha podido establecer la posicion del sonido</returns>
+	/// <returns>Booleano que indica si se ha podido establecer la posicion del sonido</returns>
 	bool setPosition(forge::Vector3 const& position);
 	/// <summary>
 	/// Establece el radio a partir del que el sonido se escucha a maximo

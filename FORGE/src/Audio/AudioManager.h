@@ -50,11 +50,11 @@ public:
 	/// </summary>
 	void update();
 	/// <summary>
-	/// Anade un sonido a la libreria de sonidos de audio
+	/// Agrega un sonido a la libreria de sonidos de audio
 	/// </summary>
 	/// <param name="name">Identificador del sonido</param>
 	/// <param name="route">Archivo de sonido</param>
-	/// <returns>Booleano que indica si se ha podido agregar el sonido</returns>
+	/// <returns>Puntero al SoundGenerator creado. nullptr si no se pudo crear</returns>
 	SoundGenerator* addSound(std::string const& name, std::string const& file);
 	/// <summary>
 	/// Accede al sonido con el identificador solicitado
@@ -75,13 +75,13 @@ public:
 	/// <param name="lookAt">Direccion a la que mira el escuchador</param>
 	void setListenerPosition(forge::Vector3 const& position, forge::Vector3 const& lookAt);
 	/// <summary>
-	/// Registra el AudioListener pasado como el listener actual si no habia ya uno
+	/// Registra el AudioListener pasado como el escuchador actual si no habia ya uno
 	/// </summary>
-	/// <param name="listener">Puntero al AudioListerner que se quiere registrar</param>
+	/// <param name="listener">Puntero al AudioListener que se quiere registrar</param>
 	/// <returns>Booleano que indica si se ha podido registrar el listener</returns>
 	bool registerListener(AudioListener* listener);
 	/// <summary>
-	/// Elimina el AudioListener pasado como listener actual si lo era
+	/// Elimina el AudioListener pasado como escuchador actual si lo era
 	/// </summary>
 	/// <param name="listener">Puntero al AudioListener que se quiere desregistrar</param>
 	/// <returns>Booleano que indica si el listener pasado era el registrado y se ha borrado</returns>

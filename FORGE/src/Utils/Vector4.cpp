@@ -2,9 +2,23 @@
 
 using namespace forge;
 
-Vector4::Vector4() :x(0), y(0), z(0), w(0) {}
+Vector4::Vector4() :
+	x(0), 
+	y(0), 
+	z(0), 
+	w(0) {}
 
-Vector4::Vector4(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
+Vector4::Vector4(float _x, float _y, float _z, float _w) : 
+	x(_x), 
+	y(_y), 
+	z(_z), 
+	w(_w) {}
+
+Vector4::Vector4(float e) : 
+	x(e),
+	y(e),
+	z(e),
+	w(e) {}
 
 Vector4::Vector4(const Vector4& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
 

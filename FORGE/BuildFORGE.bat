@@ -75,6 +75,7 @@ if !INCLUDE! equ 1 (
     xcopy /y "Image.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Button.h" "!RELATIVEINCLUDEDIR!"
     xcopy /y "Text.h" "!RELATIVEINCLUDEDIR!"
+    xcopy /y "ProgressBar.h" "!RELATIVEINCLUDEDIR!"
     cd ..
 
     cd Input

@@ -28,6 +28,11 @@ namespace forge {
 		/// <param name="_w">Componente en W</param>
 		Vector4(float _x, float _y, float _z, float _w);
 		/// <summary>
+		/// Constructora a partir de un solo parametro (vector uniforme)
+		/// </summary>
+		/// <param name="e">Componente en X, Y, Z y W</param>
+		Vector4(float e);
+		/// <summary>
 		/// Constructora a partir de otro vector
 		/// </summary>
 		/// <param name="v">Vector a copiar</param>

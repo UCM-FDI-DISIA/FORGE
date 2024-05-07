@@ -52,7 +52,7 @@ public:
 	/// <param name="_group">Referencia al grupo de la Entity</param>
 	FORGE_API void setContext(Scene* _scene, int _groupId);
 	/// <returns>
-	/// Si la Entity esta viva
+	/// Booleano que indica si la Entity esta viva
 	/// </returns>
 	FORGE_API bool isAlive();
 	/// <summary>
@@ -63,8 +63,8 @@ public:
 	/// <summary>
 	/// Agrega el Component dicho a la Entity
 	/// </summary>
-	/// <returns>Un puntero al Component agregado</returns>
 	/// <param name="data">Identificador del componente</param>
+	/// <returns>Un puntero al Component agregado</returns>
 	FORGE_API Component* addComponent(std::string const& id);
 	/// <summary>
 	/// Agrega el Component dicho a la Entity y lo inicializa
@@ -76,13 +76,13 @@ public:
 	/// Inicializa todos los componentes de la entidad
 	/// </summary>
 	/// <param name="data">Vector con los datos de la inicializacion</param>
-	/// <returns>Si la inicializacion ha sido correcta</returns>
+	/// <returns>Booleano que indica si la inicializacion ha sido correcta</returns>
 	FORGE_API bool initComponents(std::vector<ComponentData*> data);
 	/// <summary>
 	/// Inicializa todos los componentes de la entidad
 	/// </summary>
-	/// <param name="data">Vector con los datos de la inicializacion</param>
-	/// <returns>Si la inicializacion ha sido correcta</returns>
+	/// <param name="data">Vector con los datos de la inicializacion de componentes serializados</param>
+	/// <returns>Booleano que indica si la inicializacion ha sido correcta</returns>
 	FORGE_API bool initSerializedComponents(std::vector<ComponentData*> data);
 	/// <summary>
 	/// Agrega una nueva Entity como hija de this, y establece this como el padre de la hija.
@@ -99,7 +99,7 @@ public:
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
 	/// </summary>
-	/// <param name="name">Nombre del Component a eliminar</param>
+	/// <param name="id">Id del Component a eliminar</param>
 	FORGE_API void removeComponent(std::string const& id);
 	/// <summary>
 	/// Elimina el Component dicho de la Entity
@@ -109,9 +109,11 @@ public:
 	FORGE_API inline void removeComponent() {
 		removeComponent(ComponentType::Id());
 	}
-	/// <returns>
-	/// Un puntero al Component pedido de esta Entity
-	/// </returns>
+	/// <summary>
+	/// Devuelve un puntero al componente pedido de la Entity
+	/// </summary>
+	/// <typeparam name="ComponentType">Tipo del Component a acceder</typeparam>
+	/// <returns> Un puntero al Component pedido de esta Entity. nullptr si no lo tiene</returns>
 	template<class ComponentType>
 	FORGE_API inline ComponentType* getComponent() {
 		auto comp = componentMap.find(ComponentType::id);
@@ -157,13 +159,13 @@ public:
 	/// <param name="_enabled">Nuevo estado de activacion de los Components</param>
 	FORGE_API void setEnabled(bool enabled);
 	/// <returns>
-	/// Si la Entity se mantiene entre escenas
+	/// Booleano que indica si la Entity se mantiene entre escenas
 	/// </returns>
 	FORGE_API bool isKeepBetweenScenes();
 	/// <summary>
 	/// Asigna si la Entity se mantiene entre escenas al realizar un cambio de escena
 	/// </summary>
-	/// <param name="_alive">Si se mantiene la Entity</param>
+	/// <param name="keep">Valor para indicar si se mantiene la Entity</param>
 	FORGE_API void setKeepBetweenScenes(bool keep);
 	/// <summary>
 	/// Cambia la Scene en la que se encuentra esta Entity

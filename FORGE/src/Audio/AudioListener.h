@@ -16,13 +16,13 @@ public:
 	FORGE_API AudioListener();
 	/// <summary>
 	/// Destructora de audio listener, si es el listener activo
-	/// hace que el manager cambie la flag de listener activo a falso
+	/// se desregistra del manager
 	/// </summary>
 	FORGE_API ~AudioListener() override;
 	/// <summary>
 	/// Se inicializa el escuchador con el transform de la entidad
 	/// </summary>
-	/// <param name="data"></param>
+	/// <param name="data">ComponentData sin informacion</param>
 	FORGE_API bool initComponent(ComponentData* data) override;
 	/// <summary>
 	/// Comprueba si hay que actualizar la posicion del escuchador y si es asi

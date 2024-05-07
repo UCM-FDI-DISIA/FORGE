@@ -13,8 +13,7 @@ private:
 	Sound* sound;
 	
 	bool playOnAwake;
-	float fullVolumeRadious;
-	float hearingRadious;
+	bool sound2D;
 	forge::Vector3 offset;
 
 	bool resumeOnEnable;
@@ -49,12 +48,12 @@ public:
 	/// <summary>
 	/// Pausa el sonido si esta sonando
 	/// </summary>
-	/// <returns>Si se ha podido pausar</returns>
+	/// <returns>Booleano que indica si se ha podido pausar</returns>
 	FORGE_API bool pause();
 	/// <summary>
 	/// Reanuda el sonido desde donde se habia pausado
 	/// </summary>
-	/// <returns>Si se ha podido reanudar</returns>
+	/// <returns>Booleano que indica si se ha podido reanudar</returns>
 	FORGE_API bool resume();
 	/// <summary>
 	/// Devuelve si la reproduccion del sonido esta en pausa

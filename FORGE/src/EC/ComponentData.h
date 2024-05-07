@@ -12,6 +12,7 @@
 #include "ForgeExport.h"
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Vector4.h"
 #include "Quaternion.h"
 #include "ForgeError.h"
 #include "ForgeFunction.h"
@@ -145,8 +146,18 @@ public:
             }
             ++i;
         }
-        if (input.size() > 2) {
-            reportError("Vector3 con mas de 2 parametros. Devolviendo los 2 primeros parametros.");
+
+
+        if (input.size() == 0) {
+            reportError("Vector2 con 0 parametros, asignandos todos los valores a 0.");
+            return forge::Vector2();
+        }
+        else if (input.size() < 2) {
+            reportError("Vector2 con menos de 2 parametros, asignandos todos los valores al primero.");
+            return forge::Vector2(input[0]);
+        }
+        else if (input.size() > 2) {
+            reportError("Vector2 con mas de 2 parametros. Devolviendo los 2 primeros parametros.");
         }
         return forge::Vector2(input[0], input[1]);
     }
@@ -171,10 +182,54 @@ public:
             }
             ++i;
         }
-        if (input.size() > 3) {
-            reportError("Vector3 con mas de 3 parametros. Devolviendo los 3 primeros parametros.");
+
+        if (input.size() == 0) {
+            reportError("Vector3 con 0 parametros, asignandos todos los valores a 0.");
+            return forge::Vector3();
         }
+        else if (input.size() < 3) {
+            reportError("Vector3 con menos de 3 parametros, asignandos todos los valores al primero.");
+            return forge::Vector3(input[0]);
+        }
+        else if (input.size() > 3) {
+            reportError("Vector3 con mas de 3 parametros. Devolviendo los 3 primeros parametros.");
+        }        
         return forge::Vector3(input[0], input[1], input[2]);
+    }
+    /// <summary>
+    /// Get especifico para el tipo Vector4 de Forge
+    /// </summary>
+    /// <param name="param">Nombre del parametro al que se quiere acceder</param>
+    /// <returns>El valor del parametro dentro del ComponentData convertido en forge::Vector4</returns>
+    template <>
+    FORGE_API inline forge::Vector4 get<forge::Vector4>(std::string const& param) {
+        if ((*data)[param].isInstance<forge::Vector4>()) {
+            return (*data)[param].cast<forge::Vector4>();
+        }
+
+        std::vector<float> input = getter<std::vector<float>>::get(*data,param);
+        size_t i = 0;
+        for (float& e : input) {
+            if (i > 4) break;
+            if (std::isinf(e) || input.size() < i + 1) {
+                e = 0.0f;
+                reportError("Valor del parametro " << i << " del Vector4 infinito o inexistente. Asignado a 0.");
+            }
+            ++i;
+        }
+        
+        if (input.size() == 0) {
+            reportError("Vector4 con 0 parametros, asignandos todos los valores a 0.");
+            return forge::Vector4();
+        }
+        else if (input.size() < 4) {
+            reportError("Vector4 con menos de 4 parametros, asignandos todos los valores al primero.");
+            return forge::Vector4(input[0]);
+        }
+        else if (input.size() > 4) {
+            reportError("Vector4 con mas de 4 parametros. Devolviendo los 4 primeros parametros.");
+        }
+        return forge::Vector4(input[0], input[1], input[2], input[3]);
     }
     /// <summary>
     /// Get especifico para el tipo Quaternion de Forge
@@ -200,8 +255,12 @@ public:
             }
             ++i;
         }
+        if (input.size() < 4) {
+            reportError("Quaternion con menos de 4 parametros, asignandos el Quaternion identidad.");
+            return forge::Quaternion();
+        }
         if (input.size() > 4) {
-            reportError("Quaternion con mas de 4 parametros. Devolviendo los 4 primeros parametros.");
+            reportError("Quaternion con mas de 4 parametros. Creando el Quaternion con los 4 primeros parametros.");
         }
         return forge::Quaternion(input[0], input[1], input[2], input[3]);
     }

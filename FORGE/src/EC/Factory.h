@@ -50,7 +50,7 @@ public:
     /// Devuelve el orden de inicializacion del componente
     /// </summary>
     /// <returns>El orden de inicializacion del componente</returns>
-    FORGE_API int getComponentOrder(std::string componentId);
+    FORGE_API int getComponentOrder(std::string const& componentId);
     
 };
 

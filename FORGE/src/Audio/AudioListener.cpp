@@ -21,7 +21,7 @@ bool AudioListener::initComponent(ComponentData* data) {
     }
 
     if (!manager.registerListener(this)) {
-        entity->removeComponent(id);
+        throwError(false, "Ya existia un AudioListener en la escena");
     }
     transform = entity->getComponent<Transform>();
     return true;

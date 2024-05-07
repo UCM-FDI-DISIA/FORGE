@@ -5,6 +5,7 @@
 #include "SoundGenerator.h"
 #include "ForgeError.h"
 using namespace irrklang;
+using namespace forge;
 
 std::unique_ptr<AudioManager> AudioManager::instance = nullptr;
 
@@ -26,7 +27,7 @@ bool AudioManager::Init() {
 
 AudioManager* AudioManager::GetInstance() {
 	if (initialized) return instance.get();
-	return nullptr;
+	throwError(nullptr, "No se ha inicializado el AudioManager");
 }
 
 AudioManager::~AudioManager() {
@@ -47,22 +48,22 @@ void AudioManager::update() {
 
 SoundGenerator* AudioManager::addSound(std::string const& name, std::string const& file) {
 	ISoundSource* newSound = engine->addSoundSourceFromFile(file.c_str(), ESM_AUTO_DETECT , true);
-	if (newSound != NULL) {
-		SoundGenerator* s = new SoundGenerator(*engine, newSound);
-		soundLibrary.insert(std::pair<std::string, SoundGenerator*>(name, s)).second;
-		return s;
+	if (newSound == NULL) {
+		throwError(nullptr, "Ya existia el audio \"" << file << "\"");
 	}
-	return nullptr;
+	SoundGenerator* s = new SoundGenerator(*engine, newSound);
+	soundLibrary.insert(std::pair<std::string, SoundGenerator*>(name, s)).second;
+	return s;
 }
 
 Sound* AudioManager::getSound(std::string const& name) {
 	auto s = soundLibrary.find(name);
-	if (s != soundLibrary.end()) {
-		Sound* snd = s->second->instanciate();
-		currentSounds.insert(snd);
-		return snd;
+	if (s == soundLibrary.end()) {
+		throwError(nullptr, "No se registro ningun audio con el nombre indicado");
 	}
-	return nullptr;
+	Sound* snd = s->second->instanciate();
+	currentSounds.insert(snd);
+	return snd;
 }
 
 bool AudioManager::removeSound(Sound* sound) {
@@ -73,7 +74,6 @@ bool AudioManager::removeSound(Sound* sound) {
 	return res;
 }
 
-using namespace forge;
 void AudioManager::setListenerPosition(Vector3 const& position, Vector3 const& lookAt) {
 	engine->setListenerPosition(position, lookAt, Vector3::ZERO, Vector3::UP);
 }

@@ -14,15 +14,13 @@ Quaternion::Quaternion() :
 	x(0.0f), 
 	y(0.0f), 
 	z(0.0f),
-	w(1.0f) {
-}
+	w(1.0f) {}
 
 Quaternion::Quaternion(float _x, float _y, float _z, float _w) :
 	x(_x), 
 	y(_y),
 	z(_z),
-	w(_w) {
-}
+	w(_w) {}
 
 Quaternion::Quaternion(Vector3 const& vec, float angle) {
 	set(vec.getX(), vec.getY(), vec.getZ(), angle);
@@ -32,22 +30,19 @@ Quaternion::Quaternion(const Quaternion& q) :
 	x(q.x),
 	y(q.y),
 	z(q.z),
-	w(q.w) {
-}
+	w(q.w) {}
 
 Quaternion::Quaternion(Quaternion&& q) noexcept : 
 	x(q.x), 
 	y(q.y), 
 	z(q.z), 
-	w(q.w) {
-}
+	w(q.w) {}
 
 Quaternion::Quaternion(const Quaternion* q) : 
 	x(q->x),
 	y(q->y),
 	z(q->z),
-	w(q->w) {
-}
+	w(q->w) {}
 
 Quaternion::Quaternion(const Vector3& e) {
 	float bank = e.getX();

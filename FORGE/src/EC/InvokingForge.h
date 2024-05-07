@@ -15,6 +15,7 @@ class InvokingForge {
 private:
 	std::list<std::unordered_map<std::string, std::function<void()>>> invokerContainers;
 	static std::unique_ptr<InvokingForge> instance;
+	static bool initialised;
 	/// <summary>
 	/// Crea la instancia de la fragua de invocacion
 	/// </summary>

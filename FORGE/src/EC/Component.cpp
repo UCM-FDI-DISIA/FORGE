@@ -6,12 +6,12 @@ Component::Component() :
     entity(nullptr),
     scene(nullptr),
     enabled(false),
-    serializer(*(new Serializer())),
+    serializer(*new Serializer()),
     sceneManager(*SceneManager::GetInstance()){
 }
 
 Component::~Component() {
-    delete& serializer;
+    delete &serializer;
 }
 
 void Component::setContext(Entity* _entity, Scene* _scene) {
@@ -22,14 +22,12 @@ void Component::setContext(Entity* _entity, Scene* _scene) {
 bool Component::initSerialized(ComponentData* data) {
     try {
         serializer.initialize(*data);
-        enabled = true;
-        return true;
     }
     catch (std::exception e) {
-        std::cerr << "ERROR: Fallo en el serializado de lua\n";
-        return false;
+        throwError(false, "Fallo en el serializado de lua");
     }
-    
+    enabled = true;
+    return true;
 }
 
 bool Component::initComponent(ComponentData* data) { return true; }

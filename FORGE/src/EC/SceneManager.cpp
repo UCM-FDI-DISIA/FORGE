@@ -214,6 +214,7 @@ Scene* SceneManager::createScene(std::string const& id) {
 		delete initPair;
 	}
 	loadedScenes.insert({ id, newScene });
+	newScene->refresh();
 	return newScene;
 }
 

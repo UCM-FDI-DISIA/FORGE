@@ -14,5 +14,5 @@ SoundGenerator::~SoundGenerator() {
 }
 
 Sound* SoundGenerator::instanciate() {
-	return new Sound(engine, source);
+	return new Sound(engine, *source);
 }

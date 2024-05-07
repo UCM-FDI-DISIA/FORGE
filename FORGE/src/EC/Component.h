@@ -41,11 +41,13 @@ public:
 	/// Inicializa los parametros serializados del Component
 	/// </summary>
 	/// <param name="data">Parametros necesarios para la iniciacion del componente</param>
+	/// <returns>Booleano que indica si se inicializaron correctamente las serializaciones</returns>
 	FORGE_API bool initSerialized(ComponentData* data);
 	/// <summary>
 	/// Inicializa el Component con los parametros adecuados
 	/// </summary>
 	/// <param name="data">Parametros necesarios para la iniciacion del componente</param>
+	/// <returns>Booleano que indica si se inicializo correctamente el componente</returns>
 	FORGE_API virtual bool initComponent(ComponentData* data);
 	/// <summary>
 	/// Actualiza la logica del Component

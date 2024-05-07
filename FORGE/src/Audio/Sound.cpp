@@ -5,12 +5,13 @@
 using namespace irrklang;
 using namespace forge;
 
-Sound::Sound(ISoundEngine& _engine, ISoundSource* _source) :
+Sound::Sound(ISoundEngine& _engine, ISoundSource& _source) :
 	engine(_engine),
 	sound(nullptr),
 	source(_source),
 	loop(false),
 	pan(0.0f),
+	volume(1.0f),
 	fullVolumeRadious(20.0f),
 	hearingRadious(200.0f) {
 }
@@ -51,16 +52,19 @@ bool Sound::stop() {
 
 bool Sound::play() {
 	if (sound == nullptr) {
-		sound = engine.play2D(source, loop, false, true);
+		sound = engine.play2D(&source, loop, false, true);
+		sound->setVolume(volume);
+		sound->setPan(pan);
 		return true;
 	}
 	return false;
 }
 bool Sound::play(Vector3 const& position) {
 	if (sound == nullptr) {
-		sound = engine.play3D(source, position, loop, false, true);
+		sound = engine.play3D(&source, position, loop, false, true);
 		sound->setMinDistance(fullVolumeRadious);
 		sound->setMaxDistance(hearingRadious);
+		sound->setVolume(volume);
 		sound->setPan(pan);
 		return true;
 	}
@@ -83,21 +87,19 @@ bool Sound::restart() {
 bool Sound::restart(forge::Vector3 const& position) {
 	bool result;
 	result = stop();
-	if (result) {
-		result = play(position);
-	}
+	result = play(position) || result;
 	return result;
 }
 
-void Sound::setVolume(float volume) {
-	source->setDefaultVolume(volume);
+void Sound::setVolume(float value) {
+	volume = value;
 	if (sound != nullptr) {
 		sound->setVolume(volume);
 	}
 }
 
 float Sound::getVolume() const {
-	return sound->getVolume();
+	return volume;
 }
 
 void Sound::loopedToggle() {

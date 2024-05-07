@@ -14,12 +14,12 @@ AudioSource::AudioSource() :
 	transform(nullptr),
 	manager(*AudioManager::GetInstance()),
 	playOnAwake(false),
+	sound2D(false),
 	offset(),
-	fullVolumeRadious(5.0f),
-	hearingRadious(50.0f),
 	resumeOnEnable(false) {
 
 	serializer(playOnAwake, "playOnAwake");
+	serializer(sound2D, "sound2D");
 	serializer(offset, "offset");
 }
 
@@ -35,6 +35,9 @@ bool AudioSource::initComponent(ComponentData* data) {
 	// Si tiene Transform sera sonido espacial, si no sera sonido 2D
 	if(entity->hasComponent<Transform>()) {	
 		transform = entity->getComponent<Transform>();	
+	}
+	else {
+		sound2D = true;
 	}
 	if (data->has("volume")) {
 		sound->setVolume(data->get<float>("volume"));
@@ -55,7 +58,7 @@ bool AudioSource::initComponent(ComponentData* data) {
 }
 
 void AudioSource::update() {
-	if (transform != nullptr && transform->getNeedsUpdate()) {
+	if (sound2D && transform->getNeedsUpdate()) {
 		sound->setPosition(transform->getGlobalPosition());
 	}
 }
@@ -91,7 +94,7 @@ bool AudioSource::stop() {
 }
 
 bool AudioSource::play() {
-	if (transform != nullptr) {
+	if (sound2D) {
 		return sound->play(transform->getGlobalPosition() + offset);
 	}
 	return sound->play();

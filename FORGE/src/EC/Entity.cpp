@@ -27,7 +27,7 @@ Entity::~Entity() {
         child->setAlive(false);
     }
     if (parent != nullptr) {
-       // parent->removeChild(this);
+        parent->removeChild(this);
     }
     delete inv;
 }
@@ -170,8 +170,8 @@ bool Entity::isKeepBetweenScenes() {
     return keepBetweenScenes;
 }
 
-void Entity::setKeepBetweenScenes(bool ddol) {
-    keepBetweenScenes = ddol;
+void Entity::setKeepBetweenScenes(bool keep) {
+    keepBetweenScenes = keep;
 }
 
 void Entity::changeScene(Scene* newScene) {

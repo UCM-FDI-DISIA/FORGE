@@ -2,13 +2,14 @@
 #include "Invoker.h"
 
 std::unique_ptr<InvokingForge> InvokingForge::instance = nullptr;
+bool InvokingForge::initialised = false;
 
 InvokingForge::InvokingForge() : 
 	invokerContainers() {
 }
 
 bool InvokingForge::Init() {
-	if (instance == nullptr) {
+	if (!initialised) {
 		instance = std::unique_ptr<InvokingForge>(new InvokingForge());
 		return true;
 	}
@@ -16,7 +17,10 @@ bool InvokingForge::Init() {
 }
 
 InvokingForge* InvokingForge::GetInstance() {
-	return instance.get();
+	if (initialised) {
+		return instance.get();
+	}
+	return nullptr;
 }
 
 void InvokingForge::shutDown() {
