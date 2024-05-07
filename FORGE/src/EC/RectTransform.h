@@ -13,6 +13,13 @@ private:
 
 	bool needsUpdate;
 
+	RectTransform* parent;
+
+	/// <summary>
+	/// Establece el RectTransform de la Entity padre.
+	/// </summary>
+	/// <param name="newParent">Puntero al RectTransform de la nueva Entity padre.</param>
+	void setParent(RectTransform* newParent);
 public:
 	static const FORGE_API_VAR std::string id;
 
@@ -39,6 +46,11 @@ public:
 	/// </summary>
 	/// <param name="newY">Nueva posicion en el eje y</param>
 	FORGE_API void setPositionY(float newY);
+	/// <summary>
+	/// Establece la posicion global del Transform.
+	/// </summary>
+	/// <param name="newPos">Nueva posicion del Transform.</param>
+	FORGE_API void setGlobalPosition(forge::Vector2 const& newPos);
 
 	/// <summary>
 	/// Establece la escala del RectTransform
@@ -71,8 +83,12 @@ public:
 	#pragma region getters
 	/// <returns>Posicion local</returns>
 	FORGE_API forge::Vector2 const& getPosition() const;
+	/// <returns>Posicion global.</returns>
+	FORGE_API forge::Vector2 getGlobalPosition() const;
 	/// <returns>Escala local</returns>
 	FORGE_API forge::Vector2 const& getScale() const;
+	/// <returns>Escala global.</returns>
+	FORGE_API forge::Vector2 getGlobalScale() const;
 	///<returns>Se ha actualizado el RectTransform</returns>
 	FORGE_API bool getNeedsUpdate() const;
 	#pragma endregion //getters

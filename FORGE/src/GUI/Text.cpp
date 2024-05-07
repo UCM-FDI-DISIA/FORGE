@@ -40,6 +40,7 @@ Text::~Text() {
 
 bool Text::initComponent(ComponentData* data) {
     if (UIComponent::initComponent(data)) {
+        fontHeight *= transform->getScale().getY();
         createText();
         return true;
     }

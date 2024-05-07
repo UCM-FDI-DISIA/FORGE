@@ -36,6 +36,9 @@ Vector2 Vector2::operator*(float e) const {
 Vector2 Vector2::operator/(float e) const {
 	return Vector2(x / e, y / e);
 }
+Vector2 Vector2::operator/(Vector2 v) const {
+	return Vector2(x / v.x, y / v.y);
+}
 //float Vector2::operator *(const Vector2& v) const {
 //	return (x * v.x + y * v.y);
 //}

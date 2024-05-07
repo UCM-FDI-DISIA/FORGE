@@ -64,6 +64,12 @@ namespace forge {
 		/// <returns>El vector resultante</returns>
 		Vector2 operator/(float e) const;
 		/// <summary>
+		/// Divide un vector entre las componentes de otro
+		/// </summary>
+		/// <param name="v">vector por el que dividir</param>
+		/// <returns>El vector resultante</returns>
+		Vector2 operator/(Vector2 v) const;
+		/// <summary>
 		/// Producto escalar
 		/// </summary>
 		/// <param name="v">Vector por el que multiplicar</param>

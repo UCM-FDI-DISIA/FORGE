@@ -89,7 +89,7 @@ local scenes = {
             components = {
                 RectTransform = {
                     position = {0, 0},
-                    scale = {5, 5}
+                    scale = {1.3, 1.3}
                 },
                 Text = {
                     text = "texto1",
@@ -102,7 +102,7 @@ local scenes = {
             components = {
                 RectTransform = {
                     position = {0, 400},
-                    scale = {5, 5}
+                    scale = {1, 1}
                 },
                 Text = {
                     text = "texto2",

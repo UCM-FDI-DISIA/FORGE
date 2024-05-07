@@ -4,6 +4,10 @@ using namespace forge;
 
 const std::string RectTransform::id = "RectTransform";
 
+void RectTransform::setParent(RectTransform* newParent) {
+	parent = newParent;
+}
+
 RectTransform::RectTransform() :
 	position(),
 	scale(1, 1),
@@ -30,6 +34,15 @@ void RectTransform::setPositionX(float newX) {
 void RectTransform::setPositionY(float newY) {
 	position.setY(newY);
 	needsUpdate = true;
+}
+
+void RectTransform::setGlobalPosition(forge::Vector2 const& newPos) {
+	if (parent != nullptr) {
+		setPosition((newPos - parent->getGlobalPosition()) / parent->getGlobalScale());
+	}
+	else {
+		setPosition(newPos);
+	}
 }
 
 void RectTransform::setScale(forge::Vector2 const& newScale) {
@@ -59,9 +72,26 @@ void RectTransform::setNeedsUpdate(bool needed) {
 forge::Vector2 const& RectTransform::getPosition() const {
 	return position;
 }
+forge::Vector2 RectTransform::getGlobalPosition() const {
+	if (parent != nullptr) {
+		return (position * parent->getGlobalScale()) + parent->getGlobalPosition();
+	}
+	else {
+		return position;
+	}
+}
 
 forge::Vector2 const& RectTransform::getScale() const {
 	return scale;
+}
+
+forge::Vector2 RectTransform::getGlobalScale() const {
+	if (parent != nullptr) {
+		return scale * parent->getGlobalScale();
+	}
+	else {
+		return scale;
+	}
 }
 
 bool RectTransform::getNeedsUpdate() const {
