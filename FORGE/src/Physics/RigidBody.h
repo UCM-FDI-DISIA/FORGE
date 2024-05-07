@@ -141,6 +141,10 @@ public:
     FORGE_API float getMass();
 
     /// <summary>
+    /// Devuelve la gravedad del objeto
+    /// </summary>
+    FORGE_API forge::Vector3 getGravity();
+    /// <summary>
     /// Devuelve la friccion del objeto
     /// </summary>
     FORGE_API float getFriction();
@@ -172,6 +176,18 @@ public:
     /// </summary>
     /// <returns>un float con la velocidad</returns>
     FORGE_API float getSpeed();
+
+    /// <summary>
+    /// Devuelve la velocidad lineal del cuerpo rigido
+    /// </summary>
+    /// <returns>un vector 3 con la velocidad</returns>
+    FORGE_API forge::Vector3 getLinearVelocity();
+
+    /// <summary>
+    /// Devuelve la velocidad angular del cuerpo rigido
+    /// </summary>
+    /// <returns>un vector 3 con la velocidad</returns>
+    FORGE_API forge::Vector3 getAngularVelocity();
 
     #pragma endregion
 };
