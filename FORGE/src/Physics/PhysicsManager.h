@@ -120,8 +120,15 @@ public:
     /// <returns></returns>
     bool addLayer(std::string const& layerName);
 
+
     void setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide);
 
+    /// <summary>
+    /// Comprueba si existe algún contacto entre los dos cuerpos en el frame anterior
+    /// </summary>
+    /// <param name="body1">Primer cuerpo</param>
+    /// <param name="body2">Segundo cuerpo</param>
+    /// <returns></returns>
     bool checkContact(btRigidBody* body1, btRigidBody* body2);
     #pragma region Conversores
     /// <summary>
