@@ -186,9 +186,12 @@ void RigidBody::rotateZ(float newAngle) {
     myBody->setWorldTransform(trans);
 }
 
-
 float RigidBody::getMass() {
     return mass;
+}
+
+forge::Vector3 RigidBody::getGravity() {
+    return physicsManager->fromBtVectToForge(myBody->getGravity());
 }
 
 float RigidBody::getFriction() {
@@ -213,4 +216,12 @@ forge::Vector3 RigidBody::getRigidScale() {
 
 float RigidBody::getSpeed() {
     return myBody->getTotalForce().length();
+}
+
+forge::Vector3 RigidBody::getLinearVelocity() {
+    return physicsManager->fromBtVectToForge(myBody->getLinearVelocity());
+}
+
+forge::Vector3 RigidBody::getAngularVelocity() {
+    return physicsManager->fromBtVectToForge(myBody->getAngularVelocity());
 }
