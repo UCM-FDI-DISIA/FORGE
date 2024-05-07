@@ -171,7 +171,7 @@ local scenes = {
                 }
             }
         },
-        progress = {
+        progress1 = {
             components = {
                 RectTransform = {
                     position = {125, 350},
@@ -179,9 +179,55 @@ local scenes = {
                 },
                 ProgressBar = {
                     front = "angry.png",
-                    back = "angryB.png",
-                    value = 200,
+                    back = "angryBg.png",
+                    growth = "LEFT_TO_RIGHT",
+                    value = 0.85,
                     depth = 3
+                }
+            }
+        },
+        progress2 = {
+            components = {
+                RectTransform = {
+                    position = {100, 0},
+                    scale = {100, 300}
+                },
+                ProgressBar = {
+                    front = "jynx.png",
+                    back = "jynxBg.png",
+                    value = 0.85,
+                    growth = "DOWN_TO_UP",
+                    depth = 2
+                }
+            }
+        },
+        progress3 = {
+            components = {
+                RectTransform = {
+                    position = {220, 0},
+                    scale = {200, 100}
+                },
+                ProgressBar = {
+                    front = "howdy.png",
+                    back = "howdyBg.png",
+                    value = 0.85,
+                    growth = "RIGHT_TO_LEFT",
+                    depth = 2
+                }
+            }
+        },
+        progress4 = {
+            components = {
+                RectTransform = {
+                    position = {425, 0},
+                    scale = {200, 100}
+                },
+                ProgressBar = {
+                    front = "fat.png",
+                    back = "fatBg.png",
+                    value = 0.65,
+                    growth = "UP_TO_DOWN",
+                    depth = 1
                 }
             }
         }

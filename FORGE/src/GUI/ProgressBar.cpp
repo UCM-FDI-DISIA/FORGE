@@ -22,7 +22,24 @@
 const std::string ProgressBar::id = "ProgressBar";
 
 void ProgressBar::adjust() {
-	frontPanel->setDimensions(value, transform->getScale().getY());
+	switch (growth) {
+		case forge::LEFT_TO_RIGHT:
+			frontPanel->setDimensions(transform->getScale().getX() * value, transform->getScale().getY());
+			break;
+		case forge::RIGHT_TO_LEFT:
+			frontPanel->setDimensions(transform->getScale().getX() * value, transform->getScale().getY());
+			frontPanel->setPosition(transform->getPosition().getX() + transform->getScale().getX() * (1 - value),
+				transform->getPosition().getY());
+			break;
+		case forge::UP_TO_DOWN:
+			frontPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY() * value);
+			break;
+		case forge::DOWN_TO_UP:
+			frontPanel->setDimensions(transform->getScale().getX(), transform->getScale().getY() * value);
+			frontPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY() +
+				transform->getScale().getY() * (1 - value));
+			break;
+	}
 }
 
 void ProgressBar::createProgressBar() {
@@ -71,7 +88,6 @@ void ProgressBar::createProgressBar() {
 		frontPanel->setMaterialName(frontTexture);
 	}
 
-	maxValue = transform->getScale().getX();
 	setValue(value);
 }
 
@@ -99,10 +115,11 @@ ProgressBar::ProgressBar() :
 	frontImage(nullptr),
 	backImage(nullptr),
 	value(0),
-	maxValue(100) {
+	growth(forge::LEFT_TO_RIGHT) {
 	serializer(frontTexture, "front");
 	serializer(backTexture, "back");
 	serializer(value, "value");
+	serializer(readAux, "growth");
 }
 
 ProgressBar::~ProgressBar() {
@@ -113,6 +130,18 @@ ProgressBar::~ProgressBar() {
 
 bool ProgressBar::initComponent(ComponentData* data) {
 	if (UIComponent::initComponent(data)) {
+		if (readAux == "LEFT_TO_RIGHT") {
+			growth = forge::LEFT_TO_RIGHT;
+		}
+		else if (readAux == "RIGHT_TO_LEFT") {
+			growth = forge::RIGHT_TO_LEFT;
+		}
+		else if (readAux == "UP_TO_DOWN") {
+			growth = forge::UP_TO_DOWN;
+		}
+		else {
+			growth = forge::DOWN_TO_UP;
+		}
 		createProgressBar();
 		return true;
 	}
@@ -135,8 +164,7 @@ void ProgressBar::resize(forge::Vector2 const& prev, forge::Vector2 const& updat
 	overlayPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 	frontPanel->setPosition(transform->getPosition().getX(), transform->getPosition().getY());
 
-	maxValue = transform->getScale().getX();
-	setValue(value * factorX);
+	setValue(value);
 }
 
 void ProgressBar::onEnabled() {
@@ -157,18 +185,18 @@ std::string ProgressBar::getFrontTexture() {
 	return frontTexture;
 }
 
-void ProgressBar::setValue(int v) {
+void ProgressBar::setValue(float v) {
 	if (v < 0) {
 		v = 0;
 	}
-	else if (v > maxValue) {
-		v = maxValue;
+	else if (v > 1.0f) {
+		v = 1.0f;
 	}
 	value = v;
 	adjust();
 }
 
-void ProgressBar::decrease(int v) {
+void ProgressBar::decrease(float v) {
 	value -= v;
 	if (value < 0) {
 		value = 0;
@@ -176,10 +204,10 @@ void ProgressBar::decrease(int v) {
 	adjust();
 }
 
-void ProgressBar::increase(int v) {
+void ProgressBar::increase(float v) {
 	value += v;
-	if (value > maxValue) {
-		value = maxValue;
+	if (value > 1.0f) {
+		value = 1.0f;
 	}
 	adjust();
 }

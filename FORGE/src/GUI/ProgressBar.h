@@ -9,6 +9,16 @@ namespace Ogre {
 	class Image;
 };
 
+namespace forge {
+	// La barra crece...
+	enum GrowthMode {
+		LEFT_TO_RIGHT,	// De derecha a izquierda
+		RIGHT_TO_LEFT,	// De izquierda a derecha
+		UP_TO_DOWN,		// De abajo a arriba
+		DOWN_TO_UP		// De arriba a abajo
+	};
+}
+
 class ProgressBar : public UIComponent {
 private:
 	// Textura de fondo
@@ -18,9 +28,12 @@ private:
 	Ogre::Image* frontImage;
 	Ogre::Image* backImage;
 
-	// Valor de la barra frontal
-	float maxValue;
+	// Valor en porcentaje (0.0 al 1.0)
 	float value;
+
+	// Crecimiento de la barra
+	std::string readAux;
+	forge::GrowthMode growth;
 	
 	// Contenedores del elemento de ogre
 	Ogre::OverlayContainer* frontPanel;
@@ -93,19 +106,19 @@ public:
 	/// Setea el valor de la barra
 	/// </summary>
 	/// <param name="v">Nuevo valor</param>
-	FORGE_API void setValue(int v);
+	FORGE_API void setValue(float v);
 
 	/// <summary>
 	/// Decrece el valor de la barra
 	/// </summary>
 	/// <param name="v">Valor a decrecer</param>
-	FORGE_API void decrease(int v);
+	FORGE_API void decrease(float v);
 	
 	/// <summary>
 	/// Incrementa el valor de la barra
 	/// </summary>
 	/// <param name="v">Valor a aumentar</param>
-	FORGE_API void increase(int v);
+	FORGE_API void increase(float v);
 	#pragma endregion
 
 
