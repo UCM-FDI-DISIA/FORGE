@@ -1,6 +1,7 @@
 #include "TimeForge.h"
 
 double forge::Time::_deltaTime = 0.0;
+double forge::Time::_time = 0.0;
 std::unique_ptr<forge::Time> forge::Time::instance = nullptr;
 
 forge::Time::Time() :
@@ -19,5 +20,6 @@ void forge::Time::init() noexcept {
 void forge::Time::update() noexcept {	
 	std::chrono::system_clock::time_point current = std::chrono::system_clock::now();
 	_deltaTime = std::chrono::duration<double>(current - previous).count();
+	_time += _deltaTime;
 	previous = current;
 }

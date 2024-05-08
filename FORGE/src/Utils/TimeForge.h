@@ -12,6 +12,7 @@ namespace forge {
 		friend MainForge;
 		
 		static double _deltaTime;
+		static double _time;
 		std::chrono::system_clock::time_point previous;
 
 		Time();
@@ -33,6 +34,10 @@ namespace forge {
 		/// Tiempo en segundos que ha pasado desde la anterior actualizacion
 		/// </summary>
 		static constexpr FORGE_API_VAR double const& deltaTime = _deltaTime;
+		/// <summary>
+		/// Tiempo en segundos que ha pasado desde el comienzo de la ejecucion
+		/// </summary>
+		static constexpr FORGE_API_VAR double const& time = _time;
 		/// <summary>
 		/// Tiempo en segundos cada el que se evaluan las operaciones fisicas
 		/// </summary>
