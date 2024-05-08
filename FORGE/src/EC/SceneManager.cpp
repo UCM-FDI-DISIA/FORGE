@@ -11,6 +11,7 @@
 #pragma warning(pop)
 #include "Transform.h"
 #include "ForgeError.h"
+#include "Factory.h"
 
 SceneManager::EntityPair::~EntityPair() {
 	for (auto& child : children) {
@@ -75,6 +76,24 @@ Entity* SceneManager::initEntity(EntityPair* pair) {
 	return pair->entity;
 }
 
+Entity* SceneManager::instantiateBlueprint(EntityData* data) {
+	if (data == nullptr) {
+		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado");
+	}
+	Scene*& scene = activeScene.second;
+	EntityPair* pair = addEntity(scene, data);
+	Entity* entity = pair->entity;
+	if (entity->isAlive()) {
+		initEntity(pair);
+		if (entity->isAlive()) {
+			delete pair;
+			return entity;
+		}
+	}
+	delete pair;
+	throwError(nullptr, "La entidad no se ha instanciado correctamente");
+}
+
 void SceneManager::Init() {
 	instance = std::unique_ptr<SceneManager>(new SceneManager());
 	initialised = true;
@@ -115,32 +134,17 @@ lua_State* SceneManager::getLuaState() {
 
 Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId) {
 	EntityData* data = getEntityBlueprint(bluePrintId);
-	if (data == nullptr) {
-		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado.");
-	}
-	Scene*& scene = activeScene.second;
-	EntityPair* pair = addEntity(scene, data);
-	Entity* entity = pair->entity;
-	if (entity->isAlive()) {
-		initEntity(pair);
-		if (entity->isAlive()) {
-			delete pair;
-			return entity;
-		}
-	}
-	delete pair;
-	throwError(nullptr, "La entidad no se ha instanciado correctamente.");
+	return instantiateBlueprint(data);
 }
 
 Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos) {
-	Entity* entity = instantiateBlueprint(bluePrintId);
-	if (entity != nullptr) {
-		if (entity->hasComponent(Transform::id)) {
-			entity->getComponent<Transform>()->setPosition(newPos);
-		}
-		else reportError("La entidad no tiene Transform.");
+	EntityData* data = getEntityBlueprint(bluePrintId);	
+	auto transformData = data->components[Factory::GetInstance()->getComponentOrder(Transform::id)];
+	if (transformData == nullptr) {
+		throwError(nullptr, "No se ha encontrado el componente Transform en el blueprint");
 	}
-	return entity;
+	transformData->add<forge::Vector3>("position", newPos);
+	return instantiateBlueprint(data);
 }
 
 FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, Entity* parent) {
