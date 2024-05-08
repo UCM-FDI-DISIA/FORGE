@@ -25,7 +25,7 @@ PhysicsManager::PhysicsManager() :
     solver(new btSequentialImpulseConstraintSolver()),
     world(new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration)),
     #ifdef _DEBUG
-    debugger(new DebugMode(RenderManager::GetInstance()->getSceneManager())),
+    debugger(nullptr),
     debugMode(true),
     #endif // _DEBUG
     collisionMatrix(),
@@ -50,11 +50,6 @@ bool PhysicsManager::Init() {
         throwError(false, "Manager de fisicas ya inicializado.");
     }
     instance = std::unique_ptr<PhysicsManager>(new PhysicsManager());
-#ifdef _DEBUG
-    if (instance->debugMode && !instance->debugger->init()) {
-        throwError(false, "No se pudo inicializar el debugger de fisicas");
-    }
-#endif //!_DEBUG
 
     initialised = true;
     return true;
@@ -65,11 +60,15 @@ PhysicsManager* PhysicsManager::GetInstance() {
     return nullptr;
 }
 
-void PhysicsManager::setup() {
+bool PhysicsManager::setup() {
     #ifdef _DEBUG
     // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
+    debugger = new DebugMode(RenderManager::GetInstance()->getSceneManager());
     debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
     world->setDebugDrawer(debugger);
+    if (debugMode && !debugger->init()) {
+        throwError(false, "No se pudo inicializar el debugger de fisicas");
+    }
     #endif // DEBUG
         
     world->setGravity(btVector3(0.0f, -9.8f, 0.0f));
@@ -193,6 +192,7 @@ bool PhysicsManager::addLayer(std::string const& layerName) {
     ++numberOfLayers;
     collisionLayers[layerName] = BIT(numberOfLayers);
     collisionMatrix["ALL"][layerName] = true;
+    collisionMatrix[layerName]["ALL"] = true;
     return true;
 }
 

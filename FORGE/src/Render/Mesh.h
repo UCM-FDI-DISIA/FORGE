@@ -13,7 +13,7 @@ protected:
     std::string mesh;
     std::string material;
     Ogre::Entity* ogreEntity;
-    RenderManager* renderManager; 
+    RenderManager& renderManager; 
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -42,7 +42,20 @@ public:
     /// </summary>
     FORGE_API void onDisabled() override;
 
-	#pragma region setters
+    #pragma region Getters
+    /// <summary>
+    /// Devuelve el nombre del archivo .mesh utilizado para la malla
+    /// </summary>
+    /// <returns>El nombre del archivo .mesh</returns>
+    const FORGE_API std::string& getMesh() const;
+    /// <summary>
+    /// Obtiene el nombre del material utilizado
+    /// </summary>
+    /// <returns>El nombre del archivo .mesh</returns>
+    const FORGE_API std::string& getMaterial() const;
+    #pragma endregion
+
+	#pragma region Setters
     /// <summary>
     /// Cambia la malla a partir de la que se crea la entidad de Ogre
     /// destruyendola y volviendola a crear
@@ -54,19 +67,6 @@ public:
     /// </summary>
     /// <param name="newMaterial">Nombre del nuevo material</param>
     FORGE_API void setMaterial(std::string const& newMaterial);
-	#pragma endregion
-
-	#pragma region getters
-    /// <summary>
-    /// Devuelve el nombre del archivo .mesh utilizado para la malla
-    /// </summary>
-    /// <returns>El nombre del archivo .mesh</returns>
-    const FORGE_API std::string& getMesh() const;
-    /// <summary>
-    /// Obtiene el nombre del material utilizado
-    /// </summary>
-    /// <returns>El nombre del archivo .mesh</returns>
-    const FORGE_API std::string& getMaterial() const;
 	#pragma endregion
 };
 

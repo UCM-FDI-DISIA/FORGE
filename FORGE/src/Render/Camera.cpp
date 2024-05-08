@@ -17,36 +17,32 @@ const std::string Camera::id = "Camera";
 
 Camera::Camera() :
     ogreCamera(nullptr),
-    renderManager(nullptr) {
+    renderManager(*RenderManager::GetInstance()) {
     serializer(nearClipDistance, "nearClipDistance");
     serializer(autoAspectRatio, "autoAspectRatio");
     serializer(backgroundColor, "backgroundColor");
 }
 
 Camera::~Camera() {
-   if(ogreCamera != nullptr && renderManager != nullptr)
-   {
-       renderManager->removeNode(ogreCamera);
+   if(ogreCamera != nullptr) {
+       renderManager.removeNode(ogreCamera);
    }
 }
 
 bool Camera::initComponent(ComponentData* data) {
-    if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::GetInstance();
-		ogreCamera = renderManager->addCameraNode(this);
+    if (!entity->hasComponent("Transform")) {
+        throwError(false, "Se requiere un componente Transform para generar una Camera");
     }
-    else {
-        reportError("Se requiere un componente Transform para generar una Camera");
-    }
-    return ogreCamera != nullptr;
+	ogreCamera = renderManager.addCameraNode(this);
+    return true;
 }
 
 void Camera::onEnabled() {
-    ogreCamera = renderManager->addCameraNode(this);
+    ogreCamera = renderManager.addCameraNode(this);
 }
 
 void Camera::onDisabled() {
-    renderManager->removeCamera(ogreCamera);
+    renderManager.removeCamera(ogreCamera);
     ogreCamera = nullptr;
 }
 

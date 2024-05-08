@@ -30,7 +30,6 @@ private:
     DebugDrawModes mDebugModes;
     Ogre::ManualObject* mLines;
     Ogre::ManualObject* mTriangles;
-    Ogre::Root& ogreRoot;
     std::vector<ContactPoint>& mContactPoints;
     std::vector<ContactPoint>& otherContactPoints;
     std::vector<ContactPoint>  mContactPoints1;

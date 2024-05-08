@@ -14,32 +14,32 @@ protected:
     std::string particle;
     bool emitting;
     Ogre::ParticleSystem* ogreParticleSystem;
-    RenderManager* renderManager; 
+    RenderManager& renderManager; 
 
 public:
-	static const std::string id;
+	FORGE_API_VAR static const std::string id;
     #pragma region Constructores
-    ParticleSystem();
-    ~ParticleSystem();
+    FORGE_API ParticleSystem();
+    FORGE_API ~ParticleSystem();
     #pragma endregion
 
-    bool initComponent(ComponentData* data) override;
+    FORGE_API bool initComponent(ComponentData* data) override;
 
-    void onEnabled() override;
+    FORGE_API void onEnabled() override;
 
-    void onDisabled() override;
+    FORGE_API void onDisabled() override;
 
 	#pragma region Getters
     /// <summary>
     /// Acceso a la particula que esta siendo emitida
     /// </summary>
     /// <returns>El nombre de la particula en uso</returns>
-    const std::string& getParticle() const;
+    FORGE_API std::string const& getParticle() const;
     /// <summary>
     /// Acceso al estado de emision del sistema
     /// </summary>
     /// <returns>Estado de emision actual</returns>
-    const bool& getEmitting() const;
+    FORGE_API bool const& getEmitting() const;
 	#pragma endregion
 
     #pragma region Setters
@@ -47,12 +47,12 @@ public:
     /// Cambia la particula a emitir por el sistema
     /// </summary>
     /// <param name="newParticle">La nueva particula</param>
-    void setParticle(std::string const& newParticle);
+    FORGE_API void setParticle(std::string const& newParticle);
     /// <summary>
     /// Cambia el estado de emision del sistema de particulas
     /// </summary>
     /// <param name="newEmitting">Estado nuevo de emision</param>
-    void setEmitting(bool newEmitting);
+    FORGE_API void setEmitting(bool newEmitting);
     #pragma endregion
 };
 

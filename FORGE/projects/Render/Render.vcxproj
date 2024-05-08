@@ -99,6 +99,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\Render\Animator.cpp" />
     <ClCompile Include="..\..\src\Render\Billboard.cpp" />
+    <ClCompile Include="..\..\src\Render\BillboardSet.cpp" />
     <ClCompile Include="..\..\src\Render\Camera.cpp" />
     <ClCompile Include="..\..\src\Render\Light.cpp" />
     <ClCompile Include="..\..\src\Render\Mesh.cpp" />
@@ -109,6 +110,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\Render\Animator.h" />
     <ClInclude Include="..\..\src\Render\Billboard.h" />
+    <ClInclude Include="..\..\src\Render\BillboardSet.h" />
     <ClInclude Include="..\..\src\Render\Camera.h" />
     <ClInclude Include="..\..\src\Render\Light.h" />
     <ClInclude Include="..\..\src\Render\Mesh.h" />

@@ -152,13 +152,13 @@ Ogre::BillboardSet* RenderManager::addBillboardNode(Billboard* bs) {
 }
 
 Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
-	
+	std::string name = cameraNames->generate();
 	if (root == nullptr) return nullptr;
 	try {
 		// Se crea un nodo para la camara
 		Ogre::SceneNode* node = sceneManager->getRootSceneNode()->createChildSceneNode();
 		// Se crea la camara con las caracteristicas especificadas
-		Ogre::Camera* ogreCamera = sceneManager->createCamera(cameraNames->generate());
+		Ogre::Camera* ogreCamera = sceneManager->createCamera(name);
 		ogreCamera->setNearClipDistance(camera->getNearClipDistance());
 		ogreCamera->setAutoAspectRatio(camera->getAutoAspectRatio());
 		node->attachObject(ogreCamera);
@@ -173,7 +173,7 @@ Ogre::Camera* RenderManager::addCameraNode(Camera* camera) {
 		return ogreCamera;
 	}
 	catch (std::exception e) {
-		throwError(nullptr, "No se ha podido cargar una camara " << cameraNames->generate());
+		throwError(nullptr, "No se ha podido cargar una camara " << name);
 	}
 }
 
@@ -262,7 +262,7 @@ forge::Vector2 RenderManager::getResolution() {
 	return forge::Vector2(static_cast<float>(renderer->getWidth()), static_cast<float>(renderer->getHeight()));
 }
 
-Ogre::ManualObject* RenderManager::createManualObject(std::string name) {
+Ogre::ManualObject* RenderManager::createManualObject(std::string const& name) {
 	Ogre::ManualObject* newManualObject = sceneManager->createManualObject(name);
 	sceneManager->getRootSceneNode()->attachObject(newManualObject);
 	return newManualObject;

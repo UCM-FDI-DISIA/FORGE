@@ -65,7 +65,8 @@ public:
     /// <summary>
     /// Inicializa el mundo de fisicas y pone una gravedad default (9.8)
     /// </summary>
-    void setup();
+    /// <returns>Un booleano que indica si se preparo bien el manager</returns>
+    bool setup();
     /// <summary>
     /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
     /// </summary>

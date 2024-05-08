@@ -9,9 +9,9 @@
 
 using namespace Ogre;
 DebugMode::DebugMode(SceneManager* scm) :
+    mDebugModes(DBG_DrawWireframe),
     mContactPoints(mContactPoints1),
     otherContactPoints(mContactPoints2),
-    ogreRoot(Root::getSingleton()),
     mLines(RenderManager::GetInstance()->createManualObject("physics lines")),
     mTriangles(RenderManager::GetInstance()->createManualObject("physics triangles")) {    
 }
@@ -55,8 +55,7 @@ bool DebugMode::init() {
     mTriangles->position(Vector3::ZERO);
     mTriangles->colour(ColourValue::Blue);
 
-    mDebugModes = DBG_DrawWireframe;
-    ogreRoot.addFrameListener(this);
+    Root::getSingleton().addFrameListener(this);
     return true;
 }
 
@@ -85,14 +84,14 @@ void DebugMode::drawContactPoint(const btVector3& PointOnB, const btVector3& nor
     ContactPoint p = mContactPoints.back();
     p.from = Ogre::Vector3(PointOnB.x(), PointOnB.y(), PointOnB.z());
     p.to = p.from + Ogre::Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z()) * distance;
-    p.dieTime = ogreRoot.getTimer()->getMilliseconds() + lifeTime;
+    p.dieTime = Root::getSingleton().getTimer()->getMilliseconds() + lifeTime;
     p.color.r = color.x();
     p.color.g = color.y();
     p.color.b = color.z();
 }
 
 bool DebugMode::frameStarted(const Ogre::FrameEvent& evt) {
-    size_t now = ogreRoot.getTimer()->getMilliseconds();
+    size_t now = Root::getSingleton().getTimer()->getMilliseconds();
     for (auto& cp : mContactPoints) {
         mLines->position(cp.from);
         mLines->colour(cp.color);

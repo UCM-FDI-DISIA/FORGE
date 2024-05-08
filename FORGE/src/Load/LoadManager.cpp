@@ -26,6 +26,7 @@
 #include "Camera.h"
 #include "Animator.h"
 #include "Billboard.h"
+#include "BillboardSet.h"
 #include "ParticleSystem.h"
 #include "AudioSource.h"
 #include "AudioListener.h"
@@ -290,6 +291,7 @@ bool LoadManager::loadComponents() {
 	factory.registerComponent<Camera>();
 	factory.registerComponent<Animator>();
 	factory.registerComponent<Billboard>();
+	factory.registerComponent<BillboardSet>();
 	factory.registerComponent<ParticleSystem>();
 	factory.registerComponent<AudioSource>();
 	factory.registerComponent<AudioListener>();

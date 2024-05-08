@@ -18,7 +18,7 @@ private:
     forge::Vector3 backgroundColor;
 
     Ogre::Camera* ogreCamera;
-    RenderManager* renderManager;
+    RenderManager& renderManager;
 public:
     static const FORGE_API_VAR std::string id;
 
@@ -69,17 +69,17 @@ public:
     /// Devuelve la distancia a la que se encuentra el plano de recorte cercano
     /// </summary>
     /// <returns>Distancia a la que se encuentra el plano de recorte cercano</returns>
-    const FORGE_API float& getNearClipDistance() const;
+    FORGE_API float const& getNearClipDistance() const;
     /// <summary>
     /// Devuelve si la relacion de aspecto es automatica o no
     /// </summary>
     /// <returns>El estado de la relacion de aspecto automatica</returns>
-    const FORGE_API bool& getAutoAspectRatio() const;
+    FORGE_API bool const& getAutoAspectRatio() const;
     /// <summary>
     /// Devuelve el color del fondo
     /// </summary>
     /// <returns>Un Vector3 con los valores RGB del fondo</returns>
-    const FORGE_API forge::Vector3& getBackgroundColor() const;
+    FORGE_API forge::Vector3 const& getBackgroundColor() const;
 	#pragma endregion
 };
 

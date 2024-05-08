@@ -39,6 +39,9 @@
     <ClCompile Include="..\..\src\Render\Billboard.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Render\BillboardSet.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Render\RenderManager.h">
@@ -63,6 +66,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Render\Billboard.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Render\BillboardSet.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

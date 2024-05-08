@@ -262,7 +262,7 @@ local scenes = {
                     position = {100, 0, -100},
                     scale = {10,10,10}
                 },
-                Billboard = {
+                BillboardSet = {
                     size = 5,
                     material = "practica1/points",
                     billboardDimensions = {5,5},

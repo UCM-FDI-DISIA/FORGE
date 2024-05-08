@@ -168,6 +168,6 @@ public:
 	#pragma endregion
 	
 	#pragma region utils
-	Ogre::ManualObject* createManualObject(std::string name);
+	Ogre::ManualObject* createManualObject(std::string const& name);
 	#pragma endregion
 };

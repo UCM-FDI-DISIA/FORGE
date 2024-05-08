@@ -12,7 +12,7 @@ class Light : public Component {
 private:
     int type;
     Ogre::Light* ogreLight;
-    RenderManager* renderManager; 
+    RenderManager& renderManager; 
 
 public:
     static const FORGE_API_VAR std::string id;
@@ -27,10 +27,7 @@ public:
 
     FORGE_API void onDisabled() override;
 
-	#pragma region setters
-	#pragma endregion
-
-	#pragma region getters
+	#pragma region Getters
     FORGE_API const int& getType() const;
 	#pragma endregion
 };

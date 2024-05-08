@@ -14,39 +14,33 @@ const std::string Light::id = "Light";
 
 Light::Light() :
     ogreLight(nullptr),
-    renderManager(nullptr) {
+    renderManager(*RenderManager::GetInstance()) {
     serializer(type, "type");
 }
 
 Light::~Light() {
-    if(ogreLight != nullptr && renderManager != nullptr) {
-        renderManager->removeNode(ogreLight);
+    if(ogreLight != nullptr) {
+        renderManager.removeNode(ogreLight);
     }
 }
 
 bool Light::initComponent(ComponentData* data) {
-    if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::GetInstance();
-        ogreLight = renderManager->addLightNode(this);
+    if (!entity->hasComponent("Transform")) {
+        throwError(false, "Se requiere un componente Transform para generar un Light");
     }
-    else {
-        reportError("Se requiere un componente Transform para generar un Light");
-	}
-    return ogreLight != nullptr;
+    ogreLight = renderManager.addLightNode(this);
+    return true;
 }
 
 void Light::onEnabled() {
-    ogreLight = renderManager->addLightNode(this);
+    ogreLight = renderManager.addLightNode(this);
 }
 
 void Light::onDisabled() {
-    renderManager->removeNode(ogreLight);
+    renderManager.removeNode(ogreLight);
     ogreLight = nullptr;
 }
-
-
 
 const int& Light::getType() const {
     return type;
 }
-

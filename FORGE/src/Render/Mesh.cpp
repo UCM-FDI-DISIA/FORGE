@@ -16,48 +16,33 @@ Mesh::Mesh() :
 	mesh(),
 	material(),
     ogreEntity(nullptr),
-    renderManager(nullptr) {
+    renderManager(*RenderManager::GetInstance()) {
 	serializer(mesh, "mesh");
 	serializer(material, "material");
 }
 
 Mesh::~Mesh() {
-    if(ogreEntity != nullptr && renderManager != nullptr) 
-    {
-        renderManager->removeNode(ogreEntity);
+    if(ogreEntity != nullptr) {
+        renderManager.removeNode(ogreEntity);
     }
 }
 
 bool Mesh::initComponent(ComponentData* data) {
-    if(entity->hasComponent("Transform")) {
-        renderManager = RenderManager::GetInstance();
-        ogreEntity = renderManager->addMeshNode(this);
+    if (!entity->hasComponent("Transform")) {
+        throwError(false, "Se requiere un componente Transform para generar un Mesh");
     }
-    else {
-        reportError("Se requiere un componente Transform para generar un Mesh");
-    }
-    return ogreEntity != nullptr;
+    ogreEntity = renderManager.addMeshNode(this);
+    return true;;
 }
 
 void Mesh::onEnabled() {
-    ogreEntity = renderManager->addMeshNode(this);
+    ogreEntity = renderManager.addMeshNode(this);
 }
 
 void Mesh::onDisabled() {
-    renderManager->removeNode(ogreEntity);
+    renderManager.removeNode(ogreEntity);
     ogreEntity = nullptr;
 }
-
-void Mesh::setMesh(std::string const& newMesh) {
-    mesh = newMesh;
-    ogreEntity = renderManager->updateMeshNode(ogreEntity, this);
-}
-
-void Mesh::setMaterial(std::string const& newMaterial) {
-    material = newMaterial;
-    ogreEntity->setMaterialName(newMaterial);
-}
-
 
 const std::string& Mesh::getMesh() const {
     return mesh;
@@ -65,4 +50,14 @@ const std::string& Mesh::getMesh() const {
 
 const std::string& Mesh::getMaterial() const {
     return material;
+}
+
+void Mesh::setMesh(std::string const& newMesh) {
+    mesh = newMesh;
+    ogreEntity = renderManager.updateMeshNode(ogreEntity, this);
+}
+
+void Mesh::setMaterial(std::string const& newMaterial) {
+    material = newMaterial;
+    ogreEntity->setMaterialName(newMaterial);
 }
