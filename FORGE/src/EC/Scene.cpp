@@ -80,7 +80,7 @@ std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
 Entity* Scene::getEntityByHandler(std::string const& handler) {
     auto iter = handlers.find(handler);
     if (iter == handlers.end()) {
-        throwError(nullptr, "No existe la entidad con ese handler en la escena");
+        throwError(nullptr, "No existe la entidad con el handler" + handler + " en la escena");
     }
     return iter->second;
 }
