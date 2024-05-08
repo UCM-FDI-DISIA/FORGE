@@ -15,7 +15,7 @@ const std::string RigidBody::id = "RigidBody";
 RigidBody::RigidBody() :
     mass(1),
     kinematic(false),
-    friction(0),
+    friction(0.5),
     restitution(0),
     staticBody(false),
     myGravity(1),
@@ -49,8 +49,8 @@ bool RigidBody::createRigidBody(std::string const& myShapeType, float mass, bool
         throwError(false, "No se pudo crear el RigidBody.");
     }
 
-    myBody->setRestitution((btScalar)restitution);
-    myBody->setFriction((btScalar)friction);
+    myBody->setRestitution(restitution);
+    myBody->setFriction(friction);
     lockPosition(axisBlockedPos[0], axisBlockedPos[1], axisBlockedPos[2]);
     lockRotation(axisBlockedRot[0], axisBlockedRot[1], axisBlockedRot[2]);
     
@@ -215,7 +215,7 @@ forge::Vector3 RigidBody::getRigidScale() const {
 }
 
 float RigidBody::getSpeed() const {
-    return myBody->getTotalForce().length();
+    return myBody->getLinearVelocity().length();
 }
 
 forge::Vector3 RigidBody::getLinearVelocity() const {

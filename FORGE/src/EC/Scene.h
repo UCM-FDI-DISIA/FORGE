@@ -11,6 +11,7 @@ class Entity;
 class Scene {
 protected:
     std::vector<std::vector<Entity*>> entitiesByGroup;
+    std::vector<std::vector<Entity*>> entitiesByGroupToAdd;
     std::unordered_map<std::string, Entity*> handlers;
 public:
     /// <summary> 

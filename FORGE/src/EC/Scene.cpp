@@ -5,6 +5,7 @@
 
 Scene::Scene() :
     entitiesByGroup(SceneManager::GetInstance()->getMaxGroupId()),
+    entitiesByGroupToAdd(SceneManager::GetInstance()->getMaxGroupId()),
     handlers() {
 
     }
@@ -37,6 +38,15 @@ void Scene::fixedUpdate() {
 }
 
 void Scene::refresh() {
+
+    for (auto& group : entitiesByGroupToAdd) {
+        if (!group.empty()) {
+            for (auto& entity : group) {
+                entitiesByGroup[group[0]->getGroup()].push_back(entity);
+            }
+        }
+    }
+
     for (auto& group : entitiesByGroup) {
         group.erase(
             std::remove_if(group.begin(), group.end(),
@@ -51,6 +61,9 @@ void Scene::refresh() {
                 }),
             group.end());
     }
+    for (auto& group : entitiesByGroupToAdd) {
+        group.clear();
+    }
 }
 
 Entity* Scene::addEntity(int groupId) {
@@ -60,12 +73,12 @@ Entity* Scene::addEntity(int groupId) {
     Entity* entity = new Entity();
     entity->setAlive(true);
     entity->setContext(this, groupId);
-	entitiesByGroup[groupId].push_back(entity);
+	entitiesByGroupToAdd[groupId].push_back(entity);
     return entity;
 }
 
 Entity* Scene::addEntity(Entity* entity) {
-    entitiesByGroup[entity->getGroup()].push_back(entity);
+    entitiesByGroupToAdd[entity->getGroup()].push_back(entity);
     entity->changeScene(this);
     return entity;
 }
