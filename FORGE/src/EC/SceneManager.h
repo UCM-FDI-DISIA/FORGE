@@ -41,6 +41,7 @@ private:
 
 	EntityPair* addEntity(Scene* scene, EntityData* data);
 	Entity* initEntity(EntityPair* pair);
+	Entity* instantiateBlueprint(EntityData* data);
 
 public:
 	/// <summary>
