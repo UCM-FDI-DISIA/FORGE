@@ -28,6 +28,8 @@ void Image::createImage() {
 
 void Image::destroyImage() {
 	// Destruye de menor a mayor (imagen < panel < Overlay)
+	gui.getMaterialManager()->remove(texture);
+	gui.getTextureManager()->remove(texture);
 	imageSource->freeMemory();
 	delete imageSource;
 	imageSource = nullptr;
