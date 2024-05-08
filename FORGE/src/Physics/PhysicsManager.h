@@ -34,12 +34,12 @@ private:
     std::unordered_map<std::string, btRigidBody*> importantObjects;
     std::unordered_map<std::string, int> collisionLayers;
     std::unordered_map<std::string, std::unordered_map<std::string,bool>> collisionMatrix;
-    DebugMode* debugger;
     int numberOfLayers;
 
     std::list<Collider*> collisionedObjects;
 
     #ifdef _DEBUG
+    DebugMode* debugger;
     bool debugMode;
     #endif // _DEBUG
 
@@ -56,7 +56,8 @@ public:
     /// <summary>
     /// Crea una instancia del manager iniacializada
     /// </summary>
-    static void Init();
+    /// <returns>Booleano que indica si se ha podido inicializar</returns>
+    static bool Init();
     /// <returns>Devuelve una instancia al PhysicsManager</returns>
     static PhysicsManager* GetInstance();
     PhysicsManager(PhysicsManager const&) = delete;
@@ -64,7 +65,7 @@ public:
     /// <summary>
     /// Inicializa el mundo de fisicas y pone una gravedad default (9.8)
     /// </summary>
-    bool setup();
+    void setup();
     /// <summary>
     /// Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con el tiempo de refresco de fixedUpdate
     /// </summary>
@@ -121,7 +122,7 @@ public:
     bool addLayer(std::string const& layerName);
 
 
-    void setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide);
+    bool setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide);
 
     /// <summary>
     /// Comprueba si existe algún contacto entre los dos cuerpos en el frame anterior

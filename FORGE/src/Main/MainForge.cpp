@@ -113,7 +113,9 @@ bool MainForge::Init(std::string const& configPath) {
 		InvokingForge::Init();
 		RenderManager::Init();
 		SceneManager::Init();
-		PhysicsManager::Init();
+		if (!PhysicsManager::Init()) {
+			throwError(false, "No se pudo iniciar el sistema fisico.");
+		}
 		if (!Input::Init()) {
 			throwError(false, "No se pudo iniciar el sistema de entrada.");
 		}

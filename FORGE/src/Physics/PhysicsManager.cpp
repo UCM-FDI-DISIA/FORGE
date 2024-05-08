@@ -11,6 +11,7 @@
 #include "Collider.h"
 #include "ContactCallback.h"
 #include "TimeForge.h"
+#include "ForgeError.h"
 
 #define BIT(x) (1<<(x))
 
@@ -18,13 +19,13 @@ std::unique_ptr<PhysicsManager> PhysicsManager::instance = nullptr;
 bool PhysicsManager::initialised = false;
 
 PhysicsManager::PhysicsManager() :
-    broadphase(nullptr),
-    collisionConfiguration(nullptr),
-    dispatcher(nullptr),
-    solver(nullptr),
-    world(nullptr),
-    debugger(nullptr),
+    broadphase(new btDbvtBroadphase()),
+    collisionConfiguration(new btDefaultCollisionConfiguration()),
+    dispatcher(new btCollisionDispatcher(collisionConfiguration)),
+    solver(new btSequentialImpulseConstraintSolver()),
+    world(new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration)),
     #ifdef _DEBUG
+    debugger(new DebugMode(RenderManager::GetInstance()->getSceneManager())),
     debugMode(true),
     #endif // _DEBUG
     collisionMatrix(),
@@ -32,9 +33,11 @@ PhysicsManager::PhysicsManager() :
 }
 
 PhysicsManager::~PhysicsManager() {
+    #ifdef _DEBUG
     if (debugger != nullptr) {
         delete debugger;
     }
+    #endif // _DEBUG
     delete world;
     delete solver;
     delete dispatcher;
@@ -42,9 +45,19 @@ PhysicsManager::~PhysicsManager() {
     delete broadphase;
 }
 
-void PhysicsManager::Init() {
+bool PhysicsManager::Init() {
+    if (initialised) {
+        throwError(false, "Manager de fisicas ya inicializado.");
+    }
     instance = std::unique_ptr<PhysicsManager>(new PhysicsManager());
+#ifdef _DEBUG
+    if (instance->debugMode && !instance->debugger->init()) {
+        throwError(false, "No se pudo inicializar el debugger de fisicas");
+    }
+#endif //!_DEBUG
+
     initialised = true;
+    return true;
 }
 
 PhysicsManager* PhysicsManager::GetInstance() {
@@ -52,31 +65,18 @@ PhysicsManager* PhysicsManager::GetInstance() {
     return nullptr;
 }
 
-bool PhysicsManager::setup() {
-    try {
-        broadphase = new btDbvtBroadphase();
-        collisionConfiguration = new btDefaultCollisionConfiguration();
-        dispatcher = new btCollisionDispatcher(collisionConfiguration);
-        solver = new btSequentialImpulseConstraintSolver();
-        world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
-        #ifdef _DEBUG
-        debugger = new DebugMode(RenderManager::GetInstance()->getSceneManager());
-        // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
-        debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
-        world->setDebugDrawer(debugger);
-        #endif // DEBUG
+void PhysicsManager::setup() {
+    #ifdef _DEBUG
+    // Son flags, se pueden añadir varios modos (ej. DBG_DrawWireFrame|DBG...)
+    debugger->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+    world->setDebugDrawer(debugger);
+    #endif // DEBUG
         
-        world->setGravity(btVector3(0.0f, -9.8f, 0.0f));
-        collisionLayers["NOTHING"] = 0;
-        collisionLayers["ALL"] = BIT(1);
-        collisionMatrix["ALL"]["ALL"] = true;
-        numberOfLayers = 2;
-        return true;
-    }
-    catch (std::exception e) {
-        return false;
-    }
+    world->setGravity(btVector3(0.0f, -9.8f, 0.0f));
+    collisionLayers["NOTHING"] = 0;
+    collisionLayers["ALL"] = BIT(1);
+    collisionMatrix["ALL"]["ALL"] = true;
+    numberOfLayers = 2;
 }
 
 void PhysicsManager::updatePhysics() {
@@ -97,7 +97,7 @@ void PhysicsManager::handleCollisions() {
         int numContacts = contactManifold->getNumContacts();
         for (int j = 0; j < numContacts; j++) {
             btManifoldPoint& pt = contactManifold->getContactPoint(j);
-            if (pt.getDistance() < 0.f) {
+            if (pt.getDistance() < 0.0f) {
                 const btVector3& ptA = pt.getPositionWorldOnA();
                 const btVector3& ptB = pt.getPositionWorldOnB();
                 const btVector3& normalOnB = pt.m_normalWorldOnB;
@@ -106,17 +106,17 @@ void PhysicsManager::handleCollisions() {
             auto auxTransformA = transforms.find((btRigidBody*)obA);
             auto auxTransformB = transforms.find((btRigidBody*)obB);
             if (auxTransformA != transforms.end() && auxTransformB != transforms.end()) {
-                if (auxTransformA->second->getEntity()->hasComponent("Collider")) {
+                if (auxTransformA->second->getEntity()->hasComponent(Collider::id)) {
                     auxTransformA->second->getEntity()->getComponent<Collider>()->onCollision(auxTransformB->second->getEntity());
                 }
-                else {
+                else if (auxTransformA->second->getEntity()->hasComponent(RigidBody::id)) {
                     auxTransformA->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformB->second->getEntity());
                 }
 
-                if (auxTransformB->second->getEntity()->hasComponent("Collider")) {
+                if (auxTransformB->second->getEntity()->hasComponent(Collider::id)) {
                     auxTransformB->second->getEntity()->getComponent<Collider>()->onCollision(auxTransformA->second->getEntity());
                 }
-                else {
+                else if (auxTransformB->second->getEntity()->hasComponent(RigidBody::id)) {
                     auxTransformB->second->getEntity()->getComponent<RigidBody>()->onCollision(auxTransformA->second->getEntity());
                 }
             }
@@ -125,10 +125,10 @@ void PhysicsManager::handleCollisions() {
 
     //Iteramos en todos los colliders para manejar los fines de colision
     for (auto& t : transforms) {
-        if (t.second->getEntity()->hasComponent("Collider")) {
+        if (t.second->getEntity()->hasComponent(Collider::id)) {
             t.second->getEntity()->getComponent<Collider>()->checkCollisionEnd();
         }
-        else {
+        else if (t.second->getEntity()->hasComponent(RigidBody::id)) {
             t.second->getEntity()->getComponent<RigidBody>()->checkCollisionEnd();
         }
     }
@@ -187,22 +187,30 @@ bool PhysicsManager::isDebugModeEnabled() const {
 #endif // _DEBUG
 
 bool PhysicsManager::addLayer(std::string const& layerName) {
-    if (collisionLayers.count(layerName) == 0) {
-        numberOfLayers++;
-        collisionLayers[layerName] = BIT(numberOfLayers);
-        collisionMatrix["ALL"][layerName] = true;
-        return true;
+    if (collisionLayers.count(layerName) != 0) {
+        throwError(false, "Ya se habia registrado la capa");
     }
-    return false;
+    ++numberOfLayers;
+    collisionLayers[layerName] = BIT(numberOfLayers);
+    collisionMatrix["ALL"][layerName] = true;
+    return true;
 }
 
-void PhysicsManager::setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide) {
-    if (collisionLayers.count(layer) > 0) {
-        for (std::string const& aux : layersToCollide) {
-            collisionMatrix[layer][aux] = true;
-            collisionMatrix[aux][layer] = true;
-        }
+bool PhysicsManager::setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide) {
+    if (collisionLayers.count(layer) == 0) {
+        throwError(false, "No habia layers registradas");
     }
+    for (std::string const& aux : layersToCollide) {
+        auto layer1 = collisionMatrix.find(layer);
+        auto layer2 = collisionMatrix.find(aux);
+        if (layer1 == collisionMatrix.end() || layer2 == collisionMatrix.end()) {
+            throwError(false, "No se pudo registrar la colision (capas invalidas)");
+        }
+        layer1->second[aux] = true;
+        layer2->second[layer] = true;
+    }
+    
+    return true;
 }
 
 bool PhysicsManager::checkContact(btRigidBody* body1, btRigidBody* body2) {

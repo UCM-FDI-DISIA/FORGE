@@ -12,7 +12,7 @@
 const std::string Collider::id = "Collider";
 
 Collider::Collider() :
-    physicsManager(PhysicsManager::GetInstance()),
+    physicsManager(*PhysicsManager::GetInstance()),
     myBody(nullptr),
     myShape(nullptr),
     shapeType(boxShape), 
@@ -27,7 +27,7 @@ Collider::Collider() :
 }
 
 Collider::~Collider() {
-    physicsManager->deleteBody(myBody);
+    physicsManager.deleteBody(myBody);
 }
 
 bool Collider::initComponent(ComponentData* data) {
@@ -63,14 +63,14 @@ bool Collider::createRigidBody(std::string const& myShapeType, float mass, bool 
     }
 
     forge::Vector3 scale = bodyTransform->getGlobalScale() * myScale;
-    myShape->setLocalScaling(physicsManager->fromForgeToBtVect(scale));
+    myShape->setLocalScaling(physicsManager.fromForgeToBtVect(scale));
 
     //Inicializamos el rigid body
     forge::Quaternion forQuat = bodyTransform->getGlobalRotation();
     forge::Vector3 forVect = bodyTransform->getGlobalPosition();
 
-    btQuaternion quat = physicsManager->fromForgeToBtQuat(forQuat);
-    btVector3 vect = physicsManager->fromForgeToBtVect(forVect);
+    btQuaternion quat = physicsManager.fromForgeToBtQuat(forQuat);
+    btVector3 vect = physicsManager.fromForgeToBtVect(forVect);
 
     btVector3 bodyInertia;
     myShape->calculateLocalInertia(mass, bodyInertia);
@@ -89,7 +89,7 @@ bool Collider::createRigidBody(std::string const& myShapeType, float mass, bool 
         myBody->setActivationState(DISABLE_DEACTIVATION);
     }
 
-    physicsManager->registerBody(myBody, bodyTransform, (collisionLayer == "") ? "ALL" : collisionLayer);
+    physicsManager.registerBody(myBody, bodyTransform, (collisionLayer == "") ? "ALL" : collisionLayer);
 
     return true;
 }
@@ -103,7 +103,7 @@ void Collider::fixedUpdate() {
     pos.setZ(aux.getOrigin().z());
     bodyTransform->setGlobalPosition(pos);
 
-    forge::Quaternion quat = physicsManager->fromBtQuatToForge(myBody->getOrientation());
+    forge::Quaternion quat = physicsManager.fromBtQuatToForge(myBody->getOrientation());
     bodyTransform->setGlobalRotation(quat);
 }
 
@@ -111,14 +111,14 @@ void Collider::onEnabled() {
     createRigidBody(myShapeString, 0.0f, true, false);
     btTransform trans;
     trans.setOrigin(btVector3(lastPosition.getX(),lastPosition.getY(),lastPosition.getZ()));
-    trans.setRotation(physicsManager->fromForgeToBtQuat(lastOrientation));
+    trans.setRotation(physicsManager.fromForgeToBtQuat(lastOrientation));
     myBody->setWorldTransform(trans);
-    myBody->applyCentralForce(physicsManager->fromForgeToBtVect(lastForce));
+    myBody->applyCentralForce(physicsManager.fromForgeToBtVect(lastForce));
 }
 
 void Collider::onDisabled() {
     lastForce = forge::Vector3(myBody->getTotalForce().x(), myBody->getTotalForce().y(), myBody->getTotalForce().z());
-    physicsManager->deleteBody(myBody);
+    physicsManager.deleteBody(myBody);
     lastPosition = bodyTransform->getGlobalPosition();
     lastOrientation = bodyTransform->getGlobalRotation();
 }
@@ -126,10 +126,10 @@ void Collider::onDisabled() {
 bool Collider::hasCollidedWith(Entity* other) {
 
     if (other->hasComponent<RigidBody>()) {
-        return physicsManager->checkContact(myBody, other->getComponent<RigidBody>()->getBody());   
+        return physicsManager.checkContact(myBody, other->getComponent<RigidBody>()->getBody());   
     }
     if (other->hasComponent<Collider>()) {
-        return physicsManager->checkContact(myBody, other->getComponent<Collider>()->getBody());
+        return physicsManager.checkContact(myBody, other->getComponent<Collider>()->getBody());
     }
     //Si no tiene ningun componente de colision, no ha colisionado.
     //Posiblemente haya algun problema aqui, si un componente sin collider/rigidbody ha llegado hasta aqui
@@ -193,7 +193,7 @@ void Collider::checkCollisionEnd() {
             //Si no tiene ningun componente de colision, algo va MUY MAL
             otherBody = otherCollider->getBody();
 
-            if (!physicsManager->checkContact(myBody, otherBody)) {
+            if (!physicsManager.checkContact(myBody, otherBody)) {
                 for (auto& cb : oncollisionLeaveCallbacks) {
                     cb(this, otherCollider);
                 }
@@ -234,5 +234,5 @@ std::string Collider::getLayer() const {
 }
 
 forge::Vector3 Collider::getPosition() const {
-    return physicsManager->fromBtVectToForge(myBody->getWorldTransform().getOrigin());
+    return physicsManager.fromBtVectToForge(myBody->getWorldTransform().getOrigin());
 }

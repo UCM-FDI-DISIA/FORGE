@@ -18,7 +18,7 @@ private:
     forge::Vector3 totalDimensions;
     std::string material;
     Ogre::BillboardSet* billboardSet;
-    RenderManager* renderManager;
+    RenderManager& renderManager;
 
 public:
     static const std::string id;

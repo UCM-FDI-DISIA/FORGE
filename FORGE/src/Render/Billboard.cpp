@@ -19,7 +19,7 @@ Billboard::Billboard() :
 	totalDimensions(),
 	material(""),
 	billboardSet(nullptr), 
-	renderManager(nullptr) {
+	renderManager(*RenderManager::GetInstance()) {
 	serializer(size, "size");
 	serializer(material, "material");
 	serializer(billboardDimensions, "billboardDimensions");
@@ -27,35 +27,34 @@ Billboard::Billboard() :
 }
 
 Billboard::~Billboard() {
-	if(billboardSet != nullptr && renderManager != nullptr)
+	if(billboardSet != nullptr)
 	{
-		renderManager->removeNode(billboardSet);
+		renderManager.removeNode(billboardSet);
 	}
 }
 
 void Billboard::onEnabled() {
-	billboardSet = renderManager->addBillboardNode(this);
+	billboardSet = renderManager.addBillboardNode(this);
 	if (billboardSet != nullptr) {
 		addBillboards();
 	}
 }
 
 void Billboard::onDisabled() {
-	renderManager->removeNode(billboardSet);
+	renderManager.removeNode(billboardSet);
 	billboardSet = nullptr;
 }
 
 bool Billboard::initComponent(ComponentData* data) {
-	if (entity->hasComponent("Transform")) {
-		renderManager = RenderManager::GetInstance();
-		billboardSet = renderManager->addBillboardNode(this);
-		if (billboardSet != nullptr) {
-			addBillboards();	
-		}
+	if (!entity->hasComponent("Transform")) {
+		throwError(false, "Se requiere un componente Transform para generar un Billboard");
 	}
-	else {
-		reportError("Se requiere un componente Transform para generar un Billboard");
+
+	billboardSet = renderManager.addBillboardNode(this);
+	if (billboardSet != nullptr) {
+		addBillboards();
 	}
+	return true;
 	return billboardSet != nullptr;
 }
 

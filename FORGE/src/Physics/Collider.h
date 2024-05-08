@@ -24,7 +24,7 @@ protected:
     enum collisionShape {
         ballShape, boxShape, capsuleShape, cylinderShape, planeShape
     };
-    PhysicsManager* physicsManager;
+    PhysicsManager& physicsManager;
     bool trigger;
     btRigidBody* myBody;
     btCollisionShape* myShape;

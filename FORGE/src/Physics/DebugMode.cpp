@@ -1,31 +1,45 @@
+#ifdef _DEBUG
 #include "DebugMode.h"
 #include "RenderManager.h"
 #pragma warning(push)
 #pragma warning(disable : 26495)
 #include <LinearMath/btIDebugDraw.h>
 #pragma warning(pop)
+#include "ForgeError.h"
 
 using namespace Ogre;
-#ifdef _DEBUG
-DebugMode::DebugMode(SceneManager* scm) {
-    mContactPoints = &mContactPoints1;
-    mLines = RenderManager::GetInstance()->createManualObject("physics lines");
-    assert(mLines);
-    mTriangles = RenderManager::GetInstance()->createManualObject("physics triangles");
-    assert(mTriangles);
+DebugMode::DebugMode(SceneManager* scm) :
+    mContactPoints(mContactPoints1),
+    otherContactPoints(mContactPoints2),
+    ogreRoot(Root::getSingleton()),
+    mLines(RenderManager::GetInstance()->createManualObject("physics lines")),
+    mTriangles(RenderManager::GetInstance()->createManualObject("physics triangles")) {    
+}
+
+DebugMode::~DebugMode() {
+}
+
+bool DebugMode::init() {
+    if (mLines == nullptr) {
+        throwError(false, "No se pudieron inicializar las lineas a dibujar");
+    }
+    if (mTriangles == nullptr) {
+        throwError(false, "No se pudieron inicializar los triangulos a dibujar");
+    }
     mLines->setDynamic(true);
     mTriangles->setDynamic(true);
 
-    static const char* matName = "OgreBulletCollisionsDebugDefault";
-    MaterialPtr mtl = MaterialManager::getSingleton().getDefaultSettings()->clone(matName);
-    mtl->setReceiveShadows(false);
-    mtl->setSceneBlending(SBT_TRANSPARENT_ALPHA);
-    mtl->setDepthBias(0.1f, 0.0f);
-    TextureUnitState* tu = mtl->getTechnique(0)->getPass(0)->createTextureUnitState();
-    assert(tu);
-    tu->setColourOperationEx(LBX_SOURCE1, LBS_DIFFUSE);
-    mtl->getTechnique(0)->setLightingEnabled(false);
-    //mtl->getTechnique(0)->setSelfIllumination( ColourValue::White ); 
+    std::string matName = "OgreBulletCollisionsDebugDefault";
+    MaterialPtr material = MaterialManager::getSingleton().getDefaultSettings()->clone(matName);
+    material->setReceiveShadows(false);
+    material->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+    material->setDepthBias(0.1f, 0.0f);
+    TextureUnitState* textureUnit = material->getTechnique(0)->getPass(0)->createTextureUnitState();
+    if (textureUnit == nullptr) {
+        throwError(false, "No se pudo inicializar el TextureUnitState");
+    }
+    textureUnit->setColourOperationEx(LBX_SOURCE1, LBS_DIFFUSE);
+    material->getTechnique(0)->setLightingEnabled(false);
 
     mLines->begin(matName, RenderOperation::OT_LINE_LIST);
     mLines->position(Vector3::ZERO);
@@ -41,11 +55,9 @@ DebugMode::DebugMode(SceneManager* scm) {
     mTriangles->position(Vector3::ZERO);
     mTriangles->colour(ColourValue::Blue);
 
-    mDebugModes = (DebugDrawModes)DBG_DrawWireframe;
-    Root::getSingleton().addFrameListener(this);
-}
-
-DebugMode::~DebugMode() {
+    mDebugModes = DBG_DrawWireframe;
+    ogreRoot.addFrameListener(this);
+    return true;
 }
 
 void DebugMode::drawLine(const btVector3& from, const btVector3& to, const btVector3& color) {
@@ -69,29 +81,30 @@ void DebugMode::drawTriangle(const btVector3& v0, const btVector3& v1, const btV
 }
 
 void DebugMode::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color) {
-    mContactPoints->resize(mContactPoints->size() + 1);
-    ContactPoint p = mContactPoints->back();
+    mContactPoints.resize(mContactPoints.size() + 1);
+    ContactPoint p = mContactPoints.back();
     p.from = Ogre::Vector3(PointOnB.x(), PointOnB.y(), PointOnB.z());
     p.to = p.from + Ogre::Vector3(normalOnB.x(), normalOnB.y(), normalOnB.z()) * distance;
-    p.dieTime = Root::getSingleton().getTimer()->getMilliseconds() + lifeTime;
+    p.dieTime = ogreRoot.getTimer()->getMilliseconds() + lifeTime;
     p.color.r = color.x();
     p.color.g = color.y();
     p.color.b = color.z();
 }
 
 bool DebugMode::frameStarted(const Ogre::FrameEvent& evt) {
-    size_t now = Root::getSingleton().getTimer()->getMilliseconds();
-    std::vector< ContactPoint >* newCP = mContactPoints == &mContactPoints1 ? &mContactPoints2 : &mContactPoints1;
-    for (std::vector< ContactPoint >::iterator i = mContactPoints->begin(); i < mContactPoints->end(); i++) {
-        ContactPoint& cp = *i;
+    size_t now = ogreRoot.getTimer()->getMilliseconds();
+    for (auto& cp : mContactPoints) {
         mLines->position(cp.from);
         mLines->colour(cp.color);
         mLines->position(cp.to);
-        if (now <= cp.dieTime)
-            newCP->push_back(cp);
+        if (now <= cp.dieTime) {
+            otherContactPoints.push_back(cp);
+        }
     }
-    mContactPoints->clear();
-    mContactPoints = newCP;
+    mContactPoints.clear();
+    std::vector<ContactPoint>& aux = mContactPoints;
+    mContactPoints = otherContactPoints;
+    otherContactPoints = aux;
 
     mLines->end();
     mTriangles->end();
@@ -114,7 +127,7 @@ void DebugMode::draw3dText(const btVector3& location, const char* textString) {
 }
 
 void DebugMode::setDebugMode(int debugMode) {
-    mDebugModes = (DebugDrawModes)debugMode;
+    mDebugModes = static_cast<DebugDrawModes>(debugMode);
 }
 
 int DebugMode::getDebugMode() const {

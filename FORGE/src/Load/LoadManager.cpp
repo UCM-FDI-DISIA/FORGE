@@ -346,7 +346,9 @@ bool LoadManager::loadPhysics() {
 			}
 			++layerI;
 		}
-		physicsManager.setCollideWith(layer.first, interactions);
+		if (!physicsManager.setCollideWith(layer.first, interactions)) {
+			throwError(false, "No se pudieron inicializar las capas de colision");
+		}
 	}
 #ifdef _DEBUG
 	LuaRef debugBool = config["debug"];
@@ -423,9 +425,7 @@ bool LoadManager::init(std::string const& configFile) {
 	if (!loadPhysics()) {
 		throwError(false, "No se pudo cargar la configuracion de fisicas.");
 	}
-	if (!physicsManager.setup()) {
-		throwError(false, "No se pudo iniciar el sistema de fisicas.");
-	}
+	physicsManager.setup();
 	if (!loadInitialScene(config)) {
 		throwError(false, "No se pudo cargar la escena inicial.");
 	}

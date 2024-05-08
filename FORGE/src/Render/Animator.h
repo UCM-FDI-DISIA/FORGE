@@ -4,7 +4,6 @@
 #include "Mesh.h"
 #include <unordered_set>
 
-class RenderManager;
 namespace Ogre {
     class AnimationStateSet;
 }
@@ -25,7 +24,7 @@ public:
     /// Obtiene los datos de todas las animaciones asociadas a la malla
     /// y establece como activas las indicadas en el archivo lua
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="data">Data con los datos del mesh y las animaciones</param>
     FORGE_API bool initComponent(ComponentData* data) override;
     /// <summary>
     /// Obtiene los datos de todas las animaciones asociadas a la malla
@@ -36,7 +35,20 @@ public:
     /// </summary>
     FORGE_API void update() override;
 
-    #pragma region setters
+    #pragma region Getters
+    /// <summary>
+    /// Devuelve todos nombres de las animaciones asociadas a la malla
+    /// </summary>
+    /// <returns>Un vector con todos los nombres de las animaciones asociadas a la malla</returns>
+    FORGE_API std::vector<std::string> getAnimations() const;
+    /// <summary>
+    /// Devuelve todos nombres de las animaciones activas
+    /// </summary>
+    /// <returns>Un unordered set con todos los nombres de las animaciones activas</returns>
+    FORGE_API std::unordered_set<std::string> const& getActiveAnimations() const;
+    #pragma endregion
+
+    #pragma region Setters
     /// <summary>
     /// Establece el estado de bucle de una animacion
     /// </summary>
@@ -59,7 +71,7 @@ public:
     /// Establece el estado de reproduccion de varias animaciones
     /// </summary>
     /// <param name="animations">Vector con los nombres de las animaciones modificadas</param>
-    /// <param name="looped">Nuevo estado de reproduccion de las animaciones</param>
+    /// <param name="active">Nuevo estado de reproduccion de las animaciones</param>
     FORGE_API void setActive(std::vector<std::string> const& activeAnimations, bool active);
     /// <summary>
     /// Establece el estado de una unica animacion a verdadero
@@ -73,19 +85,6 @@ public:
     /// </summary>
     /// <param name="activeAnimations">Vector con los nombres de las animaciones que se reproduciran</param>
     FORGE_API void changeActive(std::vector<std::string> const& activeAnimations);
-    #pragma endregion
-
-    #pragma region getters
-    /// <summary>
-    /// Devuelve todos nombres de las animaciones asociadas a la malla
-    /// </summary>
-    /// <returns>Un vector con todos los nombres de las animaciones asociadas a la malla</returns>
-    FORGE_API std::vector<std::string> getAnimations() const;
-    /// <summary>
-    /// Devuelve todos nombres de las animaciones activas
-    /// </summary>
-    /// <returns>Un unordered set con todos los nombres de las animaciones activas</returns>
-    FORGE_API std::unordered_set<std::string> const& getActiveAnimations() const;
     #pragma endregion
 };
 
