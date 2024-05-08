@@ -179,5 +179,10 @@ public:
 	/// </summary>
 	/// <returns>Referencia al invocador de la entidad</returns>
 	FORGE_API Invoker& getInvoker();
+	/// <summary>
+	/// Devuelve un puntero al padre de la entidad
+	/// </summary>
+	/// <returns>Puntero al padre de la entidad</returns>
+	FORGE_API Entity* getParent();
 };
 #endif

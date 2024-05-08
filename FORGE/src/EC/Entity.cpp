@@ -144,6 +144,10 @@ int Entity::getGroup() {
     return groupId;
 }
 
+Entity* Entity::getParent() {
+	return parent;
+}
+
 const std::unordered_set<Entity*>& Entity::getChildren() const {
     return children;
 }
