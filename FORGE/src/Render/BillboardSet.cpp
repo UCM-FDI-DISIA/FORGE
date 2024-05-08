@@ -29,14 +29,14 @@ bool BillboardSet::addBillboards(int number) {
 		forge::Vector3 pos = forge::Vector3(rnd->generateRange(-width / 2.0f, width / 2.0f),
 			rnd->generateRange(-height / 2.0f, height / 2.0f),
 			rnd->generateRange(-depth / 2.0f, depth / 2.0f));
-		billboardSet->createBillboard(pos);
+		billboardSet->createBillboard(renderManager.forgeVector3ToOgreVector3(pos));
 	}
 	return true;
 }
 
 BillboardSet::BillboardSet() : 
 	size(2),
-	totalDimensions(1,1,1) {
+	totalDimensions(1) {
 	serializer(size, "size");
 	serializer(totalDimensions, "totalDimensions");
 }

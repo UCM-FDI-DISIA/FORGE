@@ -43,7 +43,7 @@ void Transform::onEnabled() {
 }
 
 void Transform::setRotation(forge::Quaternion const& newRot) {
-	if (!isnan(newRot.getAbsX()) && !isnan(newRot.getAbsY()) && !isnan(newRot.getAbsZ()) && !isnan(newRot.getW())) {
+	if (!isnan(newRot.getX()) && !isnan(newRot.getY()) && !isnan(newRot.getZ()) && !isnan(newRot.getW())) {
 		rotation = newRot;
 		needsUpdate = true;
 		setChildNeedsUpdate(true);

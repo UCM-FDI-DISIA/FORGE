@@ -6,10 +6,17 @@
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
-#include "Vector3.h"
 
 namespace irrklang {
+	typedef float ik_f32;
+	template <typename T>
+	class vec3d;
+	typedef vec3d<ik_f32> vec3df;
 	class ISoundEngine;
+}
+
+namespace forge {
+	class Vector3;
 }
 
 class Sound;
@@ -86,6 +93,10 @@ public:
 	/// <param name="listener">Puntero al AudioListener que se quiere desregistrar</param>
 	/// <returns>Booleano que indica si el listener pasado era el registrado y se ha borrado</returns>
 	bool deregisterListener(AudioListener* listener);
+
+	#pragma region Conversores
+	irrklang::vec3df forgeVector3ToIrrklangVec3(forge::Vector3 const& v) const;
+	#pragma endregion
 };
 
 #endif

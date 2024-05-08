@@ -45,23 +45,21 @@ local prefabs = {
 local scenes = {
     Test = {
         jugador = {
-            blueprint = "player",
-            children = {
-                cam = {
-                    components = {
-                        Transform = {
-                            position = {0, -50, 20}
-                        },
-                        Camera = {
-                            nearClipDistance = 1,
-                            autoAspectRatio = true,
-                            backgroundColor = {0.6, 0.3, 0.3}
-                        },
-                        AudioListener = 0
-                    }
-                }
+            blueprint = "player"
+        },
+        cam = {
+            components = {
+                Transform = {
+                    position = {0, -50, 20}
+                },
+                Camera = {
+                    nearClipDistance = 1,
+                    autoAspectRatio = true,
+                    backgroundColor = {0.6, 0.3, 0.3}
+                },
+                AudioListener = 0
             }
-        },        
+        },
         rampa = {
             handler = "rampa",
             components = {

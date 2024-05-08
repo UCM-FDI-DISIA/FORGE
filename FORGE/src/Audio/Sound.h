@@ -12,8 +12,10 @@ namespace irrklang {
 namespace forge {
 	class Vector3;
 }
+class AudioManager;
 class Sound {
 private:
+	AudioManager& manager;
 	irrklang::ISoundEngine& engine;
 	irrklang::ISoundSource& source;
 	irrklang::ISound* sound;

@@ -14,9 +14,11 @@ namespace forge {
 		std::random_device rd;
 		std::mt19937 gen;
 
-		public:
-		#pragma region Constructores
 		Random();
+
+		public:
+		Random(Random const&) = delete;
+		void operator=(Random const&) = delete;
 		~Random();
 		FORGE_API static Random* GetInstance();
 		#pragma region Numeros aleatorios

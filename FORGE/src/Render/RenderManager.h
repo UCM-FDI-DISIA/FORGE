@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 
+
 class RenderForge;
 class Mesh;
 class Camera;
@@ -14,9 +15,14 @@ class Billboard;
 
 namespace forge {
 	class Vector2;
+	class Vector3;
+	class Quaternion;
 }
 
 namespace Ogre {
+	class Quaternion;
+	template <int dims, typename T> class Vector;
+	typedef Vector<3, float> Vector3f;
 	class Entity;
 	class Camera;
 	class Light;
@@ -167,7 +173,12 @@ public:
 	forge::Vector2 getResolution();
 	#pragma endregion
 	
-	#pragma region utils
+	#pragma region Utils
 	Ogre::ManualObject* createManualObject(std::string const& name);
+	#pragma endregion
+
+	#pragma region Conversores
+	Ogre::Quaternion forgeQuaternionToOgreQuaternion(forge::Quaternion const& v) const;
+	Ogre::Vector3f forgeVector3ToOgreVector3(forge::Vector3 const& v) const;
 	#pragma endregion
 };

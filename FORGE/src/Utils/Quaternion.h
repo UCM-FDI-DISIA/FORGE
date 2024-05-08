@@ -2,13 +2,7 @@
 #include "Vector3.h"
 #include "ForgeExport.h"
 
-namespace Ogre {
-	class Quaternion;
-}
-
-class btQuaternion;
 namespace forge {
-	/// TO DO: Adaptar para que los set y get de los parametros los pueda tratar el usuario como par rotacion. Habrá que guardar el angulo o el seno.
 	class Quaternion {
 	private:
 		float x;
@@ -135,6 +129,10 @@ namespace forge {
 		/// </summary>
 		FORGE_API void normalize();
 
+		/// <summary>
+		/// Devuelve el Quaternion inverso
+		/// </summary>
+		/// <returns>El Quaternion inverso</returns>
 		FORGE_API Quaternion inversed() const;
 
 		#pragma region Setters
@@ -142,43 +140,37 @@ namespace forge {
 		/// Asigna un nuevo valor a la componente en X del par-rotacion
 		/// </summary>
 		/// <param name="newX">Nuevo valor en X</param>
-		FORGE_API void setX(float newX);
+		FORGE_API void setRotPairX(float newX);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en Y del par-rotacion
 		/// </summary>
 		/// <param name="newY">Nuevo valor en Y</param>
-		FORGE_API void setY(float newY);
+		FORGE_API void setRotPairY(float newY);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en Z del par-rotacion
 		/// </summary>
 		/// <param name="newZ">Nuevo valor en Z</param>
-		FORGE_API void setZ(float newZ);
+		FORGE_API void setRotPairZ(float newZ);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en X directamente
 		/// </summary>
 		/// <param name="newX">Nuevo valor en X</param>
-		FORGE_API void setAbsX(float newX);
+		FORGE_API void setX(float newX);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en Y directamente
 		/// </summary>
 		/// <param name="newY">Nuevo valor en Y</param>
-		FORGE_API void setAbsY(float newY);
+		FORGE_API void setY(float newY);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en Z directamente
 		/// </summary>
 		/// <param name="newZ">Nuevo valor en Z</param>
-		FORGE_API void setAbsZ(float newZ);
-
-		/// <summary>
-		/// Asigna un nuevo angulo
-		/// </summary>
-		/// <param name="newAngle">Nuevo valor del angulo del par rotacion</param>
-		FORGE_API void setAngle(float newAngle);
+		FORGE_API void setZ(float newZ);
 
 		/// <summary>
 		/// Asigna un nuevo valor a la componente en W del par-rotacion
@@ -187,11 +179,17 @@ namespace forge {
 		FORGE_API void setW(float newW);
 
 		/// <summary>
+		/// Asigna un nuevo angulo
+		/// </summary>
+		/// <param name="newAngle">Nuevo valor del angulo del par rotacion</param>
+		FORGE_API void setAngle(float newAngle);
+
+		/// <summary>
 		/// Consigue un cuaternion para mirar de una posición a otro punto
 		/// </summary>
 		/// <param name="lookTo">Punto a mirar</param>
 		/// <param name="pos">Posición actual</param> 
-		FORGE_API void lookTo(forge::Vector3 lookTo, forge::Vector3 pos);
+		FORGE_API void lookTo(forge::Vector3 const& lookTo, forge::Vector3 const& pos);
 
 		/// <summary>
 		/// Asigna nuevos valores al cuaternion
@@ -226,72 +224,46 @@ namespace forge {
 		/// Acceso a la componente en X del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en X</returns>
-		FORGE_API float getX() const;
+		FORGE_API float getRotPairX() const;
 
 		/// <summary>
 		/// Acceso a la componente en Y del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en Y</returns>
-		FORGE_API float getY() const;
+		FORGE_API float getRotPairY() const;
 
 		/// <summary>
 		/// Acceso a la componente en Z del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en Z</returns>
-		FORGE_API float getZ() const;
+		FORGE_API float getRotPairZ() const;
 
 		/// <summary>
 		/// Devuelve el valor a la componente en X directamente
 		/// </summary>
-		FORGE_API float getAbsX() const;
+		FORGE_API float getX() const;
 
 		/// <summary>
 		/// Devuelve el valor a la componente en Y directamente
 		/// </summary>
-		FORGE_API float getAbsY() const;
+		FORGE_API float getY() const;
 
 		/// <summary>
 		/// Devuelve el valor a la componente en Z directamente
 		/// </summary>
-		FORGE_API float getAbsZ() const;
-
-		/// <summary>
-		/// Acceso al angulo del cuaternion
-		/// </summary>
-		/// <returns>Devuelve el angulo entre 0 y 2PI</returns>
-		FORGE_API float getAngle() const;
+		FORGE_API float getZ() const;
 
 		/// <summary>
 		/// Acceso a la componente en W del par-rotacion que representa el cuaternion
 		/// </summary>
 		/// <returns>Devuelve la orientacion en W</returns>
 		FORGE_API float getW() const;
-		#pragma endregion
-
-		#pragma region Conversiones
-		/// <summary>
-		/// Conversion implicita de forge::Quaternion a Ogre::Quaternion
-		/// </summary>
-		operator Ogre::Quaternion() const;
 
 		/// <summary>
-		/// Constructor por copia de Ogre::Quaternion
+		/// Acceso al angulo del cuaternion
 		/// </summary>
-		/// <param name="q">Cuaternion de Ogre a copiar</param>
-		Quaternion(const Ogre::Quaternion& q);
-
-		/// <summary>
-		/// Constructor por copia de referencia a R value de btQuaternion
-		/// </summary>
-		/// <param name="q">Cuaternion de Bullet a copiar</param>
-		Quaternion(Ogre::Quaternion&& q) noexcept;
-
-		/// <summary>
-		/// Asigna la informacion de Q a este cuaternion
-		/// </summary>
-		/// <param name="q">Cuaternion de Bullet a copiar</param>
-		/// <returns>Cuaternion actualizado</returns>
-		Quaternion& operator=(const Ogre::Quaternion& q);
+		/// <returns>Devuelve el angulo entre 0 y 2PI</returns>
+		FORGE_API float getAngle() const;
 		#pragma endregion
 
 		static const FORGE_API_VAR Quaternion IDENTITY;

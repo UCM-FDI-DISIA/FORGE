@@ -13,17 +13,20 @@ const std::string Collider::id = "Collider";
 
 Collider::Collider() :
     physicsManager(*PhysicsManager::GetInstance()),
+    trigger(false),
     myBody(nullptr),
     myShape(nullptr),
-    shapeType(boxShape), 
-    trigger(false),
-    collisionLayer(""),
+    myShapeString("Box"),
+    shapeType(boxShape),
     bodyTransform(nullptr),
-    myScale(1.0f) {
-    serializer(myScale, "scale");
+    myScale(1.0f),
+    offset(),
+    collisionLayer("") {
     serializer(trigger, "trigger");
-    serializer(collisionLayer, "layer");
     serializer(myShapeString, "shapeType");
+    serializer(offset, "offset");
+    serializer(myScale, "scale");
+    serializer(collisionLayer, "layer");
 }
 
 Collider::~Collider() {
@@ -70,7 +73,7 @@ bool Collider::createRigidBody(std::string const& myShapeType, float mass, bool 
     forge::Vector3 forVect = bodyTransform->getGlobalPosition();
 
     btQuaternion quat = physicsManager.fromForgeToBtQuat(forQuat);
-    btVector3 vect = physicsManager.fromForgeToBtVect(forVect);
+    btVector3 vect = physicsManager.fromForgeToBtVect(forVect + offset);
 
     btVector3 bodyInertia;
     myShape->calculateLocalInertia(mass, bodyInertia);
@@ -101,7 +104,7 @@ void Collider::fixedUpdate() {
     pos.setX(aux.getOrigin().x());
     pos.setY(aux.getOrigin().y());
     pos.setZ(aux.getOrigin().z());
-    bodyTransform->setGlobalPosition(pos);
+    bodyTransform->setGlobalPosition(pos - offset);
 
     forge::Quaternion quat = physicsManager.fromBtQuatToForge(myBody->getOrientation());
     bodyTransform->setGlobalRotation(quat);
@@ -110,7 +113,7 @@ void Collider::fixedUpdate() {
 void Collider::onEnabled() {
     createRigidBody(myShapeString, 0.0f, true, false);
     btTransform trans;
-    trans.setOrigin(btVector3(lastPosition.getX(),lastPosition.getY(),lastPosition.getZ()));
+    trans.setOrigin(physicsManager.fromForgeToBtVect(lastPosition + offset));
     trans.setRotation(physicsManager.fromForgeToBtQuat(lastOrientation));
     myBody->setWorldTransform(trans);
     myBody->applyCentralForce(physicsManager.fromForgeToBtVect(lastForce));
@@ -234,5 +237,5 @@ std::string Collider::getLayer() const {
 }
 
 forge::Vector3 Collider::getPosition() const {
-    return physicsManager.fromBtVectToForge(myBody->getWorldTransform().getOrigin());
+    return physicsManager.fromBtVectToForge(myBody->getWorldTransform().getOrigin()) - offset;
 }

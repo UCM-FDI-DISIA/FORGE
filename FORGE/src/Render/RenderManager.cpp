@@ -32,6 +32,7 @@
 #include "Billboard.h"
 #include "ForgeError.h"
 #include "Vector2.h"
+#include "Quaternion.h"
 
 std::unique_ptr<RenderManager> RenderManager::instance = nullptr;
 bool RenderManager::initialised = false;
@@ -50,11 +51,11 @@ void RenderManager::updateNodePositions() {
 	for (auto&& pair : transforms) {
 		if (pair.second->getNeedsUpdate()) {
 			const forge::Vector3& position = pair.second->getGlobalPosition();
-			pair.first->setPosition(position);
+			pair.first->setPosition(forgeVector3ToOgreVector3(position));
 			const forge::Quaternion& rotation = pair.second->getGlobalRotation();
-			pair.first->setOrientation(rotation);
+			pair.first->setOrientation(forgeQuaternionToOgreQuaternion(rotation));
 			const forge::Vector3& scale = pair.second->getGlobalScale();
-			pair.first->setScale(scale);
+			pair.first->setScale(forgeVector3ToOgreVector3(scale));
 			pair.second->setNeedsUpdate(false);
 		}
 	}
@@ -266,4 +267,12 @@ Ogre::ManualObject* RenderManager::createManualObject(std::string const& name) {
 	Ogre::ManualObject* newManualObject = sceneManager->createManualObject(name);
 	sceneManager->getRootSceneNode()->attachObject(newManualObject);
 	return newManualObject;
+}
+
+Ogre::Quaternion RenderManager::forgeQuaternionToOgreQuaternion(forge::Quaternion const& v) const {
+	return Ogre::Quaternion(v.getW(), v.getX(), v.getY(), v.getZ());
+}
+
+Ogre::Vector3f RenderManager::forgeVector3ToOgreVector3(forge::Vector3 const& v) const {
+	return Ogre::Vector3(v.getX(), v.getY(), v.getZ());
 }

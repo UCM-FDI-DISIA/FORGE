@@ -160,28 +160,32 @@ Quaternion Quaternion::inversed() const {
 }
 
 #pragma region Setters
-void Quaternion::setX(float newX) {
+void Quaternion::setRotPairX(float newX) {
 	x = newX * sinf(acos(w));
 }
 
-void Quaternion::setY(float newY) {
+void Quaternion::setRotPairY(float newY) {
 	y = newY * sinf(acos(w));
 }
 
-void Quaternion::setZ(float newZ) {
+void Quaternion::setRotPairZ(float newZ) {
 	z = newZ * sinf(acos(w));
 }
 
-void forge::Quaternion::setAbsX(float newX) {
+void forge::Quaternion::setX(float newX) {
 	x = newX;
 }
 
-void forge::Quaternion::setAbsY(float newY) {
+void forge::Quaternion::setY(float newY) {
 	y = newY;
 }
 
-void forge::Quaternion::setAbsZ(float newZ) {
+void forge::Quaternion::setZ(float newZ) {
 	z = newZ;
+}
+
+void forge::Quaternion::setW(float newW) {
+	w = newW;
 }
 
 void Quaternion::setAngle(float newAngle) {
@@ -193,19 +197,15 @@ void Quaternion::setAngle(float newAngle) {
 	z = (z / prevSin) * newSin;
 }
 
-void forge::Quaternion::setW(float newW) {
-	w = newW;
-}
-
-void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
+void forge::Quaternion::lookTo(forge::Vector3 const& lookTo, forge::Vector3 const& pos) {
 	forge::Vector3 forward = pos - lookTo;
 	forward.normalize();
 	forge::Vector3 right;
-	if (forward.getY() != (- 1) && forward.getY() != (1)) {
-		right = forge::Vector3(0, 1, 0).cross(forward);
+	if (forward.getY() != -1.0f && forward.getY() != 1.0f) {
+		right = forge::Vector3(0.0f, 1.0f, 0.0f).cross(forward);
 	}
 	else {
-		right = forge::Vector3(0, 0, 1).cross(forward);
+		right = forge::Vector3(0.0f, 0.0f, 1.0f).cross(forward);
 	}
 	right.normalize();
 	forge::Vector3 up = forward.cross(right);
@@ -215,8 +215,8 @@ void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
 	float _y = 0;
 	float _z = 0;
 
-	float trace = right.getX() + up.getY() + forward.getZ(); // I removed + 1.0f; see discussion with Ethan
-	if (trace > 0) {// I changed M_EPSILON to 0
+	float trace = right.getX() + up.getY() + forward.getZ();
+	if (trace > 0.0f) {
 		float s = 0.5f / sqrtf(trace + 1.0f);
 		_w = 0.25f / s;
 		_x = (up.getZ() - forward.getY()) * s;
@@ -247,13 +247,6 @@ void forge::Quaternion::lookTo(forge::Vector3 lookTo, forge::Vector3 pos) {
 		}
 	}
 
-	//float _w = sqrt(std::max(0.0f, 1 + right.getX() + up.getY() + forward.getZ())) / 2;
-	//float _x = sqrt(std::max(0.0f, 1 + right.getX() - up.getY() - forward.getZ())) / 2;
-	//float _y = sqrt(std::max(0.0f, 1 - right.getX() + up.getY() - forward.getZ())) / 2;
-	//float _z = sqrt(std::max(0.0f, 1 - right.getX() - up.getY() + forward.getZ())) / 2;
-	//_x = _copysign(_x, (forward.getY() - up.getZ()));
-	//_y = _copysign(_y, (right.getZ() - forward.getX()));
-	//_z = _copysign(_z, (up.getX() - right.getY()));
 	x = _x;
 	y = _y;
 	z = _z;
@@ -291,63 +284,36 @@ void Quaternion::set(const Quaternion* v) {
 #pragma endregion
 
 #pragma region Getters
-float Quaternion::getX() const {
+float Quaternion::getRotPairX() const {
 	return x / sinf(acosf(w));
 }
 
-float Quaternion::getY() const {
+float Quaternion::getRotPairY() const {
 	return y / sinf(acosf(w));
 }
 
-float Quaternion::getZ() const {
+float Quaternion::getRotPairZ() const {
 	return z / sinf(acosf(w));
 }
 
-float forge::Quaternion::getAbsX() const {
+float Quaternion::getX() const {
 	return x;
 }
 
-float forge::Quaternion::getAbsY() const {
+float Quaternion::getY() const {
 	return y;
 }
 
-float forge::Quaternion::getAbsZ() const {
+float Quaternion::getZ() const {
 	return z;
+}
+
+float Quaternion::getW() const {
+	return w;
 }
 
 float Quaternion::getAngle() const {
 	return acosf(w) * 2.0f; 
-}
-FORGE_API float forge::Quaternion::getW() const {
-	return w;
-}
-#pragma endregion
-
-#pragma region Conversiones
-Quaternion::operator Ogre::Quaternion() const {
-	return Ogre::Quaternion(w, x, y, z);
-}
-
-Quaternion::Quaternion(const Ogre::Quaternion& q) : 
-	x(q.x),
-	y(q.y),
-	z(q.z),
-	w(q.w) {
-}
-
-Quaternion::Quaternion(Ogre::Quaternion&& q) noexcept :
-	x(q.x),
-	y(q.y),
-	z(q.z),
-	w(q.w) {
-}
-
-Quaternion& Quaternion::operator=(const Ogre::Quaternion& q) {
-	x = q.x;
-	y = q.y;
-	z = q.z;
-	w = q.w;
-	return (*this);
 }
 #pragma endregion
 

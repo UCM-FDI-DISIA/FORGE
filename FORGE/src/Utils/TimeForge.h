@@ -14,9 +14,13 @@ namespace forge {
 		static double _deltaTime;
 		static double _time;
 		std::chrono::system_clock::time_point previous;
+		static std::unique_ptr<Time> instance;
 
 		Time();
-		static std::unique_ptr<Time> instance;
+		/// <summary>
+		/// Devuelve una instancia del deltaTime
+		/// </summary>
+		/// <returns></returns>
 		static Time* GetInstance();
 		/// <summary>
 		/// Inicializa el deltaTime

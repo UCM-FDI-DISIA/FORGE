@@ -228,7 +228,7 @@ forge::Vector3 PhysicsManager::fromBtVectToForge(btVector3 const& vect) const {
 }
 
 btQuaternion PhysicsManager::fromForgeToBtQuat(forge::Quaternion const& quat) const {
-    return btQuaternion(quat.getAbsX(),quat.getAbsY(),quat.getAbsZ(),quat.getW());
+    return btQuaternion(quat.getX(),quat.getY(),quat.getZ(),quat.getW());
 }
 
 forge::Quaternion PhysicsManager::fromBtQuatToForge(btQuaternion const& quat) const {

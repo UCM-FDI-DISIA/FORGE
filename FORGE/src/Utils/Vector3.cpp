@@ -1,13 +1,5 @@
 #include "Vector3.h"
-#include <btVector3.h>
 #include <cmath>
-#pragma warning(push)
-#pragma warning(disable : 4251)
-#pragma warning(disable : 26439)
-#pragma warning(disable : 26495)
-#include <OgreVector.h>
-#include <ik_vec3d.h>
-#pragma warning(pop)
 using namespace forge;
 
 #define PI 3.14159265358979323846264338327950288
@@ -223,35 +215,6 @@ float Vector3::getY() const {
 
 float Vector3::getZ() const { 
 	return z; 
-}
-#pragma endregion
-
-#pragma region Conversiones
-forge::Vector3::operator Ogre::Vector3f() const {
-	return Ogre::Vector3f(x, y, z);
-}
-
-Vector3::Vector3(const Ogre::Vector3f& w) :
-	x(w.x),
-	y(w.y),
-	z(w.z) {
-}
-
-Vector3::Vector3(Ogre::Vector3f&& w) noexcept :
-	x(w.x),
-	y(w.y),
-	z(w.z) {
-}
-
-Vector3& Vector3::operator=(const Ogre::Vector3f& w) {
-	x = w.x;
-	y = w.y;
-	z = w.z;
-	return *this;
-}
-
-forge::Vector3::operator irrklang::vec3df() const {
-	return irrklang::vec3df(x, y, z);
 }
 #pragma endregion
 

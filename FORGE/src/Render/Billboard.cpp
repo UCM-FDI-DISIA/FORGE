@@ -50,7 +50,7 @@ bool Billboard::initComponent(ComponentData* data) {
 bool Billboard::createBillboard() {
 	billboardSet = renderManager.addBillboardNode(this);
 	if (billboardSet != nullptr) {
-		billboardSet->createBillboard(transform->getGlobalPosition());
+		billboardSet->createBillboard(renderManager.forgeVector3ToOgreVector3(transform->getGlobalPosition()));
 		return true;
 	}
 	return false;

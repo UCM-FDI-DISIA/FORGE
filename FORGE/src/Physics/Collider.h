@@ -24,22 +24,25 @@ protected:
     enum collisionShape {
         ballShape, boxShape, capsuleShape, cylinderShape, planeShape
     };
+
     PhysicsManager& physicsManager;
     bool trigger;
     btRigidBody* myBody;
     btCollisionShape* myShape;
     std::string myShapeString;
     collisionShape shapeType;
+
+    Transform* bodyTransform;
     forge::Vector3 myScale;
+    forge::Vector3 offset;
+
+    forge::Vector3 lastPosition;
+    forge::Vector3 lastForce;
+    forge::Quaternion lastOrientation;
 
     std::vector<std::function<void(Collider*, Collider*)>> onCollisionEnterCallbacks;
     std::vector<std::function<void(Collider*, Collider*)>> oncollisionStayCallbacks;
     std::vector<std::function<void(Collider*, Collider*)>> oncollisionLeaveCallbacks;
-
-    Transform* bodyTransform;
-    forge::Vector3 lastPosition;
-    forge::Vector3 lastForce;
-    forge::Quaternion lastOrientation;
 
     std::string collisionLayer;
     std::list<Entity*> collidedEntities;

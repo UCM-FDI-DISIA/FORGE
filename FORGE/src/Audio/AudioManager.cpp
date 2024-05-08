@@ -1,9 +1,11 @@
 #include "AudioManager.h"
 #include <iostream>
 #include <irrKlang.h>
+#include <ik_vec3d.h>
 #include "Sound.h"
 #include "SoundGenerator.h"
 #include "ForgeError.h"
+#include "Vector3.h"
 using namespace irrklang;
 using namespace forge;
 
@@ -75,7 +77,11 @@ bool AudioManager::removeSound(Sound* sound) {
 }
 
 void AudioManager::setListenerPosition(Vector3 const& position, Vector3 const& lookAt) {
-	engine->setListenerPosition(position, lookAt, Vector3::ZERO, Vector3::UP);
+	engine->setListenerPosition(
+		forgeVector3ToIrrklangVec3(position), 
+		forgeVector3ToIrrklangVec3(lookAt), 
+		forgeVector3ToIrrklangVec3(Vector3::ZERO), 
+		forgeVector3ToIrrklangVec3(Vector3::UP));
 }
 
 bool AudioManager::registerListener(AudioListener* listener) {
@@ -92,4 +98,9 @@ bool AudioManager::deregisterListener(AudioListener* listener) {
 	}
 	currentListener = nullptr;
 	return true;
+}
+
+
+irrklang::vec3df AudioManager::forgeVector3ToIrrklangVec3(forge::Vector3 const& v) const {
+	return irrklang::vec3df(v.getX(), v.getY(), v.getZ());
 }

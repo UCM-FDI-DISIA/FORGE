@@ -1,11 +1,14 @@
 #include "Sound.h"
 #include <irrKlang.h>
+#include <ik_vec3d.h>
+#include "AudioManager.h"
 #include "Vector3.h"
 
 using namespace irrklang;
 using namespace forge;
 
 Sound::Sound(ISoundEngine& _engine, ISoundSource& _source) :
+	manager(*AudioManager::GetInstance()),
 	engine(_engine),
 	sound(nullptr),
 	source(_source),
@@ -61,7 +64,7 @@ bool Sound::play() {
 }
 bool Sound::play(Vector3 const& position) {
 	if (sound == nullptr) {
-		sound = engine.play3D(&source, position, loop, false, true);
+		sound = engine.play3D(&source, manager.forgeVector3ToIrrklangVec3(position), loop, false, true);
 		sound->setMinDistance(fullVolumeRadious);
 		sound->setMaxDistance(hearingRadious);
 		sound->setVolume(volume);
@@ -137,7 +140,7 @@ bool Sound::isFinished() const {
 
 bool Sound::setPosition(forge::Vector3 const& position) {
 	if (sound != nullptr) {
-		sound->setPosition(position);
+		sound->setPosition(manager.forgeVector3ToIrrklangVec3(position));
 		return true;
 	}
 	return false;
