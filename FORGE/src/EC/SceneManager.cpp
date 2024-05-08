@@ -155,6 +155,14 @@ FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrin
 	return entity;
 }
 
+FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos, Entity* parent) {
+	Entity* entity = instantiateBlueprint(bluePrintId, newPos);
+	if (entity != nullptr) {
+		parent->addChild(entity);
+	}
+	return entity;
+}
+
 bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
 	Scene*& activeScenePointer = activeScene.second;
 	Scene* newScene;
