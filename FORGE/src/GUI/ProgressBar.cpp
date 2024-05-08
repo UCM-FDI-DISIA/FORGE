@@ -92,19 +92,12 @@ void ProgressBar::createProgressBar() {
 }
 
 void ProgressBar::destroyProgressBar() {
-	// Destruye de menor a mayor (material < textura < imagen < panel < Overlay)
-	gui.getMaterialManager()->remove(backTexture);
-	gui.getMaterialManager()->remove(frontTexture);
-	gui.getTextureManager()->remove(backTexture);
-	gui.getTextureManager()->remove(frontTexture);
 	backImage->freeMemory();
 	frontImage->freeMemory();
 	delete backImage;
 	delete frontImage;
 	backImage = nullptr;
 	frontImage = nullptr;
-	gui.deleteResource(backTexture);
-	gui.deleteResource(frontTexture);
 	destroyPanel(overlayPanel);
 	destroyPanel(frontPanel);
 	destroyOverlay(overlay);

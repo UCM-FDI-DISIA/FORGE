@@ -27,29 +27,20 @@ void Image::createImage() {
 }
 
 void Image::destroyImage() {
-	// Destruye de menor a mayor (imagen < panel < Overlay)
-	gui.getMaterialManager()->remove(texture);
-	gui.getTextureManager()->remove(texture);
 	imageSource->freeMemory();
 	delete imageSource;
 	imageSource = nullptr;
-	gui.deleteResource(texture);
 	destroyPanel(overlayPanel);
 	destroyOverlay(overlay);
 }
 
 void Image::loadAndAssign() {
-	// Si la imagen no esta cargada...
-	if (!gui.hasResource(texture)) {
-		// ...la cargo
-		if (imageSource == nullptr) {
-			imageSource = new Ogre::Image();
-		}
-		if (!gui.createTextureAndMaterialFromImage(imageSource, texture)) {
-			texture = "default.png";
-		}
+	if (imageSource == nullptr) {
+		imageSource = new Ogre::Image();
 	}
-	// Y la asigno
+	if (!gui.createTextureAndMaterialFromImage(imageSource, texture)) {
+		texture = "default.png";
+	}
 	overlayPanel->setMaterialName(texture);
 }
 

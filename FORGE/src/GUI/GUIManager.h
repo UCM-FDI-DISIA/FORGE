@@ -108,8 +108,8 @@ public:
 	bool hasFont(std::string const& font);
 
 	/// <summary>
-	/// Carga y guarda la imagen del componente en imageSource, creando tambien una textura y un material, y
-	/// registrandola en el registro de recursos del GUIManager
+	/// Carga y guarda la imagen del componente en imageSource, creando tambien una textura y un material (si no estan
+	/// creadas ya) y registrandola en el registro de recursos del GUIManager
 	/// </summary>
 	bool createTextureAndMaterialFromImage(Ogre::Image* img, std::string const& _texture);
 

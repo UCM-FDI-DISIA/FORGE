@@ -101,16 +101,17 @@ bool GUIManager::createTextureAndMaterialFromImage(Ogre::Image* img, std::string
 	catch (Ogre::Exception e) {
 		throwError(false, "No se pudo encontrar la imagen para crear la textura");
 	}
+	if (!hasResource(_texture)) {
+		// Cargar textura a partir de la imagen
+		textureManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
-	// Cargar textura a partir de la imagen
-	textureManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		// Cargar material a partir de la textura
+		materialManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
+			->getTechnique(0)->getPass(0)->createTextureUnitState(_texture);
 
-	// Cargar material a partir de la textura
-	materialManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
-		->getTechnique(0)->getPass(0)->createTextureUnitState(_texture);
-
-	// Anadir al registro
-	addResource(_texture);
+		// Anadir al registro
+		addResource(_texture);
+	}
 	return true;
 }
 
