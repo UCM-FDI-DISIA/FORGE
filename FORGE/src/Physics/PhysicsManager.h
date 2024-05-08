@@ -122,7 +122,12 @@ public:
     /// <returns></returns>
     bool addLayer(std::string const& layerName);
 
-
+    /// <summary>
+    /// Establece con que capas colisiona una capa en concreto
+    /// </summary>
+    /// <param name="layer">La capa a configurar</param>
+    /// <param name="layersToCollide">Las capas con las que layer comprobara colisiones</param>
+    /// <returns></returns>
     bool setCollideWith(std::string const& layer, std::vector<std::string> const& layersToCollide);
 
     /// <summary>
