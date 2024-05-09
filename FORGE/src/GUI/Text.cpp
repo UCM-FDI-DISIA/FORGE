@@ -40,7 +40,7 @@ Text::~Text() {
 
 bool Text::initComponent(ComponentData* data) {
     if (UIComponent::initComponent(data)) {
-        fontHeight *= transform->getScale().getY();
+        fontHeight = static_cast<int>(transform->getScale().getY() * fontHeight);
         createText();
         return true;
     }
@@ -61,7 +61,7 @@ void Text::resize(forge::Vector2 const& prev, forge::Vector2 const& updated) {
     UIComponent::resize(prev, updated);
 
     float factorY = updated.getY() / prev.getY();
-    fontHeight *= static_cast<int>(factorY);
+    fontHeight = static_cast<int>(factorY * fontHeight);
     overlayPanel->setPosition(0.0f, 0.0f);
     setPosition(transform->getPosition());
     setHeight(fontHeight);

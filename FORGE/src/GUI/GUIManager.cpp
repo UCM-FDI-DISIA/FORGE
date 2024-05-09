@@ -106,8 +106,9 @@ bool GUIManager::createTextureAndMaterialFromImage(Ogre::Image* img, std::string
 		textureManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
 		// Cargar material a partir de la textura
-		materialManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME)
-			->getTechnique(0)->getPass(0)->createTextureUnitState(_texture);
+		Ogre::MaterialPtr mat = materialManager->create(_texture, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		mat->getTechnique(0)->getPass(0)->createTextureUnitState(_texture);
+		mat->getTechnique(0)->getPass(0)->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
 
 		// Anadir al registro
 		addResource(_texture);
