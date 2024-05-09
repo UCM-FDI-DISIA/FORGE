@@ -235,7 +235,7 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 			if (entityData == nullptr) {
 				throwError(false, "No se pudo crear correctamente la entidad en KeepBetweenScenes");
 			}
-			sceneManager.addKBSData(entityData);
+			sceneManager.addKeptBetweenScenes(entityData);
 		}
 	}
 	if (sceneBlueprints.isTable()) {
@@ -406,11 +406,8 @@ bool LoadManager::loadInitialScene(LuaRef const& config) {
 	if (!initScene.isString()) {
 		throwError(false, "No se proporciono una escena inicial o no es un string.");
 	}
-	if (!sceneManager.changeScene(initScene.tostring())) {
-		return false;
-	}
-	sceneManager.addKeptBetweenScenes();
-	return true;
+	return sceneManager.createFirstScene(initScene.tostring());
+
 }
 
 LoadManager::LoadManager() :

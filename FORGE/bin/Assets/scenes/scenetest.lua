@@ -43,13 +43,26 @@ local prefabs = {
 }
 
 local keepBeetweenScenes = {
-    jugador = {
-        blueprint = "player"
+    texto2 = {
+        components = {
+            RectTransform = {
+                position = {0, 400},
+                scale = {1, 1}
+            },
+            Text = {
+                text = "texto2",
+                fontName = "Willow.ttf",
+                fontHeight = 100
+            }
+        }
     }
 }
 
 local scenes = {
     Test = {
+        jugador = {
+            blueprint = "player"
+        },
         cam = {
             components = {
                 Transform = {
@@ -94,19 +107,6 @@ local scenes = {
                 },
                 Text = {
                     text = "texto1",
-                    fontName = "Willow.ttf",
-                    fontHeight = 100
-                }
-            }
-        },
-        texto2 = {
-            components = {
-                RectTransform = {
-                    position = {0, 400},
-                    scale = {1, 1}
-                },
-                Text = {
-                    text = "texto2",
                     fontName = "Willow.ttf",
                     fontHeight = 100
                 }
@@ -234,6 +234,15 @@ local scenes = {
         }
     },
     Play = {
+        jugador = {
+            blueprint = "player",
+            components = {
+                Transform = {
+                    position = {0, 0, 0},
+                    scale = {0.25, 0.25, 0.25}
+                }
+            }
+        },
         cartel = {
             group = "obstacle",
             components = {

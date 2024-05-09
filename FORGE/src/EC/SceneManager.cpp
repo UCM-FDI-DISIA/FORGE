@@ -57,7 +57,6 @@ SceneManager::EntityPair* SceneManager::addEntity(Scene* scene, EntityData* data
 			pair->children.push_back(child);
 		}
 	}
-
 	return pair;
 }
 
@@ -92,6 +91,48 @@ Entity* SceneManager::instantiateBlueprint(EntityData* data) {
 	throwError(nullptr, "La entidad no se ha instanciado correctamente");
 }
 
+bool SceneManager::doChangeScene() {
+	std::unordered_set<EntityPair*> initData;
+	Scene* newScene;
+	Scene*& activeScenePointer = activeScene.second;
+	bool needInit = true;
+	std::vector<Entity*> keptEntities;
+	if (activeScenePointer != nullptr) {
+		keptEntities = activeScenePointer->disableScene();
+	}
+	auto iter = loadedScenes.find(sceneToChange.first);
+	if (iter == loadedScenes.end()) {
+		auto aux = createScene(sceneToChange.first);
+		newScene = aux.first;
+		initData = aux.second;
+	}
+	else {
+		if (sceneToChange.second) {
+			delete iter->second;
+			loadedScenes.erase(iter);
+			auto aux = createScene(sceneToChange.first);
+			newScene = aux.first;
+			initData = aux.second;
+		}
+		else {
+			newScene = iter->second;
+			newScene->enableScene();
+			needInit = false;
+		}
+	}
+	if (newScene != nullptr) {
+		for (Entity* entity : keptEntities) {
+			newScene->addEntity(entity);
+		}
+		if (needInit) {
+			initScene(newScene, initData);
+		}
+		activeScene = { sceneToChange.first, newScene };
+		return true;
+	}
+	throwError(false,"La escena no se ha encontrado o no se ha podido iniciar correctamente.");
+}
+
 void SceneManager::Init() {
 	instance = std::unique_ptr<SceneManager>(new SceneManager());
 	initialised = true;
@@ -109,6 +150,9 @@ SceneManager::~SceneManager() {
 void SceneManager::cleanUp() {
 	for (auto& scene : loadedScenes) {
 		delete scene.second;
+	}
+	for (auto& entity : keptBetweenScenes) {
+		delete entity;
 	}
 	for (auto& scene : sceneBlueprints) {
 		for (auto& entity : scene.second) {
@@ -145,7 +189,7 @@ Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge
 	return instantiateBlueprint(data);
 }
 
-FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, Entity* parent) {
+Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, Entity* parent) {
 	Entity* entity = instantiateBlueprint(bluePrintId);
 	if (entity != nullptr) {
 		parent->addChild(entity);
@@ -153,7 +197,7 @@ FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrin
 	return entity;
 }
 
-FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos, Entity* parent) {
+Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos, Entity* parent) {
 	Entity* entity = instantiateBlueprint(bluePrintId, newPos);
 	if (entity != nullptr) {
 		parent->addChild(entity);
@@ -162,35 +206,11 @@ FORGE_API Entity* SceneManager::instantiateBlueprint(std::string const& bluePrin
 }
 
 bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
-	Scene*& activeScenePointer = activeScene.second;
-	Scene* newScene;
-	std::vector<Entity*> keptEntities;
-	if (activeScenePointer != nullptr) {
-		keptEntities = activeScenePointer->disableScene();
-	}
-	auto iter = loadedScenes.find(scene);
-	if (iter == loadedScenes.end()) {
-		newScene = createScene(scene);
-	}
-	else {
-		if (renewScene) {
-			delete iter->second;
-			loadedScenes.erase(iter);
-			newScene = createScene(scene);
-		}
-		else {
-			newScene = iter->second;
-			newScene->enableScene();
-		}
-	}
-	if (newScene != nullptr) {
-		for (Entity* entity : keptEntities) {
-			newScene->addEntity(entity);
-		}
-		activeScene = { scene, newScene };
+	if (sceneBlueprints.count(scene)) {
+		sceneToChange = {scene, renewScene};
 		return true;
 	}
-	throwError(false, "La escena no se ha encontrado o no se ha podido iniciar correctamente.");
+	throwError(false, "No se ha podido cambiar la escena, escena " + scene + " no encontrada");
 }
 
 void SceneManager::removeScene(std::string const& id) {
@@ -201,11 +221,12 @@ void SceneManager::removeScene(std::string const& id) {
 	}
 }
 
-Scene* SceneManager::createScene(std::string const& id) {
+std::pair<Scene*, std::unordered_set<SceneManager::EntityPair*>> SceneManager::createScene(std::string const& id) {
 	std::unordered_set<EntityPair*> initData;
 	auto iter = sceneBlueprints.find(id);
 	if (iter == sceneBlueprints.end()) {
-		throwError(nullptr, "Si una escena no aparece en los archivos, no existe.");
+		std::pair<Scene*, std::unordered_set<EntityPair*>> aux(nullptr, initData);
+		throwError(aux, "Si una escena no aparece en los archivos, no existe.");
 	}
 	Scene* newScene = new Scene();
 	for (EntityData* entityData : iter->second) {
@@ -219,34 +240,44 @@ Scene* SceneManager::createScene(std::string const& id) {
 			initData.insert(pair);
 		}
 	}
-	for (auto& initPair : initData) {
-		initEntity(initPair);
-		delete initPair;
-	}
 	loadedScenes.insert({ id, newScene });
-	newScene->refresh();
-	return newScene;
+	return {newScene, initData};
 }
 
-FORGE_API void SceneManager::addKeptBetweenScenes() {
-	std::unordered_set<EntityPair*> initData;
-	for (EntityData* entityData : keptBetweenScenes) {
-		EntityPair* pair = addEntity(activeScene.second, entityData);
-		Entity* entity = pair->entity;
-		if (!entity->isAlive()) {
-			delete pair;
-			reportError("No se ha podido crear la entidad.");
-		}
-		else {
-			entity->setKeepBetweenScenes(true);
-			initData.insert(pair);
-		}
-	}
+void SceneManager::initScene(Scene* scene, std::unordered_set<EntityPair*>& initData) {
 	for (auto& initPair : initData) {
 		initEntity(initPair);
 		delete initPair;
 	}
-	activeScene.second->refresh();
+	scene->refresh();
+}
+
+bool SceneManager::createFirstScene(std::string const& id) {
+	if (activeScene.second != nullptr) {
+		throwError(false, "Ya se ha creado una escena inicial");
+	}
+	auto aux = createScene(id);
+	Scene*& newScene = aux.first;
+	std::unordered_set<EntityPair*>& initData = aux.second;
+	if (newScene != nullptr) {
+		for (EntityData* entityData : keptBetweenScenes) {
+			EntityPair* pair = addEntity(newScene, entityData);
+			Entity* entity = pair->entity;
+			if (!entity->isAlive()) {
+				initData.erase(pair);
+				delete pair;
+				reportError("No se ha podido crear la entidad.");
+			}
+			else {
+				entity->setKeepBetweenScenes(true);
+				initData.insert(pair);
+			}
+		}
+		initScene(newScene, initData);
+		activeScene = {id, newScene};
+		return true;
+	}
+	throwError(false, "La escena no se ha encontrado o no se ha podido iniciar correctamente.");
 }
 
 Scene* SceneManager::getScene(std::string const& id) {
@@ -270,19 +301,22 @@ int SceneManager::getMaxGroupId() {
 }
 
 bool SceneManager::update() {
-	if (activeScene.second != nullptr) {
-		activeScene.second->update();
-		return true;
+	if (activeScene.second == nullptr) {
+		throwError(false, "No hay escena activa");
 	}
-	return false;
+	activeScene.second->update();
+	if (sceneToChange.first != "") {
+		if (!doChangeScene()) {
+			throwError(false, "No se ha podido cambiar de escena");
+		}
+		sceneToChange.first = "";
+		sceneToChange.second = false;
+	}
+	return true;
 }
 
 void SceneManager::fixedUpdate() {
 	activeScene.second->fixedUpdate();
-}
-
-void SceneManager::refresh() {
-	activeScene.second->refresh();
 }
 
 int SceneManager::getGroupId(std::string const& group) {
@@ -297,7 +331,7 @@ void SceneManager::addSceneBlueprint(std::string const& id, std::vector<EntityDa
 	sceneBlueprints.insert({ id,scene });
 }
 
-FORGE_API void SceneManager::addKBSData(EntityData* kbsData) {
+FORGE_API void SceneManager::addKeptBetweenScenes(EntityData* kbsData) {
 	keptBetweenScenes.push_back(kbsData);
 }
 

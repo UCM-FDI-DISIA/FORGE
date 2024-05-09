@@ -4,7 +4,9 @@
 #include <list>
 #include <memory>
 #include <unordered_map>
+#include <unordered_set>
 #include <string>
+#include <utility>
 #include "Vector3.h"
 #include "ForgeExport.h"
 
@@ -29,6 +31,7 @@ private:
 
 	std::pair<std::string, Scene*> activeScene;
 	std::unordered_map<std::string, Scene*> loadedScenes;
+	std::pair<std::string, bool> sceneToChange;
 
 	std::unordered_map<std::string, EntityData*> entityBlueprints;
 	std::unordered_map<std::string, std::vector<EntityData*>> sceneBlueprints;
@@ -40,9 +43,36 @@ private:
 
     SceneManager();
 
+	/// <summary>
+	/// Agrega una nueva entidad sin inicializar a la escena escena pasada
+	/// </summary>
+	/// <param name="scene">Escena a la que agregar la entidad</param>
+	/// <param name="data">Datos de la entidad a agregar</param>
+	/// <returns>Puntero de una pareja con la entidad generada y su data</returns>
 	EntityPair* addEntity(Scene* scene, EntityData* data);
+	/// <summary>
+	/// Inicializa los componentes de la entidad y sus hijos
+	/// </summary>
+	/// <param name="pair">Puntero a la pareja que contiene la Entidad y su EntityData</param>
+	/// <returns>Puntero a la entidad inicializada</returns>
 	Entity* initEntity(EntityPair* pair);
+	/// <summary>
+	/// Instancia en escena una Entidad a partir del EntityData de un blueprint
+	/// </summary>
+	/// <param name="data">Data del blueprint a copiar</param>
+	/// <returns>Puntero a la entidad generada</returns>
 	Entity* instantiateBlueprint(EntityData* data);
+	/// <summary>
+	/// Efectua el cambio de escena a aquella marcada como nueva escena a iniciar
+	/// </summary>
+	/// <returns>Booleano que indica si se ha podido cambiar correctamente</returns>
+	bool doChangeScene();
+	/// <summary>
+	/// Inicializa las entidades pasadas y limpia su escena de posibles fallos de inicializacion
+	/// </summary>
+	/// <param name="scene">Escena de las entidades a inicializar</param>
+	/// <param name="initData">Entidades a inicializar</param>
+	void initScene(Scene* scene, std::unordered_set<EntityPair*>& initData);
 
 public:
 	/// <summary>
@@ -122,11 +152,13 @@ public:
 	/// </summary>
 	/// <param name="id">Identificador del blueprint</param>
 	/// <returns>La escena creada</returns>
-	FORGE_API Scene* createScene(std::string const& id);
+	FORGE_API std::pair<Scene*, std::unordered_set<EntityPair*>> createScene(std::string const& id);
 	/// <summary>
-	/// Agrega las entidades que se mantienen entre escenas a la escena
+	/// Crea y activa la primera escena del juego
 	/// </summary>
-	FORGE_API void addKeptBetweenScenes();
+	/// <param name="id">Id de la escena a cargar</param>
+	/// <returns>Booleano que indica si la creacion fue correcta</returns>
+	FORGE_API bool createFirstScene(std::string const& id);
 	/// <returns>
 	/// Una escena a partir de su Identificador
 	/// </returns>
@@ -151,10 +183,6 @@ public:
 	///	Actualiza las entidades de la escena activa en periodos de tiempo fijos
 	/// </summary>
 	FORGE_API void fixedUpdate();
-	/// <returns>
-	/// Borra todas las Entity no vivas de la escena activa
-	/// </returns>
-	FORGE_API void refresh();
 	/// <summary>
 	/// Devuelve la id de un grupo a partir de su nombre
 	/// </summary>
@@ -171,7 +199,7 @@ public:
 	/// Agrega un blueprint de una entidad para que se mantenga entre escenas
 	/// </summary>
 	/// <param name="kbsData">Blueprint de la entidad que se mantendra entre escenas</param>
-	FORGE_API void addKBSData(EntityData* kbsData);
+	FORGE_API void addKeptBetweenScenes(EntityData* kbsData);
 	/// <summary>
 	/// Agrega un blueprint de entidad y lo mapea con su id
 	/// </summary>
