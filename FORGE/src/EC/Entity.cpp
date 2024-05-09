@@ -204,7 +204,7 @@ void Entity::setKeepBetweenScenes(bool keep) {
 }
 
 void Entity::changeScene(Scene* newScene) {
-    scene = this->scene;
+    scene = newScene;
     for (auto& component : components) {
         component->setContext(this, scene);
     }
