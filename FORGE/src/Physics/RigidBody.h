@@ -12,6 +12,7 @@ class RigidBody : public Collider {
 protected:
     float mass;
     float friction;
+    float rollingFriction;
     float restitution;
     bool kinematic;
     bool staticBody;
@@ -142,15 +143,12 @@ public:
     /// </summary>
     /// <param name="newGravity">La gravedad nueva a aplicar</param>
     FORGE_API void setGravity(forge::Vector3 const& newGravity);
-
     /// <summary>
-    /// Cambia la friccion del objeto
+    /// Cambia la friccion del objeto, el valor ha de ser entre 0 y 1
     /// </summary>
     FORGE_API void setFriction(float newFriction);
-
-
     /// <summary>
-    /// Cambia la friccion del objeto
+    /// Cambia la friccion de una esfera rodando, el valor ha de ser entre 0 y 1
     /// </summary>
     FORGE_API void setRollingFriction(float newFriction);
     /// <summary>

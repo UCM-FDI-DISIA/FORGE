@@ -48,8 +48,17 @@ bool RigidBody::createRigidBody(std::string const& myShapeType, float mass, bool
     if (!Collider::createRigidBody(myShapeType, mass, isStatic, disableDeactivation)) {
         throwError(false, "No se pudo crear el RigidBody.");
     }
+    if (friction > 1.0f) {
+        friction = 0.99f;
+        reportError("Friccion por encima de los valores posibles, sustituyendo por 1");
+    }
+    if (friction < 0.0f) {
+        friction = 0.0f;
+        reportError("Friccion por encima de los valores posibles, sustituyendo por 0");
+    }
     if (myShapeType == "Sphere") {
         myBody->setRollingFriction(friction);
+        rollingFriction = friction;
     }
     myBody->setRestitution(restitution);
     myBody->setFriction(friction);
@@ -107,11 +116,32 @@ void RigidBody::lockRotation(bool x, bool y, bool z) {
 }
 
 void RigidBody::setFriction(float newFriction) {
-    friction = newFriction;
+    if (newFriction > 1.0f) {
+        friction = 0.99f;
+        reportError("Friccion por encima de los valores posibles, sustituyendo por 1");
+    }
+    else if (newFriction < 0.0f) {
+        friction = 0.0f;
+        reportError("Friccion por encima de los valores posibles, sustituyendo por 0");
+    }
+    else { 
+        friction = newFriction;
+    }
     myBody->setFriction(friction);
 }
 
 FORGE_API void RigidBody::setRollingFriction(float newFriction) {
+    if (newFriction > 1.0f) {
+        rollingFriction = 0.99f;
+        reportError("Friccion por encima de los valores posibles, sustituyendo por 1");
+    }
+    else if (newFriction < 0.0f) {
+        rollingFriction = 0.0f;
+        reportError("Friccion por encima de los valores posibles, sustituyendo por 0");
+    }
+    else {
+        rollingFriction = newFriction;
+    }
     myBody->setRollingFriction(newFriction);
 }
 
