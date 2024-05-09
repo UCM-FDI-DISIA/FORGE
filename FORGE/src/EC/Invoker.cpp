@@ -2,7 +2,7 @@
 #include "InvokingForge.h"
 
 Invoker::Invoker() :
-	valid(false),
+	valid(true),
 	functions(InvokingForge::GetInstance()->registerInvoker()) {
 }
 
