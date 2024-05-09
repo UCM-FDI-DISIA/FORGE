@@ -39,12 +39,9 @@
 
 using namespace luabridge;
 
-bool LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& keepBetweenScenes, LuaRef& group, LuaRef& components) {
+bool LoadManager::extractEntityValues(EntityData& entityData, LuaRef& handler, LuaRef& group, LuaRef& components) {
 	if (handler.isString()) {
 		entityData.handler = handler.tostring();
-	}
-	if (keepBetweenScenes.isBool()) {
-		entityData.keepBetweenScenes = keepBetweenScenes.cast<bool>();
 	}
 	if (group.isString()) {
 		entityData.group = group.tostring();
@@ -138,10 +135,9 @@ bool LoadManager::modifyChildrenData(EntityData& childData, LuaRef& data) {
 	LuaRef
 		group = data["group"],
 		handler = data["handler"],
-		keepBetweenScenes = data["keepBetweenScenes"],
 		components = data["components"],
 		children = data["children"];
-	if (!extractEntityValues(childData, handler, keepBetweenScenes, group, components)) {
+	if (!extractEntityValues(childData, handler, group, components)) {
 		throwError(false, "No se pudo leer correctamente la modificacion del hijo de la entidad basada en blueprint");
 	}
 	bool wasBlueprint = childData.isBlueprint;
@@ -158,7 +154,6 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	LuaRef
 		group = luaEntity["group"],
 		handler = luaEntity["handler"],
-		keepBetweenScenes = luaEntity["keepBetweenScenes"],
 		blueprint = luaEntity["blueprint"],
 		components = luaEntity["components"],
 		children = luaEntity["children"];
@@ -166,7 +161,7 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	EntityData* entityData;
 	if (!blueprint.isString()) {
 		entityData = new EntityData();
-		if (!extractEntityValues(*entityData, handler, keepBetweenScenes, group, components) || 
+		if (!extractEntityValues(*entityData, handler, group, components) || 
 			!extractChildren(*entityData, children)) {
 			delete entityData;
 			throwError(nullptr, "No se pudo crear correctamente la entidad");
@@ -174,10 +169,10 @@ EntityData* LoadManager::parseEntityData(LuaRef& luaEntity) {
 	}
 	else {
 		entityData = sceneManager.getEntityBlueprint(blueprint.tostring());
-		if (handler.isString() || keepBetweenScenes.isBool() || group.isString() || components.isTable() || children.isTable()) {
+		if (handler.isString() || group.isString() || components.isTable() || children.isTable()) {
 			entityData = new EntityData(*entityData);
 			entityData->isBlueprint = true;
-			if (!extractEntityValues(*entityData, handler, keepBetweenScenes, group, components) ||
+			if (!extractEntityValues(*entityData, handler, group, components) ||
 				!extractChildren(*entityData, children)) {
 				delete entityData;
 				throwError(nullptr, "No se pudo crear correctamente la entidad basada en blueprint");
@@ -217,7 +212,8 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 	lua_State* lua = luaForge->getState();
 	sceneManager.setLuaState(lua);
 
-	LuaRef entityBlueprints = LuaRef::fromStack(lua, -2);
+	LuaRef entityBlueprints = LuaRef::fromStack(lua, -3);
+	LuaRef keepBetweenScenes = LuaRef::fromStack(lua, -2);
 	LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
 
 	if (entityBlueprints.isTable()) {
@@ -231,6 +227,15 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 			}
 			blueprint->isBlueprint = true;
 			sceneManager.addEntityBlueprint(entity.first.tostring(), blueprint);
+		}
+	}
+	if (keepBetweenScenes.isTable()) {
+		for (auto&& entity : pairs(keepBetweenScenes)) {
+			EntityData* entityData = parseEntityData(entity.second);
+			if (entityData == nullptr) {
+				throwError(false, "No se pudo crear correctamente la entidad en KeepBetweenScenes");
+			}
+			sceneManager.addKBSData(entityData);
 		}
 	}
 	if (sceneBlueprints.isTable()) {

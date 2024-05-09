@@ -32,11 +32,10 @@ private:
 	/// </summary>
 	/// <param name="entityData">Estructura donde se guardan los parametros.</param>
 	/// <param name="handler">Entrada en lua con el la informacion de handler.</param>
-	/// <param name="keepBetweenScenes">Entrada en lua con el la informacion si se mantiene entre escenas.</param>
 	/// <param name="group">Entrada en lua con el la informacion de group.</param>
 	/// <param name="components">Entrada en lua con la informacion de los componentes.</param>
 	/// <returns>Booleano que indica si los valores de la entidad eran validos</returns>
-	bool extractEntityValues(EntityData& entityData, luabridge::LuaRef& handler, luabridge::LuaRef& keepBetweenScenes, luabridge::LuaRef& group, luabridge::LuaRef& components);
+	bool extractEntityValues(EntityData& entityData, luabridge::LuaRef& handler, luabridge::LuaRef& group, luabridge::LuaRef& components);
 	/// <summary>
 	/// Agrega al EntityData los hijos asignados en Lua.
 	/// </summary>

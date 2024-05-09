@@ -93,12 +93,15 @@ std::vector<Entity*>& Scene::getEntitiesByGroup(int groupId) {
 Entity* Scene::getEntityByHandler(std::string const& handler) {
     auto iter = handlers.find(handler);
     if (iter == handlers.end()) {
-        throwError(nullptr, "No existe la entidad con el handler" + handler + " en la escena");
+        throwError(nullptr, "No existe la entidad con el handler " + handler + " en la escena");
     }
     return iter->second;
 }
 
 bool Scene::setHandler(std::string const& handler, Entity* entity) {
+    if (handlers.count(handler)) {
+        reportError("Ya existia una entidad con el handler " + handler + " en la escena. Ha sido reemplazada");
+    }
     return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
 }
 

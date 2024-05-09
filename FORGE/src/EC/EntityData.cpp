@@ -5,7 +5,6 @@
 
 EntityData::EntityData() :
 	isBlueprint(false),
-	keepBetweenScenes(false),
 	group(""),
 	handler(""),
 	components(Factory::GetInstance()->getComponentAmount(), nullptr) {
@@ -14,7 +13,6 @@ EntityData::EntityData() :
 EntityData::EntityData(EntityData const& other) :
 	isBlueprint(false),
 	group(other.group),
-	keepBetweenScenes(other.keepBetweenScenes),
 	handler(other.handler) {
 	for (auto const& component : other.components) {
 		ComponentData* newComp = nullptr;

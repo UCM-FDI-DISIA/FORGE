@@ -32,6 +32,7 @@ private:
 
 	std::unordered_map<std::string, EntityData*> entityBlueprints;
 	std::unordered_map<std::string, std::vector<EntityData*>> sceneBlueprints;
+	std::vector<EntityData*> keptBetweenScenes;
 
 	std::unordered_map<std::string, int> groups;
 
@@ -122,6 +123,10 @@ public:
 	/// <param name="id">Identificador del blueprint</param>
 	/// <returns>La escena creada</returns>
 	FORGE_API Scene* createScene(std::string const& id);
+	/// <summary>
+	/// Agrega las entidades que se mantienen entre escenas a la escena
+	/// </summary>
+	FORGE_API void addKeptBetweenScenes();
 	/// <returns>
 	/// Una escena a partir de su Identificador
 	/// </returns>
@@ -162,6 +167,11 @@ public:
 	/// <param name="id">Identificador del blueprint</param>
 	/// <param name="scene">Blueprint de la escena</param>
 	FORGE_API void addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene);
+	/// <summary>
+	/// Agrega un blueprint de una entidad para que se mantenga entre escenas
+	/// </summary>
+	/// <param name="kbsData">Blueprint de la entidad que se mantendra entre escenas</param>
+	FORGE_API void addKBSData(EntityData* kbsData);
 	/// <summary>
 	/// Agrega un blueprint de entidad y lo mapea con su id
 	/// </summary>

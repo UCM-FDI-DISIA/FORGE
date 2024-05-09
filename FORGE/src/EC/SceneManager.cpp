@@ -38,9 +38,6 @@ SceneManager::EntityPair* SceneManager::addEntity(Scene* scene, EntityData* data
 	if (data->handler != "") {
 		scene->setHandler(data->handler, entity);
 	}
-	if (data->keepBetweenScenes) {
-		entity->setKeepBetweenScenes(true);
-	}
 	for (auto& componentData : data->components) {
 		if (componentData != nullptr) {
 			Component* component = entity->addComponent(componentData->getId());
@@ -230,6 +227,27 @@ Scene* SceneManager::createScene(std::string const& id) {
 	return newScene;
 }
 
+FORGE_API void SceneManager::addKeptBetweenScenes() {
+	std::unordered_set<EntityPair*> initData;
+	for (EntityData* entityData : keptBetweenScenes) {
+		EntityPair* pair = addEntity(activeScene.second, entityData);
+		Entity* entity = pair->entity;
+		if (!entity->isAlive()) {
+			delete pair;
+			reportError("No se ha podido crear la entidad.");
+		}
+		else {
+			entity->setKeepBetweenScenes(true);
+			initData.insert(pair);
+		}
+	}
+	for (auto& initPair : initData) {
+		initEntity(initPair);
+		delete initPair;
+	}
+	activeScene.second->refresh();
+}
+
 Scene* SceneManager::getScene(std::string const& id) {
 	auto iter = loadedScenes.find(id);
 	if (iter != loadedScenes.end()) {
@@ -276,6 +294,10 @@ int SceneManager::getGroupId(std::string const& group) {
 
 void SceneManager::addSceneBlueprint(std::string const& id, std::vector<EntityData*> const& scene) {
 	sceneBlueprints.insert({ id,scene });
+}
+
+FORGE_API void SceneManager::addKBSData(EntityData* kbsData) {
+	keptBetweenScenes.push_back(kbsData);
 }
 
 void SceneManager::addEntityBlueprint(std::string const& id, EntityData* entity) {
