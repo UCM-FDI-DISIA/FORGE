@@ -2,6 +2,7 @@
 #include "InvokingForge.h"
 
 Invoker::Invoker() :
+	valid(false),
 	functions(InvokingForge::GetInstance()->registerInvoker()) {
 }
 
@@ -10,8 +11,14 @@ void Invoker::registerFunction(std::string const& name, std::function<void()> co
 }
 
 void Invoker::invoke(std::string const& func) {
-	auto it = functions.find(func);
-	if (it != functions.end()) {
-		it->second();
+	if (valid) {
+		auto it = functions.find(func);
+		if (it != functions.end()) {
+			it->second();
+		}
 	}
+}
+
+void Invoker::invalidate() {
+	valid = false;
 }

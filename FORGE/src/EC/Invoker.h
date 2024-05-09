@@ -13,6 +13,7 @@
 class Invoker {
 private:
 	std::unordered_map<std::string, std::function<void()>>& functions;
+	bool valid;
 public:
 	/// <summary>
 	/// Invocador, sirve para registrar funciones de C++ y llamarlas desde Lua a traves de el
@@ -29,6 +30,10 @@ public:
 	/// </summary>
 	/// <param name="func">Nombre de la funcion registrada que se quiere invocar</param>
 	FORGE_API void invoke(std::string const& func);
+	/// <summary>
+	/// Invalida el Invoker
+	/// </summary>
+	FORGE_API void invalidate();
 };
 
 

@@ -5,9 +5,10 @@
 #include "Transform.h"
 #include "RectTransform.h"
 #include "Invoker.h"
+#include "InvokingForge.h"
 
 Entity::Entity() : 
-    inv(new Invoker()),
+    inv(InvokingForge::GetInstance()->generate()),
     fact(*Factory::GetInstance()),
     scene(nullptr),
     components(),
@@ -30,7 +31,7 @@ Entity::~Entity() {
     if (parent != nullptr) {
         parent->removeChild(this);
     }
-    delete inv;
+    inv.invalidate();
 }
 
 void Entity::setContext(Scene* _scene, int _groupId) {
@@ -39,7 +40,7 @@ void Entity::setContext(Scene* _scene, int _groupId) {
     alive = true;
 }
 
-bool Entity::isAlive() {
+bool Entity::isAlive() const {
     return alive; 
 }
 
@@ -152,7 +153,7 @@ int Entity::getNumberOfComponents() {
     return static_cast<int>(components.size());
 }
 
-int Entity::getGroup() {
+int Entity::getGroup() const{
     return groupId;
 }
 
@@ -194,7 +195,7 @@ void Entity::setEnabled(bool enabled) {
     }
 }
 
-bool Entity::isKeepBetweenScenes() {
+bool Entity::isKeepBetweenScenes() const{
     return keepBetweenScenes;
 }
 
@@ -210,5 +211,5 @@ void Entity::changeScene(Scene* newScene) {
 }
 
 Invoker& Entity::getInvoker() {
-    return *inv;
+    return inv;
 }

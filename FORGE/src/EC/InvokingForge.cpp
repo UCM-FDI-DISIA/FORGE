@@ -28,6 +28,15 @@ void InvokingForge::shutDown() {
 	for (auto& container : invokerContainers) {
 		container.clear();
 	}
+	for (auto& invoker : invokers) {
+		delete invoker;
+	}
+	invokers.clear();
+}
+
+Invoker& InvokingForge::generate() {
+	invokers.push_back(new Invoker());
+	return *invokers.back();
 }
 
 std::unordered_map<std::string, std::function<void()>>& InvokingForge::registerInvoker() {

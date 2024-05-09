@@ -15,7 +15,7 @@ class Invoker;
 
 class Entity {
 private:
-	Invoker* inv;
+	Invoker& inv;
 	Factory& fact;
 	Scene* scene;
 	std::string handler;
@@ -55,7 +55,7 @@ public:
 	/// <returns>
 	/// Booleano que indica si la Entity esta viva
 	/// </returns>
-	FORGE_API bool isAlive();
+	FORGE_API bool isAlive() const;
 	/// <summary>
 	/// Asigna si la Entity esta viva o no, de cara al recolector de basura
 	/// </summary>
@@ -143,7 +143,7 @@ public:
 	/// <returns>
 	/// El grupo al que pertenece la Entity
 	/// </returns>
-	FORGE_API int getGroup();
+	FORGE_API int getGroup() const;
 	/// <returns>
 	/// Un unordered_set con punteros a los hijos de la entidad
 	/// </returns>
@@ -164,7 +164,7 @@ public:
 	/// <returns>
 	/// Booleano que indica si la Entity se mantiene entre escenas
 	/// </returns>
-	FORGE_API bool isKeepBetweenScenes();
+	FORGE_API bool isKeepBetweenScenes() const;
 	/// <summary>
 	/// Asigna si la Entity se mantiene entre escenas al realizar un cambio de escena
 	/// </summary>

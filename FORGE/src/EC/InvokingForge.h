@@ -8,12 +8,15 @@
 #include <functional>
 #include <unordered_map>
 
+class Invoker;
+
 /// <summary>
 /// Fragua de invocacion
 /// </summary>
 class InvokingForge {
 private:
 	std::list<std::unordered_map<std::string, std::function<void()>>> invokerContainers;
+	std::list<Invoker*> invokers;
 	static std::unique_ptr<InvokingForge> instance;
 	static bool initialised;
 	/// <summary>
@@ -37,6 +40,11 @@ public:
 	/// Elimina todos los invocadores de la fragua
 	/// </summary>
 	void shutDown();
+	/// <summary>
+	/// Genera un nuevo Invoker y devuelve una referencia al mismo
+	/// </summary>
+	/// <returns>Una referencia a un nuevo invoker</returns>
+	Invoker& generate();
 	/// <summary>
 	/// Registra un invocador en la fragua, se llama desde el constructor de Invoker
 	/// </summary>
