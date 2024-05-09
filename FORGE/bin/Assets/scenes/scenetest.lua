@@ -42,11 +42,14 @@ local prefabs = {
     }
 }
 
+local keepBeetweenScenes = {
+    jugador = {
+        blueprint = "player"
+    }
+}
+
 local scenes = {
     Test = {
-        jugador = {
-            blueprint = "player"
-        },
         cam = {
             components = {
                 Transform = {
@@ -231,15 +234,6 @@ local scenes = {
         }
     },
     Play = {
-        jugador = {
-            blueprint = "player",
-            components = {
-                Transform = {
-                    position = {0, 0, 0},
-                    scale = {0.25, 0.25, 0.25}
-                }
-            }
-        },
         cartel = {
             group = "obstacle",
             components = {
@@ -306,4 +300,4 @@ local scenes = {
     }
 }
 
-return prefabs, scenes
+return prefabs, keepBeetweenScenes, scenes

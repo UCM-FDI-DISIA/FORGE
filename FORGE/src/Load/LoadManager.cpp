@@ -406,7 +406,11 @@ bool LoadManager::loadInitialScene(LuaRef const& config) {
 	if (!initScene.isString()) {
 		throwError(false, "No se proporciono una escena inicial o no es un string.");
 	}
-	return sceneManager.changeScene(initScene.tostring());
+	if (!sceneManager.changeScene(initScene.tostring())) {
+		return false;
+	}
+	sceneManager.addKeptBetweenScenes();
+	return true;
 }
 
 LoadManager::LoadManager() :
