@@ -6,6 +6,11 @@ Config = {
 	initialScene = "Test"
 }
 
+Window = {
+	width  = 1280,
+	height = 768
+}
+
 Physics = {
 	layers = {	--		Default	Layer1	Layer2	Layer3
 		--Layer3	= {	false,	false,	false,	true},

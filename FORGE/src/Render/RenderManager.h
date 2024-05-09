@@ -81,7 +81,7 @@ public:
 	/// Setup de una escena de prueba base, en el futuro se quitara esa parte y se hara que inicialice la ventana de OGRE sin mas.
 	/// </summary>
 	//<param name="name"> Nombre de la aplicacion</param>
-	bool setup(std::string const& appName);
+	bool setup(std::string const& appName, uint32_t width, uint32_t height);
 
 	/// <summary>
 	/// Renderiza un frame

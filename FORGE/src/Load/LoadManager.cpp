@@ -283,6 +283,24 @@ bool LoadManager::loadGame(LuaRef const& config, std::string& gameName) {
 	return true;
 }
 
+bool LoadManager::loadWindow(uint32_t& width, uint32_t& height) {
+	LuaRef window = getGlobal(luaForge->getState(), "Window");
+	if (!window.isTable()) {
+		throwError(false, "No se pudo encontrar la configuracion de ventana en el archivo proporcionado.");
+	}
+	LuaRef w = window["width"];
+	LuaRef h = window["height"];
+	if (!w.isInstance<uint32_t>()) {
+		throwError(false, "Formato de anchura incorrecto.");
+	}
+	width = w.cast<uint32_t>();
+	if (!h.isInstance<uint32_t>()) {
+		throwError(false, "Formato de altura incorrecto.");
+	}
+	height = h.cast<uint32_t>();
+	return true;
+}
+
 bool LoadManager::loadComponents() {
 	factory.registerComponent<Transform>();
 	factory.registerComponent<RectTransform>();
@@ -409,6 +427,10 @@ bool LoadManager::init(std::string const& configFile) {
 	if (!loadGame(config, gameName)) {
 		throwError(false, "No se pudo cargar el juego.");
 	}
+	uint32_t width, height;
+	if (!loadWindow(width, height)) {
+		throwError(false, "No se pudo cargar la ventana.");
+	}
 	if (!loadComponents()) {
 		throwError(false, "No se pudieron cargar los componentes.");
 	}
@@ -418,7 +440,7 @@ bool LoadManager::init(std::string const& configFile) {
 	if (!loadScenes(config)) {
 		throwError(false, "No se pudieron cargar las escenas.");
 	}
-	if (!renderManager.setup(gameName)) {
+	if (!renderManager.setup(gameName, width, height)) {
 		throwError(false, "No se pudo iniciar el sistema de renderizado.");
 	}
 	if (!guiManager.setup()) {

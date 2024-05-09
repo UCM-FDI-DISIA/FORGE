@@ -81,7 +81,13 @@ private:
 	/// <param name="config">Referencia al LuaRef en el que se ha cargado la configuracion</param>
 	/// <param name="gameName">string en el que se asignara el nombre del juego</param>
 	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
-	bool loadGame(luabridge::LuaRef const& config, std::string& gameName);
+	bool loadGame(luabridge::LuaRef const& config, std::string& gameName);	/// <summary>
+	/// Carga las dimensiones de la ventana del juego
+	/// </summary>
+	/// <param name="config">Referencia al LuaRef en el que se ha cargado la configuracion</param>
+	/// <param name="gameName">string en el que se asignara el nombre del juego</param>
+	/// <returns>Booleano que indica si la carga se ha completado correctamente</returns>
+	bool loadWindow(uint32_t& width, uint32_t& height);
 	/// <summary>
 	/// Carga los componentes del juego que se hayan agregado a la Factory
 	/// </summary>

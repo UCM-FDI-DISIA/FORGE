@@ -128,18 +128,11 @@ void RenderForge::locateResources() {
 }
 
 NativeWindowPair RenderForge::createWindow() {
-	uint32_t w, h;
 	Ogre::NameValuePairList miscParams;
 
 	if (root == nullptr) return { nullptr, nullptr };
 
 	Ogre::ConfigOptionMap ropts = root->getRenderSystem()->getConfigOptions();
-
-	std::istringstream mode(ropts["Video Mode"].currentValue);
-	Ogre::String token;
-	mode >> w;
-	mode >> token;
-	mode >> h;
 
 	miscParams["FSAA"] = ropts["FSAA"].currentValue;
 	miscParams["vsync"] = ropts["VSync"].currentValue;
@@ -153,22 +146,24 @@ NativeWindowPair RenderForge::createWindow() {
 	if (ropts["Full Screen"].currentValue == "Yes") {
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
-	window.native = SDL_CreateWindow(appName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+	window.native = SDL_CreateWindow(appName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, flags);
 
 	// Establecemos los parametros de la ventana de render y la creamos
 	SDL_SysWMinfo wmInfo;
 	SDL_VERSION(&wmInfo.version);
 	SDL_GetWindowWMInfo(window.native, &wmInfo);
 	miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
-	window.render = root->createRenderWindow(appName, w, h, false, &miscParams);
+	window.render = root->createRenderWindow(appName, windowWidth, windowHeight, false, &miscParams);
 	return window;
 }
 
-RenderForge::RenderForge(std::string const& _appName) :
+RenderForge::RenderForge(std::string const& _appName, uint32_t width, uint32_t height) :
 	root(nullptr),
 	window({nullptr, nullptr}),
 	fileSystemLayer(nullptr),
 	appName(_appName),
+	windowWidth(width),
+	windowHeight(height),
 	solutionPath() {
 	correctInitialitation = true;
 	

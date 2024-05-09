@@ -77,14 +77,14 @@ RenderManager* RenderManager::GetInstance() {
 	return nullptr;
 }
 
-bool RenderManager::setup(std::string const& appName) {
+bool RenderManager::setup(std::string const& appName, uint32_t width, uint32_t height) {
 	// Verificacion de nombre de ventana valido	
 	for (char c : appName) {
 		if (c == '?') {
 			throwError(false, "Nombre de ventana no valido");
 		}
 	}
-	forge = new RenderForge(appName);
+	forge = new RenderForge(appName, width, height);
 	if (!forge->getInitialitation()) return false;
 	root = forge->getRoot();
 	// Creamos la escena

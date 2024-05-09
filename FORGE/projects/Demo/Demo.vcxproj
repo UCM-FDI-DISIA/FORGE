@@ -113,8 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin\Assets\assets.forge.lua" />
-    <None Include="..\..\bin\Assets\config.forge.lua" />
     <None Include="..\..\bin\Assets\scenes\scenetest.lua" />
+    <None Include="..\..\bin\config.forge.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

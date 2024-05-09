@@ -36,6 +36,8 @@ private:
 	std::string appName;
 	std::string solutionPath;
 	bool correctInitialitation;
+
+	uint32_t windowWidth, windowHeight;
 	
 	#pragma region Setup
 	/// <summary>
@@ -61,7 +63,7 @@ public:
 	/// Constructora de RenderForge
 	/// </summary>
 	/// <param name="appName:">Nombre de la aplicacion ejecutada</param>
-	RenderForge(std::string const& appName);
+	RenderForge(std::string const& appName, uint32_t width, uint32_t height);
 
 	/// <summary>
 	/// Destructora del RenderForge
