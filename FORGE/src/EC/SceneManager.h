@@ -61,7 +61,7 @@ private:
 	/// </summary>
 	/// <param name="data">Data del blueprint a copiar</param>
 	/// <returns>Puntero a la entidad generada</returns>
-	Entity* instantiateBlueprint(EntityData* data);
+	EntityPair* instantiateBlueprint(EntityData* data);
 	/// <summary>
 	/// Efectua el cambio de escena a aquella marcada como nueva escena a iniciar
 	/// </summary>

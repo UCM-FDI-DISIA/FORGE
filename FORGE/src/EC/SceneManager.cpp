@@ -73,22 +73,13 @@ Entity* SceneManager::initEntity(EntityPair* pair) {
 	return pair->entity;
 }
 
-Entity* SceneManager::instantiateBlueprint(EntityData* data) {
+SceneManager::EntityPair* SceneManager::instantiateBlueprint(EntityData* data) {
 	if (data == nullptr) {
 		throwError(nullptr, "No se ha encontrado el BluePrint espeficiado");
 	}
 	Scene*& scene = activeScene.second;
 	EntityPair* pair = addEntity(scene, data);
-	Entity* entity = pair->entity;
-	if (entity->isAlive()) {
-		initEntity(pair);
-		if (entity->isAlive()) {
-			delete pair;
-			return entity;
-		}
-	}
-	delete pair;
-	throwError(nullptr, "La entidad no se ha instanciado correctamente");
+	return pair;
 }
 
 bool SceneManager::doChangeScene() {
@@ -179,7 +170,17 @@ lua_State* SceneManager::getLuaState() {
 
 Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId) {
 	EntityData* data = getEntityBlueprint(bluePrintId);
-	return instantiateBlueprint(data);
+	EntityPair* pair =  instantiateBlueprint(data);
+	Entity* entity = pair->entity;
+	if (entity->isAlive()) {
+		initEntity(pair);
+		if (entity->isAlive()) {
+			delete pair;
+			return entity;
+		}
+	}
+	delete pair;
+	throwError(nullptr, "La entidad no se ha instanciado correctamente");
 }
 
 Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos) {
@@ -189,23 +190,59 @@ Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge
 		throwError(nullptr, "No se ha encontrado el componente Transform en el blueprint");
 	}
 	transformData->add<forge::Vector3>("position", newPos);
-	return instantiateBlueprint(data);
+	EntityPair* pair = instantiateBlueprint(data);
+	Entity* entity = pair->entity;
+	if (entity->isAlive()) {
+		initEntity(pair);
+		if (entity->isAlive()) {
+			delete pair;
+			return entity;
+		}
+	}
+	delete pair;
+	throwError(nullptr, "La entidad no se ha instanciado correctamente");
 }
 
 Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, Entity* parent) {
-	Entity* entity = instantiateBlueprint(bluePrintId);
+	EntityData* data = getEntityBlueprint(bluePrintId);
+	EntityPair* pair = instantiateBlueprint(data);
+	Entity* entity = pair->entity;
 	if (entity != nullptr) {
 		parent->addChild(entity);
 	}
-	return entity;
+	if (entity->isAlive()) {
+		initEntity(pair);
+		if (entity->isAlive()) {
+			delete pair;
+			return entity;
+		}
+	}
+	delete pair;
+	throwError(nullptr, "La entidad no se ha instanciado correctamente");
+
 }
 
 Entity* SceneManager::instantiateBlueprint(std::string const& bluePrintId, forge::Vector3 const& newPos, Entity* parent) {
-	Entity* entity = instantiateBlueprint(bluePrintId, newPos);
+	EntityData* data = getEntityBlueprint(bluePrintId);
+	auto transformData = data->components[Factory::GetInstance()->getComponentOrder(Transform::id)];
+	if (transformData == nullptr) {
+		throwError(nullptr, "No se ha encontrado el componente Transform en el blueprint");
+	}
+	transformData->add<forge::Vector3>("position", newPos);
+	EntityPair* pair = instantiateBlueprint(data);
+	Entity* entity = pair->entity;
 	if (entity != nullptr) {
 		parent->addChild(entity);
 	}
-	return entity;
+	if (entity->isAlive()) {
+		initEntity(pair);
+		if (entity->isAlive()) {
+			delete pair;
+			return entity;
+		}
+	}
+	delete pair;
+	throwError(nullptr, "La entidad no se ha instanciado correctamente");
 }
 
 bool SceneManager::changeScene(std::string const& scene, bool renewScene) {
