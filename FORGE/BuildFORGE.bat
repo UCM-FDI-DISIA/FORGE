@@ -2,7 +2,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 set INCLUDEDIR=.\include\
-set INCLUDEVER=1.1.6
+set INCLUDEVER=1.1.7
 set INCLUDE=1
 
 ::Se compilan las dependencias
