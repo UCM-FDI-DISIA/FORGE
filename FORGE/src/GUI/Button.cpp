@@ -12,7 +12,7 @@
 const std::string Button::id = "Button";
 
 void Button::changeButtonImage() {
-	switch (state) {
+	switch (newState) {
 		case forge::OUT_STATE:
 			setMaterial(outTexture);
 			break;
@@ -145,10 +145,10 @@ void Button::onDisabled() {
 void Button::update() {
 	checkMousePosition();
 	if (state != newState) {
-		state = newState;
 		changeButtonImage();
+		checkCallbacks();
+		state = newState;
 	}
-	checkCallbacks();
 }
 
 bool Button::isPressed() const {
