@@ -32,6 +32,7 @@ bool Mesh::initComponent(ComponentData* data) {
         throwError(false, "Se requiere un componente Transform para generar un Mesh");
     }
     ogreEntity = renderManager.addMeshNode(this);
+    if (ogreEntity == nullptr) return false;
     return true;;
 }
 
