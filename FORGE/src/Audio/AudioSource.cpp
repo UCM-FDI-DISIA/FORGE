@@ -58,7 +58,7 @@ bool AudioSource::initComponent(ComponentData* data) {
 }
 
 void AudioSource::update() {
-	if (sound2D && transform->getNeedsUpdate()) {
+	if (!sound2D && transform->getNeedsUpdate()) {
 		sound->setPosition(transform->getGlobalPosition());
 	}
 }
