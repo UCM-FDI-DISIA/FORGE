@@ -144,11 +144,11 @@ void Button::onDisabled() {
 
 void Button::update() {
 	checkMousePosition();
-	checkCallbacks();
 	if (state != newState) {
 		state = newState;
 		changeButtonImage();
 	}
+	checkCallbacks();
 }
 
 bool Button::isPressed() const {
