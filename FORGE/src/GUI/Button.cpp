@@ -51,12 +51,12 @@ void Button::checkCallbacks() {
 			(*onOver)(*onOverInvoker);
 		}
 	}
-	if (newState == forge::CLICKED_STATE && state == forge::HOVER_STATE) {
+	else if (newState == forge::CLICKED_STATE && state == forge::HOVER_STATE) {
 		if (onClick != nullptr) {
 			(*onClick)(*onClickInvoker);
 		}
 	}
-	if (newState == forge::HOVER_STATE && state == forge::CLICKED_STATE) {
+	else if (newState == forge::HOVER_STATE && state == forge::CLICKED_STATE) {
 		if (onRelease != nullptr) {
 			(*onRelease)(*onReleaseInvoker);
 		}
@@ -116,9 +116,15 @@ bool Button::initComponent(ComponentData* data) {
 	}
 	setMaterial(outTexture);
 
-	initInvoker(data, onOverInvoker, "onOverInvoker");
-	initInvoker(data, onClickInvoker, "onClickInvoker");
-	initInvoker(data, onReleaseInvoker, "onReleaseInvoker");
+	if (!initInvoker(data, onOverInvoker, "onOverInvoker")) {
+		throwError(false, "onOverInvoker no valido");
+	}
+	if (!initInvoker(data, onClickInvoker, "onClickInvoker")) {
+		throwError(false, "onClickInvoker no valido");
+	}
+	if (!initInvoker(data, onReleaseInvoker, "onReleaseInvoker")) {
+		throwError(false, "onReleaseInvoker no valido");
+	}
 
 	return true;
 }
