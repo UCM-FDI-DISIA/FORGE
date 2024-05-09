@@ -90,7 +90,7 @@ bool LoadManager::extractChildren(EntityData& entityData, LuaRef& children) {
 		if (aux) {
 			i = index[0].cast<int>();
 			// si el index es un entero no valido
-			aux = aux && (i >= 0 && i < entityData.children.size());
+			aux = aux && (i >= 0 && i < static_cast<int>(entityData.children.size()));
 		}
 		// Si se cumplen las condiciones anteriores se agrega el hijo como nuevo elemento
 		if (!aux) {
@@ -244,7 +244,7 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 				throwError(false, "Nombre de escena no valido");
 			}
 			std::vector<EntityData*> parsedScene = parseScene(scene.second);
-			if (parsedScene.size() <= 0) {
+			if (static_cast<int>(parsedScene.size()) <= 0) {
 				throwError(false, "Escena no valida");
 			}
 			sceneManager.addSceneBlueprint(scene.first.tostring(), parsedScene);
@@ -266,7 +266,7 @@ bool LoadManager::loadAudio() {
 		if (!audio.second.isString()) {
 			throwError(false, "Ruta al audio no existe o no es un string");
 		}
-		am.addSound(audio.first.cast<std::string>(), audio.second.cast<std::string>());
+		am.addSound(audio.first.tostring(), audio.second.tostring());
 	}
 	return true;
 }
@@ -281,7 +281,7 @@ bool LoadManager::loadGame(LuaRef const& config, std::string& gameName) {
 	if (!game.isString()) {
 		throwError(false, "\"" << reading << "\" no se proporciono o no es un string.");
 	}
-	gameName = game.cast<std::string>();
+	gameName = game.tostring();
 	if (!gameLoader->init(gameName)) {
 		throwError(false, "No se pudo cargar el juego.");
 	}
@@ -391,7 +391,7 @@ bool LoadManager::loadAssets(LuaRef const& config) {
 	if (!assets.isString()) {
 		throwError(true, "No se proporciono un archivo con assets a cargar o el valor introducido no es un string.");
 	}
-	if (!luaForge->doFile(assets.cast<std::string>())) {
+	if (!luaForge->doFile(assets.tostring())) {
 		throwError(false, "No hay escenas que cargar.");
 	}
 	if (!loadAudio()) {
@@ -406,7 +406,7 @@ bool LoadManager::loadInitialScene(LuaRef const& config) {
 	if (!initScene.isString()) {
 		throwError(false, "No se proporciono una escena inicial o no es un string.");
 	}
-	return sceneManager.changeScene(initScene.cast<std::string>());
+	return sceneManager.changeScene(initScene.tostring());
 }
 
 LoadManager::LoadManager() :

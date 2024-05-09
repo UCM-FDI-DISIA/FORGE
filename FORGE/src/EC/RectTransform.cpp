@@ -11,7 +11,8 @@ void RectTransform::setParent(RectTransform* newParent) {
 RectTransform::RectTransform() :
 	position(),
 	scale(1, 1),
-	needsUpdate(true) {
+	needsUpdate(true),
+	parent(nullptr) {
 	serializer(position, "position");
 	serializer(scale, "scale");
 }

@@ -7,6 +7,7 @@
 #include <lua.hpp>
 #pragma warning(push)
 #pragma warning(disable : 26439)
+#pragma warning(disable : 26495)
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)
 #include "Transform.h"
@@ -256,7 +257,7 @@ Scene* SceneManager::getScene(std::string const& id) {
 	return nullptr;
 }
 
-Scene* SceneManager::getActiveScene() {
+Scene* SceneManager::getActiveScene() const {
 	return activeScene.second;
 }
 

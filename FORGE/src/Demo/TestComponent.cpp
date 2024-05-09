@@ -1,6 +1,4 @@
 ﻿#include "TestComponent.h"
-#include "lua.hpp"
-#include "LuaBridge/LuaBridge.h"
 #include "Input.h"
 #include "Transform.h"
 #include "ComponentData.h"
@@ -38,15 +36,15 @@ bool TestComponent::initComponent(ComponentData* data) {
 		rigidBody = entity->getComponent<RigidBody>();
 
 		rigidBody->registerCallback(forge::onCollisionEnter, [this] (Collider* me, Collider* other) {
-			std::cerr << "Colision Iniciada" << std::endl;
+			std::cout << "Colision Iniciada" << std::endl;
 		});
 
 		rigidBody->registerCallback(forge::onCollisionStay, [this] (Collider* me, Collider* other) {
-			std::cerr << "Colision Continuada" << std::endl;
+			std::cout << "Colision Continuada" << std::endl;
 		});
 
 		rigidBody->registerCallback(forge::onCollisionLeave, [this] (Collider* me, Collider* other) {
-			std::cerr << "Colision Finalizada" << std::endl;
+			std::cout << "Colision Finalizada" << std::endl;
 		});
 
 		if (animator != nullptr && animator->getEntity()->isAlive()) {
@@ -74,7 +72,7 @@ void TestComponent::update() {
 	}
 	if (input.keyPressed(K_E)) {
 		activeAnim++;
-		if (activeAnim >= anims.size()) {
+		if (activeAnim >= static_cast<int>(anims.size())) {
 			activeAnim = 0;
 		}
 		animator->changeActive(anims[activeAnim]);
@@ -86,35 +84,26 @@ void TestComponent::update() {
 		sceneManager->instantiateBlueprint("obstaculo", entity);
 	}
 	if (input.keyDown(K_W)) {
-		//transform->setPositionZ(transform->getPosition().getZ() + movement);
-		//rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
 		rigidBody->setLinearVelocity(forge::Vector3(0,1,0));
 	}
 
 	if (input.keyPressed(K_W)) {
-		//transform->setPositionZ(transform->getPosition().getZ() + movement);
-		//rigidBody->setPositionZ(transform->getPosition().getZ() + movement);
 		rigidBody->setLinearVelocity(forge::Vector3(0, 1, 0));
 	}
 	if (input.keyPressed(K_S)) {
-		//transform->setPositionZ(transform->getPosition().getZ() - movement);
 		rigidBody->setPositionZ(transform->getPosition().getZ() - movement);
 
 	}
 	if (input.keyPressed(K_D)) {
-		//transform->setPositionX(transform->getPosition().getX() + movement);
 		rigidBody->setPositionX(transform->getPosition().getX() + movement);
 	}
 	if (input.keyPressed(K_A)) {
-		//transform->setPositionX(transform->getPosition().getX() - movement);
 		rigidBody->setPositionX(transform->getPosition().getX() - movement);
 	}
 	if (input.keyPressed(K_RIGHT)) {
-		//transform->rotateY(movement);
 		rigidBody->rotateY(movement);
 	}
 	if (input.keyPressed(K_LEFT)) {
-		//transform->rotateY(-movement);
 		rigidBody->rotateY(-movement);
 	}
 

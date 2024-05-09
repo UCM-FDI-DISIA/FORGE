@@ -6,6 +6,7 @@
 #include <unordered_set>
 #pragma warning(push)
 #pragma warning(disable : 26439)
+#pragma warning(disable : 26495)
 #include <lua.hpp>
 #include <LuaBridge/LuaBridge.h>
 #pragma warning(pop)

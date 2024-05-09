@@ -18,8 +18,8 @@ struct lua_State;
 class SceneManager {
 private:
 	struct EntityPair {
-		Entity* entity;
-		EntityData* data;
+		Entity* entity = nullptr;
+		EntityData* data = nullptr;
 		std::vector<EntityPair*> children;
 		~EntityPair();
 	};
@@ -134,7 +134,7 @@ public:
 	/// <returns>
 	/// Devuelve la escena en ejecucion
 	/// </returns>
-	FORGE_API Scene* getActiveScene();
+	FORGE_API Scene* getActiveScene() const;
 	/// <summary>
 	/// Devuelve el identificador de la escena activa
 	/// </summary>
