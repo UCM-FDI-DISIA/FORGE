@@ -124,7 +124,12 @@ void RenderForge::locateResources() {
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(rtShaderLibPath + "/HLSL", type, sec);
 	}
 
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	try {
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	}
+	catch (std::exception e) {
+		reportError("No se puede leer el mismo material 2 veces");
+	}
 }
 
 NativeWindowPair RenderForge::createWindow() {
