@@ -32,3 +32,11 @@ void AudioListener::update() {
         manager.setListenerPosition(transform->getGlobalPosition(), transform->getForward());
     }
 }
+
+void AudioListener::onEnabled() {
+    manager.registerListener(this);
+}
+
+FORGE_API void AudioListener::onDisabled() {
+    manager.deregisterListener(this);
+}

@@ -29,5 +29,13 @@ public:
 	/// la actualiza
 	/// </summary>
 	FORGE_API void update() override;
+	/// <summary>
+	/// Vuelve a registrar el AudioListener
+	/// </summary>
+	FORGE_API void onEnabled() override;
+	/// <summary>
+	/// Desregistra el AudioListener
+	/// </summary>
+	FORGE_API void onDisabled() override;
 };
 #endif // AUDIO_LISTENER_H_
