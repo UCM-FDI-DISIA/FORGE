@@ -3,6 +3,7 @@
 #include "Factory.h"
 #include "ComponentData.h"
 #include "Transform.h"
+#include "RectTransform.h"
 #include "Invoker.h"
 
 Entity::Entity() : 
@@ -113,6 +114,14 @@ Entity* Entity::setParent(Entity* newParent) {
             getComponent<Transform>()->setParent(nullptr);
         }
     }
+    if (hasComponent(RectTransform::id)) {
+        if (parent->hasComponent(RectTransform::id)) {
+            getComponent<RectTransform>()->setParent(parent->getComponent<RectTransform>());
+        }
+        else {
+            getComponent<RectTransform>()->setParent(nullptr);
+        }
+    }
     return parent;
 }
 
@@ -121,6 +130,9 @@ void Entity::removeParent() {
     parent = nullptr;
     if (hasComponent(Transform::id)) {
         getComponent<Transform>()->setParent(nullptr);
+    }
+    if (hasComponent(RectTransform::id)) {
+        getComponent<RectTransform>()->setParent(nullptr);
     }
 }
 
