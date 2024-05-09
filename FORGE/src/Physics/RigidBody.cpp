@@ -48,7 +48,9 @@ bool RigidBody::createRigidBody(std::string const& myShapeType, float mass, bool
     if (!Collider::createRigidBody(myShapeType, mass, isStatic, disableDeactivation)) {
         throwError(false, "No se pudo crear el RigidBody.");
     }
-
+    if (myShapeType == "Sphere") {
+        myBody->setRollingFriction(friction);
+    }
     myBody->setRestitution(restitution);
     myBody->setFriction(friction);
     lockPosition(axisBlockedPos[0], axisBlockedPos[1], axisBlockedPos[2]);
@@ -107,6 +109,10 @@ void RigidBody::lockRotation(bool x, bool y, bool z) {
 void RigidBody::setFriction(float newFriction) {
     friction = newFriction;
     myBody->setFriction(friction);
+}
+
+FORGE_API void RigidBody::setRollingFriction(float newFriction) {
+    myBody->setRollingFriction(newFriction);
 }
 
 void RigidBody::setRestitution(float newRestitution) {

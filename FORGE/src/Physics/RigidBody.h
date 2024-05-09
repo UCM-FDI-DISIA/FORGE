@@ -147,6 +147,12 @@ public:
     /// Cambia la friccion del objeto
     /// </summary>
     FORGE_API void setFriction(float newFriction);
+
+
+    /// <summary>
+    /// Cambia la friccion del objeto
+    /// </summary>
+    FORGE_API void setRollingFriction(float newFriction);
     /// <summary>
     /// Cambia la constante de restitucion
     /// </summary>
