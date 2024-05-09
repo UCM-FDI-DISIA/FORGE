@@ -123,6 +123,9 @@ bool SceneManager::doChangeScene() {
 	if (newScene != nullptr) {
 		for (Entity* entity : keptEntities) {
 			newScene->addEntity(entity);
+			if (entity->getHandler() != "") {
+				newScene->setHandler(entity->getHandler(), entity);
+			}
 		}
 		if (needInit) {
 			initScene(newScene, initData);

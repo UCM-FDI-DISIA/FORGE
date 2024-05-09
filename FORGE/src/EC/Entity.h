@@ -18,6 +18,7 @@ private:
 	Invoker* inv;
 	Factory& fact;
 	Scene* scene;
+	std::string handler;
 	std::vector<Component*> components;
 	std::unordered_map<std::string, Component*> componentMap;
 	Entity* parent;
@@ -184,5 +185,16 @@ public:
 	/// </summary>
 	/// <returns>Puntero al padre de la entidad</returns>
 	FORGE_API Entity* getParent();
+	/// <summary>
+	/// Obtiene el identificador de la entidad
+	/// </summary>
+	/// <returns>El identificador de la entidad</returns>
+	FORGE_API std::string const& getHandler();
+	/// <summary>
+	/// Establece el identificador de la entidad
+	/// </summary>
+	/// <param name="newScene">Puntero a la nueva Scene</param>
+	FORGE_API void setHandler(std::string newHandler);
+	
 };
 #endif

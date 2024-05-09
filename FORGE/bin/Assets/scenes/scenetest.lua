@@ -24,8 +24,8 @@ local prefabs = {
                 static = false,
                 layer = "ALL",
                 scale = {20, 20, 20}
-            },
-            TestComponent = 0
+            }--,
+            --TestComponent = 0
         }
     },
     obstaculo = {

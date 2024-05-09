@@ -100,9 +100,12 @@ Entity* Scene::getEntityByHandler(std::string const& handler) {
 
 bool Scene::setHandler(std::string const& handler, Entity* entity) {
     if (handlers.count(handler)) {
-        reportError("Ya existia una entidad con el handler " + handler + " en la escena. Ha sido reemplazada");
+        throwError(false, "Ya existia una entidad con el handler " + handler + " en la escena.");
     }
-    return handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second;
+    if (handlers.insert(std::pair<std::string, Entity*>(handler, entity)).second) {
+        entity->setHandler(handler);
+    }
+    return false;
 }
 
 
@@ -117,6 +120,9 @@ std::vector<Entity*> Scene::disableScene() {
             }
             else {
                 entity->setEnabled(false);
+                if (getEntityByHandler(entity->getHandler()) == entity) {
+                    handlers.erase(entity->getHandler());
+                }
                 ++iterator;
             }
         }

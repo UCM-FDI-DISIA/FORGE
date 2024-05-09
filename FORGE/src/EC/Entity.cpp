@@ -160,6 +160,14 @@ Entity* Entity::getParent() {
 	return parent;
 }
 
+std::string const& Entity::getHandler() {
+    return handler;
+}
+
+void Entity::setHandler(std::string newHandler) {
+    handler = newHandler;
+}
+
 const std::unordered_set<Entity*>& Entity::getChildren() const {
     return children;
 }
