@@ -77,6 +77,7 @@ void RigidBody::onEnabled() {
     trans.setRotation(physicsManager.fromForgeToBtQuat(lastOrientation));
     myBody->setWorldTransform(trans);
     myBody->applyCentralForce(physicsManager.fromForgeToBtVect(lastForce));
+    setTrigger(trigger);
 }
 
 void RigidBody::applyForce(forge::Vector3 const& force) {
