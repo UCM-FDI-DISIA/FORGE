@@ -48,19 +48,38 @@ protected:
     std::list<Entity*> collidedEntities;
 public:
     static const FORGE_API_VAR std::string id;
-
+    /// <summary>
+    /// Constructora del collider
+    /// </summary>
     FORGE_API Collider();
 
+    /// <summary>
+    /// Destructora del collider
+    /// </summary>
     FORGE_API ~Collider();
-
+    /// <summary>
+    /// Inicializa el componente
+    /// </summary>
+    /// <param name="data: ">Los datos usados para inicializar</param>
+    /// <returns>Devuelve si se ha podido inicializar</returns>
     FORGE_API bool initComponent(ComponentData* data) override;
 
+    /// <summary>
+    /// Update para modificar posiciones
+    /// </summary>
     FORGE_API void fixedUpdate() override;
 
     FORGE_API void onEnabled() override;
 
     FORGE_API void onDisabled() override;
-
+    /// <summary>
+    /// Metodo para crear un cuerpo fisico
+    /// </summary>
+    /// <param name="myShapeType">La forma del cuerpo</param>
+    /// <param name="mass"> Masa del cuerpo</param>
+    /// <param name="isStatic">Si el cuerpo sera estatico</param>
+    /// <param name="disableDeactivation">Evita que bullet deje de tener en cuenta sus fisicas</param>
+    /// <returns></returns>
     FORGE_API virtual bool createRigidBody(std::string const& myShapeType, float mass, bool isStatic, bool disableDeactivation);
 
     /// <summary>
