@@ -3,6 +3,7 @@
 #include <ik_vec3d.h>
 #include "AudioManager.h"
 #include "Vector3.h"
+#include "ForgeError.h"
 
 using namespace irrklang;
 using namespace forge;
@@ -56,6 +57,10 @@ bool Sound::stop() {
 bool Sound::play() {
 	if (sound == nullptr) {
 		sound = engine.play2D(&source, loop, false, true);
+		if (sound == NULL) {
+			sound = nullptr;
+			throwError(false, "No se pudo reproducir el audio 2D");
+		}
 		sound->setVolume(volume);
 		sound->setPan(pan);
 		return true;
@@ -65,6 +70,10 @@ bool Sound::play() {
 bool Sound::play(Vector3 const& position) {
 	if (sound == nullptr) {
 		sound = engine.play3D(&source, manager.forgeVector3ToIrrklangVec3(position), loop, false, true);
+		if (sound == NULL) {
+			sound = nullptr;
+			throwError(false, "No se pudo reproducir el audio 3D");
+		}
 		sound->setMinDistance(fullVolumeRadious);
 		sound->setMaxDistance(hearingRadious);
 		sound->setVolume(volume);
