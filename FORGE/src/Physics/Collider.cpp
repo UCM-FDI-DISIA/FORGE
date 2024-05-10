@@ -117,6 +117,7 @@ void Collider::onEnabled() {
     trans.setRotation(physicsManager.fromForgeToBtQuat(lastOrientation));
     myBody->setWorldTransform(trans);
     myBody->applyCentralForce(physicsManager.fromForgeToBtVect(lastForce));
+    setTrigger(trigger);
 }
 
 void Collider::onDisabled() {
