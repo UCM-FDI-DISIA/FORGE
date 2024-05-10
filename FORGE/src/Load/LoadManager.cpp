@@ -1,5 +1,6 @@
 #include "LoadManager.h"
 #include <set>
+#include <exception>
 #include <lua.hpp>
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -36,6 +37,7 @@
 #include "Image.h"
 #include "Button.h"
 #include "ProgressBar.h"
+
 
 using namespace luabridge;
 
@@ -211,11 +213,17 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 	}
 	lua_State* lua = luaForge->getState();
 	sceneManager.setLuaState(lua);
-
-	LuaRef entityBlueprints = LuaRef::fromStack(lua, -3);
-	LuaRef keepBetweenScenes = LuaRef::fromStack(lua, -2);
-	LuaRef sceneBlueprints = LuaRef::fromStack(lua, -1);
-
+	LuaRef entityBlueprints = LuaRef(lua);
+	LuaRef keepBetweenScenes = LuaRef(lua);
+	LuaRef sceneBlueprints = LuaRef(lua);
+	try {
+		entityBlueprints = LuaRef::fromStack(lua, -3);
+		keepBetweenScenes = LuaRef::fromStack(lua, -2);
+		sceneBlueprints = LuaRef::fromStack(lua, -1);
+	}
+	catch (std::exception e) {
+		throwError(false, "Faltaron valores en el archivo de escena.");
+	}
 	if (entityBlueprints.isTable()) {
 		for (auto&& entity : pairs(entityBlueprints)) {
 			if (entity.second.isString()) {
