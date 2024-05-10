@@ -117,12 +117,12 @@ std::vector<Entity*> Scene::disableScene() {
             if (entity->isKeepBetweenScenes()) {
                 keptEntities.push_back(entity);
                 iterator = group.erase(iterator);
+                if (entity->getHandler() != "" && getEntityByHandler(entity->getHandler()) == entity) {
+                    handlers.erase(entity->getHandler());
+                }
             }
             else {
                 entity->setEnabled(false);
-                if (getEntityByHandler(entity->getHandler()) == entity) {
-                    handlers.erase(entity->getHandler());
-                }
                 ++iterator;
             }
         }
