@@ -95,9 +95,9 @@ bool AudioSource::stop() {
 
 bool AudioSource::play() {
 	if (sound2D) {
-		return sound->play(transform->getGlobalPosition() + offset);
+		return sound->play();
 	}
-	return sound->play();
+	return sound->play(transform->getGlobalPosition() + offset);
 }
 
 bool AudioSource::restart() {
