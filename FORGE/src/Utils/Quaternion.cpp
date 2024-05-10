@@ -97,7 +97,6 @@ Quaternion Quaternion::operator*(const Quaternion& q) const {
 	p.x = w * q.x + x * q.w + y * q.z - z * q.y;
 	p.y = w * q.y + y * q.w + z * q.x - x * q.z;
 	p.z = w * q.z + z * q.w + x * q.y - y * q.x;
-	validate();
 	p.normalize();
 	return p;
 }
