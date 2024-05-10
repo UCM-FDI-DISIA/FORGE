@@ -23,18 +23,7 @@ Transform::Transform() :
 }
 
 FORGE_API bool Transform::initComponent(ComponentData* data) {
-	if (scale.getX() == 0.0f) {
-		scale.setX(1.0f);
-		reportError("El valor en la X de la escala no puede ser 0. Asignado a 1.");
-	}
-	if (scale.getY() == 0.0f) {
-		scale.setY(1.0f);
-		reportError("El valor en la Y de la escala no puede ser 0. Asignado a 1.");
-	}
-	if (scale.getZ() == 0.0f) {
-		scale.setZ(1.0f);
-		reportError("El valor en la Z de la escala no puede ser 0. Asignado a 1.");
-	}
+	checkScale();
 	return true;
 }
 
@@ -145,24 +134,28 @@ void Transform::setPositionZ(float newZ) {
 
 void Transform::setScale(forge::Vector3 const& newScale) {
 	scale = newScale;
+	checkScale();
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
 }
 
 void Transform::setScale(float newScale) {
 	scale = Vector3(newScale);
+	checkScale();	
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
 }
 
 void Transform::doScale(forge::Vector3 const& rescale) {
 	scale *= rescale;
+	checkScale();	
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
 }
 
 void Transform::doScale(float rescale) {
 	scale *= rescale;
+	checkScale();	
 	needsUpdate = true;
 	setChildNeedsUpdate(true);
 }
@@ -254,4 +247,19 @@ forge::Vector3 Transform::getUp() const {
 
 forge::Vector3 Transform::getRight() const {
 	return (getGlobalRotation() * Vector3::RIGHT).normalized();
+}
+
+void Transform::checkScale() {
+	if (scale.getX() == 0.0f || isnan(scale.getX())) {
+		scale.setX(1.0f);
+		reportError("El valor en la X de la escala no puede ser 0. Asignado a 1.");
+	}
+	if (scale.getY() == 0.0f || isnan(scale.getY())) {
+		scale.setY(1.0f);
+		reportError("El valor en la Y de la escala no puede ser 0. Asignado a 1.");
+	}
+	if (scale.getZ() == 0.0f || isnan(scale.getZ())) {		
+		scale.setZ(1.0f);
+		reportError("El valor en la Z de la escala no puede ser 0. Asignado a 1.");
+	}
 }

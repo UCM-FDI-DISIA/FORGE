@@ -24,6 +24,11 @@ private:
 	/// </summary>
 	/// <param name="newParent">Puntero al Transform de la nueva Entity padre.</param>
 	void setParent(Transform* newParent);
+
+	/// <summary>
+	///  Comprueba si los valores de la escala son validos, los setea a 1 si no lo son.
+	/// </summary>
+	void checkScale();
 public:
 	static  const FORGE_API_VAR std::string id;
 
