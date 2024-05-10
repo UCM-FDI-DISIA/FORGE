@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Utils/Random.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_random_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Random.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_random_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef RANDOM_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="_random_8h.html#ae363bbfb7549fd9fe7ab6723e5d34390">    3</a></span><span class="preprocessor">#define RANDOM_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="_vector2_8h.html">Vector2.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_vector3_8h.html">Vector3.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_quaternion_8h.html">Quaternion.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceforge.html">forge</a> {</div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classforge_1_1_random.html">   11</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classforge_1_1_random.html">Random</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">static</span> std::unique_ptr&lt;Random&gt; instance;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        std::random_device rd;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        std::mt19937 gen;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_class" href="classforge_1_1_random.html">Random</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classforge_1_1_random.html#a589de71091d40871a2b10546878e0b70">   20</a></span>        <a class="code hl_function" href="classforge_1_1_random.html#a589de71091d40871a2b10546878e0b70">Random</a>(<a class="code hl_class" href="classforge_1_1_random.html">Random</a> <span class="keyword">const</span>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classforge_1_1_random.html#a6a7bc7e2d6091654bd22b634d71bfb7a">   21</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_random.html#a6a7bc7e2d6091654bd22b634d71bfb7a">operator=</a>(<a class="code hl_class" href="classforge_1_1_random.html">Random</a> <span class="keyword">const</span>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_function" href="classforge_1_1_random.html#ac0d4eaf1f32df4600eb321cb8dbc0c55">~Random</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keyword">static</span> <a class="code hl_class" href="classforge_1_1_random.html">Random</a>* <a class="code hl_function" href="classforge_1_1_random.html#a0d703774612ac81ca2af38590b24fdc3">GetInstance</a>();</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">        #pragma region Numeros aleatorios</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_random.html#a6461c53066d9b94fe4311c2a7fe4aa88">generate</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">t</a>);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">int</span> <a class="code hl_function" href="classforge_1_1_random.html#a6461c53066d9b94fe4311c2a7fe4aa88">generate</a>(<span class="keywordtype">int</span> <a class="code hl_class" href="class_forge_function.html">t</a>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_random.html#a3631b742fa51d21fbbb3ab072d4849b9">generateRange</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">a</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">b</a>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">int</span> <a class="code hl_function" href="classforge_1_1_random.html#a3631b742fa51d21fbbb3ab072d4849b9">generateRange</a>(<span class="keywordtype">int</span> <a class="code hl_class" href="class_forge_function.html">a</a>, <span class="keywordtype">int</span> <a class="code hl_class" href="class_forge_function.html">b</a>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">        #pragma endregion</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">        #pragma region Estructuras de FORGE aleatorias</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a> <a class="code hl_function" href="classforge_1_1_random.html#adacbef2689ca6d4bfc7d5771f922cf11">getRandomVector</a>();</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a> <a class="code hl_function" href="classforge_1_1_random.html#a199a756d7337a20d8e1e1a8027bc8ceb">getRandomQuaternion</a>();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">        #pragma endregion</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    };</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_quaternion_8h_html"><div class="ttname"><a href="_quaternion_8h.html">Quaternion.h</a></div></div>
+<div class="ttc" id="a_vector2_8h_html"><div class="ttname"><a href="_vector2_8h.html">Vector2.h</a></div></div>
+<div class="ttc" id="a_vector3_8h_html"><div class="ttname"><a href="_vector3_8h.html">Vector3.h</a></div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html"><div class="ttname"><a href="classforge_1_1_quaternion.html">forge::Quaternion</a></div><div class="ttdef"><b>Definition</b> Quaternion.h:6</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html"><div class="ttname"><a href="classforge_1_1_random.html">forge::Random</a></div><div class="ttdef"><b>Definition</b> Random.h:11</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_a0d703774612ac81ca2af38590b24fdc3"><div class="ttname"><a href="classforge_1_1_random.html#a0d703774612ac81ca2af38590b24fdc3">forge::Random::GetInstance</a></div><div class="ttdeci">static FORGE_API Random * GetInstance()</div><div class="ttdef"><b>Definition</b> Random.cpp:14</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_a199a756d7337a20d8e1e1a8027bc8ceb"><div class="ttname"><a href="classforge_1_1_random.html#a199a756d7337a20d8e1e1a8027bc8ceb">forge::Random::getRandomQuaternion</a></div><div class="ttdeci">FORGE_API Quaternion getRandomQuaternion()</div><div class="ttdoc">Genera un Quaternion aleatorio con valores normalizados.</div><div class="ttdef"><b>Definition</b> Random.cpp:48</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_a3631b742fa51d21fbbb3ab072d4849b9"><div class="ttname"><a href="classforge_1_1_random.html#a3631b742fa51d21fbbb3ab072d4849b9">forge::Random::generateRange</a></div><div class="ttdeci">FORGE_API float generateRange(float a, float b)</div><div class="ttdoc">Genera un numero aleatorio en el intervalo (a,b)</div><div class="ttdef"><b>Definition</b> Random.cpp:31</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_a589de71091d40871a2b10546878e0b70"><div class="ttname"><a href="classforge_1_1_random.html#a589de71091d40871a2b10546878e0b70">forge::Random::Random</a></div><div class="ttdeci">Random(Random const &amp;)=delete</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_a6461c53066d9b94fe4311c2a7fe4aa88"><div class="ttname"><a href="classforge_1_1_random.html#a6461c53066d9b94fe4311c2a7fe4aa88">forge::Random::generate</a></div><div class="ttdeci">FORGE_API float generate(float t)</div><div class="ttdoc">Genera un numero aleatorio en el intervalo: (0,t)</div><div class="ttdef"><b>Definition</b> Random.cpp:21</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_a6a7bc7e2d6091654bd22b634d71bfb7a"><div class="ttname"><a href="classforge_1_1_random.html#a6a7bc7e2d6091654bd22b634d71bfb7a">forge::Random::operator=</a></div><div class="ttdeci">void operator=(Random const &amp;)=delete</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_ac0d4eaf1f32df4600eb321cb8dbc0c55"><div class="ttname"><a href="classforge_1_1_random.html#ac0d4eaf1f32df4600eb321cb8dbc0c55">forge::Random::~Random</a></div><div class="ttdeci">~Random()</div><div class="ttdef"><b>Definition</b> Random.cpp:10</div></div>
+<div class="ttc" id="aclassforge_1_1_random_html_adacbef2689ca6d4bfc7d5771f922cf11"><div class="ttname"><a href="classforge_1_1_random.html#adacbef2689ca6d4bfc7d5771f922cf11">forge::Random::getRandomVector</a></div><div class="ttdeci">FORGE_API Vector3 getRandomVector()</div><div class="ttdoc">Genera un Vector3 aleatorio con valores normalizados.</div><div class="ttdef"><b>Definition</b> Random.cpp:43</div></div>
+<div class="ttc" id="aclassforge_1_1_vector3_html"><div class="ttname"><a href="classforge_1_1_vector3.html">forge::Vector3</a></div><div class="ttdef"><b>Definition</b> Vector3.h:7</div></div>
+<div class="ttc" id="anamespaceforge_html"><div class="ttname"><a href="namespaceforge.html">forge</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_56fe80479b5fdc95b3b8f1bfbcfe76dd.html">Utils</a></li><li class="navelem"><a class="el" href="_random_8h.html">Random.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

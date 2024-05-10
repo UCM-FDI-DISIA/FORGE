@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/GUI/UIComponent.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_u_i_component_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">UIComponent.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_u_i_component_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="_component_8h.html">Component.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="_vector2_8h.html">Vector2.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_vector4_8h.html">Vector4.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_ogre.html">Ogre</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">OverlayContainer</a>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">Overlay</a>;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>}</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">class </span><a class="code hl_class" href="class_g_u_i_manager.html">GUIManager</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span><a class="code hl_class" href="class_rect_transform.html">RectTransform</a>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_u_i_component.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="class_u_i_component.html">UIComponent</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_component.html">Component</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="comment">// Referencia al GuiManager</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_u_i_component.html#a3de8151fa342490c2c307700a1643e19">   16</a></span>    <a class="code hl_class" href="class_g_u_i_manager.html">GUIManager</a>&amp; <a class="code hl_variable" href="class_u_i_component.html#a3de8151fa342490c2c307700a1643e19">gui</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="comment">// Nombre del elemento (para los nodos de Ogre)</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_u_i_component.html#ab54eb7a8a459daa90da814cb4f2ba6bb">   19</a></span>    std::string <a class="code hl_variable" href="class_u_i_component.html#ab54eb7a8a459daa90da814cb4f2ba6bb">elementID</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// Referencia al transform</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_u_i_component.html#a44377cadd81966525947ebf99e1b0bff">   22</a></span>    <a class="code hl_class" href="class_rect_transform.html">RectTransform</a>* <a class="code hl_variable" href="class_u_i_component.html#a44377cadd81966525947ebf99e1b0bff">transform</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// Contenedores del elemento de ogre</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_u_i_component.html#a12065efae593204806f2d87682efb7ed">   25</a></span>    Ogre::OverlayContainer* <a class="code hl_variable" href="class_u_i_component.html#a12065efae593204806f2d87682efb7ed">overlayPanel</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_u_i_component.html#af839d7000d8cb46535a2f63cc37b8388">   26</a></span>    Ogre::Overlay* <a class="code hl_variable" href="class_u_i_component.html#af839d7000d8cb46535a2f63cc37b8388">overlay</a>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="comment">// Profundidad</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_u_i_component.html#a2196124368902fc4542d005b08d5403a">   29</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="class_u_i_component.html#a2196124368902fc4542d005b08d5403a">zOrder</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    Ogre::OverlayContainer* <a class="code hl_function" href="class_u_i_component.html#aafb4490528a4b739376762afb202219b">createPanel</a>();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    Ogre::Overlay* <a class="code hl_function" href="class_u_i_component.html#aaf42b37941871b817c25fc8eff8ff1b2">createOverlay</a>(Ogre::OverlayContainer* <a class="code hl_class" href="class_forge_function.html">panel</a>, <span class="keywordtype">int</span> <a class="code hl_class" href="class_forge_function.html">depth</a>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#af254b486aa107a576bab0ccc23b560b3">destroyPanel</a>(Ogre::OverlayContainer* <a class="code hl_class" href="class_forge_function.html">_panel</a>);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#a46c558dae21a4ccac835c46e25421bca">destroyOverlay</a>(Ogre::Overlay* <a class="code hl_class" href="class_forge_function.html">_over</a>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="class_u_i_component.html#ad641bb7eb3386cdf3e5b19877fe028ab">   53</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> std::string <a class="code hl_variable" href="class_u_i_component.html#ad641bb7eb3386cdf3e5b19877fe028ab">id</a>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_u_i_component.html#aa82a12c0c4123f570038854c8946d773">UIComponent</a>();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_u_i_component.html#a6c874869efe5ab6a94f6ed5c2bc26ed0">~UIComponent</a>();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_u_i_component.html#a7a3a26c14fed214fa6b3db53f0c0c305">initComponent</a>(<a class="code hl_class" href="class_component_data.html">ComponentData</a>* data) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#ac3548aba3bfd0e76a8ea9a4ea178c6b1">onEnabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#ada71a155596f1b3180e7944ce23fad49">onDisabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#acfec7c1a9a58106dfe1fc7f2b3ff224d">resize</a>(<a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">prev</a>, <a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">updated</a>);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">    #pragma region Getters</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_function" href="class_u_i_component.html#a0bd27e0f9649d3f9917e3837624f08e7">getPosition</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">    #pragma region Setter</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#aaca6be3692aea6c2b5f901ccee5b563f">setPosition</a>(<a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">newPosition</a>);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_u_i_component.html#a383da66be5c7561a4707f168397a014f">setDepth</a>(<span class="keywordtype">int</span> <a class="code hl_class" href="class_forge_function.html">_zOrder</a>);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>};</div>
+</div>
+<div class="ttc" id="a_component_8h_html"><div class="ttname"><a href="_component_8h.html">Component.h</a></div></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_vector2_8h_html"><div class="ttname"><a href="_vector2_8h.html">Vector2.h</a></div></div>
+<div class="ttc" id="a_vector4_8h_html"><div class="ttname"><a href="_vector4_8h.html">Vector4.h</a></div></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_component_html"><div class="ttname"><a href="class_component.html">Component</a></div><div class="ttdef"><b>Definition</b> Component.h:14</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclass_g_u_i_manager_html"><div class="ttname"><a href="class_g_u_i_manager.html">GUIManager</a></div><div class="ttdef"><b>Definition</b> GUIManager.h:33</div></div>
+<div class="ttc" id="aclass_rect_transform_html"><div class="ttname"><a href="class_rect_transform.html">RectTransform</a></div><div class="ttdef"><b>Definition</b> RectTransform.h:8</div></div>
+<div class="ttc" id="aclass_u_i_component_html"><div class="ttname"><a href="class_u_i_component.html">UIComponent</a></div><div class="ttdef"><b>Definition</b> UIComponent.h:13</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a0bd27e0f9649d3f9917e3837624f08e7"><div class="ttname"><a href="class_u_i_component.html#a0bd27e0f9649d3f9917e3837624f08e7">UIComponent::getPosition</a></div><div class="ttdeci">FORGE_API forge::Vector2 const &amp; getPosition() const</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:95</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a12065efae593204806f2d87682efb7ed"><div class="ttname"><a href="class_u_i_component.html#a12065efae593204806f2d87682efb7ed">UIComponent::overlayPanel</a></div><div class="ttdeci">Ogre::OverlayContainer * overlayPanel</div><div class="ttdef"><b>Definition</b> UIComponent.h:25</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a2196124368902fc4542d005b08d5403a"><div class="ttname"><a href="class_u_i_component.html#a2196124368902fc4542d005b08d5403a">UIComponent::zOrder</a></div><div class="ttdeci">int zOrder</div><div class="ttdef"><b>Definition</b> UIComponent.h:29</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a383da66be5c7561a4707f168397a014f"><div class="ttname"><a href="class_u_i_component.html#a383da66be5c7561a4707f168397a014f">UIComponent::setDepth</a></div><div class="ttdeci">FORGE_API void setDepth(int _zOrder)</div><div class="ttdoc">Devuelve el texto.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:104</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a3de8151fa342490c2c307700a1643e19"><div class="ttname"><a href="class_u_i_component.html#a3de8151fa342490c2c307700a1643e19">UIComponent::gui</a></div><div class="ttdeci">GUIManager &amp; gui</div><div class="ttdef"><b>Definition</b> UIComponent.h:16</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a44377cadd81966525947ebf99e1b0bff"><div class="ttname"><a href="class_u_i_component.html#a44377cadd81966525947ebf99e1b0bff">UIComponent::transform</a></div><div class="ttdeci">RectTransform * transform</div><div class="ttdef"><b>Definition</b> UIComponent.h:22</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a46c558dae21a4ccac835c46e25421bca"><div class="ttname"><a href="class_u_i_component.html#a46c558dae21a4ccac835c46e25421bca">UIComponent::destroyOverlay</a></div><div class="ttdeci">void destroyOverlay(Ogre::Overlay *_over)</div><div class="ttdoc">Destruye el Overlay correspondiente a este componente.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:38</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a6c874869efe5ab6a94f6ed5c2bc26ed0"><div class="ttname"><a href="class_u_i_component.html#a6c874869efe5ab6a94f6ed5c2bc26ed0">UIComponent::~UIComponent</a></div><div class="ttdeci">FORGE_API ~UIComponent()</div><div class="ttdoc">Destructora.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:52</div></div>
+<div class="ttc" id="aclass_u_i_component_html_a7a3a26c14fed214fa6b3db53f0c0c305"><div class="ttname"><a href="class_u_i_component.html#a7a3a26c14fed214fa6b3db53f0c0c305">UIComponent::initComponent</a></div><div class="ttdeci">FORGE_API bool initComponent(ComponentData *data) override</div><div class="ttdoc">Inicializa el UIComponent con los parametros adecuados.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:58</div></div>
+<div class="ttc" id="aclass_u_i_component_html_aa82a12c0c4123f570038854c8946d773"><div class="ttname"><a href="class_u_i_component.html#aa82a12c0c4123f570038854c8946d773">UIComponent::UIComponent</a></div><div class="ttdeci">FORGE_API UIComponent()</div><div class="ttdoc">Contructora de un componente de interfaz.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:42</div></div>
+<div class="ttc" id="aclass_u_i_component_html_aaca6be3692aea6c2b5f901ccee5b563f"><div class="ttname"><a href="class_u_i_component.html#aaca6be3692aea6c2b5f901ccee5b563f">UIComponent::setPosition</a></div><div class="ttdeci">virtual FORGE_API void setPosition(forge::Vector2 const &amp;newPosition)</div><div class="ttdoc">Cambiar la posicion del componente.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:99</div></div>
+<div class="ttc" id="aclass_u_i_component_html_aaf42b37941871b817c25fc8eff8ff1b2"><div class="ttname"><a href="class_u_i_component.html#aaf42b37941871b817c25fc8eff8ff1b2">UIComponent::createOverlay</a></div><div class="ttdeci">Ogre::Overlay * createOverlay(Ogre::OverlayContainer *panel, int depth)</div><div class="ttdoc">Crea el Overlay correspondiente a este componente.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:25</div></div>
+<div class="ttc" id="aclass_u_i_component_html_aafb4490528a4b739376762afb202219b"><div class="ttname"><a href="class_u_i_component.html#aafb4490528a4b739376762afb202219b">UIComponent::createPanel</a></div><div class="ttdeci">Ogre::OverlayContainer * createPanel()</div><div class="ttdoc">Crea un panel el cual ser� el contenedor del elemento de la UI.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:18</div></div>
+<div class="ttc" id="aclass_u_i_component_html_ab54eb7a8a459daa90da814cb4f2ba6bb"><div class="ttname"><a href="class_u_i_component.html#ab54eb7a8a459daa90da814cb4f2ba6bb">UIComponent::elementID</a></div><div class="ttdeci">std::string elementID</div><div class="ttdef"><b>Definition</b> UIComponent.h:19</div></div>
+<div class="ttc" id="aclass_u_i_component_html_ac3548aba3bfd0e76a8ea9a4ea178c6b1"><div class="ttname"><a href="class_u_i_component.html#ac3548aba3bfd0e76a8ea9a4ea178c6b1">UIComponent::onEnabled</a></div><div class="ttdeci">FORGE_API void onEnabled() override</div><div class="ttdoc">Agrega el elemento al canvas.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:73</div></div>
+<div class="ttc" id="aclass_u_i_component_html_acfec7c1a9a58106dfe1fc7f2b3ff224d"><div class="ttname"><a href="class_u_i_component.html#acfec7c1a9a58106dfe1fc7f2b3ff224d">UIComponent::resize</a></div><div class="ttdeci">virtual FORGE_API void resize(forge::Vector2 const &amp;prev, forge::Vector2 const &amp;updated)</div><div class="ttdoc">Ajusta el UIComponent al nuevo ajuste de la ventana.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:81</div></div>
+<div class="ttc" id="aclass_u_i_component_html_ad641bb7eb3386cdf3e5b19877fe028ab"><div class="ttname"><a href="class_u_i_component.html#ad641bb7eb3386cdf3e5b19877fe028ab">UIComponent::id</a></div><div class="ttdeci">static const FORGE_API_VAR std::string id</div><div class="ttdef"><b>Definition</b> UIComponent.h:53</div></div>
+<div class="ttc" id="aclass_u_i_component_html_ada71a155596f1b3180e7944ce23fad49"><div class="ttname"><a href="class_u_i_component.html#ada71a155596f1b3180e7944ce23fad49">UIComponent::onDisabled</a></div><div class="ttdeci">FORGE_API void onDisabled() override</div><div class="ttdoc">Quita el elemento del canvas.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:77</div></div>
+<div class="ttc" id="aclass_u_i_component_html_af254b486aa107a576bab0ccc23b560b3"><div class="ttname"><a href="class_u_i_component.html#af254b486aa107a576bab0ccc23b560b3">UIComponent::destroyPanel</a></div><div class="ttdeci">void destroyPanel(Ogre::OverlayContainer *_panel)</div><div class="ttdoc">Destruye el panel contenedor del elemento de la UI.</div><div class="ttdef"><b>Definition</b> UIComponent.cpp:34</div></div>
+<div class="ttc" id="aclass_u_i_component_html_af839d7000d8cb46535a2f63cc37b8388"><div class="ttname"><a href="class_u_i_component.html#af839d7000d8cb46535a2f63cc37b8388">UIComponent::overlay</a></div><div class="ttdeci">Ogre::Overlay * overlay</div><div class="ttdef"><b>Definition</b> UIComponent.h:26</div></div>
+<div class="ttc" id="aclassforge_1_1_vector2_html"><div class="ttname"><a href="classforge_1_1_vector2.html">forge::Vector2</a></div><div class="ttdef"><b>Definition</b> Vector2.h:8</div></div>
+<div class="ttc" id="anamespace_ogre_html"><div class="ttname"><a href="namespace_ogre.html">Ogre</a></div><div class="ttdoc">Clase de manejo de los metodos de render.</div><div class="ttdef"><b>Definition</b> GUIManager.h:11</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_8a38855cad03ddd0631a08d5404e7fdc.html">GUI</a></li><li class="navelem"><a class="el" href="_u_i_component_8h.html">UIComponent.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

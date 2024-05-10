@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/GUI/Text.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_text_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Text.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_text_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#ifndef TEXT_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="_text_8h.html#ab7f3167032ab06eb412dc08478b07117">    4</a></span><span class="preprocessor">#define TEXT_H_</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="_u_i_component_8h.html">UIComponent.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_ogre.html">Ogre</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">Font</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">TextAreaOverlayElement</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>}</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceforge.html">forge</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fd">   14</a></span>    <span class="keyword">enum</span> <a class="code hl_enumeration" href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fd">Alignment</a> {<a class="code hl_enumvalue" href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fda97d1eb40bba9bb574b3f6a2c6e7d6d9d">CENTER</a>, <a class="code hl_enumvalue" href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fda50d8f96bb27b000aec5a5dc6014d914f">RIGHT</a>, <a class="code hl_enumvalue" href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fda3d172e990b8a2ec05f9801fadaa3eecd">LEFT</a>};</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_text.html">   17</a></span><span class="keyword">class </span><a class="code hl_class" href="class_text.html">Text</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_u_i_component.html">UIComponent</a> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="comment">// Texto a mostrar</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    std::string text;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">// Color de texto</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_class" href="classforge_1_1_vector4.html">forge::Vector4</a> color;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="comment">// Color de fondo</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_class" href="classforge_1_1_vector4.html">forge::Vector4</a> bgColor;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="comment">// Nombre de la fuente</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    std::string fontName;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="comment">// Altura de la fuente</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">int</span> fontHeight;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="comment">// Posicion ajustada del texto</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> fixedPosition;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="comment">// Elemento de overlay para el texto</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    Ogre::TextAreaOverlayElement* textAreaOverlay;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> createText();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">void</span> destroyText();</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">float</span> calculateTextWidth();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordtype">void</span> fixPosition();</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="class_text.html#aec2754218fea0831278e955b7e2e13b7">   62</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> std::string <a class="code hl_variable" href="class_text.html#aec2754218fea0831278e955b7e2e13b7">id</a>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_text.html#ab3e26143fccc52699bcc5149cae852bc">Text</a>();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_text.html#a2d49e5c280e205125b149f7777ae30c7">~Text</a>();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_text.html#acfbda2415582b8ff8c75b404c6d78125">initComponent</a>(<a class="code hl_class" href="class_component_data.html">ComponentData</a>* data) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#a04cb45a77949629ed9ff2284b49e586f">onEnabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#af840f87a306c4d7cba66ab32079ab039">onDisabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#ac357b720d2674a0ad8d1723e2ea987e9">resize</a>(<a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">prev</a>, <a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">updated</a>) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#a4ca5ee650deb7b15b16fd767ad8903ea">changeBackgroundOpacity</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">op</a> = 1.0f);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">    #pragma region Getters</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> std::string <span class="keyword">const</span>&amp; <a class="code hl_function" href="class_text.html#a992cf4c0d77840e18f945e1426229eb5">getText</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector4.html">forge::Vector4</a> <span class="keyword">const</span>&amp; <a class="code hl_function" href="class_text.html#ad83af81726c6fc4f199ac4d3cd24cafb">getColor</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">    #pragma region Setters</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#a6fb5f19a5e442b932a431f04dfe57666">setPosition</a>(<a class="code hl_class" href="classforge_1_1_vector2.html">forge::Vector2</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">newPosition</a>);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#a0a6a48612070bb5b8e32b44ff7c3b731">setHeight</a>(<span class="keywordtype">int</span> <a class="code hl_class" href="class_forge_function.html">fHeight</a>);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#ad563489a5bd598693ac3db8897c68033">setFont</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">fontName_</a>);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#add510e684d5f95c2648f79aea75ce301">setText</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">text_</a>);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#ace3b386b6caf0df5af0b7ac57ebc8066">setColor</a>(<a class="code hl_class" href="classforge_1_1_vector4.html">forge::Vector4</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">c</a>);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#a9cf89a56baeeca183d04d23ceac0449c">setTextOpacity</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">op</a> = 1.0f);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_text.html#a67a17731f479997251754464ca06e37f">setTextAligment</a>(<a class="code hl_enumeration" href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fd">forge::Alignment</a> <a class="code hl_class" href="class_forge_function.html">aligment</a>);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>};</div>
+</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="preprocessor">#endif </span><span class="comment">// !TEXT_H_</span></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_u_i_component_8h_html"><div class="ttname"><a href="_u_i_component_8h.html">UIComponent.h</a></div></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclass_text_html"><div class="ttname"><a href="class_text.html">Text</a></div><div class="ttdef"><b>Definition</b> Text.h:17</div></div>
+<div class="ttc" id="aclass_text_html_a04cb45a77949629ed9ff2284b49e586f"><div class="ttname"><a href="class_text.html#a04cb45a77949629ed9ff2284b49e586f">Text::onEnabled</a></div><div class="ttdeci">FORGE_API void onEnabled() override</div><div class="ttdoc">Crea el texto.</div><div class="ttdef"><b>Definition</b> Text.cpp:50</div></div>
+<div class="ttc" id="aclass_text_html_a0a6a48612070bb5b8e32b44ff7c3b731"><div class="ttname"><a href="class_text.html#a0a6a48612070bb5b8e32b44ff7c3b731">Text::setHeight</a></div><div class="ttdeci">FORGE_API void setHeight(int fHeight)</div><div class="ttdoc">Asigna un tama�o.</div><div class="ttdef"><b>Definition</b> Text.cpp:129</div></div>
+<div class="ttc" id="aclass_text_html_a2d49e5c280e205125b149f7777ae30c7"><div class="ttname"><a href="class_text.html#a2d49e5c280e205125b149f7777ae30c7">Text::~Text</a></div><div class="ttdeci">FORGE_API ~Text()</div><div class="ttdoc">Destructora.</div><div class="ttdef"><b>Definition</b> Text.cpp:35</div></div>
+<div class="ttc" id="aclass_text_html_a4ca5ee650deb7b15b16fd767ad8903ea"><div class="ttname"><a href="class_text.html#a4ca5ee650deb7b15b16fd767ad8903ea">Text::changeBackgroundOpacity</a></div><div class="ttdeci">FORGE_API void changeBackgroundOpacity(float op=1.0f)</div><div class="ttdoc">Cambia la opacidad del fondo.</div><div class="ttdef"><b>Definition</b> Text.cpp:112</div></div>
+<div class="ttc" id="aclass_text_html_a67a17731f479997251754464ca06e37f"><div class="ttname"><a href="class_text.html#a67a17731f479997251754464ca06e37f">Text::setTextAligment</a></div><div class="ttdeci">FORGE_API void setTextAligment(forge::Alignment aligment)</div><div class="ttdoc">Coloca el texto con distinta alineacion.</div><div class="ttdef"><b>Definition</b> Text.cpp:165</div></div>
+<div class="ttc" id="aclass_text_html_a6fb5f19a5e442b932a431f04dfe57666"><div class="ttname"><a href="class_text.html#a6fb5f19a5e442b932a431f04dfe57666">Text::setPosition</a></div><div class="ttdeci">FORGE_API void setPosition(forge::Vector2 const &amp;newPosition)</div><div class="ttdoc">Cambiar la posicion del texto.</div><div class="ttdef"><b>Definition</b> Text.cpp:124</div></div>
+<div class="ttc" id="aclass_text_html_a992cf4c0d77840e18f945e1426229eb5"><div class="ttname"><a href="class_text.html#a992cf4c0d77840e18f945e1426229eb5">Text::getText</a></div><div class="ttdeci">FORGE_API std::string const &amp; getText() const</div><div class="ttdef"><b>Definition</b> Text.cpp:116</div></div>
+<div class="ttc" id="aclass_text_html_a9cf89a56baeeca183d04d23ceac0449c"><div class="ttname"><a href="class_text.html#a9cf89a56baeeca183d04d23ceac0449c">Text::setTextOpacity</a></div><div class="ttdeci">FORGE_API void setTextOpacity(float op=1.0f)</div><div class="ttdoc">Cambia la opacidad del texto.</div><div class="ttdef"><b>Definition</b> Text.cpp:160</div></div>
+<div class="ttc" id="aclass_text_html_ab3e26143fccc52699bcc5149cae852bc"><div class="ttname"><a href="class_text.html#ab3e26143fccc52699bcc5149cae852bc">Text::Text</a></div><div class="ttdeci">FORGE_API Text()</div><div class="ttdoc">Contructora del componente Text.</div><div class="ttdef"><b>Definition</b> Text.cpp:21</div></div>
+<div class="ttc" id="aclass_text_html_ac357b720d2674a0ad8d1723e2ea987e9"><div class="ttname"><a href="class_text.html#ac357b720d2674a0ad8d1723e2ea987e9">Text::resize</a></div><div class="ttdeci">FORGE_API void resize(forge::Vector2 const &amp;prev, forge::Vector2 const &amp;updated) override</div><div class="ttdoc">Ajusta el texto al nuevo ajuste de la ventana.</div><div class="ttdef"><b>Definition</b> Text.cpp:60</div></div>
+<div class="ttc" id="aclass_text_html_ace3b386b6caf0df5af0b7ac57ebc8066"><div class="ttname"><a href="class_text.html#ace3b386b6caf0df5af0b7ac57ebc8066">Text::setColor</a></div><div class="ttdeci">FORGE_API void setColor(forge::Vector4 const &amp;c)</div><div class="ttdoc">Cambia el color del texto.</div><div class="ttdef"><b>Definition</b> Text.cpp:155</div></div>
+<div class="ttc" id="aclass_text_html_acfbda2415582b8ff8c75b404c6d78125"><div class="ttname"><a href="class_text.html#acfbda2415582b8ff8c75b404c6d78125">Text::initComponent</a></div><div class="ttdeci">FORGE_API bool initComponent(ComponentData *data) override</div><div class="ttdoc">Inicializa el UIComponent con los parametros adecuados.</div><div class="ttdef"><b>Definition</b> Text.cpp:41</div></div>
+<div class="ttc" id="aclass_text_html_ad563489a5bd598693ac3db8897c68033"><div class="ttname"><a href="class_text.html#ad563489a5bd598693ac3db8897c68033">Text::setFont</a></div><div class="ttdeci">FORGE_API void setFont(std::string const &amp;fontName_)</div><div class="ttdoc">Cambia la fuente.</div><div class="ttdef"><b>Definition</b> Text.cpp:134</div></div>
+<div class="ttc" id="aclass_text_html_ad83af81726c6fc4f199ac4d3cd24cafb"><div class="ttname"><a href="class_text.html#ad83af81726c6fc4f199ac4d3cd24cafb">Text::getColor</a></div><div class="ttdeci">FORGE_API forge::Vector4 const &amp; getColor() const</div><div class="ttdef"><b>Definition</b> Text.cpp:120</div></div>
+<div class="ttc" id="aclass_text_html_add510e684d5f95c2648f79aea75ce301"><div class="ttname"><a href="class_text.html#add510e684d5f95c2648f79aea75ce301">Text::setText</a></div><div class="ttdeci">FORGE_API void setText(std::string const &amp;text_)</div><div class="ttdoc">Cambia el texto.</div><div class="ttdef"><b>Definition</b> Text.cpp:150</div></div>
+<div class="ttc" id="aclass_text_html_aec2754218fea0831278e955b7e2e13b7"><div class="ttname"><a href="class_text.html#aec2754218fea0831278e955b7e2e13b7">Text::id</a></div><div class="ttdeci">static const FORGE_API_VAR std::string id</div><div class="ttdef"><b>Definition</b> Text.h:62</div></div>
+<div class="ttc" id="aclass_text_html_af840f87a306c4d7cba66ab32079ab039"><div class="ttname"><a href="class_text.html#af840f87a306c4d7cba66ab32079ab039">Text::onDisabled</a></div><div class="ttdeci">FORGE_API void onDisabled() override</div><div class="ttdoc">Destruye el texto.</div><div class="ttdef"><b>Definition</b> Text.cpp:55</div></div>
+<div class="ttc" id="aclass_u_i_component_html"><div class="ttname"><a href="class_u_i_component.html">UIComponent</a></div><div class="ttdef"><b>Definition</b> UIComponent.h:13</div></div>
+<div class="ttc" id="aclassforge_1_1_vector2_html"><div class="ttname"><a href="classforge_1_1_vector2.html">forge::Vector2</a></div><div class="ttdef"><b>Definition</b> Vector2.h:8</div></div>
+<div class="ttc" id="aclassforge_1_1_vector4_html"><div class="ttname"><a href="classforge_1_1_vector4.html">forge::Vector4</a></div><div class="ttdef"><b>Definition</b> Vector4.h:8</div></div>
+<div class="ttc" id="anamespace_ogre_html"><div class="ttname"><a href="namespace_ogre.html">Ogre</a></div><div class="ttdoc">Clase de manejo de los metodos de render.</div><div class="ttdef"><b>Definition</b> GUIManager.h:11</div></div>
+<div class="ttc" id="anamespaceforge_html"><div class="ttname"><a href="namespaceforge.html">forge</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:18</div></div>
+<div class="ttc" id="anamespaceforge_html_a156ebccce99ae825fb67754a42cfa6fd"><div class="ttname"><a href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fd">forge::Alignment</a></div><div class="ttdeci">Alignment</div><div class="ttdef"><b>Definition</b> Text.h:14</div></div>
+<div class="ttc" id="anamespaceforge_html_a156ebccce99ae825fb67754a42cfa6fda3d172e990b8a2ec05f9801fadaa3eecd"><div class="ttname"><a href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fda3d172e990b8a2ec05f9801fadaa3eecd">forge::LEFT</a></div><div class="ttdeci">@ LEFT</div><div class="ttdef"><b>Definition</b> Text.h:14</div></div>
+<div class="ttc" id="anamespaceforge_html_a156ebccce99ae825fb67754a42cfa6fda50d8f96bb27b000aec5a5dc6014d914f"><div class="ttname"><a href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fda50d8f96bb27b000aec5a5dc6014d914f">forge::RIGHT</a></div><div class="ttdeci">@ RIGHT</div><div class="ttdef"><b>Definition</b> Text.h:14</div></div>
+<div class="ttc" id="anamespaceforge_html_a156ebccce99ae825fb67754a42cfa6fda97d1eb40bba9bb574b3f6a2c6e7d6d9d"><div class="ttname"><a href="namespaceforge.html#a156ebccce99ae825fb67754a42cfa6fda97d1eb40bba9bb574b3f6a2c6e7d6d9d">forge::CENTER</a></div><div class="ttdeci">@ CENTER</div><div class="ttdef"><b>Definition</b> Text.h:14</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_8a38855cad03ddd0631a08d5404e7fdc.html">GUI</a></li><li class="navelem"><a class="el" href="_text_8h.html">Text.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Physics/PhysicsManager.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_physics_manager_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">PhysicsManager.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_physics_manager_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btBroadphaseInterface</a>;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btDefaultCollisionConfiguration</a>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btCollisionDispatcher</a>;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btSequentialImpulseConstraintSolver</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btDiscreteDynamicsWorld</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btRigidBody</a>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btQuaternion</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btVector3</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">class </span><a class="code hl_class" href="class_transform.html">Transform</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">class </span><a class="code hl_class" href="class_rigid_body.html">RigidBody</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">DebugMode</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">class </span><a class="code hl_class" href="class_collider.html">Collider</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceforge.html">forge</a> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">class </span>Vector3;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">class </span>Quaternion;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="class_physics_manager.html">   23</a></span><span class="keyword">class </span><a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">static</span> std::unique_ptr&lt;PhysicsManager&gt; instance;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> initialised;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_class" href="class_forge_function.html">btBroadphaseInterface</a>* broadphase;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_class" href="class_forge_function.html">btDefaultCollisionConfiguration</a>* collisionConfiguration;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_class" href="class_forge_function.html">btCollisionDispatcher</a>* dispatcher;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="class_forge_function.html">btSequentialImpulseConstraintSolver</a>* solver;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_class" href="class_forge_function.html">btDiscreteDynamicsWorld</a>* world;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    std::unordered_map&lt;btRigidBody*, Transform*&gt; transforms;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    std::unordered_map&lt;std::string, btRigidBody*&gt; importantObjects;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    std::unordered_map&lt;std::string, int&gt; collisionLayers;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    std::unordered_map&lt;std::string, std::unordered_map&lt;std::string,bool&gt;&gt; collisionMatrix;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">int</span> numberOfLayers;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    std::list&lt;Collider*&gt; collisionedObjects;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">    #ifdef _DEBUG</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_class" href="class_forge_function.html">DebugMode</a>* <a class="code hl_class" href="class_forge_function.html">debugger</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">debugMode</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">    #endif </span><span class="comment">// _DEBUG</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a>();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <a class="code hl_function" href="class_physics_manager.html#ac41c46fb62b8104b3d5d5bf6bcf7b2f5">~PhysicsManager</a>();</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_physics_manager.html#abc4eb3e64c539335973c76a3f5e39bfe">Init</a>();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">static</span> <a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a>* <a class="code hl_function" href="class_physics_manager.html#affbb71e7746443b5bbc72b7c7ad251e5">GetInstance</a>();</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="class_physics_manager.html#a561ac3d092912cdc266f58aeb5d59be1">   63</a></span>    <a class="code hl_function" href="class_physics_manager.html#a561ac3d092912cdc266f58aeb5d59be1">PhysicsManager</a>(<a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a> <span class="keyword">const</span>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_physics_manager.html#a0207efbadfe196c39a46d7353b55ae17">   64</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#a0207efbadfe196c39a46d7353b55ae17">operator=</a>(<a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a> <span class="keyword">const</span>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_physics_manager.html#a0e9c9c864dc4cda5970037bbdf56a99c">setup</a>();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#aaa9856e7718cff28739f9139d34254f7">updatePhysics</a>();</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#a2c2f2bec9a9cf2280051ce5814f96780">handleCollisions</a>();</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#a96ccc7ee154ceed9ddd357d9e63d5d6f">changeGravity</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">newGravity</a>);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_physics_manager.html#a15df66089773a58b6c986437c1d165bf">getGravity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#a65b42523b297fee1361116b0bcc8e00c">registerBody</a>(<a class="code hl_class" href="class_forge_function.html">btRigidBody</a>* <a class="code hl_class" href="class_forge_function.html">body</a>, <a class="code hl_class" href="class_transform.html">Transform</a>* transform, std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">layer</a> = <span class="stringliteral">&quot;ALL&quot;</span>);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#a63abe842c8fa5abac79c37008e16371e">createImportantBody</a>(<a class="code hl_class" href="class_rigid_body.html">RigidBody</a>* <a class="code hl_class" href="class_forge_function.html">body</a>, std::string <span class="keyword">const</span>&amp; name);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_physics_manager.html#a7ee6ed93102c536ecc70e79b3f8c0454">deleteBody</a>(<a class="code hl_class" href="class_forge_function.html">btRigidBody</a>* <a class="code hl_class" href="class_forge_function.html">body</a>);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">    #ifdef _DEBUG</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">void</span> <a class="code hl_class" href="class_forge_function.html">drawDebug</a>();</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">void</span> <a class="code hl_class" href="class_forge_function.html">setDebug</a>(<span class="keywordtype">bool</span> enabled);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">isDebugModeEnabled</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">    #endif </span><span class="comment">// _DEBUG    </span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    bool addLayer(std::string const&amp; layerName);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_physics_manager.html#af081f64a5666d745db90f7c9ff7e8e54">setCollideWith</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">layer</a>, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">layersToCollide</a>);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_physics_manager.html#aff4d56b6dac798f4acf2bd047ac592a9">checkContact</a>(<a class="code hl_class" href="class_forge_function.html">btRigidBody</a>* <a class="code hl_class" href="class_forge_function.html">body1</a>, <a class="code hl_class" href="class_forge_function.html">btRigidBody</a>* <a class="code hl_class" href="class_forge_function.html">body2</a>);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="preprocessor">    #pragma region Conversores</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <a class="code hl_class" href="class_forge_function.html">btVector3</a> <a class="code hl_function" href="class_physics_manager.html#a060dc3a1d8594d07d4fe5cb85a20e855">fromForgeToBtVect</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">vect</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_physics_manager.html#a66e6c9e76e8645b40e320d7ed5e50246">fromBtVectToForge</a>(<a class="code hl_class" href="class_forge_function.html">btVector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">vect</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <a class="code hl_class" href="class_forge_function.html">btQuaternion</a> <a class="code hl_function" href="class_physics_manager.html#a6376fa681214b9a7d98b06fa944f1dd6">fromForgeToBtQuat</a>(<a class="code hl_class" href="classforge_1_1_quaternion.html">forge::Quaternion</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">quat</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <a class="code hl_class" href="classforge_1_1_quaternion.html">forge::Quaternion</a> <a class="code hl_function" href="class_physics_manager.html#aed9e64f308f616f90d8c811b11ce6281">fromBtQuatToForge</a>(<a class="code hl_class" href="class_forge_function.html">btQuaternion</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">quat</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>};</div>
+</div>
+<div class="ttc" id="aclass_collider_html"><div class="ttname"><a href="class_collider.html">Collider</a></div><div class="ttdef"><b>Definition</b> Collider.h:22</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclass_physics_manager_html"><div class="ttname"><a href="class_physics_manager.html">PhysicsManager</a></div><div class="ttdef"><b>Definition</b> PhysicsManager.h:23</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a0207efbadfe196c39a46d7353b55ae17"><div class="ttname"><a href="class_physics_manager.html#a0207efbadfe196c39a46d7353b55ae17">PhysicsManager::operator=</a></div><div class="ttdeci">void operator=(PhysicsManager const &amp;)=delete</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a060dc3a1d8594d07d4fe5cb85a20e855"><div class="ttname"><a href="class_physics_manager.html#a060dc3a1d8594d07d4fe5cb85a20e855">PhysicsManager::fromForgeToBtVect</a></div><div class="ttdeci">btVector3 fromForgeToBtVect(forge::Vector3 const &amp;vect) const</div><div class="ttdoc">Convierte un vector de forge a uno de bullet.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:222</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a0e9c9c864dc4cda5970037bbdf56a99c"><div class="ttname"><a href="class_physics_manager.html#a0e9c9c864dc4cda5970037bbdf56a99c">PhysicsManager::setup</a></div><div class="ttdeci">bool setup()</div><div class="ttdoc">Inicializa el mundo de fisicas y pone una gravedad default (9.8)</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:63</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a15df66089773a58b6c986437c1d165bf"><div class="ttname"><a href="class_physics_manager.html#a15df66089773a58b6c986437c1d165bf">PhysicsManager::getGravity</a></div><div class="ttdeci">forge::Vector3 getGravity() const</div><div class="ttdoc">Devuelve la gravedad del mundo.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:141</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a2c2f2bec9a9cf2280051ce5814f96780"><div class="ttname"><a href="class_physics_manager.html#a2c2f2bec9a9cf2280051ce5814f96780">PhysicsManager::handleCollisions</a></div><div class="ttdeci">void handleCollisions()</div><div class="ttdoc">Comprueba las colisiones ocurridas en la ultima simulacion y las resuelve segun los callbacks definid...</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:86</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a561ac3d092912cdc266f58aeb5d59be1"><div class="ttname"><a href="class_physics_manager.html#a561ac3d092912cdc266f58aeb5d59be1">PhysicsManager::PhysicsManager</a></div><div class="ttdeci">PhysicsManager(PhysicsManager const &amp;)=delete</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a6376fa681214b9a7d98b06fa944f1dd6"><div class="ttname"><a href="class_physics_manager.html#a6376fa681214b9a7d98b06fa944f1dd6">PhysicsManager::fromForgeToBtQuat</a></div><div class="ttdeci">btQuaternion fromForgeToBtQuat(forge::Quaternion const &amp;quat) const</div><div class="ttdoc">Convierte un quaternion de forge a bullet.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:230</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a63abe842c8fa5abac79c37008e16371e"><div class="ttname"><a href="class_physics_manager.html#a63abe842c8fa5abac79c37008e16371e">PhysicsManager::createImportantBody</a></div><div class="ttdeci">void createImportantBody(RigidBody *body, std::string const &amp;name)</div><div class="ttdoc">Registra una instancia de rigidBody y la guarda en un mapa por nombre.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:155</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a65b42523b297fee1361116b0bcc8e00c"><div class="ttname"><a href="class_physics_manager.html#a65b42523b297fee1361116b0bcc8e00c">PhysicsManager::registerBody</a></div><div class="ttdeci">void registerBody(btRigidBody *body, Transform *transform, std::string const &amp;layer=&quot;ALL&quot;)</div><div class="ttdoc">Registra un btRigidbody y su transform asociado para busquedas y tratamiento de colisiones.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:145</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a66e6c9e76e8645b40e320d7ed5e50246"><div class="ttname"><a href="class_physics_manager.html#a66e6c9e76e8645b40e320d7ed5e50246">PhysicsManager::fromBtVectToForge</a></div><div class="ttdeci">forge::Vector3 fromBtVectToForge(btVector3 const &amp;vect) const</div><div class="ttdoc">Convierte un vector de bullet a uno de forge.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:226</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a7ee6ed93102c536ecc70e79b3f8c0454"><div class="ttname"><a href="class_physics_manager.html#a7ee6ed93102c536ecc70e79b3f8c0454">PhysicsManager::deleteBody</a></div><div class="ttdeci">void deleteBody(btRigidBody *body)</div><div class="ttdoc">Borra un rigidBody.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:161</div></div>
+<div class="ttc" id="aclass_physics_manager_html_a96ccc7ee154ceed9ddd357d9e63d5d6f"><div class="ttname"><a href="class_physics_manager.html#a96ccc7ee154ceed9ddd357d9e63d5d6f">PhysicsManager::changeGravity</a></div><div class="ttdeci">void changeGravity(forge::Vector3 const &amp;newGravity)</div><div class="ttdoc">Cambia la gravedad del mundo fisico.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:137</div></div>
+<div class="ttc" id="aclass_physics_manager_html_aaa9856e7718cff28739f9139d34254f7"><div class="ttname"><a href="class_physics_manager.html#aaa9856e7718cff28739f9139d34254f7">PhysicsManager::updatePhysics</a></div><div class="ttdeci">void updatePhysics()</div><div class="ttdoc">Ordena al mundo de fisicas que actualice su estado. Avabza la simulacion 20ms, para que coincida con ...</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:81</div></div>
+<div class="ttc" id="aclass_physics_manager_html_abc4eb3e64c539335973c76a3f5e39bfe"><div class="ttname"><a href="class_physics_manager.html#abc4eb3e64c539335973c76a3f5e39bfe">PhysicsManager::Init</a></div><div class="ttdeci">static bool Init()</div><div class="ttdoc">Crea una instancia del manager iniacializada.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:48</div></div>
+<div class="ttc" id="aclass_physics_manager_html_ac41c46fb62b8104b3d5d5bf6bcf7b2f5"><div class="ttname"><a href="class_physics_manager.html#ac41c46fb62b8104b3d5d5bf6bcf7b2f5">PhysicsManager::~PhysicsManager</a></div><div class="ttdeci">~PhysicsManager()</div><div class="ttdoc">Destructora del manager de fisicas.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:35</div></div>
+<div class="ttc" id="aclass_physics_manager_html_aed9e64f308f616f90d8c811b11ce6281"><div class="ttname"><a href="class_physics_manager.html#aed9e64f308f616f90d8c811b11ce6281">PhysicsManager::fromBtQuatToForge</a></div><div class="ttdeci">forge::Quaternion fromBtQuatToForge(btQuaternion const &amp;quat) const</div><div class="ttdoc">Convierte un quaternion de bullet a forge.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:234</div></div>
+<div class="ttc" id="aclass_physics_manager_html_af081f64a5666d745db90f7c9ff7e8e54"><div class="ttname"><a href="class_physics_manager.html#af081f64a5666d745db90f7c9ff7e8e54">PhysicsManager::setCollideWith</a></div><div class="ttdeci">bool setCollideWith(std::string const &amp;layer, std::vector&lt; std::string &gt; const &amp;layersToCollide)</div><div class="ttdoc">Establece con que capas colisiona una capa en concreto.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:199</div></div>
+<div class="ttc" id="aclass_physics_manager_html_aff4d56b6dac798f4acf2bd047ac592a9"><div class="ttname"><a href="class_physics_manager.html#aff4d56b6dac798f4acf2bd047ac592a9">PhysicsManager::checkContact</a></div><div class="ttdeci">bool checkContact(btRigidBody *body1, btRigidBody *body2)</div><div class="ttdoc">Comprueba si existe alg�n contacto entre los dos cuerpos en el frame anterior.</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:216</div></div>
+<div class="ttc" id="aclass_physics_manager_html_affbb71e7746443b5bbc72b7c7ad251e5"><div class="ttname"><a href="class_physics_manager.html#affbb71e7746443b5bbc72b7c7ad251e5">PhysicsManager::GetInstance</a></div><div class="ttdeci">static PhysicsManager * GetInstance()</div><div class="ttdoc">Devuelve una instancia al PhysicsManager</div><div class="ttdef"><b>Definition</b> PhysicsManager.cpp:58</div></div>
+<div class="ttc" id="aclass_rigid_body_html"><div class="ttname"><a href="class_rigid_body.html">RigidBody</a></div><div class="ttdef"><b>Definition</b> RigidBody.h:11</div></div>
+<div class="ttc" id="aclass_transform_html"><div class="ttname"><a href="class_transform.html">Transform</a></div><div class="ttdef"><b>Definition</b> Transform.h:10</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html"><div class="ttname"><a href="classforge_1_1_quaternion.html">forge::Quaternion</a></div><div class="ttdef"><b>Definition</b> Quaternion.h:6</div></div>
+<div class="ttc" id="aclassforge_1_1_vector3_html"><div class="ttname"><a href="classforge_1_1_vector3.html">forge::Vector3</a></div><div class="ttdef"><b>Definition</b> Vector3.h:7</div></div>
+<div class="ttc" id="anamespaceforge_html"><div class="ttname"><a href="namespaceforge.html">forge</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_b855195972e678953b938a27d5c5db41.html">Physics</a></li><li class="navelem"><a class="el" href="_physics_manager_8h.html">PhysicsManager.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+var classforge_1_1_vector2 =
+[
+    [ "Vector2", "classforge_1_1_vector2.html#a22104d1809be26a419ef1f959e3761bf", null ],
+    [ "Vector2", "classforge_1_1_vector2.html#a9081b9b97bcedaf0f7ff0caac05b0467", null ],
+    [ "Vector2", "classforge_1_1_vector2.html#a299d9e1cd67d3fb587f57170afab9741", null ],
+    [ "Vector2", "classforge_1_1_vector2.html#a20066daf634c300041d3555eedf27ba5", null ],
+    [ "~Vector2", "classforge_1_1_vector2.html#ada03f5433d3ca4841d5ebb90b167202e", null ],
+    [ "getX", "classforge_1_1_vector2.html#a808d02062efcc0c016491c04845e3e34", null ],
+    [ "getY", "classforge_1_1_vector2.html#a59bf838c0fc50305975e1679509fda83", null ],
+    [ "magnitude", "classforge_1_1_vector2.html#ab84b0c3d31e2893df551d259789e80a9", null ],
+    [ "normalize", "classforge_1_1_vector2.html#aa1c4bf080e9c3d8d0262fac78af3aa02", null ],
+    [ "operator!=", "classforge_1_1_vector2.html#a805e8fa742bba45aea6af187069f2c96", null ],
+    [ "operator*", "classforge_1_1_vector2.html#a5df1be7a5a17b2be54b33655a48cebe6", null ],
+    [ "operator*", "classforge_1_1_vector2.html#abed281edb08c34e61ec8642d1da98a62", null ],
+    [ "operator*=", "classforge_1_1_vector2.html#a335a23efb2e30031b2cec91010ba5c77", null ],
+    [ "operator*=", "classforge_1_1_vector2.html#a5960fe3eeaa6410ae11efd1a97b89e02", null ],
+    [ "operator+", "classforge_1_1_vector2.html#a18759ffa878ab208dbe092ae07e70b6f", null ],
+    [ "operator+=", "classforge_1_1_vector2.html#a858536d6abd59cbb49dde713f69d4666", null ],
+    [ "operator-", "classforge_1_1_vector2.html#a37653598d7dd2e823c7af55bc50b92bb", null ],
+    [ "operator/", "classforge_1_1_vector2.html#a09df3031274ae221664f1505a8ec17fc", null ],
+    [ "operator/", "classforge_1_1_vector2.html#af5d1a81a538e162c52378a5199cadd20", null ],
+    [ "operator==", "classforge_1_1_vector2.html#a77b638de6b16a80d4c4be0c21fe2b481", null ],
+    [ "set", "classforge_1_1_vector2.html#a8aa2ef4b348f8628fd14f44f15a8a6e3", null ],
+    [ "set", "classforge_1_1_vector2.html#a926a3a8ceb7907eb2e92c45fad4bbeaf", null ],
+    [ "setX", "classforge_1_1_vector2.html#af3b9955100e69baadc83133bae6a23cd", null ],
+    [ "setY", "classforge_1_1_vector2.html#a88c733e5ef96489b347e9465eaa6f350", null ]
+];

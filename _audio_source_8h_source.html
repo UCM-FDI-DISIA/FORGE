@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Audio/AudioSource.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_audio_source_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">AudioSource.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_audio_source_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef AUDIO_SOURCE_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="_audio_source_8h.html#a8fff8f51b3cd73ebeea8ceae1c89dc64">    3</a></span><span class="preprocessor">#define AUDIO_SOURCE_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_component_8h.html">Component.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="_vector3_8h.html">Vector3.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">class </span><a class="code hl_class" href="class_sound.html">Sound</a>;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">class </span><a class="code hl_class" href="class_transform.html">Transform</a>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">class </span><a class="code hl_class" href="class_audio_manager.html">AudioManager</a>;</div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="class_audio_source.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="class_audio_source.html">AudioSource</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_component.html">Component</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="class_audio_manager.html">AudioManager</a>&amp; manager;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <a class="code hl_class" href="class_transform.html">Transform</a>* transform;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <a class="code hl_class" href="class_sound.html">Sound</a>* sound;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">bool</span> playOnAwake;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">bool</span> sound2D;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> offset;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordtype">bool</span> resumeOnEnable;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_audio_source.html#ace41983fedf24919dcd58303b2453c7b">   22</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> std::string <a class="code hl_variable" href="class_audio_source.html#ace41983fedf24919dcd58303b2453c7b">id</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_audio_source.html#a58ad52e32668f022d45fa6239e56a85c">AudioSource</a>();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_audio_source.html#af275d7273bdc55c8ddb87583c541c9cb">~AudioSource</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a1852c08f21b8ad7ca56b8552014dcaa2">initComponent</a>(<a class="code hl_class" href="class_component_data.html">ComponentData</a>* data) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a41fe0862f3416acd674d24e13e544fb7">update</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a3580c9adc7395a43ca5bc7a6990df727">onEnabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a00c02308f6a10f9945404fa9572987c0">onDisabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a30f9c0367bf3c628ee784f78ebb9107b">pause</a>();</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a4f82648fee8d33fccaa8b481648f3ecf">resume</a>();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a38b05d9f70cf6c7df00c3a741428d8d5">isPaused</a>();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a0d717947146ca273975ae0de909c446c">stop</a>();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a9ae1af090bad545bf8fd11dae402f70e">play</a>();</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#af6790013666dc8f421ff9a3e40d9cb97">restart</a>();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a990bcb92bb3e5d66a8aa2546f59df9f8">setVolume</a>(<span class="keywordtype">float</span> volume);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a2efc05c6255df5baaba2aa6b5c672d66">getVolume</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#abd83fd1136f12d06f2b84982aacea010">setPan</a>(<span class="keywordtype">float</span> pan);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#aaf98cd50d57508860732ddaff4c89003">getPan</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#ad8ad0028ed5e4a32424aa70892c94dbf">loopedToggle</a>();</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a2acfc098286b347ef0d7dd45ed35f76c">setLooped</a>(<span class="keywordtype">bool</span> looped);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a3293cc952e2241afa98e1a194eab5863">isLooped</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_audio_source.html#a218980b87a1b223b2e13bcb766567ad1">isPlaying</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a2bb9caaeef97b168aff81ccb6fb5edf0">setFullVolumeRadious</a>(<span class="keywordtype">float</span> value);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="class_audio_source.html#a4d7cdce75821d0c2587c3ef8e4ed37bd">getFullVolumeRadious</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_audio_source.html#a54b071c866b2f8d6fa48a507c233c02d">setHearingRadious</a>(<span class="keywordtype">float</span> value);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="class_audio_source.html#ae09669b3111a7c70b797b9f99590e2e7">getHearingRadious</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>};</div>
+</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">#endif </span><span class="comment">// AUDIO_SOURCE_H_</span></div>
+<div class="ttc" id="a_component_8h_html"><div class="ttname"><a href="_component_8h.html">Component.h</a></div></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_vector3_8h_html"><div class="ttname"><a href="_vector3_8h.html">Vector3.h</a></div></div>
+<div class="ttc" id="aclass_audio_manager_html"><div class="ttname"><a href="class_audio_manager.html">AudioManager</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:26</div></div>
+<div class="ttc" id="aclass_audio_source_html"><div class="ttname"><a href="class_audio_source.html">AudioSource</a></div><div class="ttdef"><b>Definition</b> AudioSource.h:9</div></div>
+<div class="ttc" id="aclass_audio_source_html_a00c02308f6a10f9945404fa9572987c0"><div class="ttname"><a href="class_audio_source.html#a00c02308f6a10f9945404fa9572987c0">AudioSource::onDisabled</a></div><div class="ttdeci">FORGE_API void onDisabled() override</div><div class="ttdoc">Pausa la reproduccion del sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:76</div></div>
+<div class="ttc" id="aclass_audio_source_html_a0d717947146ca273975ae0de909c446c"><div class="ttname"><a href="class_audio_source.html#a0d717947146ca273975ae0de909c446c">AudioSource::stop</a></div><div class="ttdeci">FORGE_API bool stop()</div><div class="ttdoc">Detiene por completo el sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:95</div></div>
+<div class="ttc" id="aclass_audio_source_html_a1852c08f21b8ad7ca56b8552014dcaa2"><div class="ttname"><a href="class_audio_source.html#a1852c08f21b8ad7ca56b8552014dcaa2">AudioSource::initComponent</a></div><div class="ttdeci">FORGE_API bool initComponent(ComponentData *data) override</div><div class="ttdoc">Se llama en la creacion del componente AudioSource.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:30</div></div>
+<div class="ttc" id="aclass_audio_source_html_a218980b87a1b223b2e13bcb766567ad1"><div class="ttname"><a href="class_audio_source.html#a218980b87a1b223b2e13bcb766567ad1">AudioSource::isPlaying</a></div><div class="ttdeci">FORGE_API bool isPlaying() const</div><div class="ttdoc">Comprueba si el sonido se esta reproduciendo.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:140</div></div>
+<div class="ttc" id="aclass_audio_source_html_a2acfc098286b347ef0d7dd45ed35f76c"><div class="ttname"><a href="class_audio_source.html#a2acfc098286b347ef0d7dd45ed35f76c">AudioSource::setLooped</a></div><div class="ttdeci">FORGE_API void setLooped(bool looped)</div><div class="ttdoc">Establece el estado de bucle del sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:132</div></div>
+<div class="ttc" id="aclass_audio_source_html_a2bb9caaeef97b168aff81ccb6fb5edf0"><div class="ttname"><a href="class_audio_source.html#a2bb9caaeef97b168aff81ccb6fb5edf0">AudioSource::setFullVolumeRadious</a></div><div class="ttdeci">FORGE_API void setFullVolumeRadious(float value)</div><div class="ttdoc">Establece el radio alrededor del objeto desde el que se escuchara el sonido con su maximo volumen.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:144</div></div>
+<div class="ttc" id="aclass_audio_source_html_a2efc05c6255df5baaba2aa6b5c672d66"><div class="ttname"><a href="class_audio_source.html#a2efc05c6255df5baaba2aa6b5c672d66">AudioSource::getVolume</a></div><div class="ttdeci">FORGE_API void getVolume() const</div><div class="ttdoc">Devuelve el volumen con el que se reproduce el sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:116</div></div>
+<div class="ttc" id="aclass_audio_source_html_a30f9c0367bf3c628ee784f78ebb9107b"><div class="ttname"><a href="class_audio_source.html#a30f9c0367bf3c628ee784f78ebb9107b">AudioSource::pause</a></div><div class="ttdeci">FORGE_API bool pause()</div><div class="ttdoc">Pausa el sonido si esta sonando.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:83</div></div>
+<div class="ttc" id="aclass_audio_source_html_a3293cc952e2241afa98e1a194eab5863"><div class="ttname"><a href="class_audio_source.html#a3293cc952e2241afa98e1a194eab5863">AudioSource::isLooped</a></div><div class="ttdeci">FORGE_API bool isLooped() const</div><div class="ttdoc">Devuelve el estado de bucle del sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:136</div></div>
+<div class="ttc" id="aclass_audio_source_html_a3580c9adc7395a43ca5bc7a6990df727"><div class="ttname"><a href="class_audio_source.html#a3580c9adc7395a43ca5bc7a6990df727">AudioSource::onEnabled</a></div><div class="ttdeci">FORGE_API void onEnabled() override</div><div class="ttdoc">Reanuda la reproduccion del sonido si se estaba reproduciendo cuando se desactivo el componente.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:69</div></div>
+<div class="ttc" id="aclass_audio_source_html_a38b05d9f70cf6c7df00c3a741428d8d5"><div class="ttname"><a href="class_audio_source.html#a38b05d9f70cf6c7df00c3a741428d8d5">AudioSource::isPaused</a></div><div class="ttdeci">FORGE_API bool isPaused()</div><div class="ttdoc">Devuelve si la reproduccion del sonido esta en pausa.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:91</div></div>
+<div class="ttc" id="aclass_audio_source_html_a41fe0862f3416acd674d24e13e544fb7"><div class="ttname"><a href="class_audio_source.html#a41fe0862f3416acd674d24e13e544fb7">AudioSource::update</a></div><div class="ttdeci">FORGE_API void update() override</div><div class="ttdoc">Actualiza la logica del componente, llamandose en cada iteracion del bucle principal.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:63</div></div>
+<div class="ttc" id="aclass_audio_source_html_a4d7cdce75821d0c2587c3ef8e4ed37bd"><div class="ttname"><a href="class_audio_source.html#a4d7cdce75821d0c2587c3ef8e4ed37bd">AudioSource::getFullVolumeRadious</a></div><div class="ttdeci">FORGE_API float getFullVolumeRadious() const</div><div class="ttdoc">Devuelve el valor del radio alrededor del objeto desde el que se escuchara el sonido con su maximo vo...</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:147</div></div>
+<div class="ttc" id="aclass_audio_source_html_a4f82648fee8d33fccaa8b481648f3ecf"><div class="ttname"><a href="class_audio_source.html#a4f82648fee8d33fccaa8b481648f3ecf">AudioSource::resume</a></div><div class="ttdeci">FORGE_API bool resume()</div><div class="ttdoc">Reanuda el sonido desde donde se habia pausado.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:87</div></div>
+<div class="ttc" id="aclass_audio_source_html_a54b071c866b2f8d6fa48a507c233c02d"><div class="ttname"><a href="class_audio_source.html#a54b071c866b2f8d6fa48a507c233c02d">AudioSource::setHearingRadious</a></div><div class="ttdeci">FORGE_API void setHearingRadious(float value)</div><div class="ttdoc">Establece el radio alrededor del objeto a partir del que se empieza a escuchar.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:150</div></div>
+<div class="ttc" id="aclass_audio_source_html_a58ad52e32668f022d45fa6239e56a85c"><div class="ttname"><a href="class_audio_source.html#a58ad52e32668f022d45fa6239e56a85c">AudioSource::AudioSource</a></div><div class="ttdeci">FORGE_API AudioSource()</div><div class="ttdoc">Constructora por defecto del component AudioSource.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:12</div></div>
+<div class="ttc" id="aclass_audio_source_html_a990bcb92bb3e5d66a8aa2546f59df9f8"><div class="ttname"><a href="class_audio_source.html#a990bcb92bb3e5d66a8aa2546f59df9f8">AudioSource::setVolume</a></div><div class="ttdeci">FORGE_API void setVolume(float volume)</div><div class="ttdoc">Establece el volumen con el que se reproduce el sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:112</div></div>
+<div class="ttc" id="aclass_audio_source_html_a9ae1af090bad545bf8fd11dae402f70e"><div class="ttname"><a href="class_audio_source.html#a9ae1af090bad545bf8fd11dae402f70e">AudioSource::play</a></div><div class="ttdeci">FORGE_API bool play()</div><div class="ttdoc">Comienza a reproducir el sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:99</div></div>
+<div class="ttc" id="aclass_audio_source_html_aaf98cd50d57508860732ddaff4c89003"><div class="ttname"><a href="class_audio_source.html#aaf98cd50d57508860732ddaff4c89003">AudioSource::getPan</a></div><div class="ttdeci">FORGE_API void getPan() const</div><div class="ttdoc">Devuelve el valor del paneo.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:124</div></div>
+<div class="ttc" id="aclass_audio_source_html_abd83fd1136f12d06f2b84982aacea010"><div class="ttname"><a href="class_audio_source.html#abd83fd1136f12d06f2b84982aacea010">AudioSource::setPan</a></div><div class="ttdeci">FORGE_API void setPan(float pan)</div><div class="ttdoc">Establece el valor del paneo.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:120</div></div>
+<div class="ttc" id="aclass_audio_source_html_ace41983fedf24919dcd58303b2453c7b"><div class="ttname"><a href="class_audio_source.html#ace41983fedf24919dcd58303b2453c7b">AudioSource::id</a></div><div class="ttdeci">static const FORGE_API_VAR std::string id</div><div class="ttdef"><b>Definition</b> AudioSource.h:22</div></div>
+<div class="ttc" id="aclass_audio_source_html_ad8ad0028ed5e4a32424aa70892c94dbf"><div class="ttname"><a href="class_audio_source.html#ad8ad0028ed5e4a32424aa70892c94dbf">AudioSource::loopedToggle</a></div><div class="ttdeci">FORGE_API void loopedToggle()</div><div class="ttdoc">Cambia el estado de bucle del sonido.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:128</div></div>
+<div class="ttc" id="aclass_audio_source_html_ae09669b3111a7c70b797b9f99590e2e7"><div class="ttname"><a href="class_audio_source.html#ae09669b3111a7c70b797b9f99590e2e7">AudioSource::getHearingRadious</a></div><div class="ttdeci">FORGE_API float getHearingRadious() const</div><div class="ttdoc">Devuelve el radio alrededor del objeto a partir del que se empieza a escuchar.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:153</div></div>
+<div class="ttc" id="aclass_audio_source_html_af275d7273bdc55c8ddb87583c541c9cb"><div class="ttname"><a href="class_audio_source.html#af275d7273bdc55c8ddb87583c541c9cb">AudioSource::~AudioSource</a></div><div class="ttdeci">FORGE_API ~AudioSource() override</div><div class="ttdoc">Elimina su sonido del gestor.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:26</div></div>
+<div class="ttc" id="aclass_audio_source_html_af6790013666dc8f421ff9a3e40d9cb97"><div class="ttname"><a href="class_audio_source.html#af6790013666dc8f421ff9a3e40d9cb97">AudioSource::restart</a></div><div class="ttdeci">FORGE_API bool restart()</div><div class="ttdoc">Reinicia el sonido. Detiene el sonido y lo vuelve a reproducir desde el principio.</div><div class="ttdef"><b>Definition</b> AudioSource.cpp:106</div></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_component_html"><div class="ttname"><a href="class_component.html">Component</a></div><div class="ttdef"><b>Definition</b> Component.h:14</div></div>
+<div class="ttc" id="aclass_sound_html"><div class="ttname"><a href="class_sound.html">Sound</a></div><div class="ttdef"><b>Definition</b> Sound.h:16</div></div>
+<div class="ttc" id="aclass_transform_html"><div class="ttname"><a href="class_transform.html">Transform</a></div><div class="ttdef"><b>Definition</b> Transform.h:10</div></div>
+<div class="ttc" id="aclassforge_1_1_vector3_html"><div class="ttname"><a href="classforge_1_1_vector3.html">forge::Vector3</a></div><div class="ttdef"><b>Definition</b> Vector3.h:7</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_05436b5d1b0b22979f23fc87cbcd2e2f.html">Audio</a></li><li class="navelem"><a class="el" href="_audio_source_8h.html">AudioSource.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

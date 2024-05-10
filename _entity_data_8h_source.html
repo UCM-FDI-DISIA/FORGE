@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/EC/EntityData.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_entity_data_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">EntityData.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_entity_data_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef ENTITY_DATA_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="_entity_data_8h.html#a19aa249615580eb345ffbfb4f342f67e">    3</a></span><span class="preprocessor">#define ENTITY_DATA_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">class </span><a class="code hl_class" href="class_component_data.html">ComponentData</a>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="struct_entity_data.html">    9</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_entity_data.html">EntityData</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="struct_entity_data.html#a97c235ee687fbd7f8e6e2c8b527fd23d">   10</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="struct_entity_data.html#a97c235ee687fbd7f8e6e2c8b527fd23d">isBlueprint</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_entity_data.html#a86647979d757d7224f94bc690c7b0b2b">   11</a></span>    std::string <a class="code hl_variable" href="struct_entity_data.html#a86647979d757d7224f94bc690c7b0b2b">group</a>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="struct_entity_data.html#a61dc91e9bbd95305b787f8b657b09eaa">   12</a></span>    std::string <a class="code hl_variable" href="struct_entity_data.html#a61dc91e9bbd95305b787f8b657b09eaa">handler</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="struct_entity_data.html#aacd8a9b251a77d9c815627e82db40a72">   13</a></span>    std::vector&lt;ComponentData*&gt; <a class="code hl_variable" href="struct_entity_data.html#aacd8a9b251a77d9c815627e82db40a72">components</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="struct_entity_data.html#a643b916239342ff66f94f14d7a5b55cc">   14</a></span>    std::vector&lt;EntityData*&gt; <a class="code hl_variable" href="struct_entity_data.html#a643b916239342ff66f94f14d7a5b55cc">children</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_function" href="struct_entity_data.html#aa0580491007d9306b027eb7c59eff07e">EntityData</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_function" href="struct_entity_data.html#aa0580491007d9306b027eb7c59eff07e">EntityData</a>(<a class="code hl_struct" href="struct_entity_data.html">EntityData</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">other</a>);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_function" href="struct_entity_data.html#a73fbd9ea3e25ad0113835f8073c0882a">~EntityData</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>};</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="astruct_entity_data_html"><div class="ttname"><a href="struct_entity_data.html">EntityData</a></div><div class="ttdef"><b>Definition</b> EntityData.h:9</div></div>
+<div class="ttc" id="astruct_entity_data_html_a61dc91e9bbd95305b787f8b657b09eaa"><div class="ttname"><a href="struct_entity_data.html#a61dc91e9bbd95305b787f8b657b09eaa">EntityData::handler</a></div><div class="ttdeci">std::string handler</div><div class="ttdef"><b>Definition</b> EntityData.h:12</div></div>
+<div class="ttc" id="astruct_entity_data_html_a643b916239342ff66f94f14d7a5b55cc"><div class="ttname"><a href="struct_entity_data.html#a643b916239342ff66f94f14d7a5b55cc">EntityData::children</a></div><div class="ttdeci">std::vector&lt; EntityData * &gt; children</div><div class="ttdef"><b>Definition</b> EntityData.h:14</div></div>
+<div class="ttc" id="astruct_entity_data_html_a73fbd9ea3e25ad0113835f8073c0882a"><div class="ttname"><a href="struct_entity_data.html#a73fbd9ea3e25ad0113835f8073c0882a">EntityData::~EntityData</a></div><div class="ttdeci">~EntityData()</div><div class="ttdoc">Elimina los ComponentData y los EntityData hijos de este que no sean blueprint.</div><div class="ttdef"><b>Definition</b> EntityData.cpp:29</div></div>
+<div class="ttc" id="astruct_entity_data_html_a86647979d757d7224f94bc690c7b0b2b"><div class="ttname"><a href="struct_entity_data.html#a86647979d757d7224f94bc690c7b0b2b">EntityData::group</a></div><div class="ttdeci">std::string group</div><div class="ttdef"><b>Definition</b> EntityData.h:11</div></div>
+<div class="ttc" id="astruct_entity_data_html_a97c235ee687fbd7f8e6e2c8b527fd23d"><div class="ttname"><a href="struct_entity_data.html#a97c235ee687fbd7f8e6e2c8b527fd23d">EntityData::isBlueprint</a></div><div class="ttdeci">bool isBlueprint</div><div class="ttdef"><b>Definition</b> EntityData.h:10</div></div>
+<div class="ttc" id="astruct_entity_data_html_aa0580491007d9306b027eb7c59eff07e"><div class="ttname"><a href="struct_entity_data.html#aa0580491007d9306b027eb7c59eff07e">EntityData::EntityData</a></div><div class="ttdeci">EntityData()</div><div class="ttdoc">Constructora por defecto, deja todo vacio.</div><div class="ttdef"><b>Definition</b> EntityData.cpp:6</div></div>
+<div class="ttc" id="astruct_entity_data_html_aacd8a9b251a77d9c815627e82db40a72"><div class="ttname"><a href="struct_entity_data.html#aacd8a9b251a77d9c815627e82db40a72">EntityData::components</a></div><div class="ttdeci">std::vector&lt; ComponentData * &gt; components</div><div class="ttdef"><b>Definition</b> EntityData.h:13</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_77809d553f23df092533ca26308673a8.html">EC</a></li><li class="navelem"><a class="el" href="_entity_data_8h.html">EntityData.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Physics/Collider.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_collider_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Collider.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_collider_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef COLLIDER_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="_collider_8h.html#a06e7e0827a2b6ac083c1c943f5340958">    3</a></span><span class="preprocessor">#define COLLIDER_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_component_8h.html">Component.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_vector3_8h.html">Vector3.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="_quaternion_8h.html">Quaternion.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span><a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btRigidBody</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">btCollisionShape</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">class </span><a class="code hl_class" href="class_transform.html">Transform</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceforge.html">forge</a> {</div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6">   17</a></span>    <span class="keyword">enum</span> <a class="code hl_enumeration" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6">callbackType</a> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6a4bf9804054e7504f73748cd973853cc8">   18</a></span>        <a class="code hl_enumvalue" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6a4bf9804054e7504f73748cd973853cc8">onCollisionEnter</a>, <a class="code hl_enumvalue" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6abd3ebeb22507bc08bfe336154e5e4910">onCollisionStay</a>, <a class="code hl_enumvalue" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6ab2ca9959f0d89c9b65435099923793a2">onCollisionLeave</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6ab2ca9959f0d89c9b65435099923793a2">   19</a></span>    };</div>
+</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_collider.html">   22</a></span><span class="keyword">class </span><a class="code hl_class" href="class_collider.html">Collider</a>: <span class="keyword">public</span> <a class="code hl_class" href="class_component.html">Component</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239">   24</a></span>    <span class="keyword">enum</span> <a class="code hl_enumeration" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239">collisionShape</a> {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a64f769288c0b0040f04acebe58c2d14a">   25</a></span>        <a class="code hl_enumvalue" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a64f769288c0b0040f04acebe58c2d14a">ballShape</a>, <a class="code hl_enumvalue" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239ae9236c976c8cb0c469a821a831c03509">boxShape</a>, <a class="code hl_enumvalue" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a0fe83d4b15f68f9094ccaa9c47a0965b">capsuleShape</a>, <a class="code hl_enumvalue" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a7c861a95440d4047031d084f244d1963">cylinderShape</a>, <a class="code hl_enumvalue" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a1ff9cdb28f1eca400891947dfbb53e53">planeShape</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a1ff9cdb28f1eca400891947dfbb53e53">   26</a></span>    };</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_collider.html#a9eee5bd8e8ac87217226f09eba97476e">   28</a></span>    <a class="code hl_class" href="class_physics_manager.html">PhysicsManager</a>&amp; <a class="code hl_variable" href="class_collider.html#a9eee5bd8e8ac87217226f09eba97476e">physicsManager</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_collider.html#a2381550f86119b86f716ebc0869d5767">   29</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_collider.html#a2381550f86119b86f716ebc0869d5767">trigger</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_collider.html#aba8e17f012e4827682f1f6080badb9b7">   30</a></span>    <a class="code hl_class" href="class_forge_function.html">btRigidBody</a>* <a class="code hl_variable" href="class_collider.html#aba8e17f012e4827682f1f6080badb9b7">myBody</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_collider.html#abda54c5b0b950ca33c80a16c32a575ee">   31</a></span>    <a class="code hl_class" href="class_forge_function.html">btCollisionShape</a>* <a class="code hl_variable" href="class_collider.html#abda54c5b0b950ca33c80a16c32a575ee">myShape</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="class_collider.html#a696371715067c4a94ab3b9b1891cecd4">   32</a></span>    std::string <a class="code hl_variable" href="class_collider.html#a696371715067c4a94ab3b9b1891cecd4">myShapeString</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="class_collider.html#a62d800ba5506950ca8d31dfe1dc06cb2">   33</a></span>    <a class="code hl_enumeration" href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239">collisionShape</a> <a class="code hl_variable" href="class_collider.html#a62d800ba5506950ca8d31dfe1dc06cb2">shapeType</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_collider.html#af661d74de96066df6815e28fd6996119">   35</a></span>    <a class="code hl_class" href="class_transform.html">Transform</a>* <a class="code hl_variable" href="class_collider.html#af661d74de96066df6815e28fd6996119">bodyTransform</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="class_collider.html#a5e29ff3dfaa1549b7b33fda02cf9db9b">   36</a></span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_variable" href="class_collider.html#a5e29ff3dfaa1549b7b33fda02cf9db9b">myScale</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="class_collider.html#ae2c7efcad230a5d6ccdeeff9764716e2">   37</a></span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_variable" href="class_collider.html#ae2c7efcad230a5d6ccdeeff9764716e2">offset</a>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="class_collider.html#abfe86d05115d31fe813a665cdf11bdda">   39</a></span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_variable" href="class_collider.html#abfe86d05115d31fe813a665cdf11bdda">lastPosition</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_collider.html#a45fcdb7c2c5b8508e33e3bdd101ec0e5">   40</a></span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_variable" href="class_collider.html#a45fcdb7c2c5b8508e33e3bdd101ec0e5">lastForce</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_collider.html#a227eadee2eefeb41e6903484626db0a7">   41</a></span>    <a class="code hl_class" href="classforge_1_1_quaternion.html">forge::Quaternion</a> <a class="code hl_variable" href="class_collider.html#a227eadee2eefeb41e6903484626db0a7">lastOrientation</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_collider.html#a78ecb5d12cfefa321469b28c1d0b6def">   43</a></span>    std::vector&lt;std::function&lt;<a class="code hl_class" href="class_forge_function.html">void</a>(<a class="code hl_class" href="class_collider.html">Collider</a>*, <a class="code hl_class" href="class_collider.html">Collider</a>*)&gt;&gt; <a class="code hl_variable" href="class_collider.html#a78ecb5d12cfefa321469b28c1d0b6def">onCollisionEnterCallbacks</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_collider.html#a1d54e4a5812518185f1e337adea28aff">   44</a></span>    std::vector&lt;std::function&lt;<a class="code hl_class" href="class_forge_function.html">void</a>(<a class="code hl_class" href="class_collider.html">Collider</a>*, <a class="code hl_class" href="class_collider.html">Collider</a>*)&gt;&gt; <a class="code hl_variable" href="class_collider.html#a1d54e4a5812518185f1e337adea28aff">oncollisionStayCallbacks</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="class_collider.html#a254ed86ea0d2fc4fa42bca3e14c4d64e">   45</a></span>    std::vector&lt;std::function&lt;<a class="code hl_class" href="class_forge_function.html">void</a>(<a class="code hl_class" href="class_collider.html">Collider</a>*, <a class="code hl_class" href="class_collider.html">Collider</a>*)&gt;&gt; <a class="code hl_variable" href="class_collider.html#a254ed86ea0d2fc4fa42bca3e14c4d64e">oncollisionLeaveCallbacks</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="class_collider.html#a4deb06b731265a4d47eb61b54bfa2e6d">   47</a></span>    std::string <a class="code hl_variable" href="class_collider.html#a4deb06b731265a4d47eb61b54bfa2e6d">collisionLayer</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_collider.html#ae5583bc91e05dcdb0392bd50c367a5f8">   48</a></span>    std::list&lt;Entity*&gt; <a class="code hl_variable" href="class_collider.html#ae5583bc91e05dcdb0392bd50c367a5f8">collidedEntities</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="class_collider.html#a6658a8d6bd750827045e3d4fe48b82ee">   50</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> std::string <a class="code hl_variable" href="class_collider.html#a6658a8d6bd750827045e3d4fe48b82ee">id</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_collider.html#aa7186870221f868bbc74c3ae8609fa66">Collider</a>();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_collider.html#a564acde9860f875a32a6638c573d87be">~Collider</a>();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_collider.html#ac6745ced5c825ca795f5e5ddf85bd13b">initComponent</a>(<a class="code hl_class" href="class_component_data.html">ComponentData</a>* data) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#aaea9f3e72b2776368e3d75b251282926">fixedUpdate</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#a844637d72fe0f01529b86082838d50eb">onEnabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#a1752afe6933d732499c0f53bd441c004">onDisabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_collider.html#a113e800d70192cd3c162ff45fabf9a43">createRigidBody</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">myShapeType</a>, <span class="keywordtype">float</span> mass, <span class="keywordtype">bool</span> isStatic, <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">disableDeactivation</a>);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_collider.html#a515c1d02a6c00c2d28bc3bec47fb2402">hasCollidedWith</a>(<a class="code hl_class" href="class_entity.html">Entity</a>* <a class="code hl_class" href="class_forge_function.html">other</a>);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#a493f5a71115205dbfb09d72e4ac9127d">registerCallback</a>(<a class="code hl_enumeration" href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6">forge::callbackType</a> type, std::function&lt;<span class="keywordtype">void</span>(<a class="code hl_class" href="class_collider.html">Collider</a>*, <a class="code hl_class" href="class_collider.html">Collider</a>*)&gt; <a class="code hl_class" href="class_forge_function.html">callback</a>);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#ade7312d82a5749e5f27d7a6fae74d8b8">onCollision</a>(<a class="code hl_class" href="class_entity.html">Entity</a>* <a class="code hl_class" href="class_forge_function.html">other</a>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#ae7c1e5861d2b3612ce9a47e5c5f2f45f">checkCollisionEnd</a>();</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="preprocessor">    #pragma region Getters</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_collider.html#a5268794673e5a3eeabed37fae90512c5">isTrigger</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="class_forge_function.html">btRigidBody</a>* <a class="code hl_function" href="class_collider.html#ab550729189f32243cb4df6d049ce804f">getBody</a>();</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> std::string <a class="code hl_function" href="class_collider.html#a0a5ca2ff88bfa7c751af918b7134af60">getLayer</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_collider.html#a740b7c5c50603d1c888530a38b651c2d">getPosition</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">    #pragma region Setters</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_collider.html#af96b9fde921e93d3072e49e0bfc1d942">setTrigger</a>(<span class="keywordtype">bool</span> <a class="code hl_function" href="class_collider.html#a5268794673e5a3eeabed37fae90512c5">isTrigger</a>);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>};</div>
+</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#endif </span><span class="comment">// !COLLIDER_H_</span></div>
+<div class="ttc" id="a_component_8h_html"><div class="ttname"><a href="_component_8h.html">Component.h</a></div></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_quaternion_8h_html"><div class="ttname"><a href="_quaternion_8h.html">Quaternion.h</a></div></div>
+<div class="ttc" id="a_vector3_8h_html"><div class="ttname"><a href="_vector3_8h.html">Vector3.h</a></div></div>
+<div class="ttc" id="aclass_collider_html"><div class="ttname"><a href="class_collider.html">Collider</a></div><div class="ttdef"><b>Definition</b> Collider.h:22</div></div>
+<div class="ttc" id="aclass_collider_html_a0a5ca2ff88bfa7c751af918b7134af60"><div class="ttname"><a href="class_collider.html#a0a5ca2ff88bfa7c751af918b7134af60">Collider::getLayer</a></div><div class="ttdeci">FORGE_API std::string getLayer() const</div><div class="ttdef"><b>Definition</b> Collider.cpp:235</div></div>
+<div class="ttc" id="aclass_collider_html_a113e800d70192cd3c162ff45fabf9a43"><div class="ttname"><a href="class_collider.html#a113e800d70192cd3c162ff45fabf9a43">Collider::createRigidBody</a></div><div class="ttdeci">virtual FORGE_API bool createRigidBody(std::string const &amp;myShapeType, float mass, bool isStatic, bool disableDeactivation)</div><div class="ttdef"><b>Definition</b> Collider.cpp:44</div></div>
+<div class="ttc" id="aclass_collider_html_a1752afe6933d732499c0f53bd441c004"><div class="ttname"><a href="class_collider.html#a1752afe6933d732499c0f53bd441c004">Collider::onDisabled</a></div><div class="ttdeci">FORGE_API void onDisabled() override</div><div class="ttdoc">Metodo que se llama cada vez que se desactiva el componente.</div><div class="ttdef"><b>Definition</b> Collider.cpp:122</div></div>
+<div class="ttc" id="aclass_collider_html_a1d54e4a5812518185f1e337adea28aff"><div class="ttname"><a href="class_collider.html#a1d54e4a5812518185f1e337adea28aff">Collider::oncollisionStayCallbacks</a></div><div class="ttdeci">std::vector&lt; std::function&lt; void(Collider *, Collider *)&gt; oncollisionStayCallbacks)</div><div class="ttdef"><b>Definition</b> Collider.h:44</div></div>
+<div class="ttc" id="aclass_collider_html_a227eadee2eefeb41e6903484626db0a7"><div class="ttname"><a href="class_collider.html#a227eadee2eefeb41e6903484626db0a7">Collider::lastOrientation</a></div><div class="ttdeci">forge::Quaternion lastOrientation</div><div class="ttdef"><b>Definition</b> Collider.h:41</div></div>
+<div class="ttc" id="aclass_collider_html_a2381550f86119b86f716ebc0869d5767"><div class="ttname"><a href="class_collider.html#a2381550f86119b86f716ebc0869d5767">Collider::trigger</a></div><div class="ttdeci">bool trigger</div><div class="ttdef"><b>Definition</b> Collider.h:29</div></div>
+<div class="ttc" id="aclass_collider_html_a254ed86ea0d2fc4fa42bca3e14c4d64e"><div class="ttname"><a href="class_collider.html#a254ed86ea0d2fc4fa42bca3e14c4d64e">Collider::oncollisionLeaveCallbacks</a></div><div class="ttdeci">std::vector&lt; std::function&lt; void(Collider *, Collider *)&gt; oncollisionLeaveCallbacks)</div><div class="ttdef"><b>Definition</b> Collider.h:45</div></div>
+<div class="ttc" id="aclass_collider_html_a45fcdb7c2c5b8508e33e3bdd101ec0e5"><div class="ttname"><a href="class_collider.html#a45fcdb7c2c5b8508e33e3bdd101ec0e5">Collider::lastForce</a></div><div class="ttdeci">forge::Vector3 lastForce</div><div class="ttdef"><b>Definition</b> Collider.h:40</div></div>
+<div class="ttc" id="aclass_collider_html_a493f5a71115205dbfb09d72e4ac9127d"><div class="ttname"><a href="class_collider.html#a493f5a71115205dbfb09d72e4ac9127d">Collider::registerCallback</a></div><div class="ttdeci">FORGE_API void registerCallback(forge::callbackType type, std::function&lt; void(Collider *, Collider *)&gt; callback)</div><div class="ttdoc">Registra un nuevo callback de colision.</div><div class="ttdef"><b>Definition</b> Collider.cpp:142</div></div>
+<div class="ttc" id="aclass_collider_html_a4d0b3c36d2fe419b972ec84e33c07239"><div class="ttname"><a href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239">Collider::collisionShape</a></div><div class="ttdeci">collisionShape</div><div class="ttdef"><b>Definition</b> Collider.h:24</div></div>
+<div class="ttc" id="aclass_collider_html_a4d0b3c36d2fe419b972ec84e33c07239a0fe83d4b15f68f9094ccaa9c47a0965b"><div class="ttname"><a href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a0fe83d4b15f68f9094ccaa9c47a0965b">Collider::capsuleShape</a></div><div class="ttdeci">@ capsuleShape</div><div class="ttdef"><b>Definition</b> Collider.h:25</div></div>
+<div class="ttc" id="aclass_collider_html_a4d0b3c36d2fe419b972ec84e33c07239a1ff9cdb28f1eca400891947dfbb53e53"><div class="ttname"><a href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a1ff9cdb28f1eca400891947dfbb53e53">Collider::planeShape</a></div><div class="ttdeci">@ planeShape</div><div class="ttdef"><b>Definition</b> Collider.h:25</div></div>
+<div class="ttc" id="aclass_collider_html_a4d0b3c36d2fe419b972ec84e33c07239a64f769288c0b0040f04acebe58c2d14a"><div class="ttname"><a href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a64f769288c0b0040f04acebe58c2d14a">Collider::ballShape</a></div><div class="ttdeci">@ ballShape</div><div class="ttdef"><b>Definition</b> Collider.h:25</div></div>
+<div class="ttc" id="aclass_collider_html_a4d0b3c36d2fe419b972ec84e33c07239a7c861a95440d4047031d084f244d1963"><div class="ttname"><a href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239a7c861a95440d4047031d084f244d1963">Collider::cylinderShape</a></div><div class="ttdeci">@ cylinderShape</div><div class="ttdef"><b>Definition</b> Collider.h:25</div></div>
+<div class="ttc" id="aclass_collider_html_a4d0b3c36d2fe419b972ec84e33c07239ae9236c976c8cb0c469a821a831c03509"><div class="ttname"><a href="class_collider.html#a4d0b3c36d2fe419b972ec84e33c07239ae9236c976c8cb0c469a821a831c03509">Collider::boxShape</a></div><div class="ttdeci">@ boxShape</div><div class="ttdef"><b>Definition</b> Collider.h:25</div></div>
+<div class="ttc" id="aclass_collider_html_a4deb06b731265a4d47eb61b54bfa2e6d"><div class="ttname"><a href="class_collider.html#a4deb06b731265a4d47eb61b54bfa2e6d">Collider::collisionLayer</a></div><div class="ttdeci">std::string collisionLayer</div><div class="ttdef"><b>Definition</b> Collider.h:47</div></div>
+<div class="ttc" id="aclass_collider_html_a515c1d02a6c00c2d28bc3bec47fb2402"><div class="ttname"><a href="class_collider.html#a515c1d02a6c00c2d28bc3bec47fb2402">Collider::hasCollidedWith</a></div><div class="ttdeci">FORGE_API bool hasCollidedWith(Entity *other)</div><div class="ttdoc">Metodo para comprobar si han colisionado dos colliders.</div><div class="ttdef"><b>Definition</b> Collider.cpp:129</div></div>
+<div class="ttc" id="aclass_collider_html_a5268794673e5a3eeabed37fae90512c5"><div class="ttname"><a href="class_collider.html#a5268794673e5a3eeabed37fae90512c5">Collider::isTrigger</a></div><div class="ttdeci">FORGE_API bool isTrigger() const</div><div class="ttdef"><b>Definition</b> Collider.cpp:227</div></div>
+<div class="ttc" id="aclass_collider_html_a564acde9860f875a32a6638c573d87be"><div class="ttname"><a href="class_collider.html#a564acde9860f875a32a6638c573d87be">Collider::~Collider</a></div><div class="ttdeci">FORGE_API ~Collider()</div><div class="ttdef"><b>Definition</b> Collider.cpp:32</div></div>
+<div class="ttc" id="aclass_collider_html_a5e29ff3dfaa1549b7b33fda02cf9db9b"><div class="ttname"><a href="class_collider.html#a5e29ff3dfaa1549b7b33fda02cf9db9b">Collider::myScale</a></div><div class="ttdeci">forge::Vector3 myScale</div><div class="ttdef"><b>Definition</b> Collider.h:36</div></div>
+<div class="ttc" id="aclass_collider_html_a62d800ba5506950ca8d31dfe1dc06cb2"><div class="ttname"><a href="class_collider.html#a62d800ba5506950ca8d31dfe1dc06cb2">Collider::shapeType</a></div><div class="ttdeci">collisionShape shapeType</div><div class="ttdef"><b>Definition</b> Collider.h:33</div></div>
+<div class="ttc" id="aclass_collider_html_a6658a8d6bd750827045e3d4fe48b82ee"><div class="ttname"><a href="class_collider.html#a6658a8d6bd750827045e3d4fe48b82ee">Collider::id</a></div><div class="ttdeci">static const FORGE_API_VAR std::string id</div><div class="ttdef"><b>Definition</b> Collider.h:50</div></div>
+<div class="ttc" id="aclass_collider_html_a696371715067c4a94ab3b9b1891cecd4"><div class="ttname"><a href="class_collider.html#a696371715067c4a94ab3b9b1891cecd4">Collider::myShapeString</a></div><div class="ttdeci">std::string myShapeString</div><div class="ttdef"><b>Definition</b> Collider.h:32</div></div>
+<div class="ttc" id="aclass_collider_html_a740b7c5c50603d1c888530a38b651c2d"><div class="ttname"><a href="class_collider.html#a740b7c5c50603d1c888530a38b651c2d">Collider::getPosition</a></div><div class="ttdeci">FORGE_API forge::Vector3 getPosition() const</div><div class="ttdef"><b>Definition</b> Collider.cpp:239</div></div>
+<div class="ttc" id="aclass_collider_html_a78ecb5d12cfefa321469b28c1d0b6def"><div class="ttname"><a href="class_collider.html#a78ecb5d12cfefa321469b28c1d0b6def">Collider::onCollisionEnterCallbacks</a></div><div class="ttdeci">std::vector&lt; std::function&lt; void(Collider *, Collider *)&gt; onCollisionEnterCallbacks)</div><div class="ttdef"><b>Definition</b> Collider.h:43</div></div>
+<div class="ttc" id="aclass_collider_html_a844637d72fe0f01529b86082838d50eb"><div class="ttname"><a href="class_collider.html#a844637d72fe0f01529b86082838d50eb">Collider::onEnabled</a></div><div class="ttdeci">FORGE_API void onEnabled() override</div><div class="ttdoc">Metodo que se llama cada vez que se activa el componente.</div><div class="ttdef"><b>Definition</b> Collider.cpp:113</div></div>
+<div class="ttc" id="aclass_collider_html_a9eee5bd8e8ac87217226f09eba97476e"><div class="ttname"><a href="class_collider.html#a9eee5bd8e8ac87217226f09eba97476e">Collider::physicsManager</a></div><div class="ttdeci">PhysicsManager &amp; physicsManager</div><div class="ttdef"><b>Definition</b> Collider.h:28</div></div>
+<div class="ttc" id="aclass_collider_html_aa7186870221f868bbc74c3ae8609fa66"><div class="ttname"><a href="class_collider.html#aa7186870221f868bbc74c3ae8609fa66">Collider::Collider</a></div><div class="ttdeci">FORGE_API Collider()</div><div class="ttdef"><b>Definition</b> Collider.cpp:14</div></div>
+<div class="ttc" id="aclass_collider_html_aaea9f3e72b2776368e3d75b251282926"><div class="ttname"><a href="class_collider.html#aaea9f3e72b2776368e3d75b251282926">Collider::fixedUpdate</a></div><div class="ttdeci">FORGE_API void fixedUpdate() override</div><div class="ttdoc">Actualiza el Component en periodos de tiempo fijos.</div><div class="ttdef"><b>Definition</b> Collider.cpp:100</div></div>
+<div class="ttc" id="aclass_collider_html_ab550729189f32243cb4df6d049ce804f"><div class="ttname"><a href="class_collider.html#ab550729189f32243cb4df6d049ce804f">Collider::getBody</a></div><div class="ttdeci">FORGE_API btRigidBody * getBody()</div><div class="ttdef"><b>Definition</b> Collider.cpp:231</div></div>
+<div class="ttc" id="aclass_collider_html_aba8e17f012e4827682f1f6080badb9b7"><div class="ttname"><a href="class_collider.html#aba8e17f012e4827682f1f6080badb9b7">Collider::myBody</a></div><div class="ttdeci">btRigidBody * myBody</div><div class="ttdef"><b>Definition</b> Collider.h:30</div></div>
+<div class="ttc" id="aclass_collider_html_abda54c5b0b950ca33c80a16c32a575ee"><div class="ttname"><a href="class_collider.html#abda54c5b0b950ca33c80a16c32a575ee">Collider::myShape</a></div><div class="ttdeci">btCollisionShape * myShape</div><div class="ttdef"><b>Definition</b> Collider.h:31</div></div>
+<div class="ttc" id="aclass_collider_html_abfe86d05115d31fe813a665cdf11bdda"><div class="ttname"><a href="class_collider.html#abfe86d05115d31fe813a665cdf11bdda">Collider::lastPosition</a></div><div class="ttdeci">forge::Vector3 lastPosition</div><div class="ttdef"><b>Definition</b> Collider.h:39</div></div>
+<div class="ttc" id="aclass_collider_html_ac6745ced5c825ca795f5e5ddf85bd13b"><div class="ttname"><a href="class_collider.html#ac6745ced5c825ca795f5e5ddf85bd13b">Collider::initComponent</a></div><div class="ttdeci">FORGE_API bool initComponent(ComponentData *data) override</div><div class="ttdoc">Inicializa el Component con los parametros adecuados.</div><div class="ttdef"><b>Definition</b> Collider.cpp:36</div></div>
+<div class="ttc" id="aclass_collider_html_ade7312d82a5749e5f27d7a6fae74d8b8"><div class="ttname"><a href="class_collider.html#ade7312d82a5749e5f27d7a6fae74d8b8">Collider::onCollision</a></div><div class="ttdeci">FORGE_API void onCollision(Entity *other)</div><div class="ttdoc">Maneja las colisiones con otras entidades.</div><div class="ttdef"><b>Definition</b> Collider.cpp:156</div></div>
+<div class="ttc" id="aclass_collider_html_ae2c7efcad230a5d6ccdeeff9764716e2"><div class="ttname"><a href="class_collider.html#ae2c7efcad230a5d6ccdeeff9764716e2">Collider::offset</a></div><div class="ttdeci">forge::Vector3 offset</div><div class="ttdef"><b>Definition</b> Collider.h:37</div></div>
+<div class="ttc" id="aclass_collider_html_ae5583bc91e05dcdb0392bd50c367a5f8"><div class="ttname"><a href="class_collider.html#ae5583bc91e05dcdb0392bd50c367a5f8">Collider::collidedEntities</a></div><div class="ttdeci">std::list&lt; Entity * &gt; collidedEntities</div><div class="ttdef"><b>Definition</b> Collider.h:48</div></div>
+<div class="ttc" id="aclass_collider_html_ae7c1e5861d2b3612ce9a47e5c5f2f45f"><div class="ttname"><a href="class_collider.html#ae7c1e5861d2b3612ce9a47e5c5f2f45f">Collider::checkCollisionEnd</a></div><div class="ttdeci">FORGE_API void checkCollisionEnd()</div><div class="ttdoc">Si se ha dejado de colisionar con otras entidades, se llama a los callbacks de fin de colision.</div><div class="ttdef"><b>Definition</b> Collider.cpp:181</div></div>
+<div class="ttc" id="aclass_collider_html_af661d74de96066df6815e28fd6996119"><div class="ttname"><a href="class_collider.html#af661d74de96066df6815e28fd6996119">Collider::bodyTransform</a></div><div class="ttdeci">Transform * bodyTransform</div><div class="ttdef"><b>Definition</b> Collider.h:35</div></div>
+<div class="ttc" id="aclass_collider_html_af96b9fde921e93d3072e49e0bfc1d942"><div class="ttname"><a href="class_collider.html#af96b9fde921e93d3072e49e0bfc1d942">Collider::setTrigger</a></div><div class="ttdeci">FORGE_API void setTrigger(bool isTrigger)</div><div class="ttdoc">Activa y desactiva la funcion de trigger.</div><div class="ttdef"><b>Definition</b> Collider.cpp:217</div></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_component_html"><div class="ttname"><a href="class_component.html">Component</a></div><div class="ttdef"><b>Definition</b> Component.h:14</div></div>
+<div class="ttc" id="aclass_entity_html"><div class="ttname"><a href="class_entity.html">Entity</a></div><div class="ttdef"><b>Definition</b> Entity.h:16</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclass_physics_manager_html"><div class="ttname"><a href="class_physics_manager.html">PhysicsManager</a></div><div class="ttdef"><b>Definition</b> PhysicsManager.h:23</div></div>
+<div class="ttc" id="aclass_transform_html"><div class="ttname"><a href="class_transform.html">Transform</a></div><div class="ttdef"><b>Definition</b> Transform.h:10</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html"><div class="ttname"><a href="classforge_1_1_quaternion.html">forge::Quaternion</a></div><div class="ttdef"><b>Definition</b> Quaternion.h:6</div></div>
+<div class="ttc" id="aclassforge_1_1_vector3_html"><div class="ttname"><a href="classforge_1_1_vector3.html">forge::Vector3</a></div><div class="ttdef"><b>Definition</b> Vector3.h:7</div></div>
+<div class="ttc" id="anamespaceforge_html"><div class="ttname"><a href="namespaceforge.html">forge</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:18</div></div>
+<div class="ttc" id="anamespaceforge_html_a9f00126377aa3060c667c102b7bb3eb6"><div class="ttname"><a href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6">forge::callbackType</a></div><div class="ttdeci">callbackType</div><div class="ttdef"><b>Definition</b> Collider.h:17</div></div>
+<div class="ttc" id="anamespaceforge_html_a9f00126377aa3060c667c102b7bb3eb6a4bf9804054e7504f73748cd973853cc8"><div class="ttname"><a href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6a4bf9804054e7504f73748cd973853cc8">forge::onCollisionEnter</a></div><div class="ttdeci">@ onCollisionEnter</div><div class="ttdef"><b>Definition</b> Collider.h:18</div></div>
+<div class="ttc" id="anamespaceforge_html_a9f00126377aa3060c667c102b7bb3eb6ab2ca9959f0d89c9b65435099923793a2"><div class="ttname"><a href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6ab2ca9959f0d89c9b65435099923793a2">forge::onCollisionLeave</a></div><div class="ttdeci">@ onCollisionLeave</div><div class="ttdef"><b>Definition</b> Collider.h:18</div></div>
+<div class="ttc" id="anamespaceforge_html_a9f00126377aa3060c667c102b7bb3eb6abd3ebeb22507bc08bfe336154e5e4910"><div class="ttname"><a href="namespaceforge.html#a9f00126377aa3060c667c102b7bb3eb6abd3ebeb22507bc08bfe336154e5e4910">forge::onCollisionStay</a></div><div class="ttdeci">@ onCollisionStay</div><div class="ttdef"><b>Definition</b> Collider.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_b855195972e678953b938a27d5c5db41.html">Physics</a></li><li class="navelem"><a class="el" href="_collider_8h.html">Collider.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Render/Animator.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_animator_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Animator.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_animator_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef ANIMATOR_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="_animator_8h.html#a00bbcb139145b569299ec87a6caecd6c">    3</a></span><span class="preprocessor">#define ANIMATOR_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_mesh_8h.html">Mesh.h</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;unordered_set&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_ogre.html">Ogre</a> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">class </span><a class="code hl_class" href="class_forge_function.html">AnimationStateSet</a>;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>}</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_animator.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="class_animator.html">Animator</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_mesh.html">Mesh</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    std::unordered_set&lt;std::string&gt; activeAnimations;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    Ogre::AnimationStateSet* ogreAnimations;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_animator.html#a11c05da506d55d69fc6678781a76b319">   16</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> std::string <a class="code hl_variable" href="class_animator.html#a11c05da506d55d69fc6678781a76b319">id</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_animator.html#a701eeb9283612be2027425efb06bbff7">Animator</a>();</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_animator.html#a1a87d057865a81bcc1363a177506802a">initComponent</a>(<a class="code hl_class" href="class_component_data.html">ComponentData</a>* data) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#a5cbbd020e786435b01c06477dd0059a4">onEnabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#a59b9903253d8ce084048f7600e956735">update</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">    #pragma region Getters</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> std::vector&lt;std::string&gt; <a class="code hl_function" href="class_animator.html#a0d8b5d1da5e531ea7f159b820b735079">getAnimations</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> std::unordered_set&lt;std::string&gt; <span class="keyword">const</span>&amp; <a class="code hl_function" href="class_animator.html#afecfd9c1d1f64c4fe79462057e50d9ed">getActiveAnimations</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">    #pragma region Setters</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#aeb5e93a04527b1c7456ba82b09daf33f">setLoop</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">animation</a>, <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">looped</a>);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#a0129b85d69103f5605c8d3dabc6a8137">setActive</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">animation</a>, <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">active</a>);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#aeb5e93a04527b1c7456ba82b09daf33f">setLoop</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">animations</a>, <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">looped</a>);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#a0129b85d69103f5605c8d3dabc6a8137">setActive</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; activeAnimations, <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">active</a>);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#ae61fee1644ee4640833f3857e5b2131a">changeActive</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">animation</a>);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_animator.html#ae61fee1644ee4640833f3857e5b2131a">changeActive</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; activeAnimations);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>};</div>
+</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#endif </span><span class="comment">// !ANIMATOR_H_</span></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_mesh_8h_html"><div class="ttname"><a href="_mesh_8h.html">Mesh.h</a></div></div>
+<div class="ttc" id="aclass_animator_html"><div class="ttname"><a href="class_animator.html">Animator</a></div><div class="ttdef"><b>Definition</b> Animator.h:11</div></div>
+<div class="ttc" id="aclass_animator_html_a0129b85d69103f5605c8d3dabc6a8137"><div class="ttname"><a href="class_animator.html#a0129b85d69103f5605c8d3dabc6a8137">Animator::setActive</a></div><div class="ttdeci">FORGE_API void setActive(std::string const &amp;animation, bool active)</div><div class="ttdoc">Establece el estado de reproduccion de una animacion.</div><div class="ttdef"><b>Definition</b> Animator.cpp:91</div></div>
+<div class="ttc" id="aclass_animator_html_a0d8b5d1da5e531ea7f159b820b735079"><div class="ttname"><a href="class_animator.html#a0d8b5d1da5e531ea7f159b820b735079">Animator::getAnimations</a></div><div class="ttdeci">FORGE_API std::vector&lt; std::string &gt; getAnimations() const</div><div class="ttdoc">Devuelve todos nombres de las animaciones asociadas a la malla.</div><div class="ttdef"><b>Definition</b> Animator.cpp:69</div></div>
+<div class="ttc" id="aclass_animator_html_a11c05da506d55d69fc6678781a76b319"><div class="ttname"><a href="class_animator.html#a11c05da506d55d69fc6678781a76b319">Animator::id</a></div><div class="ttdeci">static const FORGE_API_VAR std::string id</div><div class="ttdef"><b>Definition</b> Animator.h:16</div></div>
+<div class="ttc" id="aclass_animator_html_a1a87d057865a81bcc1363a177506802a"><div class="ttname"><a href="class_animator.html#a1a87d057865a81bcc1363a177506802a">Animator::initComponent</a></div><div class="ttdeci">FORGE_API bool initComponent(ComponentData *data) override</div><div class="ttdoc">Obtiene los datos de todas las animaciones asociadas a la malla y establece como activas las indicada...</div><div class="ttdef"><b>Definition</b> Animator.cpp:22</div></div>
+<div class="ttc" id="aclass_animator_html_a59b9903253d8ce084048f7600e956735"><div class="ttname"><a href="class_animator.html#a59b9903253d8ce084048f7600e956735">Animator::update</a></div><div class="ttdeci">FORGE_API void update() override</div><div class="ttdoc">Actualiza las animaciones activas agregandole el tiempo transcurrido.</div><div class="ttdef"><b>Definition</b> Animator.cpp:63</div></div>
+<div class="ttc" id="aclass_animator_html_a5cbbd020e786435b01c06477dd0059a4"><div class="ttname"><a href="class_animator.html#a5cbbd020e786435b01c06477dd0059a4">Animator::onEnabled</a></div><div class="ttdeci">FORGE_API void onEnabled() override</div><div class="ttdoc">Obtiene los datos de todas las animaciones asociadas a la malla.</div><div class="ttdef"><b>Definition</b> Animator.cpp:44</div></div>
+<div class="ttc" id="aclass_animator_html_a701eeb9283612be2027425efb06bbff7"><div class="ttname"><a href="class_animator.html#a701eeb9283612be2027425efb06bbff7">Animator::Animator</a></div><div class="ttdeci">FORGE_API Animator()</div><div class="ttdoc">Crea el Animator con valores por defecto.</div><div class="ttdef"><b>Definition</b> Animator.cpp:16</div></div>
+<div class="ttc" id="aclass_animator_html_ae61fee1644ee4640833f3857e5b2131a"><div class="ttname"><a href="class_animator.html#ae61fee1644ee4640833f3857e5b2131a">Animator::changeActive</a></div><div class="ttdeci">FORGE_API void changeActive(std::string const &amp;animation)</div><div class="ttdoc">Establece el estado de una unica animacion a verdadero y el de todas las demas a falso.</div><div class="ttdef"><b>Definition</b> Animator.cpp:115</div></div>
+<div class="ttc" id="aclass_animator_html_aeb5e93a04527b1c7456ba82b09daf33f"><div class="ttname"><a href="class_animator.html#aeb5e93a04527b1c7456ba82b09daf33f">Animator::setLoop</a></div><div class="ttdeci">FORGE_API void setLoop(std::string const &amp;animation, bool looped)</div><div class="ttdoc">Establece el estado de bucle de una animacion.</div><div class="ttdef"><b>Definition</b> Animator.cpp:85</div></div>
+<div class="ttc" id="aclass_animator_html_afecfd9c1d1f64c4fe79462057e50d9ed"><div class="ttname"><a href="class_animator.html#afecfd9c1d1f64c4fe79462057e50d9ed">Animator::getActiveAnimations</a></div><div class="ttdeci">FORGE_API std::unordered_set&lt; std::string &gt; const &amp; getActiveAnimations() const</div><div class="ttdoc">Devuelve todos nombres de las animaciones activas.</div><div class="ttdef"><b>Definition</b> Animator.cpp:81</div></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclass_mesh_html"><div class="ttname"><a href="class_mesh.html">Mesh</a></div><div class="ttdef"><b>Definition</b> Mesh.h:11</div></div>
+<div class="ttc" id="anamespace_ogre_html"><div class="ttname"><a href="namespace_ogre.html">Ogre</a></div><div class="ttdoc">Clase de manejo de los metodos de render.</div><div class="ttdef"><b>Definition</b> GUIManager.h:11</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_ac2bd4169c153f3b53df1bef167b239d.html">Render</a></li><li class="navelem"><a class="el" href="_animator_8h.html">Animator.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

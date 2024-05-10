@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de cÃ³digo fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Physics/RigidBody.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_rigid_body_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">RigidBody.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_rigid_body_8h.html">Ir a la documentaciÃ³n de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef RIGIDBODY_H_</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="_rigid_body_8h.html#a5071d9199ba5e2e545bef18d67c65fc3">    3</a></span><span class="preprocessor">#define RIGIDBODY_H_</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="_collider_8h.html">Collider.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceforge.html">forge</a> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">class </span>Vector3;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>};</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="class_rigid_body.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="class_rigid_body.html">RigidBody</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_collider.html">Collider</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="class_rigid_body.html#ade21c3a46b04ecff37f578624d54e3bb">   13</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="class_rigid_body.html#ade21c3a46b04ecff37f578624d54e3bb">mass</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a424760c36cdad93c9c86d2c28e58589c">   14</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="class_rigid_body.html#a424760c36cdad93c9c86d2c28e58589c">friction</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a130f0b629f983eee6385f6f7920a29fc">   15</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="class_rigid_body.html#a130f0b629f983eee6385f6f7920a29fc">rollingFriction</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a193f28e6d9590872777123a40230fc2f">   16</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="class_rigid_body.html#a193f28e6d9590872777123a40230fc2f">restitution</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a3b95d2238692aa733eddcd3c1bfa7a0e">   17</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_rigid_body.html#a3b95d2238692aa733eddcd3c1bfa7a0e">kinematic</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_rigid_body.html#aeab417c66e3ab4064c5c884b008d585d">   18</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="class_rigid_body.html#aeab417c66e3ab4064c5c884b008d585d">staticBody</a>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a2a25eeaa3c249c643fd4105f81b100cc">   19</a></span>    <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_variable" href="class_rigid_body.html#a2a25eeaa3c249c643fd4105f81b100cc">myGravity</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a56decb034b92e989311f1a73bcb75012">   20</a></span>    std::vector&lt;bool&gt; <a class="code hl_variable" href="class_rigid_body.html#a56decb034b92e989311f1a73bcb75012">axisBlockedPos</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_rigid_body.html#a5d4fbad2fe54b6e85f3e4633825258a0">   21</a></span>    std::vector&lt;bool&gt; <a class="code hl_variable" href="class_rigid_body.html#a5d4fbad2fe54b6e85f3e4633825258a0">axisBlockedRot</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_rigid_body.html#accf5b239e711b6844167102fcb21c6fb">   24</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> std::string <a class="code hl_variable" href="class_rigid_body.html#accf5b239e711b6844167102fcb21c6fb">id</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="class_rigid_body.html#a28203d38d278da0695ace20c66ee5f0a">RigidBody</a>();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rigid_body.html#aafef17ddd57709debb692ee8b7486ece">initComponent</a>(<a class="code hl_class" href="class_component_data.html">ComponentData</a>* data) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rigid_body.html#ae8980ec45654221f0446585ea59cc008">createRigidBody</a>(std::string <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">myShapeType</a>, <span class="keywordtype">float</span> <a class="code hl_variable" href="class_rigid_body.html#ade21c3a46b04ecff37f578624d54e3bb">mass</a>, <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rigid_body.html#ab56aa71c3258139f72e17f85f2bbec29">isStatic</a>, <span class="keywordtype">bool</span> <a class="code hl_class" href="class_forge_function.html">disableDeactivation</a>) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#aa0d53385979c0090951d9b58f1051a63">onEnabled</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#af90e6b47fcab8a7508c75d0f0d0f4cf1">applyForce</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">force</a>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#ad879dcd57d91c04a431a4edd12ee494c">clearForces</a>();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a9cae1092943e2dc79f8646e699c775ed">rotateX</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newAngle</a>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a2a699d5bd7acc19ed8618817705c9932">rotateY</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newAngle</a>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a6cd01cf826286c7e658148e0880a6b8f">rotateZ</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newAngle</a>);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#ae7e21393e8d415a746ff135e92dee508">rest</a>();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a56490fbb5a2f92c3237d3be74d82683a">lockPosition</a>(<span class="keywordtype">bool</span> x, <span class="keywordtype">bool</span> y, <span class="keywordtype">bool</span> z);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#ae9f12a3831c649b018aa76d7cd642a4c">lockRotation</a>(<span class="keywordtype">bool</span> x, <span class="keywordtype">bool</span> y, <span class="keywordtype">bool</span> z);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">    #pragma region Getters</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="class_rigid_body.html#a8bbd701e3b09f609830a024f72d32b3c">getMass</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_rigid_body.html#aaf0b4da365bf4e91f2e7eb335f0f23e4">getGravity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="class_rigid_body.html#ac20f0bc68fb8308693c8b77fb0efb629">getFriction</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="class_rigid_body.html#ac153af230fafa7041c64b2d4ebb59e8d">getRestitution</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rigid_body.html#ab56aa71c3258139f72e17f85f2bbec29">isStatic</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="class_forge_function.html">btCollisionShape</a>* <a class="code hl_function" href="class_rigid_body.html#a05b90df1f0ed953c9134a537b3d42b0f">getShape</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_rigid_body.html#aa7c631b0ed7f39899a45b3dd5c47dd29">getRigidScale</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="class_rigid_body.html#a1b63bb59fc0a79e37d3b1f57c2c86ca3">getSpeed</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_rigid_body.html#a364df5742cdde4d7d6e2f628c6b3f054">getLinearVelocity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <a class="code hl_function" href="class_rigid_body.html#a83ec153631db7d7ec8411e5d70f0447b">getAngularVelocity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="preprocessor">    #pragma region Setters</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a0ea074c57ef44ec6a0754bf08fe2e782">setGravity</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">newGravity</a>);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a050c37adc9e4373818010d82762923d4">setFriction</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newFriction</a>);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#add5fcff9bc99cb261e47586cfa06a6d4">setRollingFriction</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newFriction</a>);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a489bc4fb7509001d222406ef443c4db2">setRestitution</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newRestitution</a>);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#aed169722fa55cbd3638ee2ed766dd351">setRigidScale</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; scale);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#ac5be440c1e40e1e3c3e29bbc01e6ae97">setLinearVelocity</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">vect</a>);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a33d1445514939c2890f57e4fbc125b1d">setAngularVelocity</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">vect</a>);</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a1d8e3a48af12146631f2f2dcbd9a681d">setPosition</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">vect</a>);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#ae030b80a105658174d059b85cba75a79">setPositionX</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newX</a>);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#abc283a58eaef50bb4bc5a8475588383c">setPositionY</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newY</a>);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="class_rigid_body.html#a64c67f109811be6e0a234eab151093c5">setPositionZ</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newZ</a>);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="preprocessor">    #pragma endregion</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>};</div>
+</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="preprocessor">#endif </span><span class="comment">// !RIGIDBODY_H_</span></div>
+<div class="ttc" id="a_collider_8h_html"><div class="ttname"><a href="_collider_8h.html">Collider.h</a></div></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="aclass_collider_html"><div class="ttname"><a href="class_collider.html">Collider</a></div><div class="ttdef"><b>Definition</b> Collider.h:22</div></div>
+<div class="ttc" id="aclass_component_data_html"><div class="ttname"><a href="class_component_data.html">ComponentData</a></div><div class="ttdef"><b>Definition</b> ComponentData.h:21</div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclass_rigid_body_html"><div class="ttname"><a href="class_rigid_body.html">RigidBody</a></div><div class="ttdef"><b>Definition</b> RigidBody.h:11</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a050c37adc9e4373818010d82762923d4"><div class="ttname"><a href="class_rigid_body.html#a050c37adc9e4373818010d82762923d4">RigidBody::setFriction</a></div><div class="ttdeci">FORGE_API void setFriction(float newFriction)</div><div class="ttdoc">Cambia la friccion del objeto, el valor ha de ser entre 0 y 1.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:118</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a05b90df1f0ed953c9134a537b3d42b0f"><div class="ttname"><a href="class_rigid_body.html#a05b90df1f0ed953c9134a537b3d42b0f">RigidBody::getShape</a></div><div class="ttdeci">FORGE_API btCollisionShape * getShape() const</div><div class="ttdoc">Devuelve el shape del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:245</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a0ea074c57ef44ec6a0754bf08fe2e782"><div class="ttname"><a href="class_rigid_body.html#a0ea074c57ef44ec6a0754bf08fe2e782">RigidBody::setGravity</a></div><div class="ttdeci">FORGE_API void setGravity(forge::Vector3 const &amp;newGravity)</div><div class="ttdoc">Metodo para aplicar gravedad nueva a un objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:90</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a130f0b629f983eee6385f6f7920a29fc"><div class="ttname"><a href="class_rigid_body.html#a130f0b629f983eee6385f6f7920a29fc">RigidBody::rollingFriction</a></div><div class="ttdeci">float rollingFriction</div><div class="ttdef"><b>Definition</b> RigidBody.h:15</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a193f28e6d9590872777123a40230fc2f"><div class="ttname"><a href="class_rigid_body.html#a193f28e6d9590872777123a40230fc2f">RigidBody::restitution</a></div><div class="ttdeci">float restitution</div><div class="ttdef"><b>Definition</b> RigidBody.h:16</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a1b63bb59fc0a79e37d3b1f57c2c86ca3"><div class="ttname"><a href="class_rigid_body.html#a1b63bb59fc0a79e37d3b1f57c2c86ca3">RigidBody::getSpeed</a></div><div class="ttdeci">FORGE_API float getSpeed() const</div><div class="ttdoc">Devuelve la velocidad (modulo de la fuerza) del cuerpo rigido.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:253</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a1d8e3a48af12146631f2f2dcbd9a681d"><div class="ttname"><a href="class_rigid_body.html#a1d8e3a48af12146631f2f2dcbd9a681d">RigidBody::setPosition</a></div><div class="ttdeci">FORGE_API void setPosition(forge::Vector3 const &amp;vect)</div><div class="ttdoc">Metodo para actualizar la posicion a partir de otro vector.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:166</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a28203d38d278da0695ace20c66ee5f0a"><div class="ttname"><a href="class_rigid_body.html#a28203d38d278da0695ace20c66ee5f0a">RigidBody::RigidBody</a></div><div class="ttdeci">FORGE_API RigidBody()</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:15</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a2a25eeaa3c249c643fd4105f81b100cc"><div class="ttname"><a href="class_rigid_body.html#a2a25eeaa3c249c643fd4105f81b100cc">RigidBody::myGravity</a></div><div class="ttdeci">forge::Vector3 myGravity</div><div class="ttdef"><b>Definition</b> RigidBody.h:19</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a2a699d5bd7acc19ed8618817705c9932"><div class="ttname"><a href="class_rigid_body.html#a2a699d5bd7acc19ed8618817705c9932">RigidBody::rotateY</a></div><div class="ttdeci">FORGE_API void rotateY(float newAngle)</div><div class="ttdoc">Rota en el eje y el nuevo valor.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:207</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a33d1445514939c2890f57e4fbc125b1d"><div class="ttname"><a href="class_rigid_body.html#a33d1445514939c2890f57e4fbc125b1d">RigidBody::setAngularVelocity</a></div><div class="ttdeci">FORGE_API void setAngularVelocity(forge::Vector3 const &amp;vect)</div><div class="ttdoc">Actualiza la velocidad Angular del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:162</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a364df5742cdde4d7d6e2f628c6b3f054"><div class="ttname"><a href="class_rigid_body.html#a364df5742cdde4d7d6e2f628c6b3f054">RigidBody::getLinearVelocity</a></div><div class="ttdeci">FORGE_API forge::Vector3 getLinearVelocity() const</div><div class="ttdoc">Devuelve la velocidad lineal del cuerpo rigido.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:257</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a3b95d2238692aa733eddcd3c1bfa7a0e"><div class="ttname"><a href="class_rigid_body.html#a3b95d2238692aa733eddcd3c1bfa7a0e">RigidBody::kinematic</a></div><div class="ttdeci">bool kinematic</div><div class="ttdef"><b>Definition</b> RigidBody.h:17</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a424760c36cdad93c9c86d2c28e58589c"><div class="ttname"><a href="class_rigid_body.html#a424760c36cdad93c9c86d2c28e58589c">RigidBody::friction</a></div><div class="ttdeci">float friction</div><div class="ttdef"><b>Definition</b> RigidBody.h:14</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a489bc4fb7509001d222406ef443c4db2"><div class="ttname"><a href="class_rigid_body.html#a489bc4fb7509001d222406ef443c4db2">RigidBody::setRestitution</a></div><div class="ttdeci">FORGE_API void setRestitution(float newRestitution)</div><div class="ttdoc">Cambia la constante de restitucion.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:148</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a56490fbb5a2f92c3237d3be74d82683a"><div class="ttname"><a href="class_rigid_body.html#a56490fbb5a2f92c3237d3be74d82683a">RigidBody::lockPosition</a></div><div class="ttdeci">FORGE_API void lockPosition(bool x, bool y, bool z)</div><div class="ttdoc">Añade bloqueos para evitar movimiento en los ejes.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:100</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a56decb034b92e989311f1a73bcb75012"><div class="ttname"><a href="class_rigid_body.html#a56decb034b92e989311f1a73bcb75012">RigidBody::axisBlockedPos</a></div><div class="ttdeci">std::vector&lt; bool &gt; axisBlockedPos</div><div class="ttdef"><b>Definition</b> RigidBody.h:20</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a5d4fbad2fe54b6e85f3e4633825258a0"><div class="ttname"><a href="class_rigid_body.html#a5d4fbad2fe54b6e85f3e4633825258a0">RigidBody::axisBlockedRot</a></div><div class="ttdeci">std::vector&lt; bool &gt; axisBlockedRot</div><div class="ttdef"><b>Definition</b> RigidBody.h:21</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a64c67f109811be6e0a234eab151093c5"><div class="ttname"><a href="class_rigid_body.html#a64c67f109811be6e0a234eab151093c5">RigidBody::setPositionZ</a></div><div class="ttdeci">FORGE_API void setPositionZ(float newZ)</div><div class="ttdoc">Cambia la posicion en z por el nuevo valor.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:190</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a6cd01cf826286c7e658148e0880a6b8f"><div class="ttname"><a href="class_rigid_body.html#a6cd01cf826286c7e658148e0880a6b8f">RigidBody::rotateZ</a></div><div class="ttdeci">FORGE_API void rotateZ(float newAngle)</div><div class="ttdoc">Rota en el eje z el nuevo valor.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:216</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a83ec153631db7d7ec8411e5d70f0447b"><div class="ttname"><a href="class_rigid_body.html#a83ec153631db7d7ec8411e5d70f0447b">RigidBody::getAngularVelocity</a></div><div class="ttdeci">FORGE_API forge::Vector3 getAngularVelocity() const</div><div class="ttdoc">Devuelve la velocidad angular del cuerpo rigido.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:261</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a8bbd701e3b09f609830a024f72d32b3c"><div class="ttname"><a href="class_rigid_body.html#a8bbd701e3b09f609830a024f72d32b3c">RigidBody::getMass</a></div><div class="ttdeci">FORGE_API float getMass() const</div><div class="ttdoc">Devuelve la masa del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:225</div></div>
+<div class="ttc" id="aclass_rigid_body_html_a9cae1092943e2dc79f8646e699c775ed"><div class="ttname"><a href="class_rigid_body.html#a9cae1092943e2dc79f8646e699c775ed">RigidBody::rotateX</a></div><div class="ttdeci">FORGE_API void rotateX(float newAngle)</div><div class="ttdoc">Rota en el eje x el nuevo valor.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:198</div></div>
+<div class="ttc" id="aclass_rigid_body_html_aa0d53385979c0090951d9b58f1051a63"><div class="ttname"><a href="class_rigid_body.html#aa0d53385979c0090951d9b58f1051a63">RigidBody::onEnabled</a></div><div class="ttdeci">FORGE_API void onEnabled() override</div><div class="ttdoc">Metodo que se llama cada vez que se activa el componente.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:73</div></div>
+<div class="ttc" id="aclass_rigid_body_html_aa7c631b0ed7f39899a45b3dd5c47dd29"><div class="ttname"><a href="class_rigid_body.html#aa7c631b0ed7f39899a45b3dd5c47dd29">RigidBody::getRigidScale</a></div><div class="ttdeci">FORGE_API forge::Vector3 getRigidScale() const</div><div class="ttdoc">Devuelve la escala del cuerpo rigido.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:249</div></div>
+<div class="ttc" id="aclass_rigid_body_html_aaf0b4da365bf4e91f2e7eb335f0f23e4"><div class="ttname"><a href="class_rigid_body.html#aaf0b4da365bf4e91f2e7eb335f0f23e4">RigidBody::getGravity</a></div><div class="ttdeci">FORGE_API forge::Vector3 getGravity() const</div><div class="ttdoc">Devuelve la gravedad del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:229</div></div>
+<div class="ttc" id="aclass_rigid_body_html_aafef17ddd57709debb692ee8b7486ece"><div class="ttname"><a href="class_rigid_body.html#aafef17ddd57709debb692ee8b7486ece">RigidBody::initComponent</a></div><div class="ttdeci">FORGE_API bool initComponent(ComponentData *data) override</div><div class="ttdoc">Inicializa el Component con los parametros adecuados.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:34</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ab56aa71c3258139f72e17f85f2bbec29"><div class="ttname"><a href="class_rigid_body.html#ab56aa71c3258139f72e17f85f2bbec29">RigidBody::isStatic</a></div><div class="ttdeci">FORGE_API bool isStatic() const</div><div class="ttdoc">Devuelve true si es un objeto estatico.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:241</div></div>
+<div class="ttc" id="aclass_rigid_body_html_abc283a58eaef50bb4bc5a8475588383c"><div class="ttname"><a href="class_rigid_body.html#abc283a58eaef50bb4bc5a8475588383c">RigidBody::setPositionY</a></div><div class="ttdeci">FORGE_API void setPositionY(float newY)</div><div class="ttdoc">Cambia la posicion en y por el nuevo valor.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:182</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ac153af230fafa7041c64b2d4ebb59e8d"><div class="ttname"><a href="class_rigid_body.html#ac153af230fafa7041c64b2d4ebb59e8d">RigidBody::getRestitution</a></div><div class="ttdeci">FORGE_API float getRestitution() const</div><div class="ttdoc">Devuelve la constante de restitución del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:237</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ac20f0bc68fb8308693c8b77fb0efb629"><div class="ttname"><a href="class_rigid_body.html#ac20f0bc68fb8308693c8b77fb0efb629">RigidBody::getFriction</a></div><div class="ttdeci">FORGE_API float getFriction() const</div><div class="ttdoc">Devuelve la friccion del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:233</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ac5be440c1e40e1e3c3e29bbc01e6ae97"><div class="ttname"><a href="class_rigid_body.html#ac5be440c1e40e1e3c3e29bbc01e6ae97">RigidBody::setLinearVelocity</a></div><div class="ttdeci">FORGE_API void setLinearVelocity(forge::Vector3 const &amp;vect)</div><div class="ttdoc">Actualiza la velocidad lineal del objeto.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:158</div></div>
+<div class="ttc" id="aclass_rigid_body_html_accf5b239e711b6844167102fcb21c6fb"><div class="ttname"><a href="class_rigid_body.html#accf5b239e711b6844167102fcb21c6fb">RigidBody::id</a></div><div class="ttdeci">static const FORGE_API_VAR std::string id</div><div class="ttdef"><b>Definition</b> RigidBody.h:24</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ad879dcd57d91c04a431a4edd12ee494c"><div class="ttname"><a href="class_rigid_body.html#ad879dcd57d91c04a431a4edd12ee494c">RigidBody::clearForces</a></div><div class="ttdeci">FORGE_API void clearForces()</div><div class="ttdoc">Limpia las fuerzas aplicadas al objeto, devolviendolo a un estado sin fuerzas aplicadas.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:86</div></div>
+<div class="ttc" id="aclass_rigid_body_html_add5fcff9bc99cb261e47586cfa06a6d4"><div class="ttname"><a href="class_rigid_body.html#add5fcff9bc99cb261e47586cfa06a6d4">RigidBody::setRollingFriction</a></div><div class="ttdeci">FORGE_API void setRollingFriction(float newFriction)</div><div class="ttdoc">Cambia la friccion de una esfera rodando, el valor ha de ser entre 0 y 1.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:133</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ade21c3a46b04ecff37f578624d54e3bb"><div class="ttname"><a href="class_rigid_body.html#ade21c3a46b04ecff37f578624d54e3bb">RigidBody::mass</a></div><div class="ttdeci">float mass</div><div class="ttdef"><b>Definition</b> RigidBody.h:13</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ae030b80a105658174d059b85cba75a79"><div class="ttname"><a href="class_rigid_body.html#ae030b80a105658174d059b85cba75a79">RigidBody::setPositionX</a></div><div class="ttdeci">FORGE_API void setPositionX(float newX)</div><div class="ttdoc">Cambia la posicion en x por el nuevo valor.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:174</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ae7e21393e8d415a746ff135e92dee508"><div class="ttname"><a href="class_rigid_body.html#ae7e21393e8d415a746ff135e92dee508">RigidBody::rest</a></div><div class="ttdeci">FORGE_API void rest()</div><div class="ttdoc">Metodo para devolver un objeto a su estado de reposo.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:95</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ae8980ec45654221f0446585ea59cc008"><div class="ttname"><a href="class_rigid_body.html#ae8980ec45654221f0446585ea59cc008">RigidBody::createRigidBody</a></div><div class="ttdeci">FORGE_API bool createRigidBody(std::string const &amp;myShapeType, float mass, bool isStatic, bool disableDeactivation) override</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:47</div></div>
+<div class="ttc" id="aclass_rigid_body_html_ae9f12a3831c649b018aa76d7cd642a4c"><div class="ttname"><a href="class_rigid_body.html#ae9f12a3831c649b018aa76d7cd642a4c">RigidBody::lockRotation</a></div><div class="ttdeci">FORGE_API void lockRotation(bool x, bool y, bool z)</div><div class="ttdoc">Añade bloqueos para evitar rotación en los ejes.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:109</div></div>
+<div class="ttc" id="aclass_rigid_body_html_aeab417c66e3ab4064c5c884b008d585d"><div class="ttname"><a href="class_rigid_body.html#aeab417c66e3ab4064c5c884b008d585d">RigidBody::staticBody</a></div><div class="ttdeci">bool staticBody</div><div class="ttdef"><b>Definition</b> RigidBody.h:18</div></div>
+<div class="ttc" id="aclass_rigid_body_html_aed169722fa55cbd3638ee2ed766dd351"><div class="ttname"><a href="class_rigid_body.html#aed169722fa55cbd3638ee2ed766dd351">RigidBody::setRigidScale</a></div><div class="ttdeci">FORGE_API void setRigidScale(forge::Vector3 const &amp;scale)</div><div class="ttdoc">Actualiza la escala del cuerpo.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:153</div></div>
+<div class="ttc" id="aclass_rigid_body_html_af90e6b47fcab8a7508c75d0f0d0f4cf1"><div class="ttname"><a href="class_rigid_body.html#af90e6b47fcab8a7508c75d0f0d0f4cf1">RigidBody::applyForce</a></div><div class="ttdeci">FORGE_API void applyForce(forge::Vector3 const &amp;force)</div><div class="ttdoc">Metodo para aplicar fuerzas a un rigidbody.</div><div class="ttdef"><b>Definition</b> RigidBody.cpp:82</div></div>
+<div class="ttc" id="aclassforge_1_1_vector3_html"><div class="ttname"><a href="classforge_1_1_vector3.html">forge::Vector3</a></div><div class="ttdef"><b>Definition</b> Vector3.h:7</div></div>
+<div class="ttc" id="anamespaceforge_html"><div class="ttname"><a href="namespaceforge.html">forge</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_b855195972e678953b938a27d5c5db41.html">Physics</a></li><li class="navelem"><a class="el" href="_rigid_body_8h.html">RigidBody.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

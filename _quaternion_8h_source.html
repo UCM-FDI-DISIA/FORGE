@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FORGE: Archivo de código fuente C:/Users/portatil/Documents/GitHub/Uxia_a_necora_de_Montealto/Dependencies/FORGE/FORGE/src/Utils/Quaternion.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="FORGE-Logo (1).png"/></td>
+  <td id="projectalign">
+   <div id="projectname">FORGE<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">La fragua</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_quaternion_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Quaternion.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_quaternion_8h.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="_vector3_8h.html">Vector3.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="_forge_export_8h.html">ForgeExport.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceforge.html">forge</a> {</div>
+<div class="foldopen" id="foldopen00006" data-start="{" data-end="};">
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="classforge_1_1_quaternion.html">    6</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        <span class="keywordtype">float</span> x;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <span class="keywordtype">float</span> y;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <span class="keywordtype">float</span> z;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keywordtype">float</span> w;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordtype">void</span> validate();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">        #pragma region Constructores</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>();</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">_x</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">_y</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">_z</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">_w</a>);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">vec</a>, <span class="keywordtype">float</span> angle);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>(<a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp;&amp; <a class="code hl_class" href="class_forge_function.html">q</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>* <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">Quaternion</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a>&amp; <a class="code hl_class" href="class_forge_function.html">e</a>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#a5f834c2ca469cd71edc8a23fdc3f56e8">~Quaternion</a>();</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">        #pragma endregion</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">        #pragma region Operadores</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_function" href="classforge_1_1_quaternion.html#ad8d32832a9af1ab3fefec77aedb63b13">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_function" href="classforge_1_1_quaternion.html#ad8d32832a9af1ab3fefec77aedb63b13">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a>&amp; <a class="code hl_class" href="class_forge_function.html">e</a>);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#ad143d42479d690eabc1ca99a5dacf677">dot</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#ab178e12364d87fb676d85695e491361f">operator*</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#a93328f7480904dd8527d6f60c63db8f5">operator*=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#ab178e12364d87fb676d85695e491361f">operator*</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a>&amp; <a class="code hl_class" href="class_forge_function.html">v</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a516d4dcc7c6f13d8846070b72f588210">operator==</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a1a97201d7deb56f543d65be9741cd2bd">operator!=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="preprocessor">        #pragma endregion</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_vector3.html">Vector3</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#a4cf4c0bfa2ff0217a0f06845cf039982">toEuler</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a48e6bafb249c895ed25f29dc9170e11e">normalize</a>();</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a> <a class="code hl_function" href="classforge_1_1_quaternion.html#a17c3d73a8be1219d05c0c65d7b9122df">inversed</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="preprocessor">        #pragma region Setters</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a0d721204744172d1fe235067d21ec475">setRotPairX</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newX</a>);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a326e845ea39d3737449cbd9cdebaba30">setRotPairY</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newY</a>);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a3be96dba296e793af0bb6c9a8b8ab144">setRotPairZ</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newZ</a>);</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a131fc21f1a6a87d2d5d9d700d63a68e4">setX</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newX</a>);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a4b3ceb9ffb633079bc226af8b67817d9">setY</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newY</a>);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a9b61b259f15d16abe722f6eeb6ccece7">setZ</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newZ</a>);</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#aeb1cfeb5eb353989c4e253275cda6b5f">setW</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newW</a>);</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a9e00e445cc95183b919d39d9de5ccf51">setAngle</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newAngle</a>);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#ae704f7e7e910e5e4dcafbb79a422c1ab">lookTo</a>(<a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_function" href="classforge_1_1_quaternion.html#ae704f7e7e910e5e4dcafbb79a422c1ab">lookTo</a>, <a class="code hl_class" href="classforge_1_1_vector3.html">forge::Vector3</a> <span class="keyword">const</span>&amp; <a class="code hl_class" href="class_forge_function.html">pos</a>);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#ac1ca070e7295f821c6c2c4ec98f365ae">set</a>(<span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newX</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newY</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newZ</a>, <span class="keywordtype">float</span> <a class="code hl_class" href="class_forge_function.html">newAngle</a>);</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#ac1ca070e7295f821c6c2c4ec98f365ae">set</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp; <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#ac1ca070e7295f821c6c2c4ec98f365ae">set</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>&amp;&amp; <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">void</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#ac1ca070e7295f821c6c2c4ec98f365ae">set</a>(<span class="keyword">const</span> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a>* <a class="code hl_class" href="class_forge_function.html">q</a>);</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="preprocessor">        #pragma endregion</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="preprocessor">        #pragma region Getters</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a1e6cb76dad3bce9c280f4a424c3c5bb6">getRotPairX</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a73be161620685e44763f49a3792f8d91">getRotPairY</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a30b60b636540ceb1d31191e8d00357ea">getRotPairZ</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a9614343e217fe84527ec799ae28a1564">getX</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a4582b45a0c7678f947737e4ebadf4998">getY</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a1435cef67d9c2ab0a17f36f3ae02c3fd">getZ</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#a945428056d27d9984b6afa6090ee5b7b">getW</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <a class="code hl_define" href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a> <span class="keywordtype">float</span> <a class="code hl_function" href="classforge_1_1_quaternion.html#af8debeac3b547e67db464aefbe2368cf">getAngle</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="preprocessor">        #pragma endregion</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno"><a class="line" href="classforge_1_1_quaternion.html#ac18490f3704b16fef9c789167913e7a8">  274</a></span>        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_define" href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a> <a class="code hl_class" href="classforge_1_1_quaternion.html">Quaternion</a> <a class="code hl_variable" href="classforge_1_1_quaternion.html#ac18490f3704b16fef9c789167913e7a8">IDENTITY</a>;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    };</div>
+</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>}</div>
+<div class="ttc" id="a_forge_export_8h_html"><div class="ttname"><a href="_forge_export_8h.html">ForgeExport.h</a></div></div>
+<div class="ttc" id="a_forge_export_8h_html_a2a40bea1e670e13743fc48ff2e996e19"><div class="ttname"><a href="_forge_export_8h.html#a2a40bea1e670e13743fc48ff2e996e19">FORGE_API_VAR</a></div><div class="ttdeci">#define FORGE_API_VAR</div><div class="ttdoc">Macro que marca las variables que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:25</div></div>
+<div class="ttc" id="a_forge_export_8h_html_a6fb5896c62c6c487c3f61c08b18d06b6"><div class="ttname"><a href="_forge_export_8h.html#a6fb5896c62c6c487c3f61c08b18d06b6">FORGE_API</a></div><div class="ttdeci">#define FORGE_API</div><div class="ttdoc">Macro que marca las funciones que exporta el motor.</div><div class="ttdef"><b>Definition</b> ForgeExport.h:14</div></div>
+<div class="ttc" id="a_vector3_8h_html"><div class="ttname"><a href="_vector3_8h.html">Vector3.h</a></div></div>
+<div class="ttc" id="aclass_forge_function_html"><div class="ttname"><a href="class_forge_function.html">ForgeFunction</a></div><div class="ttdef"><b>Definition</b> ForgeFunction.h:14</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html"><div class="ttname"><a href="classforge_1_1_quaternion.html">forge::Quaternion</a></div><div class="ttdef"><b>Definition</b> Quaternion.h:6</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a0d721204744172d1fe235067d21ec475"><div class="ttname"><a href="classforge_1_1_quaternion.html#a0d721204744172d1fe235067d21ec475">forge::Quaternion::setRotPairX</a></div><div class="ttdeci">FORGE_API void setRotPairX(float newX)</div><div class="ttdoc">Asigna un nuevo valor a la componente en X del par-rotacion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:181</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a131fc21f1a6a87d2d5d9d700d63a68e4"><div class="ttname"><a href="classforge_1_1_quaternion.html#a131fc21f1a6a87d2d5d9d700d63a68e4">forge::Quaternion::setX</a></div><div class="ttdeci">FORGE_API void setX(float newX)</div><div class="ttdoc">Asigna un nuevo valor a la componente en X directamente.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:196</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a1435cef67d9c2ab0a17f36f3ae02c3fd"><div class="ttname"><a href="classforge_1_1_quaternion.html#a1435cef67d9c2ab0a17f36f3ae02c3fd">forge::Quaternion::getZ</a></div><div class="ttdeci">FORGE_API float getZ() const</div><div class="ttdoc">Devuelve el valor a la componente en Z directamente.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:338</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a17c3d73a8be1219d05c0c65d7b9122df"><div class="ttname"><a href="classforge_1_1_quaternion.html#a17c3d73a8be1219d05c0c65d7b9122df">forge::Quaternion::inversed</a></div><div class="ttdeci">FORGE_API Quaternion inversed() const</div><div class="ttdoc">Devuelve el Quaternion inverso.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:171</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a1a97201d7deb56f543d65be9741cd2bd"><div class="ttname"><a href="classforge_1_1_quaternion.html#a1a97201d7deb56f543d65be9741cd2bd">forge::Quaternion::operator!=</a></div><div class="ttdeci">FORGE_API bool operator!=(const Quaternion &amp;q) const</div><div class="ttdoc">Compara dos cuaterniones. Seran distintos si su producto escalar es menor a 1.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:134</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a1e6cb76dad3bce9c280f4a424c3c5bb6"><div class="ttname"><a href="classforge_1_1_quaternion.html#a1e6cb76dad3bce9c280f4a424c3c5bb6">forge::Quaternion::getRotPairX</a></div><div class="ttdeci">FORGE_API float getRotPairX() const</div><div class="ttdoc">Acceso a la componente en X del par-rotacion que representa el cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:318</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a30b60b636540ceb1d31191e8d00357ea"><div class="ttname"><a href="classforge_1_1_quaternion.html#a30b60b636540ceb1d31191e8d00357ea">forge::Quaternion::getRotPairZ</a></div><div class="ttdeci">FORGE_API float getRotPairZ() const</div><div class="ttdoc">Acceso a la componente en Z del par-rotacion que representa el cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:326</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a326e845ea39d3737449cbd9cdebaba30"><div class="ttname"><a href="classforge_1_1_quaternion.html#a326e845ea39d3737449cbd9cdebaba30">forge::Quaternion::setRotPairY</a></div><div class="ttdeci">FORGE_API void setRotPairY(float newY)</div><div class="ttdoc">Asigna un nuevo valor a la componente en Y del par-rotacion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:186</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a3be96dba296e793af0bb6c9a8b8ab144"><div class="ttname"><a href="classforge_1_1_quaternion.html#a3be96dba296e793af0bb6c9a8b8ab144">forge::Quaternion::setRotPairZ</a></div><div class="ttdeci">FORGE_API void setRotPairZ(float newZ)</div><div class="ttdoc">Asigna un nuevo valor a la componente en Z del par-rotacion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:191</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a4582b45a0c7678f947737e4ebadf4998"><div class="ttname"><a href="classforge_1_1_quaternion.html#a4582b45a0c7678f947737e4ebadf4998">forge::Quaternion::getY</a></div><div class="ttdeci">FORGE_API float getY() const</div><div class="ttdoc">Devuelve el valor a la componente en Y directamente.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:334</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a48e6bafb249c895ed25f29dc9170e11e"><div class="ttname"><a href="classforge_1_1_quaternion.html#a48e6bafb249c895ed25f29dc9170e11e">forge::Quaternion::normalize</a></div><div class="ttdeci">FORGE_API void normalize()</div><div class="ttdoc">Normaliza el vector del quaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:162</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a4b3ceb9ffb633079bc226af8b67817d9"><div class="ttname"><a href="classforge_1_1_quaternion.html#a4b3ceb9ffb633079bc226af8b67817d9">forge::Quaternion::setY</a></div><div class="ttdeci">FORGE_API void setY(float newY)</div><div class="ttdoc">Asigna un nuevo valor a la componente en Y directamente.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:201</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a4cf4c0bfa2ff0217a0f06845cf039982"><div class="ttname"><a href="classforge_1_1_quaternion.html#a4cf4c0bfa2ff0217a0f06845cf039982">forge::Quaternion::toEuler</a></div><div class="ttdeci">FORGE_API Vector3 toEuler() const</div><div class="ttdoc">Calcula un vector Euleriano a partir del cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:139</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a516d4dcc7c6f13d8846070b72f588210"><div class="ttname"><a href="classforge_1_1_quaternion.html#a516d4dcc7c6f13d8846070b72f588210">forge::Quaternion::operator==</a></div><div class="ttdeci">FORGE_API bool operator==(const Quaternion &amp;q) const</div><div class="ttdoc">Compara dos cuaterniones. Seran iguales si su producto escalar es igual a 1.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:130</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a5f834c2ca469cd71edc8a23fdc3f56e8"><div class="ttname"><a href="classforge_1_1_quaternion.html#a5f834c2ca469cd71edc8a23fdc3f56e8">forge::Quaternion::~Quaternion</a></div><div class="ttdeci">FORGE_API ~Quaternion()</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:73</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a73be161620685e44763f49a3792f8d91"><div class="ttname"><a href="classforge_1_1_quaternion.html#a73be161620685e44763f49a3792f8d91">forge::Quaternion::getRotPairY</a></div><div class="ttdeci">FORGE_API float getRotPairY() const</div><div class="ttdoc">Acceso a la componente en Y del par-rotacion que representa el cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:322</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a93328f7480904dd8527d6f60c63db8f5"><div class="ttname"><a href="classforge_1_1_quaternion.html#a93328f7480904dd8527d6f60c63db8f5">forge::Quaternion::operator*=</a></div><div class="ttdeci">FORGE_API Quaternion operator*=(const Quaternion &amp;q)</div><div class="ttdoc">Calcula la multiplicacion polinomial de cuaterniones y asigna su resultado a este cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:104</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a945428056d27d9984b6afa6090ee5b7b"><div class="ttname"><a href="classforge_1_1_quaternion.html#a945428056d27d9984b6afa6090ee5b7b">forge::Quaternion::getW</a></div><div class="ttdeci">FORGE_API float getW() const</div><div class="ttdoc">Acceso a la componente en W del par-rotacion que representa el cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:342</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a9614343e217fe84527ec799ae28a1564"><div class="ttname"><a href="classforge_1_1_quaternion.html#a9614343e217fe84527ec799ae28a1564">forge::Quaternion::getX</a></div><div class="ttdeci">FORGE_API float getX() const</div><div class="ttdoc">Devuelve el valor a la componente en X directamente.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:330</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a9b61b259f15d16abe722f6eeb6ccece7"><div class="ttname"><a href="classforge_1_1_quaternion.html#a9b61b259f15d16abe722f6eeb6ccece7">forge::Quaternion::setZ</a></div><div class="ttdeci">FORGE_API void setZ(float newZ)</div><div class="ttdoc">Asigna un nuevo valor a la componente en Z directamente.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:206</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_a9e00e445cc95183b919d39d9de5ccf51"><div class="ttname"><a href="classforge_1_1_quaternion.html#a9e00e445cc95183b919d39d9de5ccf51">forge::Quaternion::setAngle</a></div><div class="ttdeci">FORGE_API void setAngle(float newAngle)</div><div class="ttdoc">Asigna un nuevo angulo.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:216</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_ab178e12364d87fb676d85695e491361f"><div class="ttname"><a href="classforge_1_1_quaternion.html#ab178e12364d87fb676d85695e491361f">forge::Quaternion::operator*</a></div><div class="ttdeci">FORGE_API Quaternion operator*(const Quaternion &amp;q) const</div><div class="ttdoc">Multiplicacion polinomial de cuaterniones.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:94</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_abcc01358aada56ea5f0db4da18aaf77d"><div class="ttname"><a href="classforge_1_1_quaternion.html#abcc01358aada56ea5f0db4da18aaf77d">forge::Quaternion::Quaternion</a></div><div class="ttdeci">FORGE_API Quaternion()</div><div class="ttdoc">Constructor predeterminado: Quaternion(0,0,0,1)</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:19</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_ac18490f3704b16fef9c789167913e7a8"><div class="ttname"><a href="classforge_1_1_quaternion.html#ac18490f3704b16fef9c789167913e7a8">forge::Quaternion::IDENTITY</a></div><div class="ttdeci">static const FORGE_API_VAR Quaternion IDENTITY</div><div class="ttdef"><b>Definition</b> Quaternion.h:274</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_ac1ca070e7295f821c6c2c4ec98f365ae"><div class="ttname"><a href="classforge_1_1_quaternion.html#ac1ca070e7295f821c6c2c4ec98f365ae">forge::Quaternion::set</a></div><div class="ttdeci">FORGE_API void set(float newX, float newY, float newZ, float newAngle)</div><div class="ttdoc">Asigna nuevos valores al cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:283</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_ad143d42479d690eabc1ca99a5dacf677"><div class="ttname"><a href="classforge_1_1_quaternion.html#ad143d42479d690eabc1ca99a5dacf677">forge::Quaternion::dot</a></div><div class="ttdeci">FORGE_API float dot(const Quaternion &amp;q) const</div><div class="ttdoc">Calcula el producto escalar de los quaterniones.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:90</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_ad8d32832a9af1ab3fefec77aedb63b13"><div class="ttname"><a href="classforge_1_1_quaternion.html#ad8d32832a9af1ab3fefec77aedb63b13">forge::Quaternion::operator=</a></div><div class="ttdeci">FORGE_API Quaternion &amp; operator=(const Quaternion &amp;q)</div><div class="ttdoc">Asigna la informacion de Q a este cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:77</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_ae704f7e7e910e5e4dcafbb79a422c1ab"><div class="ttname"><a href="classforge_1_1_quaternion.html#ae704f7e7e910e5e4dcafbb79a422c1ab">forge::Quaternion::lookTo</a></div><div class="ttdeci">FORGE_API void lookTo(forge::Vector3 const &amp;lookTo, forge::Vector3 const &amp;pos)</div><div class="ttdoc">Consigue un cuaternion para mirar de una posici�n a otro punto.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:226</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_aeb1cfeb5eb353989c4e253275cda6b5f"><div class="ttname"><a href="classforge_1_1_quaternion.html#aeb1cfeb5eb353989c4e253275cda6b5f">forge::Quaternion::setW</a></div><div class="ttdeci">FORGE_API void setW(float newW)</div><div class="ttdoc">Asigna un nuevo valor a la componente en W del par-rotacion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:211</div></div>
+<div class="ttc" id="aclassforge_1_1_quaternion_html_af8debeac3b547e67db464aefbe2368cf"><div class="ttname"><a href="classforge_1_1_quaternion.html#af8debeac3b547e67db464aefbe2368cf">forge::Quaternion::getAngle</a></div><div class="ttdeci">FORGE_API float getAngle() const</div><div class="ttdoc">Acceso al angulo del cuaternion.</div><div class="ttdef"><b>Definition</b> Quaternion.cpp:346</div></div>
+<div class="ttc" id="aclassforge_1_1_vector3_html"><div class="ttname"><a href="classforge_1_1_vector3.html">forge::Vector3</a></div><div class="ttdef"><b>Definition</b> Vector3.h:7</div></div>
+<div class="ttc" id="anamespaceforge_html"><div class="ttname"><a href="namespaceforge.html">forge</a></div><div class="ttdef"><b>Definition</b> AudioManager.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_235d9f43e4a5551449cf67a01b8fcb4c.html">Uxia_a_necora_de_Montealto</a></li><li class="navelem"><a class="el" href="dir_78d106c66d5d461bc9b7125f9886700d.html">Dependencies</a></li><li class="navelem"><a class="el" href="dir_68228ba7be4d081217ce88f89f0d6e2d.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_a8e046d280b67ffa8fc43c7c41c7894e.html">FORGE</a></li><li class="navelem"><a class="el" href="dir_63d61b35f4202a68a39670fcea5a09ed.html">src</a></li><li class="navelem"><a class="el" href="dir_56fe80479b5fdc95b3b8f1bfbcfe76dd.html">Utils</a></li><li class="navelem"><a class="el" href="_quaternion_8h.html">Quaternion.h</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>
