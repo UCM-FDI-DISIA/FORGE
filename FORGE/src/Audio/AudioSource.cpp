@@ -45,6 +45,9 @@ bool AudioSource::initComponent(ComponentData* data) {
 	if (data->has("pan")) {
 		sound->setPan(data->get<float>("pan"));
 	}
+	if (data->has("loop")) {
+		sound->setLooped(data->get<bool>("loop"));
+	}
 	if (data->has("fullVolumeRadious")) {
 		sound->setFullVolumeRadious(data->get<float>("fullVolumeRadious"));
 	}
