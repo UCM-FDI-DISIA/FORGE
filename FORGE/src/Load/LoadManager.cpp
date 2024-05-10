@@ -212,43 +212,46 @@ bool LoadManager::loadScenes(LuaRef const& config) {
 	lua_State* lua = luaForge->getState();
 	sceneManager.setLuaState(lua);
 
-	LuaRef entityBlueprints = getGlobal(lua, "entityBlueprints");
+	LuaRef entityBlueprints = getGlobal(lua, "prefabs");
 	LuaRef keepBetweenScenes = getGlobal(lua, "keepBetweenScenes");
-	LuaRef sceneBlueprints = getGlobal(lua, "sceneBlueprints");
+	LuaRef sceneBlueprints = getGlobal(lua, "scenes");
 
-	if (entityBlueprints.isTable()) {
-		for (auto&& entity : pairs(entityBlueprints)) {
-			if (entity.second.isString()) {
-				throwError(false, "Nombre de blueprint no valido");
-			}
-			EntityData* blueprint = parseEntityData(entity.second);
-			if (blueprint == nullptr) {
-				throwError(false, "No se pudo crear correctamente el blueprint");
-			}
-			blueprint->isBlueprint = true;
-			sceneManager.addEntityBlueprint(entity.first.tostring(), blueprint);
-		}
+	if (!entityBlueprints.isTable()) {
+		throwError(false, "No se pudo leer prefabs");
 	}
-	if (keepBetweenScenes.isTable()) {
-		for (auto&& entity : pairs(keepBetweenScenes)) {
-			EntityData* entityData = parseEntityData(entity.second);
-			if (entityData == nullptr) {
-				throwError(false, "No se pudo crear correctamente la entidad en KeepBetweenScenes");
-			}
-			sceneManager.addKeptBetweenScenes(entityData);
+	for (auto&& entity : pairs(entityBlueprints)) {
+		if (entity.second.isString()) {
+			throwError(false, "Nombre de blueprint no valido");
 		}
+		EntityData* blueprint = parseEntityData(entity.second);
+		if (blueprint == nullptr) {
+			throwError(false, "No se pudo crear correctamente el blueprint");
+		}
+		blueprint->isBlueprint = true;
+		sceneManager.addEntityBlueprint(entity.first.tostring(), blueprint);
 	}
-	if (sceneBlueprints.isTable()) {
-		for (auto&& scene : pairs(sceneBlueprints)) {
-			if (scene.second.isString()) {
-				throwError(false, "Nombre de escena no valido");
-			}
-			std::vector<EntityData*> parsedScene = parseScene(scene.second);
-			if (static_cast<int>(parsedScene.size()) <= 0) {
-				throwError(false, "Escena no valida");
-			}
-			sceneManager.addSceneBlueprint(scene.first.tostring(), parsedScene);
+	if (!keepBetweenScenes.isTable()) {
+		throwError(false, "No se pudo leer keepBetweenScenes");
+	}
+	for (auto&& entity : pairs(keepBetweenScenes)) {
+		EntityData* entityData = parseEntityData(entity.second);
+		if (entityData == nullptr) {
+			throwError(false, "No se pudo crear correctamente la entidad en KeepBetweenScenes");
 		}
+		sceneManager.addKeptBetweenScenes(entityData);
+	}
+	if (!sceneBlueprints.isTable()) {
+		throwError(false, "No se pudo leer scenes");
+	}
+	for (auto&& scene : pairs(sceneBlueprints)) {
+		if (scene.second.isString()) {
+			throwError(false, "Nombre de escena no valido");
+		}
+		std::vector<EntityData*> parsedScene = parseScene(scene.second);
+		if (static_cast<int>(parsedScene.size()) <= 0) {
+			throwError(false, "Escena no valida");
+		}
+		sceneManager.addSceneBlueprint(scene.first.tostring(), parsedScene);
 	}
 	return true;
 }

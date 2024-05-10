@@ -1,4 +1,4 @@
-local prefabs = {
+prefabs = {
     player = {
         handler = "player",
         components = {
@@ -42,7 +42,7 @@ local prefabs = {
     }
 }
 
-local keepBeetweenScenes = {
+keepBetweenScenes = {
     texto2 = {
         components = {
             RectTransform = {
@@ -58,7 +58,7 @@ local keepBeetweenScenes = {
     }
 }
 
-local scenes = {
+scenes = {
     Test = {
         jugador = {
             blueprint = "player"
@@ -308,5 +308,3 @@ local scenes = {
         }
     }
 }
-
-return prefabs, keepBeetweenScenes, scenes
