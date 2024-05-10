@@ -10,6 +10,11 @@ namespace forge {
 		float z;
 		float w;
 
+		/// <summary>
+		/// Se asegura de que el si el Quaternion es invalido lo asigna al identidad
+		/// </summary>
+		void validate();
+
 	public:
 		#pragma region Constructores
 		/// <summary>

@@ -9,6 +9,12 @@ using namespace forge;
 
 #define kEpsilon = 0.000001
 
+void Quaternion::validate() {
+	if (x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f) {
+		*this = IDENTITY;
+	}
+}
+
 #pragma region Constructores
 Quaternion::Quaternion() : 
 	x(0.0f), 
@@ -20,29 +26,38 @@ Quaternion::Quaternion(float _x, float _y, float _z, float _w) :
 	x(_x), 
 	y(_y),
 	z(_z),
-	w(_w) {}
+	w(_w) {
+	validate();
+}
 
 Quaternion::Quaternion(Vector3 const& vec, float angle) {
 	set(vec.getX(), vec.getY(), vec.getZ(), angle);
+	validate();
 }
 
 Quaternion::Quaternion(const Quaternion& q) :
 	x(q.x),
 	y(q.y),
 	z(q.z),
-	w(q.w) {}
+	w(q.w) {
+	validate();
+}
 
 Quaternion::Quaternion(Quaternion&& q) noexcept : 
 	x(q.x), 
 	y(q.y), 
 	z(q.z), 
-	w(q.w) {}
+	w(q.w) {
+	validate();
+}
 
 Quaternion::Quaternion(const Quaternion* q) : 
 	x(q->x),
 	y(q->y),
 	z(q->z),
-	w(q->w) {}
+	w(q->w) {
+	validate();
+}
 
 Quaternion::Quaternion(const Vector3& e) {
 	float bank = e.getX();
@@ -51,7 +66,8 @@ Quaternion::Quaternion(const Vector3& e) {
 	w = cosf(bank / 2) * cosf(pitch / 2) * cosf(heading / 2) + sinf(bank / 2) * sinf(pitch / 2) * sinf(heading / 2);
 	x = sinf(bank / 2) * cosf(pitch / 2) * cosf(heading / 2) - cosf(bank / 2) * sinf(pitch / 2) * sinf(heading / 2);
 	y = cosf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2) + sinf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2);
-	z = cosf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2) - sinf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2);	
+	z = cosf(bank / 2) * cosf(pitch / 2) * sinf(heading / 2) - sinf(bank / 2) * sinf(pitch / 2) * cosf(heading / 2);
+	validate();	
 }
 
 Quaternion::~Quaternion() {}
@@ -63,6 +79,7 @@ Quaternion& Quaternion::operator=(const Quaternion& q) {
 	y = q.y;
 	z = q.z;
 	w = q.w;
+	validate();
 	return *this;
 }
 
@@ -80,6 +97,7 @@ Quaternion Quaternion::operator*(const Quaternion& q) const {
 	p.x = w * q.x + x * q.w + y * q.z - z * q.y;
 	p.y = w * q.y + y * q.w + z * q.x - x * q.z;
 	p.z = w * q.z + z * q.w + x * q.y - y * q.x;
+	validate();
 	p.normalize();
 	return p;
 }
@@ -148,6 +166,7 @@ void Quaternion::normalize() {
 	y /= num;
 	z /= num;
 	w /= num;
+	validate();
 }
 
 Quaternion Quaternion::inversed() const {
@@ -162,30 +181,37 @@ Quaternion Quaternion::inversed() const {
 #pragma region Setters
 void Quaternion::setRotPairX(float newX) {
 	x = newX * sinf(acos(w));
+	validate();
 }
 
 void Quaternion::setRotPairY(float newY) {
 	y = newY * sinf(acos(w));
+	validate();
 }
 
 void Quaternion::setRotPairZ(float newZ) {
 	z = newZ * sinf(acos(w));
+	validate();
 }
 
 void forge::Quaternion::setX(float newX) {
 	x = newX;
+	validate();
 }
 
 void forge::Quaternion::setY(float newY) {
 	y = newY;
+	validate();
 }
 
 void forge::Quaternion::setZ(float newZ) {
 	z = newZ;
+	validate();
 }
 
 void forge::Quaternion::setW(float newW) {
 	w = newW;
+	validate();
 }
 
 void Quaternion::setAngle(float newAngle) {
@@ -195,6 +221,7 @@ void Quaternion::setAngle(float newAngle) {
 	x = (x / prevSin) * newSin;
 	y = (y / prevSin) * newSin;
 	z = (z / prevSin) * newSin;
+	validate();
 }
 
 void forge::Quaternion::lookTo(forge::Vector3 const& lookTo, forge::Vector3 const& pos) {
@@ -251,6 +278,7 @@ void forge::Quaternion::lookTo(forge::Vector3 const& lookTo, forge::Vector3 cons
 	y = _y;
 	z = _z;
 	w = _w;
+	validate();
 }
 
 void Quaternion::set(float newX, float newY, float newZ, float newAngle) {
@@ -259,6 +287,7 @@ void Quaternion::set(float newX, float newY, float newZ, float newAngle) {
 	y = newY * sinWHalf;
 	z = newZ * sinWHalf;
 	w = cosf(newAngle / 2.0f);
+	validate();
 }
 
 void Quaternion::set(const Quaternion& v) {
@@ -266,6 +295,7 @@ void Quaternion::set(const Quaternion& v) {
 	y = v.y;
 	z = v.z;
 	w = v.w;
+	validate();
 }
 
 void Quaternion::set(const Quaternion&& v) {
@@ -273,6 +303,7 @@ void Quaternion::set(const Quaternion&& v) {
 	y = v.y;
 	z = v.z;
 	w = v.w;
+	validate();
 }
 
 void Quaternion::set(const Quaternion* v) {
@@ -280,6 +311,7 @@ void Quaternion::set(const Quaternion* v) {
 	y = v->y;
 	z = v->z;
 	w = v->w;
+	validate();
 }
 #pragma endregion
 
