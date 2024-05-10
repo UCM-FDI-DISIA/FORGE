@@ -7,7 +7,7 @@ set INCLUDE=1
 
 ::Se compilan las dependencias
 cd Dependencies
-call BuildDependenciesWinVS.bat
+call BuildDependencies.bat
 cd ..
 
 ::Se compila el motor
